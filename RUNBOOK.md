@@ -2,9 +2,15 @@
 
 ## Option A: GitHub Actions (no server; recommended for the pilot)
 
-You need a GitHub account (free). Total effort: about fifteen minutes, once.
+You need a GitHub account (free). Total effort: about fifteen minutes, once. Claude can do steps 2–5
+for you if you give it a short-lived access token (Settings → Developer settings → Personal access
+tokens → Tokens (classic) → scopes `repo` and `workflow`, expiry 7 days); delete the token afterwards.
 
-1. Create a new **private** repository called `newsflow-engine` (github.com → New repository).
+1. Create a new repository called `newsflow-engine`. **Public** gives unlimited run minutes and the
+   results page for free (the engine, its configuration and the headline pile are visible to anyone
+   who finds it). **Private** keeps everything hidden but needs GitHub Pro (USD 4/month) for the
+   results page and an hourly schedule to stay inside the free minutes (see the `cron` line in
+   `.github/workflows/newsflow.yml`).
 2. Upload this folder's contents to it. Easiest: on the repository page choose *Add file → Upload files*,
    drag the whole folder in, commit. (Or `git push` if you use git.)
 3. Turn on the schedule: open the **Actions** tab, click *I understand my workflows, go ahead and enable them*.
@@ -13,13 +19,7 @@ You need a GitHub account (free). Total effort: about fifteen minutes, once.
 5. Turn on the results page: Settings → **Pages** → Source: *Deploy from a branch* → Branch: `main`, folder `/docs` → Save.
    After the next run the pile is at `https://<your-user>.github.io/newsflow-engine/` — `index.html`
    to read, `latest.json` for the editorial layer. Tell Claude that address once.
-6. Done. From now on it runs every hour on its own, with every route on every run. Nothing to maintain.
-
-   Why hourly: a private repository gets 2,000 free Actions minutes a month, and a run takes four to
-   eight minutes. Hourly fits; every 15 minutes would not. Three ways to go faster when you want
-   "real time": make the repository public (unlimited minutes; your config and coverage list become
-   visible), pay for minutes (about USD 0.008 a minute, roughly USD 60–100 a month at 15-minute cadence),
-   or move to Option B. To change the cadence edit the `cron` line in `.github/workflows/newsflow.yml`.
+6. Done. From now on it runs every 15 minutes on its own. Nothing to maintain.
 
 Optional: Tier-1 alert pushes. Settings → Secrets and variables → Actions → New repository secret
 `NEWSFLOW_WEBHOOK_URL` (a Slack incoming-webhook URL or any endpoint that accepts `{"text": ...}`),
