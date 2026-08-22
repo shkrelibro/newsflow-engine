@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 import logging
-from concurrent.futures import ThreadPoolExecutor
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from typing import Callable, Optional
@@ -32,6 +33,13 @@ Job = Callable[[], tuple[list[RawItem], SourceResult]]
 
 
 @dataclass
+class JobSpec:
+    label: str
+    route: str
+    fn: Job
+
+
+@dataclass
 class RunSummary:
     run_id: int
     started_at: datetime
@@ -46,6 +54,7 @@ class RunSummary:
     alerts: int = 0
     source_results: list[SourceResult] = field(default_factory=list)
     errors: int = 0
+    skipped: int = 0
 
 
 def make_http(cfg: Config) -> Http:
@@ -83,14 +92,22 @@ def _due(every: int, run_number: int) -> bool:
     return every <= 1 or run_number % every == 0
 
 
-def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False) -> list[Job]:
-    jobs: list[Job] = []
+def cold_start(cfg: Config, run_number: int) -> bool:
+    """The first two cycles of staggered site queries use a wide window so history is captured."""
+    site_every = max(1, int(cfg.routes.get("googlenews", {}).get("site_every_n_runs", 4)))
+    return run_number <= 2 * site_every
+
+
+def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False) -> list[JobSpec]:
+    jobs: list[JobSpec] = []
     routes = cfg.routes
+    cold = cold_start(cfg, run_number)
+    cold_window = str(routes.get("googlenews", {}).get("cold_start_when", "30d"))
     when_google = f"{backfill_days}d" if backfill_days else str(routes.get("googlenews", {}).get("when", "1d"))
-    when_site = f"{backfill_days}d" if backfill_days else str(routes.get("googlenews", {}).get("site_when", "7d"))
+    when_site = f"{backfill_days}d" if backfill_days else (cold_window if cold else str(routes.get("googlenews", {}).get("site_when", "7d")))
     gdelt_span = f"{backfill_days}d" if backfill_days else str(routes.get("gdelt", {}).get("timespan", "24h"))
     outlet_by_domain = {domain_of(o.homepage): o for o in cfg.outlets}
-    force = backfill_days is not None or all_routes   # run every route regardless of its every_n_runs cadence
+    force = backfill_days is not None or all_routes   # run every cadenced route regardless of its every_n_runs
 
     for name in cfg.names:
         ids = [name.id]
@@ -104,56 +121,73 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     if not alias.applies_to(m.lang):
                         continue
                     q = f'"{alias.text}"'
-                    jobs.append(lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google))
+                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
             # --- site-restricted queries for key outlets
-            # site: queries are spread across runs: with site_every_n_runs = 4 each run takes a quarter
-            # of the list, so every outlet is queried once per hour at a 15-minute cadence without bursts
+            # site: queries are always spread across runs (never burst, even on backfill): with
+            # site_every_n_runs = 6 each run takes a sixth of the list, so every outlet is queried
+            # every 90 minutes at a 15-minute cadence; the first two cycles use a 30-day window
             site_every = max(1, int(routes.get("googlenews", {}).get("site_every_n_runs", 4)))
             if name.site_queries:
                 main = _main_alias(name)
                 for i, dom in enumerate(name.site_queries):
-                    if not force and i % site_every != run_number % site_every:
+                    if i % site_every != run_number % site_every:
                         continue
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     q = f'"{main}" site:{dom}'
-                    jobs.append(lambda q=q, lang=lang, country=country: fetch_google_news(http, q, lang, country, ids, when_site))
+                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country: fetch_google_news(http, q, lang, country, ids, when_site)))
         # --- Bing per market
         if cfg.route_enabled("bingnews"):
             bing_every = int(routes.get("bingnews", {}).get("every_n_runs", 2))
             if force or _due(bing_every, run_number):
                 main = _main_alias(name)
                 for m in markets:
-                    jobs.append(lambda m=m, main=main: fetch_bing_news(http, main, m.lang, m.country, ids))
+                    jobs.append(JobSpec(f"{main} [{m.lang}-{m.country}]", "bingnews", lambda m=m, main=main: fetch_bing_news(http, main, m.lang, m.country, ids)))
         # --- GDELT global (+ per language if configured)
         if cfg.route_enabled("gdelt"):
             gdelt_every = int(routes.get("gdelt", {}).get("every_n_runs", 1))
             if force or _due(gdelt_every, run_number):
                 main = _main_alias(name)
-                jobs.append(lambda main=main: fetch_gdelt(http, f'"{main}"', ids, gdelt_span))
+                jobs.append(JobSpec(f"{main} [all]", "gdelt", lambda main=main: fetch_gdelt(http, f'"{main}"', ids, gdelt_span)))
                 if routes.get("gdelt", {}).get("per_lang", False):
                     for lang in name.langs:
-                        jobs.append(lambda main=main, lang=lang: fetch_gdelt(http, f'"{main}"', ids, gdelt_span, "", lang))
+                        jobs.append(JobSpec(f"{main} [{lang}]", "gdelt", lambda main=main, lang=lang: fetch_gdelt(http, f'"{main}"', ids, gdelt_span, "", lang)))
         # --- name-specific feeds
         if cfg.route_enabled("rss"):
             for f in name.feeds:
-                jobs.append(lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name))
+                jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name)))
         # --- page watchers
         if cfg.route_enabled("pages"):
             pages_every = int(routes.get("pages", {}).get("every_n_runs", 2))
             if force or _due(pages_every, run_number):
                 for p in name.pages:
-                    jobs.append(lambda p=p: _page_job(http, store, p, backfill=force))
+                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force)))
 
-    # --- shared outlet feeds (fetched once, matched against every name)
+    # --- shared outlet feeds (fetched once, matched against every name). Feed discovery is capped
+    #     per run and retried at most daily per outlet, so the first runs are not swamped by it.
     if cfg.route_enabled("rss") and cfg.outlets:
         wanted_countries = {m.country for n in cfg.names for m in n.markets}
-        discover_every = int(routes.get("rss", {}).get("discover_every_n_runs", 8))
+        discover_budget = int(routes.get("rss", {}).get("discover_per_run", 20))
+        retry_after = timedelta(hours=float(routes.get("rss", {}).get("discover_retry_hours", 24)))
+        now = datetime.now(timezone.utc)
         for o in cfg.outlets:
             if not o.enabled or o.country not in wanted_countries:
                 continue
-            jobs.append(lambda o=o: _outlet_job(http, store, o, discover=(run_number == 1 or _due(discover_every, run_number))))
+            discover = False
+            if not o.feed_url:
+                row = store.get_feed(o.homepage)
+                known = bool(row and row["feed_url"])
+                tried_recently = False
+                if row and row["discovered_at"]:
+                    try:
+                        tried_recently = (now - datetime.fromisoformat(row["discovered_at"])) < retry_after
+                    except ValueError:
+                        tried_recently = False
+                if not known and not tried_recently and discover_budget > 0:
+                    discover = True
+                    discover_budget -= 1
+            jobs.append(JobSpec(f"{o.name} ({o.country})", "rss", lambda o=o, discover=discover: _outlet_job(http, store, o, discover=discover)))
     return jobs
 
 
@@ -298,7 +332,7 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
 # Entry point
 # ----------------------------------------------------------------------
 
-def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill_days: Optional[int] = None, all_routes: bool = False, now: Optional[datetime] = None, jobs: Optional[list[Job]] = None) -> RunSummary:
+def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill_days: Optional[int] = None, all_routes: bool = False, now: Optional[datetime] = None, jobs: Optional[list] = None, budget_minutes: Optional[float] = None) -> RunSummary:
     now = now or datetime.now(timezone.utc)
     own_http = http is None
     http = http or make_http(cfg)
@@ -306,32 +340,66 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     run_id = store.start_run(now)
     run_number = store.run_count()
     summary = RunSummary(run_id=run_id, started_at=now)
-    lookback = float(backfill_days * 24 + 24) if backfill_days else float(cfg.engine.get("lookback_hours", 72))
-
-    jobs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days, all_routes)
-    summary.jobs = len(jobs)
-    workers = max(1, int(cfg.engine.get("max_workers", 4)))
-    raw_items: list[RawItem] = []
-    results: list[SourceResult] = []
-    log.info("run %s: %d jobs, %d workers", run_id, len(jobs), workers)
-    if workers == 1:
-        for job in jobs:
-            items, res = job()
-            raw_items.extend(items)
-            results.append(res)
+    if backfill_days:
+        lookback = float(backfill_days * 24 + 24)
+    elif cold_start(cfg, run_number):
+        lookback = float(cfg.engine.get("cold_start_lookback_hours", 31 * 24))
     else:
-        with ThreadPoolExecutor(max_workers=workers) as ex:
-            for items, res in ex.map(lambda j: j(), jobs):
-                raw_items.extend(items)
-                results.append(res)
-    summary.source_results = results
-    summary.errors = sum(1 for r in results if not r.ok)
-    store.add_source_results(run_id, results)
+        lookback = float(cfg.engine.get("lookback_hours", 72))
 
-    process_items(cfg, store, matcher, http, raw_items, run_id, now, summary, lookback)
+    specs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days, all_routes)
+    specs = [j if isinstance(j, JobSpec) else JobSpec(f"job-{i}", "custom", j) for i, j in enumerate(specs)]
+    summary.jobs = len(specs)
+    workers = max(1, int(cfg.engine.get("max_workers", 4)))
+    budget = float(cfg.engine.get("max_run_minutes", 12)) if budget_minutes is None else float(budget_minutes)
+    deadline = time.monotonic() + budget * 60
+    results: list[SourceResult] = []
+    log.info("run %s (#%d): %d jobs, %d workers, budget %.0f min, lookback %.0f h", run_id, run_number, len(specs), workers, budget, lookback)
+
+    def handle(spec: JobSpec, items: list[RawItem], res: SourceResult) -> None:
+        results.append(res)
+        log.info("%s %-10s %-58s items=%-4d %5.1fs %s", "ok " if res.ok else "ERR", res.route, res.source[:58], res.items, res.seconds, res.error[:90])
+        if items:
+            process_items(cfg, store, matcher, http, items, run_id, now, summary, lookback)
+
+    ex = ThreadPoolExecutor(max_workers=workers)
+    futures = {ex.submit(spec.fn): spec for spec in specs}
+    pending = set(futures)
+    stopped = False
+    try:
+        for fut in as_completed(futures):
+            spec = futures[fut]
+            pending.discard(fut)
+            try:
+                items, res = fut.result()
+            except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
+                items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
+            handle(spec, items, res)
+            if time.monotonic() > deadline and pending:
+                stopped = True
+                break
+    finally:
+        ex.shutdown(wait=True, cancel_futures=True)
+    if stopped:
+        for fut in pending:
+            spec = futures[fut]
+            if fut.cancelled():
+                results.append(SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0))
+                summary.skipped += 1
+            else:
+                try:
+                    items, res = fut.result()
+                except Exception as exc:  # noqa: BLE001
+                    items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
+                handle(spec, items, res)
+        log.warning("time budget of %.0f min reached: %d jobs skipped (they run on the next cycle)", budget, summary.skipped)
+
+    summary.source_results = results
+    summary.errors = sum(1 for r in results if not r.ok) - summary.skipped
+    store.add_source_results(run_id, results)
     summary.finished_at = datetime.now(timezone.utc)
-    store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=f"errors={summary.errors} stale={summary.stale} unrelated={summary.unrelated}")
+    store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=f"errors={summary.errors} skipped={summary.skipped} stale={summary.stale} unrelated={summary.unrelated}")
     if own_http:
         http.close()
-    log.info("run %s done: fetched=%d new=%d candidates=%d screened=%d alerts=%d errors=%d", run_id, summary.fetched, summary.new_items, summary.candidates, summary.screened, summary.alerts, summary.errors)
+    log.info("run %s done: fetched=%d new=%d candidates=%d screened=%d alerts=%d errors=%d skipped=%d", run_id, summary.fetched, summary.new_items, summary.candidates, summary.screened, summary.alerts, summary.errors, summary.skipped)
     return summary

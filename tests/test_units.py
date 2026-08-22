@@ -183,6 +183,28 @@ def test_site_queries_are_staggered(cfg, tmp_path):
     total_site = sum(c - base for c in counts)
     assert len(n.site_queries) <= total_site <= len(n.site_queries) + 12
     assert max(counts) - min(counts) < len(n.site_queries) / 2
+    # --all-routes runs every cadenced route but still only one chunk of site queries (no bursts)
     forced = len(build_jobs(cfg, http, store, run_number=1, all_routes=True))
-    assert forced >= base + len(n.site_queries)
+    assert base + len(n.site_queries) // every <= forced < base + len(n.site_queries)
     http.close(); store.close()
+
+
+def test_time_budget_skips_remaining_jobs(cfg, tmp_path, fake_http_factory, googlenews_xml):
+    import time
+    from newsflow.pipeline import JobSpec, run_once
+    from newsflow.routes import fetch_google_news
+    from newsflow.store import Store
+    cfg.engine["db_path"] = str(tmp_path / "b.db")
+    http = fake_http_factory({"news.google.com": googlenews_xml})
+    store = Store(cfg.db_path)
+
+    def slow():
+        time.sleep(0.3)
+        return fetch_google_news(http, '"Intrum"', "sv", "SE", ["intrum"])
+
+    specs = [JobSpec(f"slow-{i}", "googlenews", slow) for i in range(12)]
+    s = run_once(cfg, store, http=http, backfill_days=60, jobs=specs, budget_minutes=0.0)
+    assert s.skipped > 0 and s.skipped + (len(specs) - s.skipped) == len(specs)
+    assert any("skipped: run time budget" in r.error for r in s.source_results)
+    assert s.new_items >= 1            # whatever finished was still stored
+    store.close()
