@@ -72,8 +72,10 @@ run `python -m newsflow check-config`, commit. The next run picks it up.
 
 ## Running it
 
-See `RUNBOOK.md`. Two options: GitHub Actions (no server, free, every 15 minutes, results served
-by GitHub Pages) or Docker on any small server.
+See `RUNBOOK.md`. Two options: GitHub Actions (no server; hourly on a private repository's free
+minutes, every 15 minutes on a public repository; results served by GitHub Pages) or Docker on any
+small server (every 15 minutes, no limits). On hourly schedules run with `--all-routes` so every
+route runs every time; the `every_n_runs` cadences in `config/newsflow.yaml` are for 15-minute runs.
 
 ## Tests
 

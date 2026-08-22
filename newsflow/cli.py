@@ -29,7 +29,7 @@ def cmd_run(args) -> int:
     cfg = load_config(args.config)
     store = Store(cfg.db_path)
     try:
-        summary = run_once(cfg, store, backfill_days=args.backfill_days)
+        summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False))
         write_exports(cfg, store)
         sent = push_alerts(cfg, store)
         print(json.dumps({
@@ -122,8 +122,8 @@ def cmd_jobs(args) -> int:
     store = Store(cfg.db_path)
     http = make_http(cfg)
     try:
-        jobs = build_jobs(cfg, http, store, run_number=int(args.run_number))
-        print(f"{len(jobs)} jobs would run on run #{args.run_number}")
+        jobs = build_jobs(cfg, http, store, run_number=int(args.run_number), all_routes=args.all_routes)
+        print(f"{len(jobs)} jobs would run on run #{args.run_number}{' with --all-routes' if args.all_routes else ''}")
         return 0
     finally:
         http.close()
@@ -138,16 +138,18 @@ def main(argv=None) -> int:
 
     r = sub.add_parser("run", help="one fetch run, then export and alerts")
     r.add_argument("--backfill-days", type=int, default=None, help="widen the window to N days (golden set / first run)")
+    r.add_argument("--all-routes", action="store_true", help="run every route on this run regardless of its every_n_runs cadence (use on hourly schedules)")
     r.set_defaults(fn=cmd_run)
 
     lp = sub.add_parser("loop", help="run forever every N minutes (server mode)")
     lp.add_argument("--every", type=int, default=15)
     lp.add_argument("--backfill-days", type=int, default=None)
+    lp.add_argument("--all-routes", action="store_true")
     lp.set_defaults(fn=cmd_loop)
 
     bf = sub.add_parser("backfill", help="alias for run --backfill-days N")
     bf.add_argument("days", type=int)
-    bf.set_defaults(fn=lambda a: cmd_run(argparse.Namespace(config=a.config, verbose=a.verbose, backfill_days=a.days)))
+    bf.set_defaults(fn=lambda a: cmd_run(argparse.Namespace(config=a.config, verbose=a.verbose, backfill_days=a.days, all_routes=True)))
 
     ex = sub.add_parser("export", help="rebuild the export files from the database")
     ex.set_defaults(fn=cmd_export)
@@ -164,6 +166,7 @@ def main(argv=None) -> int:
 
     jb = sub.add_parser("jobs", help="count the jobs a run would execute")
     jb.add_argument("--run-number", type=int, default=1)
+    jb.add_argument("--all-routes", action="store_true")
     jb.set_defaults(fn=cmd_jobs)
 
     args = p.parse_args(argv)

@@ -2,7 +2,10 @@ name: newsflow
 
 on:
   schedule:
-    - cron: "*/15 * * * *"        # every 15 minutes (GitHub may delay scheduled runs by a few minutes)
+    # Hourly at :07 keeps a PRIVATE repository inside GitHub's free 2,000 Actions minutes a month.
+    # Every 15 minutes ("*/15 * * * *") needs a public repository (unlimited minutes), paid minutes,
+    # or a small server (see RUNBOOK.md). GitHub may delay scheduled runs by a few minutes.
+    - cron: "7 * * * *"
   workflow_dispatch:
     inputs:
       backfill_days:
@@ -45,10 +48,12 @@ jobs:
           NEWSFLOW_WEBHOOK_URL: ${{ secrets.NEWSFLOW_WEBHOOK_URL }}
           NEWSFLOW_SMTP_PASSWORD: ${{ secrets.NEWSFLOW_SMTP_PASSWORD }}
         run: |
+          # --all-routes: on an hourly schedule every route runs every time (the every_n_runs
+          # cadences in config/newsflow.yaml are designed for 15-minute runs)
           if [ -n "${{ github.event.inputs.backfill_days }}" ]; then
-            python -m newsflow run --backfill-days "${{ github.event.inputs.backfill_days }}"
+            python -m newsflow run --all-routes --backfill-days "${{ github.event.inputs.backfill_days }}"
           else
-            python -m newsflow run
+            python -m newsflow run --all-routes
           fi
 
       - name: Save database
@@ -64,7 +69,7 @@ jobs:
           git config user.email "newsflow-bot@users.noreply.github.com"
           git add docs
           # back the database up in git once a day (first run after 00:00 UTC) or on a manual run
-          if [ "$(date -u +%H)" = "00" ] && [ "$(date -u +%M)" -lt 15 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$(date -u +%H)" = "00" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             git add -f data/newsflow.db
           fi
           git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" || echo "nothing to commit"

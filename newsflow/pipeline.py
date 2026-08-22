@@ -83,14 +83,14 @@ def _due(every: int, run_number: int) -> bool:
     return every <= 1 or run_number % every == 0
 
 
-def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None) -> list[Job]:
+def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False) -> list[Job]:
     jobs: list[Job] = []
     routes = cfg.routes
     when_google = f"{backfill_days}d" if backfill_days else str(routes.get("googlenews", {}).get("when", "1d"))
     when_site = f"{backfill_days}d" if backfill_days else str(routes.get("googlenews", {}).get("site_when", "7d"))
     gdelt_span = f"{backfill_days}d" if backfill_days else str(routes.get("gdelt", {}).get("timespan", "24h"))
     outlet_by_domain = {domain_of(o.homepage): o for o in cfg.outlets}
-    force = backfill_days is not None
+    force = backfill_days is not None or all_routes   # run every route regardless of its every_n_runs cadence
 
     for name in cfg.names:
         ids = [name.id]
@@ -294,7 +294,7 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
 # Entry point
 # ----------------------------------------------------------------------
 
-def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill_days: Optional[int] = None, now: Optional[datetime] = None, jobs: Optional[list[Job]] = None) -> RunSummary:
+def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill_days: Optional[int] = None, all_routes: bool = False, now: Optional[datetime] = None, jobs: Optional[list[Job]] = None) -> RunSummary:
     now = now or datetime.now(timezone.utc)
     own_http = http is None
     http = http or make_http(cfg)
@@ -304,7 +304,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     summary = RunSummary(run_id=run_id, started_at=now)
     lookback = float(backfill_days * 24 + 24) if backfill_days else float(cfg.engine.get("lookback_hours", 72))
 
-    jobs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days)
+    jobs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days, all_routes)
     summary.jobs = len(jobs)
     workers = max(1, int(cfg.engine.get("max_workers", 4)))
     raw_items: list[RawItem] = []

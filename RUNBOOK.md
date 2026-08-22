@@ -13,7 +13,13 @@ You need a GitHub account (free). Total effort: about fifteen minutes, once.
 5. Turn on the results page: Settings → **Pages** → Source: *Deploy from a branch* → Branch: `main`, folder `/docs` → Save.
    After the next run the pile is at `https://<your-user>.github.io/newsflow-engine/` — `index.html`
    to read, `latest.json` for the editorial layer. Tell Claude that address once.
-6. Done. From now on it runs every 15 minutes on its own. Nothing to maintain.
+6. Done. From now on it runs every hour on its own, with every route on every run. Nothing to maintain.
+
+   Why hourly: a private repository gets 2,000 free Actions minutes a month, and a run takes four to
+   eight minutes. Hourly fits; every 15 minutes would not. Three ways to go faster when you want
+   "real time": make the repository public (unlimited minutes; your config and coverage list become
+   visible), pay for minutes (about USD 0.008 a minute, roughly USD 60–100 a month at 15-minute cadence),
+   or move to Option B. To change the cadence edit the `cron` line in `.github/workflows/newsflow.yml`.
 
 Optional: Tier-1 alert pushes. Settings → Secrets and variables → Actions → New repository secret
 `NEWSFLOW_WEBHOOK_URL` (a Slack incoming-webhook URL or any endpoint that accepts `{"text": ...}`),
@@ -29,8 +35,9 @@ docker compose up -d --build
 docker compose exec engine python -m newsflow run --backfill-days 30   # seed once
 ```
 
-The engine runs every 15 minutes; `http://<server>:8080/latest.json` and `/index.html` serve the
-pile. Put it behind HTTPS (Caddy or nginx) if the editorial layer must reach it over the internet.
+The engine runs every 15 minutes (the cadence the config is tuned for; no minute limits, and a small
+server's fixed IP is treated more kindly by Google than GitHub's shared runners); `http://<server>:8080/latest.json`
+and `/index.html` serve the pile. Put it behind HTTPS (Caddy or nginx) if the editorial layer must reach it over the internet.
 
 ## Daily operation
 
