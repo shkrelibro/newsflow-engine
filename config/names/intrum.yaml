@@ -41,7 +41,8 @@ aliases:
   - {text: "Intrum Hellas", langs: [el, en], search: true, search_every: 2}
   - {text: "Solvia", langs: [es], weight: 0.8, search: true, search_every: 4,
      require_context: ["Intrum", "servicer", "inmobiliaria", "cartera", "NPL", "Sabadell", "activos", "Tellado"]}
-  - {text: "Ophelos", weight: 0.8, langs: [en, nl, fr, es, pt, it, el, de], search: true, search_every: 8}
+  - {text: "Ophelos", weight: 0.8, langs: [en, nl, fr, es, pt, it, el, de], search: true, search_every: 8,
+     require_context: ["Intrum", "debt", "collection", "collections", "incasso", "recouvrement", "cobro", "cobrança", "recupero", "Inkasso", "οφειλ"]}   # a Brazilian police operation is also called Óphelos
   # matched only
   - {text: "Ίντρουμ", langs: [el]}
   - {text: "Lindorff", weight: 0.6, require_context: ["Intrum"]}
@@ -327,17 +328,13 @@ sources:
     - {url: "https://www.intrum.gr/el/business-to-business/about-intrum/newsroom/all-news/", name: "Intrum Hellas newsroom", tier: 0, country: GR, lang: el, require_alias: false, link_pattern: "all-news/.+"}
     - {url: "https://www.intrum.dk/kreditstyring-for-virksomheder/om-intrum/newsroom/", name: "Intrum Denmark newsroom", tier: 0, country: DK, lang: da, require_alias: false, link_pattern: "newsroom/.+"}
     - {url: "https://www.intrum.sk/klienti-firemne-riesenia/o-nas/novinky-tlacove-spravy/vsetky-novinky/", name: "Intrum Slovakia news", tier: 0, country: SK, lang: sk, require_alias: false, link_pattern: "vsetky-novinky/.+"}
-    - {url: "https://www.intrum.lt/verslo-sprendimai/naujienos/", name: "Intrum Lithuania news", tier: 0, country: LT, lang: lt, require_alias: false, link_pattern: "naujienos/.+"}
     # Local outlets with Intrum tag pages (no RSS needed)
     - {url: "https://www.mononews.gr/tag/intrum-hellas", name: "Mononews tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "mononews\\.gr/(business|real-estate|banks|economy)/.+"}
     - {url: "https://www.ot.gr/tag/intrum-hellas/", name: "OT tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "ot\\.gr/\\d{4}/\\d{2}/\\d{2}/.+"}
     - {url: "https://www.newmoney.gr/tag/intrum-hellas/", name: "Newmoney tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "newmoney\\.gr/roh/.+"}
-    - {url: "https://www.imerisia.gr/intrum", name: "Imerisia tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "imerisia\\.gr/.+/\\d+/.+"}
     - {url: "https://www.dagensps.se/tag/intrum/", name: "Dagens PS tag", tier: 3, country: SE, lang: sv, require_alias: false, link_pattern: "dagensps\\.se/(bors|ekonomi|pengar|naringsliv)/.+"}
     - {url: "https://forbes.it/tag/intrum-italy/", name: "Forbes Italia tag", tier: 3, country: IT, lang: it, require_alias: false, link_pattern: "forbes\\.it/\\d{4}/.+"}
-    - {url: "https://www.irishexaminer.com/maintopics/organisation-intrum-ireland_topic-2954504.html", name: "Irish Examiner topic", tier: 3, country: IE, lang: en, require_alias: false, link_pattern: "irishexaminer\\.com/(business|news)/.+"}
     # Regulators: only links whose text names Intrum are kept (require_alias true); site: queries above cover the body text.
-    - {url: "https://forbrugerombudsmanden.dk/nyheder/forbrugerombudsmanden/pressemeddelelser/", name: "Danish Consumer Ombudsman releases", tier: 1, country: DK, lang: da, require_alias: true}
 
 noise:
   domains: []
