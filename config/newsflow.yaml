@@ -11,7 +11,7 @@ engine:
   db_path: data/newsflow.db
   rate_limits:
     default_seconds: 1.0
-    googlenews_seconds: 2.0
+    googlenews_seconds: 3.0
     bing_seconds: 2.0
     gdelt_seconds: 6.0
 
@@ -20,7 +20,7 @@ routes:
     enabled: true
     when: "1d"                # window for alias queries
     site_when: "7d"           # window for site-restricted outlet queries
-    site_every_n_runs: 4      # outlet site: queries run every 4th run (hourly at a 15-minute cadence)
+    site_every_n_runs: 6      # site: queries are spread over 6 runs: each outlet/regulator is queried every 90 minutes
   bingnews:
     enabled: true
     every_n_runs: 2

@@ -1,9 +1,10 @@
-# Shared outlet list: national business press (tier 3) and trade press (tier 4) per country.
-# feed_url may be left blank: `newsflow discover-feeds` looks for <link rel=alternate> and common paths,
-# and the engine retries discovery every 8th run. Outlets without a feed are still covered by the
-# Google News site: queries listed per name. Every item from these feeds is matched against every name.
+# Shared outlet list: national business press (tier 3), trade press (tier 4) and regional titles near
+# known Intrum sites (tier 5) per country. feed_url may be left blank: `newsflow discover-feeds` looks
+# for <link rel=alternate> and common paths, and the engine retries discovery daily. Outlets without a
+# feed are still covered by the Google News site: queries listed per name. Every item from these feeds
+# is matched against every name. Country keys are quoted because YAML reads a bare NO as "false".
 countries:
-  SE:
+  "SE":
     - {name: Dagens industri, homepage: https://www.di.se, feed_url: "https://www.di.se/rss", lang: sv}
     - {name: Svenska Dagbladet Näringsliv, homepage: https://www.svd.se, feed_url: "https://www.svd.se/feed/articles.rss", lang: sv}
     - {name: Dagens Nyheter Ekonomi, homepage: https://www.dn.se, feed_url: "https://www.dn.se/rss/ekonomi/", lang: sv}
@@ -12,54 +13,105 @@ countries:
     - {name: Placera, homepage: https://www.placera.se, lang: sv}
     - {name: Privata Affärer, homepage: https://privataaffarer.se, lang: sv}
     - {name: Dagens PS, homepage: https://www.dagensps.se, lang: sv}
-  NO:
+    - {name: Breakit, homepage: https://www.breakit.se, lang: sv, tier: 4}
+    - {name: EFN, homepage: https://www.efn.se, lang: sv, tier: 4}
+    - {name: Göteborgs-Posten Ekonomi, homepage: https://www.gp.se, lang: sv}
+    - {name: Hallands Nyheter (Varberg), homepage: https://www.hn.se, lang: sv, tier: 5}
+  "NO":
     - {name: E24, homepage: https://e24.no, lang: nb}
     - {name: Dagens Næringsliv, homepage: https://www.dn.no, lang: nb}
     - {name: Finansavisen, homepage: https://www.finansavisen.no, lang: nb}
-  DK:
+    - {name: Nettavisen Økonomi, homepage: https://www.nettavisen.no, lang: nb}
+    - {name: Kapital, homepage: https://kapital.no, lang: nb, tier: 4}
+  "DK":
     - {name: Børsen, homepage: https://borsen.dk, lang: da}
     - {name: Finans.dk, homepage: https://finans.dk, lang: da}
-  FI:
+    - {name: Berlingske Business, homepage: https://www.berlingske.dk, lang: da}
+    - {name: FinansWatch, homepage: https://finanswatch.dk, lang: da, tier: 4}
+  "FI":
     - {name: Kauppalehti, homepage: https://www.kauppalehti.fi, lang: fi}
     - {name: Helsingin Sanomat Talous, homepage: https://www.hs.fi, lang: fi}
+    - {name: Talouselämä, homepage: https://www.talouselama.fi, lang: fi}
+    - {name: Taloussanomat, homepage: https://www.is.fi/taloussanomat/, lang: fi}
+    - {name: Yle Talous, homepage: https://yle.fi, lang: fi}
+    - {name: Hufvudstadsbladet, homepage: https://www.hbl.fi, lang: sv}
     - {name: Yrittäjät, homepage: https://www.yrittajat.fi, lang: fi, tier: 4}
-  DE:
+  "DE":
     - {name: Handelsblatt, homepage: https://www.handelsblatt.com, feed_url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen", lang: de}
     - {name: FAZ Wirtschaft, homepage: https://www.faz.net, feed_url: "https://www.faz.net/rss/aktuell/wirtschaft/", lang: de}
     - {name: Börsen-Zeitung, homepage: https://www.boersen-zeitung.de, lang: de}
+    - {name: Süddeutsche Wirtschaft, homepage: https://www.sueddeutsche.de, lang: de}
+    - {name: Wirtschaftswoche, homepage: https://www.wiwo.de, lang: de}
+    - {name: manager magazin, homepage: https://www.manager-magazin.de, lang: de}
+    - {name: Finanz-Szene, homepage: https://finanz-szene.de, lang: de, tier: 4}
+    - {name: Echo Online (Heppenheim), homepage: https://www.echo-online.de, lang: de, tier: 5}
     - {name: Netzwoche, homepage: https://www.netzwoche.ch, lang: de, tier: 4}
-  AT:
+  "AT":
     - {name: Der Standard Wirtschaft, homepage: https://www.derstandard.at, lang: de}
     - {name: Die Presse Wirtschaft, homepage: https://www.diepresse.com, lang: de}
-  CH:
+    - {name: Kurier Wirtschaft, homepage: https://kurier.at, lang: de}
+    - {name: ORF Wirtschaft, homepage: https://orf.at, lang: de}
+    - {name: Konsument.at (VKI), homepage: https://konsument.at, lang: de, tier: 4}
+  "CH":
     - {name: NZZ Wirtschaft, homepage: https://www.nzz.ch, lang: de}
     - {name: Finanz und Wirtschaft, homepage: https://www.fuw.ch, lang: de}
+    - {name: Handelszeitung, homepage: https://www.handelszeitung.ch, lang: de}
+    - {name: Tages-Anzeiger Wirtschaft, homepage: https://www.tagesanzeiger.ch, lang: de}
+    - {name: Blick Wirtschaft, homepage: https://www.blick.ch, lang: de}
     - {name: Beobachter, homepage: https://www.beobachter.ch, lang: de, tier: 5}
-  NL:
+    - {name: Le Temps, homepage: https://www.letemps.ch, lang: fr}
+    - {name: Zürcher Oberländer (Schwerzenbach), homepage: https://zueriost.ch, lang: de, tier: 5}
+  "NL":
     - {name: Het Financieele Dagblad, homepage: https://fd.nl, lang: nl}
-  BE:
+    - {name: NRC Economie, homepage: https://www.nrc.nl, lang: nl}
+    - {name: De Telegraaf DFT, homepage: https://www.telegraaf.nl, lang: nl}
+    - {name: NU.nl Economie, homepage: https://www.nu.nl, lang: nl}
+    - {name: RTL Nieuws Economie, homepage: https://www.rtl.nl, lang: nl}
+    - {name: AD Amersfoort, homepage: https://www.ad.nl, lang: nl, tier: 5}
+  "BE":
     - {name: De Tijd, homepage: https://www.tijd.be, lang: nl}
     - {name: L'Echo, homepage: https://www.lecho.be, lang: fr}
-  FR:
+    - {name: De Standaard Economie, homepage: https://www.standaard.be, lang: nl}
+    - {name: Trends, homepage: https://trends.knack.be, lang: nl, tier: 4}
+    - {name: Het Nieuwsblad (Gent), homepage: https://www.nieuwsblad.be, lang: nl, tier: 5}
+    - {name: HLN Geld, homepage: https://www.hln.be, lang: nl}
+  "FR":
     - {name: Les Echos, homepage: https://www.lesechos.fr, feed_url: "https://services.lesechos.fr/rss/les-echos-finance-marches.xml", lang: fr}
-  IT:
+    - {name: La Tribune, homepage: https://www.latribune.fr, lang: fr}
+    - {name: L'Agefi, homepage: https://www.agefi.fr, lang: fr, tier: 4}
+    - {name: BFM Business, homepage: https://www.bfmtv.com/economie/, lang: fr}
+    - {name: Capital.fr, homepage: https://www.capital.fr, lang: fr}
+    - {name: Le Figaro Économie, homepage: https://www.lefigaro.fr, lang: fr}
+    - {name: Le Progrès (Lyon, Saint-Priest), homepage: https://www.leprogres.fr, lang: fr, tier: 5}
+  "IT":
     - {name: Il Sole 24 Ore Finanza, homepage: https://www.ilsole24ore.com, feed_url: "https://www.ilsole24ore.com/rss/finanza.xml", lang: it}
     - {name: Milano Finanza, homepage: https://www.milanofinanza.it, lang: it}
     - {name: BeBeez, homepage: https://bebeez.it, lang: it, tier: 4}
     - {name: Credit Village, homepage: https://www.creditvillage.news, lang: it, tier: 4}
     - {name: CreditNews, homepage: https://www.creditnews.it, lang: it, tier: 4}
-  ES:
+    - {name: Repubblica Economia, homepage: https://www.repubblica.it, lang: it}
+    - {name: Corriere Economia, homepage: https://www.corriere.it, lang: it}
+    - {name: Affaritaliani, homepage: https://www.affaritaliani.it, lang: it}
+  "ES":
     - {name: Expansión Empresas, homepage: https://www.expansion.com, feed_url: "https://e00-expansion.uecdn.es/rss/empresas.xml", lang: es}
     - {name: Cinco Días, homepage: https://cincodias.elpais.com, lang: es}
     - {name: El Confidencial Empresas, homepage: https://www.elconfidencial.com, feed_url: "https://rss.elconfidencial.com/empresas/", lang: es}
     - {name: El Economista Empresas, homepage: https://www.eleconomista.es, feed_url: "https://www.eleconomista.es/rss/rss-empresas.php", lang: es}
     - {name: Vozpópuli, homepage: https://www.vozpopuli.com, lang: es}
+    - {name: El Español Invertia, homepage: https://www.elespanol.com/invertia/, lang: es}
+    - {name: La Información, homepage: https://www.lainformacion.com, lang: es}
     - {name: EjePrime, homepage: https://www.ejeprime.com, lang: es, tier: 4}
     - {name: Funds Society, homepage: https://www.fundssociety.com, lang: es, tier: 4}
-  PT:
+    - {name: Brainsre News, homepage: https://brainsre.news, lang: es, tier: 4}
+    - {name: Alicante Plaza, homepage: https://alicanteplaza.es, lang: es, tier: 5}
+    - {name: El Norte de Castilla (Valladolid), homepage: https://www.elnortedecastilla.es, lang: es, tier: 5}
+  "PT":
     - {name: Jornal de Negócios, homepage: https://www.jornaldenegocios.pt, lang: pt}
     - {name: ECO, homepage: https://eco.sapo.pt, lang: pt}
-  GR:
+    - {name: Jornal Económico, homepage: https://jornaleconomico.pt, lang: pt}
+    - {name: Observador Economia, homepage: https://observador.pt, lang: pt}
+    - {name: Dinheiro Vivo, homepage: https://www.dinheirovivo.pt, lang: pt}
+  "GR":
     - {name: Kathimerini, homepage: https://www.kathimerini.gr, lang: el}
     - {name: Naftemporiki, homepage: https://www.naftemporiki.gr, lang: el}
     - {name: Capital.gr, homepage: https://www.capital.gr, lang: el}
@@ -69,25 +121,52 @@ countries:
     - {name: Newmoney, homepage: https://www.newmoney.gr, lang: el}
     - {name: OT, homepage: https://www.ot.gr, lang: el}
     - {name: Insider.gr, homepage: https://www.insider.gr, lang: el}
-  HU:
+    - {name: Imerisia, homepage: https://www.imerisia.gr, lang: el}
+    - {name: Business Daily, homepage: https://www.businessdaily.gr, lang: el}
+    - {name: Powergame, homepage: https://www.powergame.gr, lang: el}
+    - {name: in.gr Οικονομία, homepage: https://www.in.gr, lang: el}
+  "HU":
     - {name: Portfolio.hu, homepage: https://www.portfolio.hu, feed_url: "https://www.portfolio.hu/rss/all.xml", lang: hu}
     - {name: Világgazdaság, homepage: https://www.vg.hu, lang: hu}
     - {name: Privátbankár, homepage: https://privatbankar.hu, lang: hu}
-  PL:
+    - {name: HVG Gazdaság, homepage: https://hvg.hu, lang: hu}
+    - {name: Index Gazdaság, homepage: https://index.hu, lang: hu}
+    - {name: Napi.hu, homepage: https://www.napi.hu, lang: hu}
+    - {name: Telex Gazdaság, homepage: https://telex.hu, lang: hu}
+  "PL":
     - {name: Puls Biznesu, homepage: https://www.pb.pl, lang: pl}
     - {name: Parkiet, homepage: https://www.parkiet.com, lang: pl}
+    - {name: Rzeczpospolita Ekonomia, homepage: https://www.rp.pl, lang: pl}
+    - {name: Bankier.pl, homepage: https://www.bankier.pl, lang: pl}
+    - {name: Money.pl, homepage: https://www.money.pl, lang: pl}
+    - {name: Business Insider Polska, homepage: https://businessinsider.com.pl, lang: pl}
     - {name: Prawo.pl, homepage: https://www.prawo.pl, lang: pl, tier: 4}
-  CZ:
+  "CZ":
     - {name: Hospodářské noviny, homepage: https://hn.cz, lang: cs}
     - {name: E15, homepage: https://www.e15.cz, lang: cs}
-  SK:
+    - {name: Seznam Zprávy Ekonomika, homepage: https://www.seznamzpravy.cz, lang: cs}
+    - {name: iDNES Ekonomika, homepage: https://www.idnes.cz, lang: cs}
+    - {name: Novinky Ekonomika, homepage: https://www.novinky.cz, lang: cs}
+  "SK":
     - {name: Trend, homepage: https://www.trend.sk, lang: sk}
     - {name: Hospodárske noviny, homepage: https://hnonline.sk, lang: sk}
-  LT:
+    - {name: SME Ekonomika, homepage: https://ekonomika.sme.sk, lang: sk}
+    - {name: Pravda Ekonomika, homepage: https://ekonomika.pravda.sk, lang: sk}
+  "LT":
     - {name: LRT Verslas, homepage: https://www.lrt.lt, feed_url: "https://www.lrt.lt/naujienos/verslas?rss", lang: lt}
     - {name: Verslo žinios, homepage: https://vz.lt, lang: lt}
-  GB:
+    - {name: Delfi Verslas, homepage: https://www.delfi.lt, lang: lt}
+    - {name: 15min Verslas, homepage: https://www.15min.lt, lang: lt}
+  "GB":
     - {name: Credit Connect, homepage: https://www.credit-connect.co.uk, lang: en, tier: 4}
     - {name: Credit Strategy, homepage: https://www.creditstrategy.co.uk, lang: en, tier: 4}
-  IE:
+    - {name: The Guardian Business, homepage: https://www.theguardian.com/uk/business, lang: en}
+    - {name: Sky News Business, homepage: https://news.sky.com/business, lang: en}
+    - {name: This is Money, homepage: https://www.thisismoney.co.uk, lang: en}
+    - {name: City A.M., homepage: https://www.cityam.com, lang: en}
+  "IE":
     - {name: Irish Examiner Business, homepage: https://www.irishexaminer.com, lang: en}
+    - {name: Irish Times Business, homepage: https://www.irishtimes.com, lang: en}
+    - {name: RTÉ Business, homepage: https://www.rte.ie/news/business/, lang: en}
+    - {name: Business Post, homepage: https://www.businesspost.ie, lang: en}
+    - {name: Irish Independent Business, homepage: https://www.independent.ie, lang: en}

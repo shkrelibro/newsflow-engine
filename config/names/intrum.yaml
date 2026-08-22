@@ -15,7 +15,7 @@ markets:
   - {country: IE, lang: en}
   - {country: FI, lang: fi}
   - {country: DK, lang: da}
-  - {country: NO, lang: nb}
+  - {country: "NO", lang: nb}        # quoted: YAML reads a bare NO as false
   - {country: DE, lang: de}
   - {country: AT, lang: de}
   - {country: CH, lang: de}
@@ -69,7 +69,30 @@ sources:
   # Google News "site:" queries run for the main alias every 4th run with a 7-day window.
   # They search the body text, so they also cover regulators and outlets without feeds.
   site_queries:
-    # Sweden / Nordics
+    # --- Intrum's own country sites (press pages are not always linked; Google indexes them)
+    - intrum.com
+    - intrum.se
+    - intrum.no
+    - intrum.dk
+    - intrum.fi
+    - intrum.de
+    - intrum.at
+    - intrum.ch
+    - intrum.nl
+    - intrum.be
+    - intrum.fr
+    - intrum.it
+    - intrum.es
+    - intrum.pt
+    - intrum.gr
+    - intrum.hu
+    - intrum.pl
+    - intrum.cz
+    - intrum.sk
+    - intrum.co.uk
+    - intrum.ie
+    - intrum.lt
+    # --- Sweden / Nordics
     - di.se
     - svd.se
     - dn.se
@@ -78,40 +101,90 @@ sources:
     - placera.se
     - privataaffarer.se
     - dagensps.se
+    - breakit.se
+    - gp.se
+    - hn.se
     - e24.no
     - dn.no
     - finansavisen.no
+    - nettavisen.no
     - borsen.dk
     - finans.dk
+    - berlingske.dk
+    - finanswatch.dk
     - kauppalehti.fi
     - hs.fi
+    - talouselama.fi
+    - is.fi
     - yle.fi
-    # DACH
+    - hbl.fi
+    # --- DACH
     - handelsblatt.com
     - faz.net
     - boersen-zeitung.de
+    - sueddeutsche.de
+    - wiwo.de
+    - manager-magazin.de
+    - finanz-szene.de
+    - echo-online.de
     - nzz.ch
     - fuw.ch
+    - handelszeitung.ch
+    - tagesanzeiger.ch
+    - blick.ch
+    - beobachter.ch
+    - letemps.ch
     - derstandard.at
     - diepresse.com
-    # Benelux / France
+    - kurier.at
+    - orf.at
+    - konsument.at
+    # --- Benelux / France
     - fd.nl
+    - nrc.nl
+    - telegraaf.nl
+    - nu.nl
+    - rtl.nl
     - tijd.be
     - lecho.be
+    - standaard.be
+    - trends.knack.be
+    - nieuwsblad.be
+    - hln.be
     - lesechos.fr
-    # Iberia / Italy
+    - latribune.fr
+    - agefi.fr
+    - bfmtv.com
+    - capital.fr
+    - lefigaro.fr
+    - leprogres.fr
+    # --- Iberia / Italy
     - expansion.com
     - cincodias.elpais.com
     - elconfidencial.com
     - eleconomista.es
     - vozpopuli.com
+    - elespanol.com
+    - lainformacion.com
+    - ejeprime.com
+    - fundssociety.com
+    - brainsre.news
+    - alicanteplaza.es
+    - elnortedecastilla.es
     - jornaldenegocios.pt
     - eco.sapo.pt
+    - jornaleconomico.pt
+    - observador.pt
+    - dinheirovivo.pt
     - ilsole24ore.com
     - milanofinanza.it
     - bebeez.it
     - creditvillage.news
-    # Greece
+    - creditnews.it
+    - repubblica.it
+    - corriere.it
+    - affaritaliani.it
+    # --- Greece
     - kathimerini.gr
     - naftemporiki.gr
     - capital.gr
@@ -121,36 +194,117 @@ sources:
     - newmoney.gr
     - ot.gr
     - insider.gr
-    # CEE / Baltics
+    - imerisia.gr
+    - businessdaily.gr
+    - powergame.gr
+    - in.gr
+    # --- CEE / Baltics
     - portfolio.hu
     - vg.hu
     - privatbankar.hu
+    - hvg.hu
+    - index.hu
+    - napi.hu
+    - telex.hu
     - pb.pl
     - parkiet.com
+    - rp.pl
+    - bankier.pl
+    - money.pl
+    - businessinsider.com.pl
+    - prawo.pl
     - hn.cz
     - e15.cz
+    - seznamzpravy.cz
+    - idnes.cz
+    - novinky.cz
     - trend.sk
     - hnonline.sk
+    - sme.sk
+    - pravda.sk
     - lrt.lt
     - vz.lt
-    # Global and credit-specialist (headlines only)
+    - delfi.lt
+    - 15min.lt
+    # --- UK / Ireland
+    - credit-connect.co.uk
+    - creditstrategy.co.uk
+    - theguardian.com
+    - news.sky.com
+    - thisismoney.co.uk
+    - cityam.com
+    - thetimes.com
+    - irishexaminer.com
+    - irishtimes.com
+    - rte.ie
+    - businesspost.ie
+    - independent.ie
+    # --- Global and credit-specialist (headlines only)
     - ft.com
     - reuters.com
     - bloomberg.com
     - debtwire.com
     - 9fin.com
     - reorg.com
-    # Regulators and courts (site queries search the body, which is how "Intrum" inside a release is found)
-    - forbrugerombudsmanden.dk
+    - globalcapital.com
+    # --- Regulators, supervisors, consumer and data-protection authorities (site queries search the body,
+    #     which is how "Intrum" inside a decision or press release is found)
     - fi.se
     - imy.se
+    - konsumentverket.se
+    - kronofogden.se
+    - finanstilsynet.no
+    - forbrukertilsynet.no
+    - datatilsynet.no
+    - forbrugerombudsmanden.dk
+    - finanstilsynet.dk
+    - datatilsynet.dk
     - finanssivalvonta.fi
+    - kkv.fi
+    - tietosuoja.fi
     - bafin.de
-    - bankofgreece.gr
-    - bancaditalia.it
-    - bde.es
-    - fca.org.uk
+    - verbraucherzentrale.de
+    - bfdi.bund.de
+    - fma.gv.at
+    - dsb.gv.at
+    - edoeb.admin.ch
+    - afm.nl
+    - acm.nl
+    - autoriteitpersoonsgegevens.nl
+    - fsma.be
+    - economie.fgov.be
     - acpr.banque-france.fr
+    - cnil.fr
+    - economie.gouv.fr
+    - bancaditalia.it
+    - agcm.it
+    - garanteprivacy.it
+    - bde.es
+    - aepd.es
+    - cnmc.es
+    - bportugal.pt
+    - cnpd.pt
+    - bankofgreece.gr
+    - synigoroskatanaloti.gr
+    - dpa.gr
+    - mnb.hu
+    - gvh.hu
+    - naih.hu
+    - knf.gov.pl
+    - uokik.gov.pl
+    - uodo.gov.pl
+    - cnb.cz
+    - coi.cz
+    - uoou.gov.cz
+    - nbs.sk
+    - soi.sk
+    - lb.lt
+    - fca.org.uk
+    - ico.org.uk
+    - centralbank.ie
+    - ccpc.ie
+    - dataprotection.ie
+    - eba.europa.eu
 
   # Name-specific feeds (RSS/Atom). Leave empty until a feed URL is confirmed; pages below cover the rest.
   feeds: []
@@ -159,6 +313,7 @@ sources:
   # require_alias: false means every new article link on the page is attributed to Intrum (use only on Intrum-specific pages).
   pages:
     - {url: "https://mfn.se/all/a/intrum", name: "MFN regulatory feed", tier: 0, country: SE, lang: sv, require_alias: false, link_pattern: "mfn\\.se/a/intrum/"}
+    - {url: "https://www.intrum.no/bedriftstjenester/om-intrum/presse/", name: "Intrum Norway press", tier: 0, country: "NO", lang: nb, require_alias: false, link_pattern: "presse/.+"}
     - {url: "https://www.intrum.fi/tiedotteet/", name: "Intrum Finland releases", tier: 0, country: FI, lang: fi, require_alias: false, link_pattern: "intrum\\.fi/tiedotteet/.+"}
     - {url: "https://www.intrum.hu/szolgaltatasaink-cegeknek/az-intrumrol/hirek/sajtohireink/", name: "Intrum Hungary press", tier: 0, country: HU, lang: hu, require_alias: false, link_pattern: "sajtohireink/.+"}
     - {url: "https://www.intrum.es/empresas/sobre-intrum/comunicacion/noticias/", name: "Intrum Spain news", tier: 0, country: ES, lang: es, require_alias: false, link_pattern: "noticias/.+"}

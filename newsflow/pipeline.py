@@ -106,10 +106,14 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     q = f'"{alias.text}"'
                     jobs.append(lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google))
             # --- site-restricted queries for key outlets
-            site_every = int(routes.get("googlenews", {}).get("site_every_n_runs", 4))
-            if name.site_queries and (force or _due(site_every, run_number)):
+            # site: queries are spread across runs: with site_every_n_runs = 4 each run takes a quarter
+            # of the list, so every outlet is queried once per hour at a 15-minute cadence without bursts
+            site_every = max(1, int(routes.get("googlenews", {}).get("site_every_n_runs", 4)))
+            if name.site_queries:
                 main = _main_alias(name)
-                for dom in name.site_queries:
+                for i, dom in enumerate(name.site_queries):
+                    if not force and i % site_every != run_number % site_every:
+                        continue
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")

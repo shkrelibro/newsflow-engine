@@ -144,3 +144,45 @@ def test_title_similarity():
     c = title_key("Intrum aktie rusar: DNB Carnegie ser vändpunkt för bolaget")
     assert similar(a, c)
     assert b  # just exercised
+
+
+# ---------------------------------------------------------------- config robustness
+def test_norway_is_not_false(cfg):
+    n = cfg.name("intrum")
+    assert any(m.country == "NO" and m.lang == "nb" for m in n.markets)
+    assert not any(m.country in ("FALSE", "TRUE") for m in n.markets)
+    assert any(o.country == "NO" for o in cfg.outlets)
+    assert any(p.country == "NO" for p in n.pages)
+
+
+def test_every_market_has_local_language_query(cfg):
+    n = cfg.name("intrum")
+    countries = {m.country for m in n.markets}
+    for c in ["AT", "BE", "CZ", "DK", "FI", "FR", "DE", "GR", "HU", "IT", "NL", "NO", "PL", "PT", "SK", "ES", "SE", "CH", "GB", "IE"]:
+        assert c in countries, c
+    english_only = {m.country for m in n.markets if m.lang == "en"}
+    assert english_only == {"GB", "IE"}
+
+
+def test_site_queries_are_staggered(cfg, tmp_path):
+    from newsflow.pipeline import build_jobs
+    from newsflow.store import Store
+    from newsflow.http import Http
+    cfg.engine["db_path"] = str(tmp_path / "x.db")
+    store = Store(cfg.db_path)
+    http = Http("test")
+    cfg.routes["bingnews"] = {"enabled": False}
+    cfg.routes["gdelt"] = {"enabled": False}
+    cfg.routes["rss"] = {"enabled": False}
+    cfg.routes["pages"] = {"enabled": False}
+    n = cfg.name("intrum")
+    every = int(cfg.routes["googlenews"]["site_every_n_runs"])
+    base = len(n.markets)  # the main alias is queried in every market on every run
+    counts = [len(build_jobs(cfg, http, store, run_number=r)) for r in range(1, every + 1)]
+    # across one full cycle every site query runs exactly once; secondary aliases add a few jobs on some runs
+    total_site = sum(c - base for c in counts)
+    assert len(n.site_queries) <= total_site <= len(n.site_queries) + 12
+    assert max(counts) - min(counts) < len(n.site_queries) / 2
+    forced = len(build_jobs(cfg, http, store, run_number=1, all_routes=True))
+    assert forced >= base + len(n.site_queries)
+    http.close(); store.close()

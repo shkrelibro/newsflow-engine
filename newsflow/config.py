@@ -135,6 +135,13 @@ class Config:
         return p if p.is_absolute() else (self.root.parent / p)
 
 
+def _cc(value: Any) -> str:
+    """Country code from YAML. Bare NO/YES/ON/OFF are read as booleans by YAML 1.1; map them back."""
+    if isinstance(value, bool):
+        return "NO" if value is False else "YES"
+    return str(value).strip().upper()
+
+
 def _parse_alias(raw: Any) -> Alias:
     if isinstance(raw, str):
         return Alias(text=raw)
@@ -157,7 +164,7 @@ def _parse_page(raw: dict, default_ids: list[str], kind: str) -> PageSource:
         url=str(raw["url"]),
         name=str(raw.get("name", raw["url"])),
         tier=int(raw.get("tier", 3)),
-        country=str(raw.get("country", "")),
+        country=_cc(raw.get("country", "")) if raw.get("country", "") != "" else "",
         lang=str(raw.get("lang", "")),
         kind=kind,
         name_ids=[str(x) for x in raw.get("names", default_ids)],
@@ -169,7 +176,7 @@ def _parse_page(raw: dict, default_ids: list[str], kind: str) -> PageSource:
 def _parse_name(path: Path) -> NameConfig:
     raw = _load_yaml(path)
     nid = str(raw.get("id") or path.stem)
-    markets = [Market(country=str(m["country"]).upper(), lang=str(m["lang"]).lower()) for m in raw.get("markets", [])]
+    markets = [Market(country=_cc(m["country"]), lang=str(m["lang"]).lower()) for m in raw.get("markets", [])]
     aliases = [_parse_alias(a) for a in raw.get("aliases", [])]
     # people and brands are aliases too; they usually need the company in context
     for p in raw.get("people", []):
@@ -205,7 +212,7 @@ def _parse_outlets(raw: dict) -> list[Outlet]:
         for e in entries or []:
             out.append(
                 Outlet(
-                    country=str(country).upper(),
+                    country=_cc(country),
                     name=str(e["name"]),
                     homepage=str(e["homepage"]),
                     feed_url=str(e.get("feed_url", "") or ""),

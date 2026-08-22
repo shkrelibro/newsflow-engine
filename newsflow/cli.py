@@ -117,6 +117,42 @@ def cmd_check(args) -> int:
     return 0
 
 
+def cmd_coverage(args) -> int:
+    """Per-country audit: languages, search routes, outlet feeds, newsroom pages, site queries."""
+    from collections import defaultdict
+    from .normalize import domain_of
+    cfg = load_config(args.config)
+    tld = {"se": "SE", "no": "NO", "dk": "DK", "fi": "FI", "de": "DE", "at": "AT", "ch": "CH", "nl": "NL", "be": "BE",
+           "fr": "FR", "it": "IT", "es": "ES", "pt": "PT", "gr": "GR", "hu": "HU", "pl": "PL", "cz": "CZ", "sk": "SK",
+           "lt": "LT", "uk": "GB", "ie": "IE", "eu": "EU"}
+    by_dom = {domain_of(o.homepage): o.country for o in cfg.outlets}
+    outlets = defaultdict(int)
+    for o in cfg.outlets:
+        outlets[o.country] += 1
+    for n in cfg.names:
+        langs = defaultdict(list)
+        for m in n.markets:
+            langs[m.country].append(m.lang)
+        pages = defaultdict(int)
+        for pg in n.pages:
+            pages[pg.country or "?"] += 1
+        sq = defaultdict(int)
+        for d in n.site_queries:
+            c = by_dom.get(d) or tld.get(d.rsplit(".", 1)[-1], "GLOBAL")
+            if d.startswith("intrum."):
+                c = {"intrum.com": "GLOBAL", "intrum.co.uk": "GB"}.get(d, tld.get(d.split(".")[-1], "GLOBAL"))
+            sq[c] += 1
+        print(f"{n.name}: {len(n.markets)} market-language pairs, {len(n.langs)} languages")
+        print(f"{'country':8}{'languages':12}{'google':8}{'bing':6}{'gdelt':7}{'feeds':7}{'pages':7}{'site queries'}")
+        for c in sorted(langs):
+            l = langs[c]
+            print(f"{c:8}{','.join(l):12}{len(l):<8}{len(l):<6}{'yes':7}{outlets.get(c, 0):<7}{pages.get(c, 0):<7}{sq.get(c, 0)}")
+        print(f"{'GLOBAL':8}{'en':12}{'-':8}{'-':6}{'yes':7}{'-':7}{'-':7}{sq.get('GLOBAL', 0) + sq.get('EU', 0)}")
+        missing = [c for c in langs if outlets.get(c, 0) == 0 or sq.get(c, 0) == 0]
+        print("gaps:", ", ".join(missing) if missing else "none — every market has a local-language Google query, a Bing market, outlet feeds and site queries")
+    return 0
+
+
 def cmd_jobs(args) -> int:
     cfg = load_config(args.config)
     store = Store(cfg.db_path)
@@ -163,6 +199,9 @@ def main(argv=None) -> int:
 
     ck = sub.add_parser("check-config", help="validate and summarise the configuration")
     ck.set_defaults(fn=cmd_check)
+
+    cv = sub.add_parser("coverage", help="per-country audit of languages, routes, feeds, pages and site queries")
+    cv.set_defaults(fn=cmd_coverage)
 
     jb = sub.add_parser("jobs", help="count the jobs a run would execute")
     jb.add_argument("--run-number", type=int, default=1)
