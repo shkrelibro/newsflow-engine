@@ -1,0 +1,189 @@
+# Intrum AB (publ) — built from the entity master on 22 Aug 2026.
+id: intrum
+name: Intrum AB
+kind: name
+home_country: SE
+notes: >
+  Credit management services / debt purchasing. Nasdaq Stockholm INTRUM (ISIN SE0000936478).
+  20 countries per intrum.com/our-locations plus Ireland. Baltic collections business sold to
+  Aktiva Finance Group (2023-24); Vilnius shared-service centre remains, so Lithuanian press is swept.
+
+# Every market is swept in its own language on every run. This list is the footprint, never a subset.
+markets:
+  - {country: SE, lang: sv}
+  - {country: GB, lang: en}      # global English coverage (Bloomberg, Reuters, FT) lands here
+  - {country: IE, lang: en}
+  - {country: FI, lang: fi}
+  - {country: DK, lang: da}
+  - {country: NO, lang: nb}
+  - {country: DE, lang: de}
+  - {country: AT, lang: de}
+  - {country: CH, lang: de}
+  - {country: CH, lang: fr}
+  - {country: NL, lang: nl}
+  - {country: BE, lang: nl}
+  - {country: BE, lang: fr}
+  - {country: FR, lang: fr}
+  - {country: IT, lang: it}
+  - {country: ES, lang: es}
+  - {country: PT, lang: pt}
+  - {country: GR, lang: el}
+  - {country: HU, lang: hu}
+  - {country: PL, lang: pl}
+  - {country: CZ, lang: cs}
+  - {country: SK, lang: sk}
+  - {country: LT, lang: lt}
+
+aliases:
+  # searched (queries run on Google News / Bing / GDELT) and matched
+  - {text: "Intrum", inflect: true, search: true}                 # Intrums, Intrumin, Intrumille, Intrum-Aktie, Intrum Hellas ...
+  - {text: "Intrum Justitia", search: true, search_every: 8}      # former name; German stock sites and older CEE press still use it
+  - {text: "Intrum Hellas", langs: [el, en], search: true, search_every: 2}
+  - {text: "Solvia", langs: [es], weight: 0.8, search: true, search_every: 4,
+     require_context: ["Intrum", "servicer", "inmobiliaria", "cartera", "NPL", "Sabadell", "activos", "Tellado"]}
+  - {text: "Ophelos", weight: 0.8, langs: [en, nl, fr, es, pt, it, el, de], search: true, search_every: 8}
+  # matched only
+  - {text: "Ίντρουμ", langs: [el]}
+  - {text: "Lindorff", weight: 0.6, require_context: ["Intrum"]}
+  - {text: "Aktua", langs: [es], weight: 0.6, require_context: ["Intrum", "Solvia", "servicer", "NPL"]}
+  - {text: "Haya Real Estate", langs: [es], weight: 0.7, require_context: ["Intrum", "Solvia"]}
+  - {text: "eCollect", langs: [de, en, fr], weight: 0.6, require_context: ["Intrum"]}
+
+# People: distinctive names match on their own (weight < 1 so the company alias wins when both appear);
+# common names need the company in context.
+people:
+  - {text: "Johan Åkerblom", weight: 0.7}
+  - {text: "Masih Yazdi", weight: 0.7}
+  - {text: "Enrique Tellado", langs: [es, en], weight: 0.7}
+  - {text: "Enrico Risso", langs: [it, en], weight: 0.7}
+  - {text: "Andrés Rubio", weight: 0.6, require_context: ["Intrum"]}
+  - {text: "Georgakopoulos", langs: [el, en], weight: 0.6, require_context: ["Intrum", "servicer", "NPL"]}
+  - {text: "Γεωργακόπουλος", langs: [el], weight: 0.6, require_context: ["Intrum", "servicer", "NPL", "κόκκιν"]}
+  - {text: "Annie Ho", weight: 0.5, require_context: ["Intrum"]}
+
+exclude_terms: []
+
+comps: []   # add comp ids here once they exist as names/*.yaml (e.g. hoist, dovalue, kruk)
+
+sources:
+  # Google News "site:" queries run for the main alias every 4th run with a 7-day window.
+  # They search the body text, so they also cover regulators and outlets without feeds.
+  site_queries:
+    # Sweden / Nordics
+    - di.se
+    - svd.se
+    - dn.se
+    - affarsvarlden.se
+    - realtid.se
+    - placera.se
+    - privataaffarer.se
+    - dagensps.se
+    - e24.no
+    - dn.no
+    - finansavisen.no
+    - borsen.dk
+    - finans.dk
+    - kauppalehti.fi
+    - hs.fi
+    - yle.fi
+    # DACH
+    - handelsblatt.com
+    - faz.net
+    - boersen-zeitung.de
+    - nzz.ch
+    - fuw.ch
+    - derstandard.at
+    - diepresse.com
+    # Benelux / France
+    - fd.nl
+    - tijd.be
+    - lecho.be
+    - lesechos.fr
+    # Iberia / Italy
+    - expansion.com
+    - cincodias.elpais.com
+    - elconfidencial.com
+    - eleconomista.es
+    - vozpopuli.com
+    - jornaldenegocios.pt
+    - eco.sapo.pt
+    - ilsole24ore.com
+    - milanofinanza.it
+    - bebeez.it
+    - creditvillage.news
+    # Greece
+    - kathimerini.gr
+    - naftemporiki.gr
+    - capital.gr
+    - euro2day.gr
+    - bankingnews.gr
+    - mononews.gr
+    - newmoney.gr
+    - ot.gr
+    - insider.gr
+    # CEE / Baltics
+    - portfolio.hu
+    - vg.hu
+    - privatbankar.hu
+    - pb.pl
+    - parkiet.com
+    - hn.cz
+    - e15.cz
+    - trend.sk
+    - hnonline.sk
+    - lrt.lt
+    - vz.lt
+    # Global and credit-specialist (headlines only)
+    - ft.com
+    - reuters.com
+    - bloomberg.com
+    - debtwire.com
+    - 9fin.com
+    - reorg.com
+    # Regulators and courts (site queries search the body, which is how "Intrum" inside a release is found)
+    - forbrugerombudsmanden.dk
+    - fi.se
+    - imy.se
+    - finanssivalvonta.fi
+    - bafin.de
+    - bankofgreece.gr
+    - bancaditalia.it
+    - bde.es
+    - fca.org.uk
+    - acpr.banque-france.fr
+
+  # Name-specific feeds (RSS/Atom). Leave empty until a feed URL is confirmed; pages below cover the rest.
+  feeds: []
+
+  # Page watchers: polled every 2nd run, robots.txt honoured, change detection on links.
+  # require_alias: false means every new article link on the page is attributed to Intrum (use only on Intrum-specific pages).
+  pages:
+    - {url: "https://mfn.se/all/a/intrum", name: "MFN regulatory feed", tier: 0, country: SE, lang: sv, require_alias: false, link_pattern: "mfn\\.se/a/intrum/"}
+    - {url: "https://www.intrum.fi/tiedotteet/", name: "Intrum Finland releases", tier: 0, country: FI, lang: fi, require_alias: false, link_pattern: "intrum\\.fi/.+/.+"}
+    - {url: "https://www.intrum.hu/szolgaltatasaink-cegeknek/az-intrumrol/hirek/sajtohireink/", name: "Intrum Hungary press", tier: 0, country: HU, lang: hu, require_alias: false, link_pattern: "sajtohireink/.+"}
+    - {url: "https://www.intrum.es/empresas/sobre-intrum/comunicacion/noticias/", name: "Intrum Spain news", tier: 0, country: ES, lang: es, require_alias: false, link_pattern: "noticias/.+"}
+    - {url: "https://www.intrum.it/le-nostre-soluzioni-per-le-aziende/about-intrum/newsroom/comunicati-stampa-news/", name: "Intrum Italy press", tier: 0, country: IT, lang: it, require_alias: false, link_pattern: "comunicati-stampa-news/.+"}
+    - {url: "https://www.intrum.de/business-losungen/uber-intrum/news/", name: "Intrum Germany news", tier: 0, country: DE, lang: de, require_alias: false, link_pattern: "/news/.+"}
+    - {url: "https://www.intrum.nl/zakelijke-oplossingen/over-intrum/newsroom/blijf-op-de-hoogte/", name: "Intrum Netherlands news", tier: 0, country: NL, lang: nl, require_alias: false, link_pattern: "blijf-op-de-hoogte/.+"}
+    - {url: "https://www.intrum.be/nl/business-solutions/over-intrum/newsroom/", name: "Intrum Belgium newsroom", tier: 0, country: BE, lang: nl, require_alias: false, link_pattern: "newsroom/.+"}
+    - {url: "https://www.intrum.ch/de/business-solutions/uber-intrum/news-medien/news-schweiz/", name: "Intrum Switzerland news", tier: 0, country: CH, lang: de, require_alias: false, link_pattern: "news-schweiz/.+"}
+    - {url: "https://www.intrum.fr/solutions-entreprises/a-propos-d-intrum/actualites/", name: "Intrum France news", tier: 0, country: FR, lang: fr, require_alias: false, link_pattern: "actualites/.+"}
+    - {url: "https://www.intrum.pt/empresas/sobre-a-intrum/sala-de-imprensa/noticias/", name: "Intrum Portugal news", tier: 0, country: PT, lang: pt, require_alias: false, link_pattern: "noticias/.+"}
+    - {url: "https://www.intrum.gr/el/business-to-business/about-intrum/newsroom/all-news/", name: "Intrum Hellas newsroom", tier: 0, country: GR, lang: el, require_alias: false, link_pattern: "all-news/.+"}
+    - {url: "https://www.intrum.dk/kreditstyring-for-virksomheder/om-intrum/newsroom/", name: "Intrum Denmark newsroom", tier: 0, country: DK, lang: da, require_alias: false, link_pattern: "newsroom/.+"}
+    - {url: "https://www.intrum.sk/klienti-firemne-riesenia/o-nas/novinky-tlacove-spravy/vsetky-novinky/", name: "Intrum Slovakia news", tier: 0, country: SK, lang: sk, require_alias: false, link_pattern: "vsetky-novinky/.+"}
+    - {url: "https://www.intrum.lt/verslo-sprendimai/naujienos/", name: "Intrum Lithuania news", tier: 0, country: LT, lang: lt, require_alias: false, link_pattern: "naujienos/.+"}
+    # Local outlets with Intrum tag pages (no RSS needed)
+    - {url: "https://www.mononews.gr/tag/intrum-hellas", name: "Mononews tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "mononews\\.gr/(business|real-estate|banks|economy)/.+"}
+    - {url: "https://www.ot.gr/tag/intrum-hellas/", name: "OT tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "ot\\.gr/\\d{4}/\\d{2}/\\d{2}/.+"}
+    - {url: "https://www.newmoney.gr/tag/intrum-hellas/", name: "Newmoney tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "newmoney\\.gr/roh/.+"}
+    - {url: "https://www.imerisia.gr/intrum", name: "Imerisia tag", tier: 3, country: GR, lang: el, require_alias: false, link_pattern: "imerisia\\.gr/.+/\\d+/.+"}
+    - {url: "https://www.dagensps.se/tag/intrum/", name: "Dagens PS tag", tier: 3, country: SE, lang: sv, require_alias: false, link_pattern: "dagensps\\.se/(bors|ekonomi|pengar|naringsliv)/.+"}
+    - {url: "https://forbes.it/tag/intrum-italy/", name: "Forbes Italia tag", tier: 3, country: IT, lang: it, require_alias: false, link_pattern: "forbes\\.it/\\d{4}/.+"}
+    - {url: "https://www.irishexaminer.com/maintopics/organisation-intrum-ireland_topic-2954504.html", name: "Irish Examiner topic", tier: 3, country: IE, lang: en, require_alias: false, link_pattern: "irishexaminer\\.com/(business|news)/.+"}
+    # Regulators: only links whose text names Intrum are kept (require_alias true); site: queries above cover the body text.
+    - {url: "https://forbrugerombudsmanden.dk/nyheder/forbrugerombudsmanden/pressemeddelelser/", name: "Danish Consumer Ombudsman releases", tier: 1, country: DK, lang: da, require_alias: true}
+
+noise:
+  domains: []
+  title_patterns: []

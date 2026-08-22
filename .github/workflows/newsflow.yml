@@ -1,0 +1,72 @@
+name: newsflow
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"        # every 15 minutes (GitHub may delay scheduled runs by a few minutes)
+  workflow_dispatch:
+    inputs:
+      backfill_days:
+        description: "Widen the window to N days (use 30 on the very first run to seed the pile)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: newsflow-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # The SQLite database is carried between runs in the Actions cache (a new key every run,
+      # restored by prefix). It is also committed once a day as a backup.
+      - name: Restore database
+        uses: actions/cache/restore@v4
+        with:
+          path: data/newsflow.db
+          key: newsflow-db-${{ github.run_id }}
+          restore-keys: newsflow-db-
+
+      - name: Run engine
+        env:
+          NEWSFLOW_WEBHOOK_URL: ${{ secrets.NEWSFLOW_WEBHOOK_URL }}
+          NEWSFLOW_SMTP_PASSWORD: ${{ secrets.NEWSFLOW_SMTP_PASSWORD }}
+        run: |
+          if [ -n "${{ github.event.inputs.backfill_days }}" ]; then
+            python -m newsflow run --backfill-days "${{ github.event.inputs.backfill_days }}"
+          else
+            python -m newsflow run
+          fi
+
+      - name: Save database
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: data/newsflow.db
+          key: newsflow-db-${{ github.run_id }}
+
+      - name: Commit outputs
+        run: |
+          git config user.name "newsflow-bot"
+          git config user.email "newsflow-bot@users.noreply.github.com"
+          git add docs
+          # back the database up in git once a day (first run after 00:00 UTC) or on a manual run
+          if [ "$(date -u +%H)" = "00" ] && [ "$(date -u +%M)" -lt 15 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            git add -f data/newsflow.db
+          fi
+          git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" || echo "nothing to commit"
+          git pull --rebase origin "${{ github.ref_name }}" || true
+          git push

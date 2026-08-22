@@ -1,0 +1,93 @@
+# Shared outlet list: national business press (tier 3) and trade press (tier 4) per country.
+# feed_url may be left blank: `newsflow discover-feeds` looks for <link rel=alternate> and common paths,
+# and the engine retries discovery every 8th run. Outlets without a feed are still covered by the
+# Google News site: queries listed per name. Every item from these feeds is matched against every name.
+countries:
+  SE:
+    - {name: Dagens industri, homepage: https://www.di.se, feed_url: "https://www.di.se/rss", lang: sv}
+    - {name: Svenska Dagbladet Näringsliv, homepage: https://www.svd.se, feed_url: "https://www.svd.se/feed/articles.rss", lang: sv}
+    - {name: Dagens Nyheter Ekonomi, homepage: https://www.dn.se, feed_url: "https://www.dn.se/rss/ekonomi/", lang: sv}
+    - {name: Affärsvärlden, homepage: https://www.affarsvarlden.se, lang: sv}
+    - {name: Realtid, homepage: https://www.realtid.se, lang: sv}
+    - {name: Placera, homepage: https://www.placera.se, lang: sv}
+    - {name: Privata Affärer, homepage: https://privataaffarer.se, lang: sv}
+    - {name: Dagens PS, homepage: https://www.dagensps.se, lang: sv}
+  NO:
+    - {name: E24, homepage: https://e24.no, lang: nb}
+    - {name: Dagens Næringsliv, homepage: https://www.dn.no, lang: nb}
+    - {name: Finansavisen, homepage: https://www.finansavisen.no, lang: nb}
+  DK:
+    - {name: Børsen, homepage: https://borsen.dk, lang: da}
+    - {name: Finans.dk, homepage: https://finans.dk, lang: da}
+  FI:
+    - {name: Kauppalehti, homepage: https://www.kauppalehti.fi, lang: fi}
+    - {name: Helsingin Sanomat Talous, homepage: https://www.hs.fi, lang: fi}
+    - {name: Yrittäjät, homepage: https://www.yrittajat.fi, lang: fi, tier: 4}
+  DE:
+    - {name: Handelsblatt, homepage: https://www.handelsblatt.com, feed_url: "https://www.handelsblatt.com/contentexport/feed/schlagzeilen", lang: de}
+    - {name: FAZ Wirtschaft, homepage: https://www.faz.net, feed_url: "https://www.faz.net/rss/aktuell/wirtschaft/", lang: de}
+    - {name: Börsen-Zeitung, homepage: https://www.boersen-zeitung.de, lang: de}
+    - {name: Netzwoche, homepage: https://www.netzwoche.ch, lang: de, tier: 4}
+  AT:
+    - {name: Der Standard Wirtschaft, homepage: https://www.derstandard.at, lang: de}
+    - {name: Die Presse Wirtschaft, homepage: https://www.diepresse.com, lang: de}
+  CH:
+    - {name: NZZ Wirtschaft, homepage: https://www.nzz.ch, lang: de}
+    - {name: Finanz und Wirtschaft, homepage: https://www.fuw.ch, lang: de}
+    - {name: Beobachter, homepage: https://www.beobachter.ch, lang: de, tier: 5}
+  NL:
+    - {name: Het Financieele Dagblad, homepage: https://fd.nl, lang: nl}
+  BE:
+    - {name: De Tijd, homepage: https://www.tijd.be, lang: nl}
+    - {name: L'Echo, homepage: https://www.lecho.be, lang: fr}
+  FR:
+    - {name: Les Echos, homepage: https://www.lesechos.fr, feed_url: "https://services.lesechos.fr/rss/les-echos-finance-marches.xml", lang: fr}
+  IT:
+    - {name: Il Sole 24 Ore Finanza, homepage: https://www.ilsole24ore.com, feed_url: "https://www.ilsole24ore.com/rss/finanza.xml", lang: it}
+    - {name: Milano Finanza, homepage: https://www.milanofinanza.it, lang: it}
+    - {name: BeBeez, homepage: https://bebeez.it, lang: it, tier: 4}
+    - {name: Credit Village, homepage: https://www.creditvillage.news, lang: it, tier: 4}
+    - {name: CreditNews, homepage: https://www.creditnews.it, lang: it, tier: 4}
+  ES:
+    - {name: Expansión Empresas, homepage: https://www.expansion.com, feed_url: "https://e00-expansion.uecdn.es/rss/empresas.xml", lang: es}
+    - {name: Cinco Días, homepage: https://cincodias.elpais.com, lang: es}
+    - {name: El Confidencial Empresas, homepage: https://www.elconfidencial.com, feed_url: "https://rss.elconfidencial.com/empresas/", lang: es}
+    - {name: El Economista Empresas, homepage: https://www.eleconomista.es, feed_url: "https://www.eleconomista.es/rss/rss-empresas.php", lang: es}
+    - {name: Vozpópuli, homepage: https://www.vozpopuli.com, lang: es}
+    - {name: EjePrime, homepage: https://www.ejeprime.com, lang: es, tier: 4}
+    - {name: Funds Society, homepage: https://www.fundssociety.com, lang: es, tier: 4}
+  PT:
+    - {name: Jornal de Negócios, homepage: https://www.jornaldenegocios.pt, lang: pt}
+    - {name: ECO, homepage: https://eco.sapo.pt, lang: pt}
+  GR:
+    - {name: Kathimerini, homepage: https://www.kathimerini.gr, lang: el}
+    - {name: Naftemporiki, homepage: https://www.naftemporiki.gr, lang: el}
+    - {name: Capital.gr, homepage: https://www.capital.gr, lang: el}
+    - {name: Euro2day, homepage: https://www.euro2day.gr, lang: el}
+    - {name: Bankingnews, homepage: https://www.bankingnews.gr, lang: el}
+    - {name: Mononews, homepage: https://www.mononews.gr, lang: el}
+    - {name: Newmoney, homepage: https://www.newmoney.gr, lang: el}
+    - {name: OT, homepage: https://www.ot.gr, lang: el}
+    - {name: Insider.gr, homepage: https://www.insider.gr, lang: el}
+  HU:
+    - {name: Portfolio.hu, homepage: https://www.portfolio.hu, feed_url: "https://www.portfolio.hu/rss/all.xml", lang: hu}
+    - {name: Világgazdaság, homepage: https://www.vg.hu, lang: hu}
+    - {name: Privátbankár, homepage: https://privatbankar.hu, lang: hu}
+  PL:
+    - {name: Puls Biznesu, homepage: https://www.pb.pl, lang: pl}
+    - {name: Parkiet, homepage: https://www.parkiet.com, lang: pl}
+    - {name: Prawo.pl, homepage: https://www.prawo.pl, lang: pl, tier: 4}
+  CZ:
+    - {name: Hospodářské noviny, homepage: https://hn.cz, lang: cs}
+    - {name: E15, homepage: https://www.e15.cz, lang: cs}
+  SK:
+    - {name: Trend, homepage: https://www.trend.sk, lang: sk}
+    - {name: Hospodárske noviny, homepage: https://hnonline.sk, lang: sk}
+  LT:
+    - {name: LRT Verslas, homepage: https://www.lrt.lt, feed_url: "https://www.lrt.lt/naujienos/verslas?rss", lang: lt}
+    - {name: Verslo žinios, homepage: https://vz.lt, lang: lt}
+  GB:
+    - {name: Credit Connect, homepage: https://www.credit-connect.co.uk, lang: en, tier: 4}
+    - {name: Credit Strategy, homepage: https://www.creditstrategy.co.uk, lang: en, tier: 4}
+  IE:
+    - {name: Irish Examiner Business, homepage: https://www.irishexaminer.com, lang: en}

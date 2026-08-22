@@ -1,0 +1,55 @@
+# newsflow-engine settings. Paths are relative to the repository root.
+engine:
+  user_agent: "newsflow-engine/0.1 (personal newsflow monitor; contact ld@dueser.com)"
+  timeout_seconds: 20
+  retries: 2
+  max_workers: 4              # parallel fetch threads; per-host spacing still applies
+  lookback_hours: 72          # ignore items published earlier than this (first run; backfill overrides)
+  cluster_window_hours: 72    # near-duplicate clustering window
+  resolve_redirects: false    # try to resolve Google News links to the outlet URL (slower; off on GitHub Actions)
+  honour_robots_for_pages: true
+  db_path: data/newsflow.db
+  rate_limits:
+    default_seconds: 1.0
+    googlenews_seconds: 2.0
+    bing_seconds: 2.0
+    gdelt_seconds: 6.0
+
+routes:
+  googlenews:
+    enabled: true
+    when: "1d"                # window for alias queries
+    site_when: "7d"           # window for site-restricted outlet queries
+    site_every_n_runs: 4      # outlet site: queries run every 4th run (hourly at a 15-minute cadence)
+  bingnews:
+    enabled: true
+    every_n_runs: 2
+  gdelt:
+    enabled: true
+    timespan: "24h"
+    every_n_runs: 1
+    per_lang: false
+  rss:
+    enabled: true
+    discover_every_n_runs: 96 # retry feed discovery for outlets without a known feed (daily at a 15-minute cadence)
+  pages:
+    enabled: true
+    every_n_runs: 2
+
+export:
+  out_dir: docs               # served by GitHub Pages when Pages is set to "main branch / docs"
+  window_hours: 24            # latest.json covers the last 24h of first-seen items
+  keep_days: 90
+  health_runs: 4
+
+alerts:
+  enabled: false              # set true and provide a webhook (Slack-compatible) or SMTP to push Tier-1 candidates
+  lookback_hours: 24
+  webhook_url: ""             # or env NEWSFLOW_WEBHOOK_URL
+  smtp:
+    host: ""
+    port: 587
+    user: ""
+    password_env: NEWSFLOW_SMTP_PASSWORD
+    from: ""
+    to: []

@@ -1,0 +1,21 @@
+services:
+  engine:
+    build: .
+    restart: unless-stopped
+    environment:
+      - NEWSFLOW_WEBHOOK_URL=${NEWSFLOW_WEBHOOK_URL:-}
+      - NEWSFLOW_SMTP_PASSWORD=${NEWSFLOW_SMTP_PASSWORD:-}
+    volumes:
+      - ./data:/app/data
+      - ./docs:/app/docs
+      - ./config:/app/config:ro
+
+  # serves the export folder (latest.json, index.html) on http://<server>:8080
+  web:
+    image: python:3.12-slim
+    restart: unless-stopped
+    command: ["python", "-m", "http.server", "8080", "--directory", "/srv"]
+    volumes:
+      - ./docs:/srv:ro
+    ports:
+      - "8080:8080"
