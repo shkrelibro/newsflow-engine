@@ -4,7 +4,7 @@ engine:
   timeout_seconds: 20
   retries: 2
   max_workers: 4              # parallel fetch threads; per-host spacing still applies
-  lookback_hours: 72          # ignore items published earlier than this (first run; backfill overrides)
+  lookback_hours: 192         # ignore items published earlier than 8 days (covers the 7-day site: queries; backfill overrides)
   cluster_window_hours: 72    # near-duplicate clustering window
   resolve_redirects: false    # try to resolve Google News links to the outlet URL (slower; off on GitHub Actions)
   honour_robots_for_pages: true
