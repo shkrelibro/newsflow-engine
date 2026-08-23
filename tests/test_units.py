@@ -212,3 +212,65 @@ def test_time_budget_skips_remaining_jobs(cfg, tmp_path, fake_http_factory, goog
     assert any("skipped: run time budget" in r.error for r in s.source_results)
     assert s.new_items >= 1            # whatever finished was still stored
     store.close()
+
+def test_solo_jobs_carry_their_own_name_ids(cfg, tmp_path, monkeypatch):
+    """Regression: solo Google jobs used to close over the loop variable `ids`, so every
+    solo query executed with the LAST name's id (zooplus) — misattributing ~1000 items."""
+    import re
+    import newsflow.pipeline as pl
+    from newsflow.store import Store
+    from newsflow.models import SourceResult
+    cfg.engine["db_path"] = str(tmp_path / "solo.db")
+    store = Store(cfg.db_path)
+    calls = []
+
+    def rec(http, q, lang, country, ids, when=None):
+        calls.append((q, tuple(ids)))
+        return [], SourceResult("googlenews", q, True, 0, "", 0.0)
+
+    monkeypatch.setattr(pl, "fetch_google_news", rec)
+    jobs = pl.build_jobs(cfg, http=None, store=store, run_number=1, all_routes=True)
+    for j in jobs:
+        if j.route == "googlenews":
+            j.fn()
+    assert calls, "no google jobs executed"
+
+    # ownership map: alias text -> ids of names that declare it
+    owners: dict[str, set[str]] = {}
+    for n in cfg.names:
+        for a in n.aliases:
+            owners.setdefault(a.text, set()).add(n.id)
+
+    solo = re.compile(r'^"([^"]+)"(?: site:\S+)?$')
+    checked = 0
+    for q, ids in calls:
+        m = solo.match(q)
+        if not m or m.group(1) not in owners:
+            continue
+        checked += 1
+        assert len(ids) == 1, (q, ids)
+        assert ids[0] in owners[m.group(1)], f"query {q!r} attributed to {ids[0]!r}, owner is {owners[m.group(1)]!r}"
+    assert checked > 100                                # the whole universe of solo queries was exercised
+    attributed = {ids[0] for q, ids in calls if solo.match(q) and len(ids) == 1}
+    assert len(attributed) > 50                         # spread across many names, not collapsed onto one
+    store.close()
+
+
+def test_job_order_rotates_per_run(cfg, tmp_path):
+    from newsflow.pipeline import build_jobs
+    from newsflow.store import Store
+    from newsflow.http import Http
+    cfg.engine["db_path"] = str(tmp_path / "rot.db")
+    store = Store(cfg.db_path)
+    http = Http("test")
+    a1 = [j.label for j in build_jobs(cfg, http, store, run_number=1, all_routes=True)]
+    a2 = [j.label for j in build_jobs(cfg, http, store, run_number=1, all_routes=True)]
+    b = [j.label for j in build_jobs(cfg, http, store, run_number=2, all_routes=True)]
+    assert a1 == a2                       # deterministic for a given run number
+    assert sorted(a1) == sorted(b)        # same job set under force
+    assert a1 != b                        # ...but a different order, so the budget tail rotates
+    # routes are interleaved, not all-solos-first: googlenews must not fill the entire first half
+    half = a1[: len(a1) // 2]
+    non_google = sum(1 for l in half if l.startswith(("bing", "gdelt")) or "(" in l and l.endswith(")"))
+    assert non_google > 0
+    http.close(); store.close()

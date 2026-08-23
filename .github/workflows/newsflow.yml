@@ -40,8 +40,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: data/newsflow.db
-          key: newsflow-db-${{ github.run_id }}
-          restore-keys: newsflow-db-
+          key: newsflow-db-v2-${{ github.run_id }}
+          restore-keys: newsflow-db-v2-
 
       - name: Run engine
         env:
@@ -63,7 +63,7 @@ jobs:
         if: always()
         with:
           path: data/newsflow.db
-          key: newsflow-db-${{ github.run_id }}
+          key: newsflow-db-v2-${{ github.run_id }}
 
       - name: Commit outputs
         if: always()

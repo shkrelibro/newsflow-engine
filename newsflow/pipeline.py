@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import random
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
@@ -156,7 +157,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 for m in markets:
                     if m.country == name.home_country:
                         q = f'"{main}"'
-                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
+                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
             # secondary search aliases keep their per-alias solo behaviour
             for alias in name.aliases:
                 if not alias.search or alias.text == main:
@@ -167,7 +168,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     if not alias.applies_to(m.lang):
                         continue
                     q = f'"{alias.text}"'
-                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
+                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
             # per-name site queries (only names that define them, e.g. Intrum), staggered
             site_every = max(1, int(g.get("site_every_n_runs", 4)))
             if name.site_queries:
@@ -178,7 +179,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     q = f'"{main}" site:{dom}'
-                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country: fetch_google_news(http, q, lang, country, ids, when_site)))
+                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site)))
         # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
             for f in name.feeds:
@@ -262,6 +263,11 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     discover = True
                     discover_budget -= 1
             jobs.append(JobSpec(f"{o.name} ({o.country})", "rss", lambda o=o, discover=discover: _outlet_job(http, store, o, discover=discover)))
+
+    # Deterministic per-run shuffle: interleaves routes within a run and rotates which jobs
+    # land in the time-budget tail, so a skipped source is picked up on the next cycle
+    # instead of being starved forever by a fixed construction order.
+    random.Random(run_number).shuffle(jobs)
     return jobs
 
 
