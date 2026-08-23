@@ -177,15 +177,19 @@ def test_site_queries_are_staggered(cfg, tmp_path):
     cfg.routes["pages"] = {"enabled": False}
     n = cfg.name("intrum")
     every = int(cfg.routes["googlenews"]["site_every_n_runs"])
-    base = len(n.markets)  # the main alias is queried in every market on every run
-    counts = [len(build_jobs(cfg, http, store, run_number=r)) for r in range(1, every + 1)]
-    # across one full cycle every site query runs exactly once; secondary aliases add a few jobs on some runs
-    total_site = sum(c - base for c in counts)
-    assert len(n.site_queries) <= total_site <= len(n.site_queries) + 12
-    assert max(counts) - min(counts) < len(n.site_queries) / 2
-    # --all-routes runs every cadenced route but still only one chunk of site queries (no bursts)
-    forced = len(build_jobs(cfg, http, store, run_number=1, all_routes=True))
-    assert base + len(n.site_queries) // every <= forced < base + len(n.site_queries)
+    per_run = []
+    site_total = 0
+    for r in range(1, every + 1):
+        jobs = build_jobs(cfg, http, store, run_number=r)
+        labels = [j.label for j in jobs]
+        site_total += sum(1 for l in labels if "site:" in l and "reg " not in l)
+        # every run sweeps every market at least once via the grouped queries
+        assert sum(1 for l in labels if l.startswith("group")) >= len(n.markets)
+        per_run.append(len(jobs))
+    assert site_total == len(n.site_queries)          # one full cycle covers every site query exactly once
+    assert max(per_run) - min(per_run) < len(n.site_queries)  # no burst run
+    forced = build_jobs(cfg, http, store, run_number=1, all_routes=True)
+    assert sum(1 for j in forced if "site:" in j.label) >= len(n.site_queries) // every
     http.close(); store.close()
 
 

@@ -129,7 +129,10 @@ def cmd_coverage(args) -> int:
     outlets = defaultdict(int)
     for o in cfg.outlets:
         outlets[o.country] += 1
-    for n in cfg.names:
+    tier_a = [n for n in cfg.names if n.kind != "comp"]
+    comps = [n for n in cfg.names if n.kind == "comp"]
+    print(f"{len(tier_a)} tier-A names, {len(comps)} comps (grouped sweeps: home market + global English)")
+    for n in tier_a:
         langs = defaultdict(list)
         for m in n.markets:
             langs[m.country].append(m.lang)
@@ -148,8 +151,8 @@ def cmd_coverage(args) -> int:
             l = langs[c]
             print(f"{c:8}{','.join(l):12}{len(l):<8}{len(l):<6}{'yes':7}{outlets.get(c, 0):<7}{pages.get(c, 0):<7}{sq.get(c, 0)}")
         print(f"{'GLOBAL':8}{'en':12}{'-':8}{'-':6}{'yes':7}{'-':7}{'-':7}{sq.get('GLOBAL', 0) + sq.get('EU', 0)}")
-        missing = [c for c in langs if outlets.get(c, 0) == 0 or sq.get(c, 0) == 0]
-        print("gaps:", ", ".join(missing) if missing else "none — every market has a local-language Google query, a Bing market, outlet feeds and site queries")
+        missing = [c for c in langs if outlets.get(c, 0) == 0]
+        print("gaps (no outlet feeds):", ", ".join(missing) if missing else "none — every market has a local-language Google query, a Bing market and outlet feeds")
     return 0
 
 

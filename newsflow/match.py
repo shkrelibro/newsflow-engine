@@ -48,9 +48,15 @@ class Matcher:
     global_noise_domains: list[str]
     global_noise_titles: list[re.Pattern]
     by_id: dict[str, CompiledName] = field(default_factory=dict)
+    prefilter: re.Pattern | None = None
 
     def __post_init__(self) -> None:
         self.by_id = {n.cfg.id: n for n in self.names}
+        # one cheap alternation over every alias text: full scans (shared feeds) only run the
+        # per-name matchers when this hits, which keeps 200+ entities fast
+        texts = sorted({a.text for n in self.names for a, _ in n.aliases}, key=len, reverse=True)
+        if texts:
+            self.prefilter = re.compile("|".join(re.escape(t) for t in texts), re.IGNORECASE | re.UNICODE)
 
     # ------------------------------------------------------------------
     @classmethod
@@ -79,6 +85,8 @@ class Matcher:
         results: list[MatchResult] = []
         text_all = f"{title}\n{summary}"
         wanted = set(only) if only else None
+        if wanted is None and self.prefilter is not None and not self.prefilter.search(text_all):
+            return results
         for cn in self.names:
             if wanted is not None and cn.cfg.id not in wanted:
                 continue

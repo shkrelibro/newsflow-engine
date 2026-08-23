@@ -88,8 +88,8 @@ def _main_alias(name: NameConfig) -> str:
     return name.name
 
 
-def _due(every: int, run_number: int) -> bool:
-    return every <= 1 or run_number % every == 0
+def _due(every: int, run_number: int, phase: int = 0) -> bool:
+    return every <= 1 or run_number % every == phase % every
 
 
 def cold_start(cfg: Config, run_number: int) -> bool:
@@ -109,60 +109,134 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     outlet_by_domain = {domain_of(o.homepage): o for o in cfg.outlets}
     force = backfill_days is not None or all_routes   # run every cadenced route regardless of its every_n_runs
 
+    # ------------------------------------------------------------------
+    # Search routes are GROUPED so fetch load scales with markets, not names:
+    # per market one Google/Bing query carries up to group_size quoted aliases OR'd
+    # together. Tier-A names ("name") additionally get a solo query in their home
+    # market (keeps the alias-not-in-headline fallback where it matters most), and
+    # secondary search aliases keep their per-alias solo behaviour. Comps ("comp")
+    # are grouped only, at a slower cadence.
+    # ------------------------------------------------------------------
+    g = routes.get("googlenews", {})
+    group_size = max(2, int(g.get("group_size", 6)))
+    home_every = max(1, int(g.get("home_every_n_runs", 2)))
+    comp_every = max(1, int(g.get("comp_every_n_runs", 2)))
+    bing_every = int(routes.get("bingnews", {}).get("every_n_runs", 2))
+    bing_comp_every = int(routes.get("bingnews", {}).get("comp_every_n_runs", 4))
+    gdelt_every = int(routes.get("gdelt", {}).get("every_n_runs", 1))
+    gdelt_comp_every = int(routes.get("gdelt", {}).get("comp_every_n_runs", 4))
+
+    by_market_a: dict[tuple[str, str], list[tuple[str, str]]] = {}   # (lang, country) -> [(name_id, main alias)]
+    by_market_c: dict[tuple[str, str], list[tuple[str, str]]] = {}
+    mains_a: list[tuple[str, str]] = []
+    mains_c: list[tuple[str, str]] = []
+    by_home: dict[str, list[tuple[str, str]]] = {}                   # home country -> [(name_id, main)]
+
+    def _chunks(seq, size):
+        for i in range(0, len(seq), size):
+            yield i // size, seq[i:i + size]
+
+    def _or_query(entries) -> str:
+        return "(" + " OR ".join(f'"{alias}"' for _, alias in entries) + ")"
+
     for name in cfg.names:
         ids = [name.id]
-        markets = name.markets or ([] if not name.home_country else [])
-        # --- Google News per alias × market
+        markets = name.markets
+        main = _main_alias(name)
+        bucket = by_market_c if name.kind == "comp" else by_market_a
+        (mains_c if name.kind == "comp" else mains_a).append((name.id, main))
+        if name.kind != "comp" and name.home_country:
+            by_home.setdefault(name.home_country, []).append((name.id, main))
+        for m in markets:
+            bucket.setdefault((m.lang, m.country), []).append((name.id, main))
+
         if cfg.route_enabled("googlenews"):
+            # solo home-market query for tier-A names (full fallback recall)
+            if name.kind != "comp" and (force or _due(home_every, run_number, 0)):
+                for m in markets:
+                    if m.country == name.home_country:
+                        q = f'"{main}"'
+                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
+            # secondary search aliases keep their per-alias solo behaviour
             for alias in name.aliases:
-                if not alias.search or not (force or _due(alias.search_every, run_number)):
+                if not alias.search or alias.text == main:
+                    continue
+                if not (force or _due(alias.search_every, run_number, sum(alias.text.encode()) )):
                     continue
                 for m in markets:
                     if not alias.applies_to(m.lang):
                         continue
                     q = f'"{alias.text}"'
                     jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
-            # --- site-restricted queries for key outlets
-            # site: queries are always spread across runs (never burst, even on backfill): with
-            # site_every_n_runs = 6 each run takes a sixth of the list, so every outlet is queried
-            # every 90 minutes at a 15-minute cadence; the first two cycles use a 30-day window
-            site_every = max(1, int(routes.get("googlenews", {}).get("site_every_n_runs", 4)))
+            # per-name site queries (only names that define them, e.g. Intrum), staggered
+            site_every = max(1, int(g.get("site_every_n_runs", 4)))
             if name.site_queries:
-                main = _main_alias(name)
                 for i, dom in enumerate(name.site_queries):
-                    if i % site_every != run_number % site_every:
+                    if not force and i % site_every != run_number % site_every:
                         continue
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     q = f'"{main}" site:{dom}'
                     jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country: fetch_google_news(http, q, lang, country, ids, when_site)))
-        # --- Bing per market
-        if cfg.route_enabled("bingnews"):
-            bing_every = int(routes.get("bingnews", {}).get("every_n_runs", 2))
-            if force or _due(bing_every, run_number):
-                main = _main_alias(name)
-                for m in markets:
-                    jobs.append(JobSpec(f"{main} [{m.lang}-{m.country}]", "bingnews", lambda m=m, main=main: fetch_bing_news(http, main, m.lang, m.country, ids)))
-        # --- GDELT global (+ per language if configured)
-        if cfg.route_enabled("gdelt"):
-            gdelt_every = int(routes.get("gdelt", {}).get("every_n_runs", 1))
-            if force or _due(gdelt_every, run_number):
-                main = _main_alias(name)
-                jobs.append(JobSpec(f"{main} [all]", "gdelt", lambda main=main: fetch_gdelt(http, f'"{main}"', ids, gdelt_span)))
-                if routes.get("gdelt", {}).get("per_lang", False):
-                    for lang in name.langs:
-                        jobs.append(JobSpec(f"{main} [{lang}]", "gdelt", lambda main=main, lang=lang: fetch_gdelt(http, f'"{main}"', ids, gdelt_span, "", lang)))
-        # --- name-specific feeds
+        # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
             for f in name.feeds:
                 jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name)))
-        # --- page watchers
         if cfg.route_enabled("pages"):
             pages_every = int(routes.get("pages", {}).get("every_n_runs", 2))
             if force or _due(pages_every, run_number):
                 for p in name.pages:
                     jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force)))
+
+    # ---- grouped Google per market ----
+    if cfg.route_enabled("googlenews"):
+        for (lang, country), entries in sorted(by_market_a.items()):
+            for ci, chunk in _chunks(entries, group_size):
+                q = _or_query(chunk)
+                nids = [nid for nid, _ in chunk]
+                jobs.append(JobSpec(f"group{ci} {len(chunk)} names [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google)))
+        if force or _due(comp_every, run_number, 1):
+            for (lang, country), entries in sorted(by_market_c.items()):
+                for ci, chunk in _chunks(entries, group_size):
+                    q = _or_query(chunk)
+                    nids = [nid for nid, _ in chunk]
+                    jobs.append(JobSpec(f"comps{ci} {len(chunk)} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google)))
+        # regulator sweep: home-country authority domains x the names based there, staggered
+        reg_every = max(1, int(g.get("regulator_every_n_runs", 12)))
+        reg_jobs = []
+        for cc, entries in sorted(by_home.items()):
+            for dom in cfg.regulators.get(cc, []):
+                for ci, chunk in _chunks(entries, group_size):
+                    reg_jobs.append((cc, dom, ci, chunk))
+        for idx, (cc, dom, ci, chunk) in enumerate(reg_jobs):
+            if not force and idx % reg_every != run_number % reg_every:
+                continue
+            q = _or_query(chunk) + f" site:{dom}"
+            nids = [nid for nid, _ in chunk]
+            lang = "en"
+            jobs.append(JobSpec(f"reg {dom} [{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site)))
+
+    # ---- grouped Bing per market ----
+    if cfg.route_enabled("bingnews"):
+        for tier_map, every, phase in ((by_market_a, bing_every, 1), (by_market_c, bing_comp_every, 3)):
+            if not (force or _due(every, run_number, phase)):
+                continue
+            for (lang, country), entries in sorted(tier_map.items()):
+                for ci, chunk in _chunks(entries, group_size):
+                    q = " OR ".join(f'"{alias}"' for _, alias in chunk)
+                    nids = [nid for nid, _ in chunk]
+                    jobs.append(JobSpec(f"bing{ci} {len(chunk)} [{lang}-{country}]", "bingnews", lambda q=q, lang=lang, country=country, nids=nids: fetch_bing_news(http, q, lang, country, nids)))
+
+    # ---- grouped GDELT (global, all languages) ----
+    if cfg.route_enabled("gdelt"):
+        for mains, every in ((mains_a, gdelt_every), (mains_c, gdelt_comp_every)):
+            for ci, chunk in _chunks(mains, group_size):
+                if not force and (ci + run_number) % every != 0:
+                    continue
+                q = "(" + " OR ".join(f'"{alias}"' for _, alias in chunk) + ")"
+                nids = [nid for nid, _ in chunk]
+                jobs.append(JobSpec(f"gdelt{ci} {len(chunk)}", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span)))
 
     # --- shared outlet feeds (fetched once, matched against every name). Feed discovery is capped
     #     per run and retried at most daily per outlet, so the first runs are not swamped by it.
@@ -274,8 +348,9 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
         matches = matcher.match(raw.title, raw.summary, raw.lang, only=only)
         if not matches:
             attributed = False
-            if raw.route in SEARCH_ROUTES and raw.name_ids:
-                # the name query returned it: keep, flagged as alias-not-in-text
+            if raw.route in SEARCH_ROUTES and len(raw.name_ids) == 1:
+                # a single-name query returned it: keep, flagged as alias-not-in-text.
+                # grouped (OR) queries never fall back - attribution would be a guess.
                 matches = [type("M", (), {"name_id": nid, "alias": "(query)", "where": "none", "confidence": 0.4})() for nid in raw.name_ids]
                 attributed = True
             elif raw.route == "page" and raw.name_ids and not require_alias_pages.get(raw.query, True):

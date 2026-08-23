@@ -67,7 +67,7 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
         cluster_list = []
         for cid, items in clusters.items():
             items.sort(key=_primary_sort_key)
-            primary, also = items[0], items[1:]
+            primary, also = items[0], items[1:11]   # cap the also-reported-by list
             cats = sorted({c for it in items for c in it["alert_categories"]})
             alert = any(it["alert_candidate"] for it in items)
             entry = {
@@ -100,7 +100,7 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
                 "candidate_count": len(cluster_list),
                 "mentions_in_window": len(rows),
                 "unresolved_urls": sum(1 for c in cluster_list if c["primary"]["url_unresolved"]),
-                "screened": {"count": len(screened), "by_reason": dict(reasons), "items": screened},
+                "screened": {"count": len(screened), "by_reason": dict(reasons), "items": screened[:25]},
             }
         )
     health = store.source_health(int(cfg.export.get("health_runs", 4)))
@@ -159,7 +159,7 @@ def render_index(data: dict[str, Any]) -> str:
         parts.append(f"<h2>{e(n['name'])} <span class='m'>{n['candidate_count']} candidates · {n['mentions_in_window']} mentions · {n['screened']['count']} screened</span></h2>")
         if not n["candidates"]:
             parts.append("<div class='c s'>No candidates in the window.</div>")
-        for c in n["candidates"]:
+        for c in n["candidates"][:30]:
             p = c["primary"]
             flag = f"<span class='a'>{e(', '.join(c['alert_categories']))}</span>" if c["alert_candidate"] else ""
             also = f" · also reported by {len(c['also'])} more" if c["also"] else ""

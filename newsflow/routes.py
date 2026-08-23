@@ -40,6 +40,10 @@ GOOGLE_LOCALES: dict[tuple[str, str], tuple[str, str, str]] = {
     ("nl", "BE"): ("nl", "BE", "BE:nl"),
     ("fr", "CH"): ("fr", "CH", "CH:fr"),
     ("it", "CH"): ("it", "CH", "CH:it"),
+    ("lv", "LV"): ("lv", "LV", "LV:lv"),
+    ("et", "EE"): ("et-EE", "EE", "EE:et-EE"),
+    ("he", "IL"): ("he", "IL", "IL:he"),
+    ("zh", "CN"): ("zh-CN", "CN", "CN:zh-Hans"),
 }
 
 # Bing market codes.

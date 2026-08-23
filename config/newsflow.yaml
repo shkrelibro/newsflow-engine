@@ -13,7 +13,7 @@ engine:
   db_path: data/newsflow.db
   rate_limits:
     default_seconds: 1.0
-    googlenews_seconds: 3.0
+    googlenews_seconds: 2.5
     bing_seconds: 2.0
     gdelt_seconds: 6.0
 
@@ -22,15 +22,21 @@ routes:
     enabled: true
     when: "1d"                # window for alias queries
     site_when: "7d"           # window for site-restricted outlet queries
-    site_every_n_runs: 6      # site: queries are spread over 6 runs: each outlet/regulator is queried every 90 minutes
+    site_every_n_runs: 6      # per-name site: queries are spread over 6 runs (each outlet every 90 minutes)
     cold_start_when: "30d"    # window used for site: queries during the first two cycles (history for the golden set)
+    group_size: 6             # names per grouped (OR) market query; load scales with markets, not names
+    home_every_n_runs: 2      # tier-A solo home-market queries (full fallback recall) every 2nd run
+    comp_every_n_runs: 2      # comp market groups every 2nd run
+    regulator_every_n_runs: 12  # home-country regulator site: sweeps spread over 12 runs
   bingnews:
     enabled: true
     every_n_runs: 2
+    comp_every_n_runs: 4
   gdelt:
     enabled: true
     timespan: "24h"
-    every_n_runs: 1
+    every_n_runs: 2           # tier-A gdelt groups rotate over 2 runs
+    comp_every_n_runs: 4
     per_lang: false
   rss:
     enabled: true

@@ -56,7 +56,8 @@ def test_end_to_end(cfg, tmp_path, fake_http_factory, googlenews_xml, bing_xml, 
     stats = store.stats()
     assert stats["items"] == 6 and stats["pages_tracked"] == 1
     dup = store.get_item_by_url("https://placera.se/nyheter/intrum-emitterar-nya-obligationer-2026-07-06")
-    assert dup is not None and "bingnews:Intrum" in dup["also_routes"]
+    # jobs process as they complete, so either route may have stored it first; the other is noted
+    assert dup is not None and ("bingnews:" in dup["also_routes"] or "googlenews:" in dup["also_routes"])
     seeded = [r for r in s1.source_results if r.route == "page"][0]
     assert seeded.ok and seeded.error == "seeded" and seeded.items == 0
 
@@ -74,8 +75,7 @@ def test_end_to_end(cfg, tmp_path, fake_http_factory, googlenews_xml, bing_xml, 
     # ---- export ---------------------------------------------------------------------------
     out = write_exports(cfg, store, now=NOW)
     latest = json.loads((out / "latest.json").read_text(encoding="utf-8"))
-    name = latest["names"][0]
-    assert name["id"] == "intrum"
+    name = next(n for n in latest["names"] if n["id"] == "intrum")
     assert name["candidate_count"] == 6
     assert name["screened"]["count"] == 1 and "noise_domain" in name["screened"]["by_reason"]
     assert latest["alerts"] and latest["alerts"][0]["alert_candidate"]

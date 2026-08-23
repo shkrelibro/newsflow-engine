@@ -110,6 +110,7 @@ class Config:
     tier1_terms: dict[str, list[str]]
     noise_domains: list[str]
     noise_title_patterns: list[str]
+    regulators: dict[str, list[str]] = field(default_factory=dict)   # country -> regulator/authority domains
 
     # ---- convenience -------------------------------------------------
     def name(self, name_id: str) -> NameConfig:
@@ -232,6 +233,8 @@ def load_config(config_dir: str | os.PathLike = "config") -> Config:
     outlets = _parse_outlets(_load_yaml(root / "sources" / "outlets.yaml"))
     tier1 = _load_yaml(root / "tier1_terms.yaml")
     noise = _load_yaml(root / "noise.yaml")
+    regs_raw = _load_yaml(root / "sources" / "regulators.yaml")
+    regulators = {_cc(k): [str(d) for d in v or []] for k, v in (regs_raw.get("countries", {}) or {}).items()}
     return Config(
         root=root,
         engine=main.get("engine", {}) or {},
@@ -243,4 +246,5 @@ def load_config(config_dir: str | os.PathLike = "config") -> Config:
         tier1_terms={str(k): [str(x) for x in v] for k, v in (tier1.get("categories", {}) or {}).items()},
         noise_domains=[str(x) for x in noise.get("domains", [])],
         noise_title_patterns=[str(x) for x in noise.get("title_patterns", [])],
+        regulators=regulators,
     )
