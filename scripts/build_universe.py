@@ -161,7 +161,7 @@ A: dict[str, dict] = {
 
  "evoca": dict(name="Evoca Group", ticker="", home="IT", sector="vending",
    markets=["IT:it", "DE:de"],
-   aliases=[("Evoca", dict(search=True, require_context=["coffee", "vending", "caffè", "macchine", "Bergamo", "Necta", "distributori"])),
+   aliases=[("Evoca", dict(search=True, require_context=["coffee", "vending", "caffè", "macchine", "Bergamo", "Necta", "distributori", "Evoca Group", "Gruppo Evoca", "Lone Star"])),
             ("Necta", dict(weight=0.7, require_context=["Evoca", "vending", "coffee", "caffè"])),
             ("Gaggia Milano", dict(weight=0.6))],
    comps_raw=["Rheavendors", "Crane", "Sielaff", "Bianchi", "Vendo", "WMF", "Eversys", "Thermoplan"],
@@ -457,7 +457,7 @@ C: dict[str, tuple] = {
  "kedrion": ("Kedrion", "IT:it", None, {}),
  "takeda": ("Takeda", "US:en", None, {"ctx": ["pharma", "drug", "medicine"]}),
  "endo": ("Endo International", "US:en", None, {}),
- "bayer": ("Bayer", "DE:de", None, {"ctx": ["Pharma", "Aktie", "Monsanto", "Leverkusen", "drug", "crop"]}),
+ "bayer": ("Bayer", "DE:de", None, {"ctx": ["Pharma", "Aktie", "Monsanto", "drug", "crop", "Pharmakonzern", "Agrar", "Glyphosat"], "exclude": ["Leverkusen", "Bayer 04"], "weight": 0.95}),
  "pfizer": ("Pfizer", "US:en", None, {}),
  "drreddys": ("Dr. Reddy's", "IN:en", "Dr. Reddy's", {}),
  # airlines / travel
@@ -469,7 +469,7 @@ C: dict[str, tuple] = {
  "jet2": ("Jet2", "GB:en", None, {}),
  "thomascook": ("Thomas Cook", "GB:en", None, {}),
  "easyjetholidays": ("easyJet holidays", "GB:en", None, {}),
- "booking": ("Booking Holdings", "US:en", None, {"extra": ["NL:nl"]}),
+ "booking": ("Booking Holdings", "US:en", None, {"extra": ["NL:nl"], "ctx": ["Booking.com", "Booking Holdings", "travel", "hotel", "OTA"]}),
  "expedia": ("Expedia", "US:en", None, {}),
  "dertouristik": ("DER Touristik", "DE:de", None, {}),
  "royalcaribbean": ("Royal Caribbean", "US:en", None, {}),
@@ -491,7 +491,7 @@ C: dict[str, tuple] = {
  "leduff": ("Groupe Le Duff", "FR:fr", None, {}),
  "sodexo": ("Sodexo", "FR:fr", None, {}),
  "iss": ("ISS A/S", "DK:da", "ISS", {"ctx": ["facility", "service", "rengøring", "outsourcing"]}),
- "compass": ("Compass Group", "GB:en", None, {}),
+ "compass": ("Compass Group", "GB:en", "Compass Group", {"ctx": ["catering", "foodservice", "canteen", "Eurest", "Chartwells", "contract"]}),
  "aramark": ("Aramark", "US:en", None, {}),
  "ssp": ("SSP Group", "GB:en", None, {}),
  "restaurantgroup": ("The Restaurant Group", "GB:en", None, {}),
@@ -554,7 +554,7 @@ C: dict[str, tuple] = {
  "action": ("Action", "NL:nl", "Action", {"ctx": ["discounter", "winkelketen", "3i", "retailer", "filialen"]}),
  "next": ("Next plc", "GB:en", "Next plc", {}),
  "boohoo": ("boohoo", "GB:en", None, {}),
- "otto": ("Otto Group", "DE:de", None, {}),
+ "otto": ("Otto Group", "DE:de", None, {"ctx": ["Otto Group", "Otto-Konzern", "Versand", "otto.de", "Hermes", "E-Commerce", "Handelskonzern"]}),
  "nbrown": ("N Brown", "GB:en", None, {}),
  # vending / coffee
  "rheavendors": ("Rheavendors", "IT:it", None, {}),
@@ -592,11 +592,11 @@ C: dict[str, tuple] = {
  "gousto": ("Gousto", "GB:en", None, {}),
  # tv retail
  "channel21": ("Channel 21", "DE:de", None, {"ctx": ["Teleshopping", "Homeshopping"]}),
- "qvc": ("QVC", "US:en", None, {"extra": ["DE:de"]}),
+ "qvc": ("QVC", "US:en", None, {"extra": ["DE:de"], "ctx": ["shopping", "Teleshopping", "Qurate", "retail", "Kanal"]}),
  "123tv": ("1-2-3.tv", "DE:de", "1-2-3.tv", {}),
  "sonnenklar": ("Sonnenklar TV", "DE:de", None, {}),
  # fitness
- "gymgroup": ("The Gym Group", "GB:en", None, {}),
+ "gymgroup": ("The Gym Group", "GB:en", "The Gym Group", {}),
  "davidlloyd": ("David Lloyd", "GB:en", None, {"ctx": ["gym", "leisure", "club", "fitness"]}),
  "planetfitness": ("Planet Fitness", "US:en", None, {}),
  "basicfit": ("Basic-Fit", "NL:nl", None, {}),
@@ -839,8 +839,10 @@ def main(check_only: bool = False) -> int:
         a_opts = {"search": not opts.get("nosearch", False), "inflect": len(alias.split()) == 1 and alias.isalpha()}
         if opts.get("ctx"):
             a_opts["require_context"] = opts["ctx"]
+        if opts.get("weight"):
+            a_opts["weight"] = opts["weight"]
         notes = "Tier-B comp (grouped sweeps only)." + (" CONFIRM." if opts.get("confirm") else "")
-        files[cid] = emit(cid, display, "", "comp", home_cc, markets, [(alias, a_opts)], [], [], "", notes)
+        files[cid] = emit(cid, display, "", "comp", home_cc, markets, [(alias, a_opts)], [], opts.get("exclude", []), "", notes)
 
     if unresolved:
         print("UNRESOLVED:")

@@ -81,7 +81,11 @@ class Matcher:
         )
 
     # ------------------------------------------------------------------
-    def match(self, title: str, summary: str, lang: str = "", only: Iterable[str] | None = None) -> list[MatchResult]:
+    def match(self, title: str, summary: str, lang: str = "", only: Iterable[str] | None = None, rejected: set | None = None) -> list[MatchResult]:
+        """rejected (optional out-param): collects name_ids whose alias DID appear in the text
+        but was rejected for cause (context guard failed). Callers use it to suppress the
+        low-confidence query fallback - an ambiguous alias rejected for cause must not come
+        back as a 0.4 candidate (the Evoca common-word bug)."""
         results: list[MatchResult] = []
         text_all = f"{title}\n{summary}"
         wanted = set(only) if only else None
@@ -103,6 +107,8 @@ class Matcher:
                 if not where:
                     continue
                 if alias.require_context and not any(c.lower() in text_all.lower() for c in alias.require_context):
+                    if rejected is not None:
+                        rejected.add(cn.cfg.id)
                     continue
                 conf = alias.weight * (1.0 if where == "title" else 0.7)
                 if excluded and not (alias.weight >= 1.0 and where == "title"):
@@ -115,8 +121,14 @@ class Matcher:
         return results
 
     # ------------------------------------------------------------------
+    REGULATORY_TITLE = re.compile(r"^\s*(?:EQS|DGAP|Ad[ -]?hoc)\b", re.IGNORECASE)
+
     def screen(self, domain: str, url: str, title: str, name_id: str = "") -> str:
         """Return a screen reason if the item is noise, else ''."""
+        # A regulatory release (EQS/DGAP/ad-hoc prefixed) is never noise, whatever site
+        # republished it - a noise-domain rule once swallowed Adler's EQS-AFR notice.
+        if self.REGULATORY_TITLE.match(title or ""):
+            return ""
         d = (domain or "").lower()
         u = (url or "").lower()
         domains = list(self.global_noise_domains)

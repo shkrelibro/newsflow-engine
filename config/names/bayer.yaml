@@ -8,4 +8,5 @@ markets:
   - {country: DE, lang: de}
   - {country: GB, lang: en}
 aliases:
-  - {text: "Bayer", inflect: true, search: true, require_context: ["Pharma", "Aktie", "Monsanto", "Leverkusen", "drug", "crop"]}
+  - {text: "Bayer", inflect: true, search: true, weight: 0.95, require_context: ["Pharma", "Aktie", "Monsanto", "drug", "crop", "Pharmakonzern", "Agrar", "Glyphosat"]}
+exclude_terms: ["Leverkusen", "Bayer 04"]

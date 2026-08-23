@@ -38,6 +38,7 @@ class JobSpec:
     label: str
     route: str
     fn: Job
+    name_ids: list[str] = field(default_factory=list)   # names this job sweeps (coverage ledger)
 
 
 @dataclass
@@ -157,7 +158,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 for m in markets:
                     if m.country == name.home_country:
                         q = f'"{main}"'
-                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
+                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids)))
             # secondary search aliases keep their per-alias solo behaviour
             for alias in name.aliases:
                 if not alias.search or alias.text == main:
@@ -168,7 +169,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     if not alias.applies_to(m.lang):
                         continue
                     q = f'"{alias.text}"'
-                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google)))
+                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids)))
             # per-name site queries (only names that define them, e.g. Intrum), staggered
             site_every = max(1, int(g.get("site_every_n_runs", 4)))
             if name.site_queries:
@@ -179,16 +180,16 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     q = f'"{main}" site:{dom}'
-                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site)))
+                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids)))
         # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
             for f in name.feeds:
-                jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name)))
+                jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name), name_ids=list(f.name_ids)))
         if cfg.route_enabled("pages"):
             pages_every = int(routes.get("pages", {}).get("every_n_runs", 2))
             if force or _due(pages_every, run_number):
                 for p in name.pages:
-                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force)))
+                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force), name_ids=list(p.name_ids)))
 
     # ---- grouped Google per market ----
     if cfg.route_enabled("googlenews"):
@@ -196,13 +197,13 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             for ci, chunk in _chunks(entries, group_size):
                 q = _or_query(chunk)
                 nids = [nid for nid, _ in chunk]
-                jobs.append(JobSpec(f"group{ci} {len(chunk)} names [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google)))
+                jobs.append(JobSpec(f"group{ci} {len(chunk)} names [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids))
         if force or _due(comp_every, run_number, 1):
             for (lang, country), entries in sorted(by_market_c.items()):
                 for ci, chunk in _chunks(entries, group_size):
                     q = _or_query(chunk)
                     nids = [nid for nid, _ in chunk]
-                    jobs.append(JobSpec(f"comps{ci} {len(chunk)} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google)))
+                    jobs.append(JobSpec(f"comps{ci} {len(chunk)} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids))
         # regulator sweep: home-country authority domains x the names based there, staggered
         reg_every = max(1, int(g.get("regulator_every_n_runs", 12)))
         reg_jobs = []
@@ -216,7 +217,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             q = _or_query(chunk) + f" site:{dom}"
             nids = [nid for nid, _ in chunk]
             lang = "en"
-            jobs.append(JobSpec(f"reg {dom} [{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site)))
+            jobs.append(JobSpec(f"reg {dom} [{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site), name_ids=nids))
 
     # ---- grouped Bing per market ----
     if cfg.route_enabled("bingnews"):
@@ -227,7 +228,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 for ci, chunk in _chunks(entries, group_size):
                     q = " OR ".join(f'"{alias}"' for _, alias in chunk)
                     nids = [nid for nid, _ in chunk]
-                    jobs.append(JobSpec(f"bing{ci} {len(chunk)} [{lang}-{country}]", "bingnews", lambda q=q, lang=lang, country=country, nids=nids: fetch_bing_news(http, q, lang, country, nids)))
+                    jobs.append(JobSpec(f"bing{ci} {len(chunk)} [{lang}-{country}]", "bingnews", lambda q=q, lang=lang, country=country, nids=nids: fetch_bing_news(http, q, lang, country, nids), name_ids=nids))
 
     # ---- grouped GDELT (global, all languages) ----
     if cfg.route_enabled("gdelt"):
@@ -244,7 +245,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     continue
                 q = "(" + " OR ".join(f'"{alias}"' for _, alias in phrases) + ")"
                 nids = [nid for nid, _ in chunk]
-                jobs.append(JobSpec(f"gdelt{ci} {len(chunk)}", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span)))
+                jobs.append(JobSpec(f"gdelt{ci} {len(chunk)}", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span), name_ids=nids))
 
     # --- shared outlet feeds (fetched once, matched against every name). Feed discovery is capped
     #     per run and retried at most daily per outlet, so the first runs are not swamped by it.
@@ -335,6 +336,16 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
     cluster_window = now - timedelta(hours=float(cfg.engine.get("cluster_window_hours", 72)))
     require_alias_pages = {p.url: p.require_alias for n in cfg.names for p in n.pages}
     require_alias_feeds = {f.url: f.require_alias for n in cfg.names for f in n.feeds}
+    # names whose every search alias is context-guarded (ambiguous words like "Evoca"):
+    # the query fallback must also see one of those context terms, else it is noise.
+    fallback_ctx: dict[str, list[str]] = {}
+    for n in cfg.names:
+        search_aliases = [a for a in n.aliases if a.search]
+        if search_aliases and all(a.require_context for a in search_aliases):
+            fallback_ctx[n.id] = sorted({t.lower() for a in search_aliases for t in a.require_context})
+    # comps never get the fallback: they are read-across names swept in groups; an
+    # unverifiable 0.4 comp candidate is noise by construction.
+    comp_ids = {n.id for n in cfg.names if n.kind == "comp"}
 
     for raw in raw_items:
         summary.fetched += 1
@@ -358,14 +369,21 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
 
         # --- matching
         only = raw.name_ids if (raw.route in SEARCH_ROUTES or raw.route == "page") else None
-        matches = matcher.match(raw.title, raw.summary, raw.lang, only=only)
+        rejected: set = set()
+        matches = matcher.match(raw.title, raw.summary, raw.lang, only=only, rejected=rejected)
         if not matches:
             attributed = False
             if raw.route in SEARCH_ROUTES and len(raw.name_ids) == 1:
                 # a single-name query returned it: keep, flagged as alias-not-in-text.
                 # grouped (OR) queries never fall back - attribution would be a guess.
-                matches = [type("M", (), {"name_id": nid, "alias": "(query)", "where": "none", "confidence": 0.4})() for nid in raw.name_ids]
-                attributed = True
+                nid = raw.name_ids[0]
+                text_l = f"{raw.title}\n{raw.summary}".lower()
+                ctx = fallback_ctx.get(nid)
+                if nid in comp_ids or nid in rejected or (ctx and not any(t in text_l for t in ctx)):
+                    pass  # alias rejected for cause, or required context absent: not a candidate
+                else:
+                    matches = [type("M", (), {"name_id": nid, "alias": "(query)", "where": "none", "confidence": 0.4})()]
+                    attributed = True
             elif raw.route == "page" and raw.name_ids and not require_alias_pages.get(raw.query, True):
                 matches = [type("M", (), {"name_id": nid, "alias": "(page)", "where": "none", "confidence": 0.8})() for nid in raw.name_ids]
                 attributed = True
@@ -445,6 +463,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     log.info("run %s (#%d): %d jobs, %d workers, budget %.0f min, lookback %.0f h", run_id, run_number, len(specs), workers, budget, lookback)
 
     def handle(spec: JobSpec, items: list[RawItem], res: SourceResult) -> None:
+        res.names = list(spec.name_ids)
         results.append(res)
         log.info("%s %-10s %-58s items=%-4d %5.1fs %s", "ok " if res.ok else "ERR", res.route, res.source[:58], res.items, res.seconds, res.error[:90])
         if items:
@@ -472,7 +491,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
         for fut in pending:
             spec = futures[fut]
             if fut.cancelled():
-                results.append(SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0))
+                results.append(SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0, list(spec.name_ids)))
                 summary.skipped += 1
             else:
                 try:

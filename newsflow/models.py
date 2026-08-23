@@ -64,3 +64,4 @@ class SourceResult:
     items: int
     error: str = ""
     seconds: float = 0.0
+    names: list[str] = field(default_factory=list)   # name_ids this job swept (coverage ledger)

@@ -74,7 +74,8 @@ CREATE TABLE IF NOT EXISTS source_results (
   ok INTEGER NOT NULL,
   items INTEGER NOT NULL,
   error TEXT NOT NULL DEFAULT '',
-  seconds REAL NOT NULL DEFAULT 0
+  seconds REAL NOT NULL DEFAULT 0,
+  names TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS idx_sr_run ON source_results(run_id);
 
@@ -120,6 +121,10 @@ class Store:
         self.conn = sqlite3.connect(str(self.path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        try:  # migration for databases created before the coverage ledger
+            self.conn.execute("ALTER TABLE source_results ADD COLUMN names TEXT NOT NULL DEFAULT ''")
+        except sqlite3.OperationalError:
+            pass
         self.conn.commit()
 
     # ---- runs ----------------------------------------------------------
@@ -137,8 +142,8 @@ class Store:
 
     def add_source_results(self, run_id: int, results: Iterable[SourceResult]) -> None:
         self.conn.executemany(
-            "INSERT INTO source_results(run_id, route, source, ok, items, error, seconds) VALUES (?,?,?,?,?,?,?)",
-            [(run_id, r.route, r.source, 1 if r.ok else 0, r.items, r.error, round(r.seconds, 2)) for r in results],
+            "INSERT INTO source_results(run_id, route, source, ok, items, error, seconds, names) VALUES (?,?,?,?,?,?,?,?)",
+            [(run_id, r.route, r.source, 1 if r.ok else 0, r.items, r.error, round(r.seconds, 2), ",".join(r.names)) for r in results],
         )
         self.conn.commit()
 
@@ -269,6 +274,26 @@ class Store:
             (name_id, _iso(since)),
         ).fetchall()
         return [dict(r) for r in rows]
+
+    def coverage_jobs(self, since: datetime) -> list[sqlite3.Row]:
+        """Job outcomes since `since` for jobs that declared the names they sweep."""
+        return self.conn.execute(
+            """SELECT sr.names, sr.ok, sr.error FROM source_results sr
+               JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ? AND sr.names != ''""",
+            (_iso(since),),
+        ).fetchall()
+
+    def name_mentions(self, since_recent: datetime) -> dict[str, dict[str, Any]]:
+        """Per name: total mentions, mentions since `since_recent`, latest mention time."""
+        rows = self.conn.execute(
+            """SELECT m.name_id AS nid, COUNT(*) AS total,
+                      SUM(CASE WHEN COALESCE(i.published_at, i.first_seen_at) >= ? THEN 1 ELSE 0 END) AS recent,
+                      MAX(COALESCE(i.published_at, i.first_seen_at)) AS latest
+               FROM matches m JOIN items i ON i.id = m.item_id GROUP BY m.name_id""",
+            (_iso(since_recent),),
+        ).fetchall()
+        return {r["nid"]: {"total": r["total"], "recent": r["recent"], "latest": r["latest"]} for r in rows}
 
     def source_health(self, last_runs: int = 4) -> list[dict[str, Any]]:
         rows = self.conn.execute(

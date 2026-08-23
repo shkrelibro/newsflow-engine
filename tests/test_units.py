@@ -274,3 +274,72 @@ def test_job_order_rotates_per_run(cfg, tmp_path):
     non_google = sum(1 for l in half if l.startswith(("bing", "gdelt")) or "(" in l and l.endswith(")"))
     assert non_google > 0
     http.close(); store.close()
+
+# ---------------------------------------------------------------- reliability fixes (23 Aug)
+def test_regulatory_titles_are_never_screened(cfg):
+    from newsflow.match import Matcher
+    m = Matcher.from_config(cfg)
+    # the Adler bug: an EQS release republished by a noise domain was swallowed
+    assert m.screen("boerse.de", "https://boerse.de/x", "EQS-AFR: Adler Group S.A.: Vorabbekanntmachung") == ""
+    assert m.screen("boerse.de", "https://boerse.de/x", "DGAP-News: irgendwas Wichtiges") == ""
+    assert m.screen("boerse.de", "https://boerse.de/x", "Ad hoc: Anleihe gekündigt") == ""
+
+
+def test_fallback_suppressed_for_cause(cfg, tmp_path):
+    """The Evoca bug: a context-guarded alias rejected for cause must not come back
+    as a 0.4 (query) candidate, and comps never get the fallback at all."""
+    from datetime import datetime, timezone
+    from newsflow.match import Matcher
+    from newsflow.models import RawItem
+    from newsflow.pipeline import RunSummary, process_items
+    from newsflow.store import Store
+    cfg.engine["db_path"] = str(tmp_path / "fb.db")
+    store = Store(cfg.db_path)
+    matcher = Matcher.from_config(cfg)
+    now = datetime(2026, 8, 23, 12, 0, tzinfo=timezone.utc)
+    mk = lambda i, title, nids, summary="": RawItem(
+        title=title, link=f"https://example.org/{i}", route="googlenews", query='"Evoca"',
+        summary=summary, published_at=now, source_domain="example.org", lang="it", country="IT", name_ids=nids)
+    s = RunSummary(run_id=1, started_at=now)
+    items = [
+        mk(1, "Il suono dei gong evoca lo spirito del patrimonio", ["evoca"]),       # verb, ctx absent -> rejected
+        mk(2, "Evoca Group rifinanzia il debito", ["evoca"], "macchine da caffè"),   # real: ctx present
+        mk(3, "Genoa-Napoli 0-2, decidono De Bruyne e Vergara", ["evoca"]),          # alias absent, ctx absent -> suppressed
+        mk(4, "Mieterverein kritisiert Nebenkosten", ["vonovia"]),                   # comp -> never fallback
+        mk(5, "Inkassobolaget pressas av nya regler", ["intrum"]),                   # tier-A, no ctx guard -> fallback stays
+    ]
+    run_id = store.start_run(now)
+    process_items(cfg, store, matcher, None, items, run_id, now, s, lookback_hours=48)
+    got = {r["name_id"]: (r["alias"], r["confidence"]) for r in store.conn.execute(
+        "SELECT m.name_id, m.alias, m.confidence FROM matches m")}
+    assert "evoca" in got and got["evoca"][0] == "Evoca"          # only the real item matched
+    n_evoca = store.conn.execute("SELECT COUNT(*) FROM matches WHERE name_id='evoca'").fetchone()[0]
+    assert n_evoca == 1
+    assert "vonovia" not in got                                    # comp fallback suppressed
+    assert got.get("intrum") == ("(query)", 0.4)                   # legitimate fallback preserved
+    store.close()
+
+
+def test_coverage_ledger(cfg, tmp_path):
+    from datetime import datetime, timezone
+    from newsflow.export import build_coverage
+    from newsflow.models import SourceResult
+    from newsflow.store import Store
+    cfg.engine["db_path"] = str(tmp_path / "cov.db")
+    store = Store(cfg.db_path)
+    now = datetime(2026, 8, 23, 12, 0, tzinfo=timezone.utc)
+    run_id = store.start_run(now)
+    store.add_source_results(run_id, [
+        SourceResult("googlenews", '"Intrum" [sv-SE] home', True, 3, "", 1.0, ["intrum"]),
+        SourceResult("googlenews", "group0 2 names", False, 0, "skipped: run time budget reached", 0.0, ["hse", "evoca"]),
+        SourceResult("googlenews", "group1 1 names", False, 0, "HTTP 429", 0.0, ["evoca"]),
+    ])
+    cov = build_coverage(cfg, store, now)
+    ns = cov["names"]
+    assert ns["intrum"]["jobs_24h"] == 1 and ns["intrum"]["state"] in ("ok", "quiet")
+    assert ns["hse"]["state"] == "STARVED"                          # only skipped jobs
+    assert ns["evoca"]["state"] == "STARVED"                        # skipped + failed, none ok
+    assert ns["adler"]["state"] == "NO_QUERIES"                     # nothing swept it in 24h
+    assert "adler" in cov["flags"]["no_queries"] and "hse" in cov["flags"]["starved"]
+    assert cov["summary"]["total"] == len(cfg.names)
+    store.close()

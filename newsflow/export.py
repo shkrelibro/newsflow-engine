@@ -116,6 +116,76 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
     }
 
 
+def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
+    """Per-name proof of sweep: quiet must be provably different from broken.
+
+    States:
+      ok       - queries ran in the last 24h and the name had a mention in the last 7 days
+      quiet    - queries ran, no mention in 7 days (days_silent says how long)
+      STARVED  - queries were built but every one failed or was skipped in the last 24h
+      NO_QUERIES - no job swept this name in the last 24h (misconfiguration or engine gap)
+    """
+    since24 = now - timedelta(hours=24)
+    per: dict[str, dict[str, int]] = {n.id: {"jobs": 0, "ok": 0, "failed": 0, "skipped": 0} for n in cfg.names}
+    for row in store.coverage_jobs(since24):
+        ok, err = bool(row["ok"]), row["error"] or ""
+        for nid in row["names"].split(","):
+            c = per.get(nid)
+            if c is None:
+                continue
+            c["jobs"] += 1
+            if ok:
+                c["ok"] += 1
+            elif err.startswith("skipped"):
+                c["skipped"] += 1
+            else:
+                c["failed"] += 1
+    mentions = store.name_mentions(now - timedelta(days=7))
+    names_out = {}
+    flags = {"starved": [], "no_queries": [], "silent_over_14d": []}
+    for n in cfg.names:
+        c = per[n.id]
+        m = mentions.get(n.id, {"total": 0, "recent": 0, "latest": None})
+        latest = m["latest"]
+        days_silent = None
+        if latest:
+            try:
+                days_silent = round((now - datetime.fromisoformat(latest)).total_seconds() / 86400, 1)
+            except ValueError:
+                days_silent = None
+        if c["jobs"] == 0:
+            state = "NO_QUERIES"
+            flags["no_queries"].append(n.id)
+        elif c["ok"] == 0:
+            state = "STARVED"
+            flags["starved"].append(n.id)
+        elif m["recent"] and int(m["recent"]) > 0:
+            state = "ok"
+        else:
+            state = "quiet"
+            if days_silent is None or days_silent > 14:
+                flags["silent_over_14d"].append(n.id)
+        names_out[n.id] = {
+            "name": n.name, "kind": n.kind, "state": state,
+            "jobs_24h": c["jobs"], "ok_24h": c["ok"], "failed_24h": c["failed"], "skipped_24h": c["skipped"],
+            "mentions_7d": int(m["recent"] or 0), "mentions_total": int(m["total"] or 0),
+            "last_mention": latest, "days_silent": days_silent,
+        }
+    return {
+        "generated_at": now.isoformat(timespec="seconds"),
+        "window_hours": 24,
+        "names": names_out,
+        "flags": flags,
+        "summary": {
+            "total": len(names_out),
+            "ok": sum(1 for v in names_out.values() if v["state"] == "ok"),
+            "quiet": sum(1 for v in names_out.values() if v["state"] == "quiet"),
+            "starved": len(flags["starved"]),
+            "no_queries": len(flags["no_queries"]),
+        },
+    }
+
+
 def write_exports(cfg: Config, store: Store, now: datetime | None = None) -> Path:
     now = now or datetime.now(timezone.utc)
     out = cfg.out_dir
@@ -125,7 +195,9 @@ def write_exports(cfg: Config, store: Store, now: datetime | None = None) -> Pat
     (out / "latest.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "daily" / f"{now.date().isoformat()}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "alerts.json").write_text(json.dumps({"generated_at": data["generated_at"], "alerts": data["alerts"]}, ensure_ascii=False, indent=1), encoding="utf-8")
-    (out / "health.json").write_text(json.dumps({"generated_at": data["generated_at"], **data["source_health"], "stats": data["stats"]}, ensure_ascii=False, indent=1), encoding="utf-8")
+    coverage = build_coverage(cfg, store, now)
+    (out / "coverage.json").write_text(json.dumps(coverage, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "health.json").write_text(json.dumps({"generated_at": data["generated_at"], **data["source_health"], "stats": data["stats"], "coverage": {"summary": coverage["summary"], "flags": coverage["flags"]}}, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "index.html").write_text(render_index(data), encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
     keep_days = int(cfg.export.get("keep_days", 90))
