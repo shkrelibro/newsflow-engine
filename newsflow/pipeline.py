@@ -231,11 +231,18 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
 
     # ---- grouped GDELT (global, all languages) ----
     if cfg.route_enabled("gdelt"):
+        # GDELT rejects the whole query if any phrase is too short ("NKD", "QVC", "N Brown");
+        # such names stay covered by Google/Bing, so drop only the offending phrase here.
+        def _gdelt_ok(alias: str) -> bool:
+            return len(alias) >= 4 and all(len(w) >= 2 for w in alias.split())
         for mains, every in ((mains_a, gdelt_every), (mains_c, gdelt_comp_every)):
             for ci, chunk in _chunks(mains, group_size):
                 if not force and (ci + run_number) % every != 0:
                     continue
-                q = "(" + " OR ".join(f'"{alias}"' for _, alias in chunk) + ")"
+                phrases = [(nid, alias) for nid, alias in chunk if _gdelt_ok(alias)]
+                if not phrases:
+                    continue
+                q = "(" + " OR ".join(f'"{alias}"' for _, alias in phrases) + ")"
                 nids = [nid for nid, _ in chunk]
                 jobs.append(JobSpec(f"gdelt{ci} {len(chunk)}", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span)))
 
