@@ -610,7 +610,7 @@ C: dict[str, tuple] = {
  "compagniedesalpes": ("Compagnie des Alpes", "FR:fr", None, {}),
  "parquesreunidos": ("Parques Reunidos", "ES:es", None, {}),
  # fuel retail
- "eggroup": ("EG Group", "GB:en", None, {}),
+ "eggroup": ("EG Group", "GB:en", "EG Group", {}),
  "applegreen": ("Applegreen", "IE:en", None, {}),
  "parkland": ("Parkland", "CA:en", None, {"ctx": ["fuel", "Ultramar", "convenience", "refinery"]}),
  "circlek": ("Circle K", "US:en", None, {"extra": ["NO:nb", "DK:da"]}),
