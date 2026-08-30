@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-30T18:31:51+00:00",
+ "generated_at": "2026-08-30T18:47:51+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -74,7 +74,9 @@
     "alias": "Air France-KLM",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Air France-KLM\" OR \"Alten\" OR \"Brico Dépôt\" OR \"Centrakor\" OR \"Compagnie des Alpes\" OR \"Conforama\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -644,7 +646,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Branicks\""
+     "googlenews:\"Branicks\"",
+     "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"Axactor\" OR \"Branicks\" OR \"Ceconomy\" OR \"Cheplapharm\")"
     ],
     "alert_categories": [
      "rating"
@@ -1415,9 +1418,34 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 15391,
+     "title": "Pepco Rate Increase Cut by More Than Half in Maryland",
+     "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1jeHM1dmVYQnF1UnB6ZDZSNzNuY2pFeVVJdjBxMDZwQkM2TUJXVFdJRVRYV1BubklvSjZ4YjU4N0FVV0k2N0Mwakh4cWUtNzJaUmVVaF9qUXlkZ2tKalNDYVpSTS1CZEE",
+     "raw_link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1jeHM1dmVYQnF1UnB6ZDZSNzNuY2pFeVVJdjBxMDZwQkM2TUJXVFdJRVRYV1BubklvSjZ4YjU4N0FVV0k2N0Mwakh4cWUtNzJaUmVVaF9qUXlkZ2tKalNDYVpSTS1CZEE?oc=5",
+     "source": "Microgrid Media",
+     "domain": "microgridmedia.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-08-30T18:17:24+00:00",
+     "first_seen_at": "2026-08-30T18:38:29+00:00",
+     "route": "googlenews",
+     "query": "(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")",
+     "tier_hint": null,
+     "summary": "Pepco Rate Increase Cut by More Than Half in Maryland Microgrid Media",
+     "alias": "Pepco",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [],
+     "alert_candidate": false,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 3,
+   "sources": 4,
    "alert_candidate": true,
    "alert_categories": [
     "regulatory"
@@ -1432,7 +1460,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-08-29T22:21:00+00:00"
+   "latest": "2026-08-30T18:17:24+00:00"
   },
   {
    "name_id": "pfizer",
@@ -1536,6 +1564,55 @@
     "IE"
    ],
    "latest": "2026-08-29T14:15:40+00:00"
+  },
+  {
+   "name_id": "sbb",
+   "name": "SBB (Samhällsbyggnadsbolaget)",
+   "cluster_id": 12120,
+   "primary": {
+    "id": 15383,
+    "title": "SBB-ägda PPI inleder återköpsprogram",
+    "url": "https://di.se/nyheter/sbb-agda-ppi-inleder-aterkopsprogram",
+    "raw_link": "https://www.di.se/nyheter/sbb-agda-ppi-inleder-aterkopsprogram/",
+    "source": "Dagens industri",
+    "domain": "di.se",
+    "country": "SE",
+    "lang": "sv",
+    "published_at": "2026-08-30T18:35:11+00:00",
+    "first_seen_at": "2026-08-30T18:38:29+00:00",
+    "route": "rss",
+    "query": "https://www.di.se/rss",
+    "tier_hint": 3,
+    "summary": "Fastighetsbolaget PPI ska återköpa egna aktier för upp till 400 miljoner kronor.",
+    "alias": "SBB",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "SBB"
+   ],
+   "languages": [
+    "sv"
+   ],
+   "countries": [
+    "SE"
+   ],
+   "latest": "2026-08-30T18:35:11+00:00"
   },
   {
    "name_id": "ssp",
