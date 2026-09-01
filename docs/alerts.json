@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-01T00:36:10+00:00",
+ "generated_at": "2026-09-01T00:58:53+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -2266,7 +2266,9 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
+      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
+      "googlenews:\"Avis Budget\"",
+      "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Grifols\")"
      ],
      "alert_categories": [
       "litigation"
@@ -5343,58 +5345,6 @@
    "latest": "2026-08-31T05:36:58+00:00"
   },
   {
-   "name_id": "paypal",
-   "name": "PayPal",
-   "cluster_id": 12329,
-   "primary": {
-    "id": 15712,
-    "title": "Marvell (NASDAQ: MRVL) And PayPal (NASDAQ: PYPL) Lead Market Declines As Earnings Disappoint And Takeover Talk Cools",
-    "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQR2c2akhPZmJ4WmUxeDhKYkRsbTFMVVBKT3FoQTU0UlBwd2ZxTnF4SEQ5WGRMbkk3akw3RmY0NEdyQTVTVXpPa0tRZDRZTG9vWmlpam56TmZ3aXo5cklPNnh6Vkg4RHE5R3ZMdmZqd0dKdUtmdDMxUnUzNThjTzZ0S05yTm9TSEdTRG1fb0JYYnZpWFpZa0dRcFZ5LW5Jd1JleldsNFoxYkh6MmE0RVpmTXRTMjViTW5VUkE3dmdFbzhGMHR2YU9mNFpYclgtenBPemRiSlFzR1NpY3NZWk9aMkFxV0FmWDhsdlVaQVI3cXI",
-    "raw_link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQR2c2akhPZmJ4WmUxeDhKYkRsbTFMVVBKT3FoQTU0UlBwd2ZxTnF4SEQ5WGRMbkk3akw3RmY0NEdyQTVTVXpPa0tRZDRZTG9vWmlpam56TmZ3aXo5cklPNnh6Vkg4RHE5R3ZMdmZqd0dKdUtmdDMxUnUzNThjTzZ0S05yTm9TSEdTRG1fb0JYYnZpWFpZa0dRcFZ5LW5Jd1JleldsNFoxYkh6MmE0RVpmTXRTMjViTW5VUkE3dmdFbzhGMHR2YU9mNFpYclgtenBPemRiSlFzR1NpY3NZWk9aMkFxV0FmWDhsdlVaQVI3cXI?oc=5",
-    "source": "foreignpolicyjournal.com",
-    "domain": "foreignpolicyjournal.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-08-31T00:40:00+00:00",
-    "first_seen_at": "2026-08-31T00:38:29+00:00",
-    "route": "googlenews",
-    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
-    "tier_hint": null,
-    "summary": "Marvell (NASDAQ: MRVL) And PayPal (NASDAQ: PYPL) Lead Market Declines As Earnings Disappoint And Takeover Talk Cools foreignpolicyjournal.com",
-    "alias": "PayPal",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")"
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "PayPal"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-08-31T00:40:00+00:00"
-  },
-  {
    "name_id": "pepco",
    "name": "Pepco Group",
    "cluster_id": 11352,
@@ -5519,7 +5469,9 @@
     "alias": "Planet Fitness",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -6351,6 +6303,57 @@
     "BR"
    ],
    "latest": "2026-08-31T12:23:14+00:00"
+  },
+  {
+   "name_id": "teva",
+   "name": "Teva",
+   "cluster_id": 13893,
+   "primary": {
+    "id": 18059,
+    "title": "Teva Bids $57.5 Million for BioXcel's Agitation Drug in Bankruptcy Auction",
+    "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5TSVBTRDRsUUxRS0Nud0VVMDJYZmpHNWVQd1FLZ2wwcmxaX2ZIaU1VLUdVWUx6d0pMQXE4TGRIWEhITlZRUzd5X3N1SU9hLW52ZkREUlJ1LWI5bFUwMFdTa3NpLV9HZHdjX3k3bEhYYlJnVDFyMFE",
+    "raw_link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5TSVBTRDRsUUxRS0Nud0VVMDJYZmpHNWVQd1FLZ2wwcmxaX2ZIaU1VLUdVWUx6d0pMQXE4TGRIWEhITlZRUzd5X3N1SU9hLW52ZkREUlJ1LWI5bFUwMFdTa3NpLV9HZHdjX3k3bEhYYlJnVDFyMFE?oc=5",
+    "source": "finance.biggo.com",
+    "domain": "finance.biggo.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-08-31T18:37:00+00:00",
+    "first_seen_at": "2026-09-01T00:49:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Teva\" OR \"Wagamama\")",
+    "tier_hint": null,
+    "summary": "Teva Bids $57.5 Million for BioXcel's Agitation Drug in Bankruptcy Auction finance.biggo.com",
+    "alias": "Teva",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Samhällsbyggnadsbolaget\" OR \"STADA\" OR \"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\")"
+    ],
+    "alert_categories": [
+     "restructuring"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "restructuring"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Teva"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-08-31T18:37:00+00:00"
   },
   {
    "name_id": "teva",
