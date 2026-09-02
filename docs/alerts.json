@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T21:53:20+00:00",
+ "generated_at": "2026-09-02T22:07:26+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -2310,7 +2310,9 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")"
+      "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
+      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
+      "googlenews:\"Boots\""
      ],
      "alert_categories": [
       "management"
@@ -5624,7 +5626,9 @@
     "alias": "Morrisons",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -7061,38 +7065,66 @@
    "name": "PayPal",
    "cluster_id": 16593,
    "primary": {
-    "id": 22081,
+    "id": 23350,
     "title": "PayPal to lay off nearly a quarter of India workforce amid global restructuring",
-    "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxORG1rck0wME5QT0s4SVFCdWYweENUMk0zVUdhM1NHc3Mya0VEY3JrZExLWmk1VWIwY1JCOElkRmRWNVNjREV0dEFCMGlqZDR5RWJlQ3ZhTU5ONWlKWlh0NXE4ZDI5RnBuNWhCWlhMUmRhWi03LXBQSnJEcktrRUMzX09uSGhXV3lkR2JtRzUteVVoMzBFVHVVWk1CM2NKTENvTjR4NXN0c3kyTGlBaDl4c3VkNlNCQ28yMlBxRTNSdHluT0xiWkkxRmtyb1VmUmxKTUJ5Y3dqMldFTHhrUnfSAeQBQVVfeXFMUElCTU45WTNzYWFGQ19SMDNXbEdKODZNMllPU0dsZDUwek9EUG9IQ3FFTkRtX05BVndOTUlRUjJaQ241dmNMS2pTNy1qcE9lWkV4LVpSNEtuOVJaRFNiWFViNDF1cGhfbEZkYmRBMWFwNWo3ZS1UczBwWElqa1RJV09ETWNLeU1BM2EzYk4za0doZXUyMGhMWFBJeF9oU0VSVHgyRm56MjV5MnlVU1dkNjMwNDd3XzdGbGtfMHRtX1BDMjQ3NDY3cHdNNTEwRXRkVFhfQ0pTWUJhaFJXMFNYemdaTU5z",
-    "raw_link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxORG1rck0wME5QT0s4SVFCdWYweENUMk0zVUdhM1NHc3Mya0VEY3JrZExLWmk1VWIwY1JCOElkRmRWNVNjREV0dEFCMGlqZDR5RWJlQ3ZhTU5ONWlKWlh0NXE4ZDI5RnBuNWhCWlhMUmRhWi03LXBQSnJEcktrRUMzX09uSGhXV3lkR2JtRzUteVVoMzBFVHVVWk1CM2NKTENvTjR4NXN0c3kyTGlBaDl4c3VkNlNCQ28yMlBxRTNSdHluT0xiWkkxRmtyb1VmUmxKTUJ5Y3dqMldFTHhrUnfSAeQBQVVfeXFMUElCTU45WTNzYWFGQ19SMDNXbEdKODZNMllPU0dsZDUwek9EUG9IQ3FFTkRtX05BVndOTUlRUjJaQ241dmNMS2pTNy1qcE9lWkV4LVpSNEtuOVJaRFNiWFViNDF1cGhfbEZkYmRBMWFwNWo3ZS1UczBwWElqa1RJV09ETWNLeU1BM2EzYk4za0doZXUyMGhMWFBJeF9oU0VSVHgyRm56MjV5MnlVU1dkNjMwNDd3XzdGbGtfMHRtX1BDMjQ3NDY3cHdNNTEwRXRkVFhfQ0pTWUJhaFJXMFNYemdaTU5z?oc=5",
+    "url": "https://thehindubusinessline.com/incoming/paypal-to-lay-off-nearly-a-quarter-of-india-workforce-amid-global-restructuring/article71419574.ece",
+    "raw_link": "https://www.thehindubusinessline.com/incoming/paypal-to-lay-off-nearly-a-quarter-of-india-workforce-amid-global-restructuring/article71419574.ece",
     "source": "thehindubusinessline.com",
     "domain": "thehindubusinessline.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-02T12:47:45+00:00",
-    "first_seen_at": "2026-09-02T13:57:46+00:00",
-    "route": "googlenews",
-    "query": "(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
+    "country": "India",
+    "lang": "english",
+    "published_at": "2026-09-02T13:45:00+00:00",
+    "first_seen_at": "2026-09-02T21:55:38+00:00",
+    "route": "gdelt",
+    "query": "(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")",
     "tier_hint": null,
-    "summary": "PayPal to lay off nearly a quarter of India workforce amid global restructuring thehindubusinessline.com",
+    "summary": "",
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
-     "googlenews:(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
-     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")",
-     "googlenews:(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")"
-    ],
+    "also_routes": [],
     "alert_categories": [
      "restructuring"
     ],
     "alert_candidate": true,
     "status": "candidate",
     "screen_reason": "",
-    "url_unresolved": true
+    "url_unresolved": false
    },
-   "also": [],
+   "also": [
+    {
+     "id": 22081,
+     "title": "PayPal to lay off nearly a quarter of India workforce amid global restructuring",
+     "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxORG1rck0wME5QT0s4SVFCdWYweENUMk0zVUdhM1NHc3Mya0VEY3JrZExLWmk1VWIwY1JCOElkRmRWNVNjREV0dEFCMGlqZDR5RWJlQ3ZhTU5ONWlKWlh0NXE4ZDI5RnBuNWhCWlhMUmRhWi03LXBQSnJEcktrRUMzX09uSGhXV3lkR2JtRzUteVVoMzBFVHVVWk1CM2NKTENvTjR4NXN0c3kyTGlBaDl4c3VkNlNCQ28yMlBxRTNSdHluT0xiWkkxRmtyb1VmUmxKTUJ5Y3dqMldFTHhrUnfSAeQBQVVfeXFMUElCTU45WTNzYWFGQ19SMDNXbEdKODZNMllPU0dsZDUwek9EUG9IQ3FFTkRtX05BVndOTUlRUjJaQ241dmNMS2pTNy1qcE9lWkV4LVpSNEtuOVJaRFNiWFViNDF1cGhfbEZkYmRBMWFwNWo3ZS1UczBwWElqa1RJV09ETWNLeU1BM2EzYk4za0doZXUyMGhMWFBJeF9oU0VSVHgyRm56MjV5MnlVU1dkNjMwNDd3XzdGbGtfMHRtX1BDMjQ3NDY3cHdNNTEwRXRkVFhfQ0pTWUJhaFJXMFNYemdaTU5z",
+     "raw_link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxORG1rck0wME5QT0s4SVFCdWYweENUMk0zVUdhM1NHc3Mya0VEY3JrZExLWmk1VWIwY1JCOElkRmRWNVNjREV0dEFCMGlqZDR5RWJlQ3ZhTU5ONWlKWlh0NXE4ZDI5RnBuNWhCWlhMUmRhWi03LXBQSnJEcktrRUMzX09uSGhXV3lkR2JtRzUteVVoMzBFVHVVWk1CM2NKTENvTjR4NXN0c3kyTGlBaDl4c3VkNlNCQ28yMlBxRTNSdHluT0xiWkkxRmtyb1VmUmxKTUJ5Y3dqMldFTHhrUnfSAeQBQVVfeXFMUElCTU45WTNzYWFGQ19SMDNXbEdKODZNMllPU0dsZDUwek9EUG9IQ3FFTkRtX05BVndOTUlRUjJaQ241dmNMS2pTNy1qcE9lWkV4LVpSNEtuOVJaRFNiWFViNDF1cGhfbEZkYmRBMWFwNWo3ZS1UczBwWElqa1RJV09ETWNLeU1BM2EzYk4za0doZXUyMGhMWFBJeF9oU0VSVHgyRm56MjV5MnlVU1dkNjMwNDd3XzdGbGtfMHRtX1BDMjQ3NDY3cHdNNTEwRXRkVFhfQ0pTWUJhaFJXMFNYemdaTU5z?oc=5",
+     "source": "thehindubusinessline.com",
+     "domain": "thehindubusinessline.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T12:47:45+00:00",
+     "first_seen_at": "2026-09-02T13:57:46+00:00",
+     "route": "googlenews",
+     "query": "(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
+     "tier_hint": null,
+     "summary": "PayPal to lay off nearly a quarter of India workforce amid global restructuring thehindubusinessline.com",
+     "alias": "PayPal",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
+      "googlenews:(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
+      "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")",
+      "googlenews:(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")"
+     ],
+     "alert_categories": [
+      "restructuring"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -7103,12 +7135,14 @@
     "PayPal"
    ],
    "languages": [
-    "en"
+    "en",
+    "english"
    ],
    "countries": [
-    "GB"
+    "GB",
+    "India"
    ],
-   "latest": "2026-09-02T12:47:45+00:00"
+   "latest": "2026-09-02T13:45:00+00:00"
   },
   {
    "name_id": "paypal",
