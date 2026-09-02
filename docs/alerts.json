@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T20:54:47+00:00",
+ "generated_at": "2026-09-02T21:06:08+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -288,7 +288,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -371,7 +373,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "gdelt:(\"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\" OR \"Anglikang\")"
+     "gdelt:(\"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\" OR \"Anglikang\")",
+     "gdelt:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -523,9 +526,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 23255,
+     "title": "Grill brush recall expanded to include over 3.6 million brushes sold at Walmart, Amazon, other retailers",
+     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQcUFsNWJVTS1pZ1NUX2JMbmw3dHBDeGlpMXRGamJ3Y2pjeHZuVjRXbTNoN3lRRmtrNTdHd2VoLVRzTXhnd25jS2VvaXlIZkhvY1Rpd00wYm03Tzk5NE9EalNGT1E3NWp3UjV3dFlROTZiMDkxZEVyV0RiMWtxSmplWnFoRTRjSS1VN25Yak1iZlJwak1WNVZlTGlld3hYSkQtQ2dNc3VsTlVwaUZ1WFBuT0JlUVNhZlNKZ1VCZWVXUUdPdFNVakdJ0gHbAUFVX3lxTFBfUEl6aENrcVdyR0pKeUtiVXpiV3BJNmxxVEFkWlhqTFo2aGk1X01pV1hsTkpsNElBb3IxM0N6TXdsTDNnVmZsSkhPSzZRaFo0UXN3Rm05dHUtWUdhTkQwTzFaRHZtVy1PVU4yUC12OHJieW9ZdDNtVVZ3S3ZsdVR6V2t5ZERFYy03c2x0Q3dialBrUXU5QjVZalVhWFduQ1l1Y1prQWtrdVpVMjFDUmN3VGtDN2lXUEIxdklvOFExZFdDS0RqY0QzcVRuWVB4d2hLWkFabHNvNTJpTQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQcUFsNWJVTS1pZ1NUX2JMbmw3dHBDeGlpMXRGamJ3Y2pjeHZuVjRXbTNoN3lRRmtrNTdHd2VoLVRzTXhnd25jS2VvaXlIZkhvY1Rpd00wYm03Tzk5NE9EalNGT1E3NWp3UjV3dFlROTZiMDkxZEVyV0RiMWtxSmplWnFoRTRjSS1VN25Yak1iZlJwak1WNVZlTGlld3hYSkQtQ2dNc3VsTlVwaUZ1WFBuT0JlUVNhZlNKZ1VCZWVXUUdPdFNVakdJ0gHbAUFVX3lxTFBfUEl6aENrcVdyR0pKeUtiVXpiV3BJNmxxVEFkWlhqTFo2aGk1X01pV1hsTkpsNElBb3IxM0N6TXdsTDNnVmZsSkhPSzZRaFo0UXN3Rm05dHUtWUdhTkQwTzFaRHZtVy1PVU4yUC12OHJieW9ZdDNtVVZ3S3ZsdVR6V2t5ZERFYy03c2x0Q3dialBrUXU5QjVZalVhWFduQ1l1Y1prQWtrdVpVMjFDUmN3VGtDN2lXUEIxdklvOFExZFdDS0RqY0QzcVRuWVB4d2hLWkFabHNvNTJpTQ?oc=5",
+     "source": "KTIV",
+     "domain": "ktiv.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-09-02T14:05:00+00:00",
+     "first_seen_at": "2026-09-02T20:56:12+00:00",
+     "route": "googlenews",
+     "query": "(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")",
+     "tier_hint": null,
+     "summary": "Grill brush recall expanded to include over 3.6 million brushes sold at Walmart, Amazon, other retailers KTIV",
+     "alias": "Amazon",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -1445,26 +1475,24 @@
    "name": "Asda",
    "cluster_id": 17183,
    "primary": {
-    "id": 23009,
+    "id": 23261,
     "title": "Product sold at Tesco, Asda and more recalled as shoppers told 'stop using it'",
-    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPeEJRMndsNGY3dnJFRURfTUFZUFQ5X2Y2bDJ3M1BISTBpSVUtcHMzUm1vLVhycjYyM3pwQ2xMOHJtOXNFX3JGUkpzQlY0cjJ4a3BKLU5ibDZ1YndnZ3hVeFVQT2pUTndKWXpfUmUwUFVOcy01Y3BsaE5jWFJuR2lfb3o4RkI1S1VPMHZJUXRWaHZsbWFXVTNoZlFfVQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPeEJRMndsNGY3dnJFRURfTUFZUFQ5X2Y2bDJ3M1BISTBpSVUtcHMzUm1vLVhycjYyM3pwQ2xMOHJtOXNFX3JGUkpzQlY0cjJ4a3BKLU5ibDZ1YndnZ3hVeFVQT2pUTndKWXpfUmUwUFVOcy01Y3BsaE5jWFJuR2lfb3o4RkI1S1VPMHZJUXRWaHZsbWFXVTNoZlFfVQ?oc=5",
-    "source": "Telegraph and Argus",
-    "domain": "thetelegraphandargus.co.uk",
+    "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbUJIaWwtY3Z3UGE3SVNGeXhzWnpwVGNEMmJMTnZkVnZWVkdPTGZzbDZLeXozT29rYTNEYWFtcGVnbXhFSVNSNEpseTFnWTl2aWl5V2lNUlk3SV9rZjdlZ3A0d1BQYURUcWJaRmR1ODNpeW1kazdfSzY3bHdPZVd4VE5tOERtR21UcDRlelFEbi1GZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbUJIaWwtY3Z3UGE3SVNGeXhzWnpwVGNEMmJMTnZkVnZWVkdPTGZzbDZLeXozT29rYTNEYWFtcGVnbXhFSVNSNEpseTFnWTl2aWl5V2lNUlk3SV9rZjdlZ3A0d1BQYURUcWJaRmR1ODNpeW1kazdfSzY3bHdPZVd4VE5tOERtR21UcDRlelFEbi1GZw?oc=5",
+    "source": "Reading Chronicle",
+    "domain": "localberkshire.co.uk",
     "country": "GB",
     "lang": "en",
-    "published_at": "2026-09-02T13:53:15+00:00",
-    "first_seen_at": "2026-09-02T20:16:57+00:00",
+    "published_at": "2026-09-02T10:18:06+00:00",
+    "first_seen_at": "2026-09-02T20:56:12+00:00",
     "route": "googlenews",
     "query": "(\"Aroundtown\" OR \"Asda\" OR \"Ashtead\" OR \"Aspen Pharmacare\" OR \"Aurelius\" OR \"Aurobindo Pharma\")",
     "tier_hint": null,
-    "summary": "Product sold at Tesco, Asda and more recalled as shoppers told 'stop using it' Telegraph and Argus",
+    "summary": "Product sold at Tesco, Asda and more recalled as shoppers told 'stop using it' Reading Chronicle",
     "alias": "Asda",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")"
-    ],
+    "also_routes": [],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1473,8 +1501,38 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 23009,
+     "title": "Product sold at Tesco, Asda and more recalled as shoppers told 'stop using it'",
+     "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPeEJRMndsNGY3dnJFRURfTUFZUFQ5X2Y2bDJ3M1BISTBpSVUtcHMzUm1vLVhycjYyM3pwQ2xMOHJtOXNFX3JGUkpzQlY0cjJ4a3BKLU5ibDZ1YndnZ3hVeFVQT2pUTndKWXpfUmUwUFVOcy01Y3BsaE5jWFJuR2lfb3o4RkI1S1VPMHZJUXRWaHZsbWFXVTNoZlFfVQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPeEJRMndsNGY3dnJFRURfTUFZUFQ5X2Y2bDJ3M1BISTBpSVUtcHMzUm1vLVhycjYyM3pwQ2xMOHJtOXNFX3JGUkpzQlY0cjJ4a3BKLU5ibDZ1YndnZ3hVeFVQT2pUTndKWXpfUmUwUFVOcy01Y3BsaE5jWFJuR2lfb3o4RkI1S1VPMHZJUXRWaHZsbWFXVTNoZlFfVQ?oc=5",
+     "source": "Telegraph and Argus",
+     "domain": "thetelegraphandargus.co.uk",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T13:53:15+00:00",
+     "first_seen_at": "2026-09-02T20:16:57+00:00",
+     "route": "googlenews",
+     "query": "(\"Aroundtown\" OR \"Asda\" OR \"Ashtead\" OR \"Aspen Pharmacare\" OR \"Aurelius\" OR \"Aurobindo Pharma\")",
+     "tier_hint": null,
+     "summary": "Product sold at Tesco, Asda and more recalled as shoppers told 'stop using it' Telegraph and Argus",
+     "alias": "Asda",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")"
+     ],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -2223,7 +2281,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Bianchi Industry\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\" OR \"Brico Dépôt\")"
+     "googlenews:(\"Bianchi Industry\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\" OR \"Brico Dépôt\")",
+     "googlenews:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -2359,7 +2418,8 @@
      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
      "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
      "googlenews:\"Boots\"",
-     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")"
+     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
+     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
     ],
     "alert_categories": [
      "management"
@@ -2653,7 +2713,9 @@
      "alias": "Carnival",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Carnival\" OR \"Castellum\" OR \"Centrakor\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"Chuanning Biotech\")"
+     ],
      "alert_categories": [
       "litigation"
      ],
@@ -3119,7 +3181,9 @@
      "alias": "DEMIRE",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -3483,7 +3547,9 @@
     "alias": "Enterprise",
     "alias_where": "summary",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -4330,109 +4396,6 @@
    "latest": "2026-09-01T22:47:34+00:00"
   },
   {
-   "name_id": "enterprise",
-   "name": "Enterprise Holdings",
-   "cluster_id": 15286,
-   "primary": {
-    "id": 20356,
-    "title": "SolutionStream Acquires Kahoa to Expand Enterprise AI Consulting and Implementation Services",
-    "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFA1NEFWcUF6ZXNONWxBTkRwaGxCMF8zWGxpaUREMHFqQnFMZFc4b2RMUXdrX2xfcjQ5NTFkYkZQYmI1RGJidVY3TVdDZ3JXUE5i",
-    "raw_link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFA1NEFWcUF6ZXNONWxBTkRwaGxCMF8zWGxpaUREMHFqQnFMZFc4b2RMUXdrX2xfcjQ5NTFkYkZQYmI1RGJidVY3TVdDZ3JXUE5i?oc=5",
-    "source": "PR.com",
-    "domain": "pr.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-09-01T16:10:41+00:00",
-    "first_seen_at": "2026-09-01T20:55:41+00:00",
-    "route": "googlenews",
-    "query": "(\"Endo International\" OR \"Enterprise\" OR \"Expedia\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\")",
-    "tier_hint": null,
-    "summary": "SolutionStream Acquires Kahoa to Expand Enterprise AI Consulting and Implementation Services PR.com",
-    "alias": "Enterprise",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Endo International\" OR \"Enterprise\" OR \"Expedia\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Enterprise"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-09-01T16:10:41+00:00"
-  },
-  {
-   "name_id": "enterprise",
-   "name": "Enterprise Holdings",
-   "cluster_id": 14996,
-   "primary": {
-    "id": 20344,
-    "title": "Photon Achieves CyberVadis Platinum Rating, Reinforcing Enterprise Trust Through Independent Cybersecurity Validation",
-    "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNSENWbURfMWhhZHYxb1FmTmdXd2U0clgyb2xIM05FQkplN3oyeTdGM3hyMVVxR1NwWExzaFptNmRWNXY4RXEySTBYOGg2Mkt2Nk1OVmRDWXRkY0syV0JtQWVWVmdiMnI3VUNSOFhrRnVtWjZDMDFYYVp2VE1XbVVTV2RkdlJhOU9hbEh5LW5JVXIxZ1BZdFJ6V1RkczNuWXhRWDNrMHNaZjNtN3J3U3JKYU5PWXZ1T0VlbGUzOXZaZm5OS1g4dDV6QkMxSi1ib2FHTC1nclhFeUNLbUx1SGVuLTlKMS1fV2hfREt5d0lsMHQyWTZPajdwYzdVZGFnTDB0WFE",
-    "raw_link": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNSENWbURfMWhhZHYxb1FmTmdXd2U0clgyb2xIM05FQkplN3oyeTdGM3hyMVVxR1NwWExzaFptNmRWNXY4RXEySTBYOGg2Mkt2Nk1OVmRDWXRkY0syV0JtQWVWVmdiMnI3VUNSOFhrRnVtWjZDMDFYYVp2VE1XbVVTV2RkdlJhOU9hbEh5LW5JVXIxZ1BZdFJ6V1RkczNuWXhRWDNrMHNaZjNtN3J3U3JKYU5PWXZ1T0VlbGUzOXZaZm5OS1g4dDV6QkMxSi1ib2FHTC1nclhFeUNLbUx1SGVuLTlKMS1fV2hfREt5d0lsMHQyWTZPajdwYzdVZGFnTDB0WFE?oc=5",
-    "source": "PR Newswire",
-    "domain": "prnewswire.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-01T14:00:00+00:00",
-    "first_seen_at": "2026-09-01T20:55:41+00:00",
-    "route": "googlenews",
-    "query": "(\"Endo International\" OR \"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\")",
-    "tier_hint": null,
-    "summary": "Photon Achieves CyberVadis Platinum Rating, Reinforcing Enterprise Trust Through Independent Cybersecurity Validation PR Newswire",
-    "alias": "Enterprise",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Endo International\" OR \"Enterprise\" OR \"Expedia\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\")",
-     "googlenews:(\"Endo International\" OR \"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\")"
-    ],
-    "alert_categories": [
-     "rating"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "rating"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Enterprise"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-09-01T14:00:00+00:00"
-  },
-  {
    "name_id": "expedia",
    "name": "Expedia",
    "cluster_id": 16356,
@@ -4831,6 +4794,55 @@
     "DE"
    ],
    "latest": "2026-09-02T13:19:04+00:00"
+  },
+  {
+   "name_id": "hertz",
+   "name": "Hertz",
+   "cluster_id": 17405,
+   "primary": {
+    "id": 23274,
+    "title": "Court Approves Hertz Deal Widening Rental Options for Drivers Using Hand Controls",
+    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOMUFuYXRHWl9CUEdXV2RJV21ORFhBV2FzcGR0bVN2alhkZHpPS0pGbGg4dWhKdHRRSU5La0tFaDhHcXo0NEViY3o4RUhhUnJtSmc4YU9PR1k2YWNlZnpuSTJmeWc0VjZQU1NQQkNBaUpCT2phTUNoUXhRNVlkMkFJQU41bUhtUGI2S3RrQ3JfWEV2N3kteXhXbVU3Z0ctR292TzEwdG9WaUk",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOMUFuYXRHWl9CUEdXV2RJV21ORFhBV2FzcGR0bVN2alhkZHpPS0pGbGg4dWhKdHRRSU5La0tFaDhHcXo0NEViY3o4RUhhUnJtSmc4YU9PR1k2YWNlZnpuSTJmeWc0VjZQU1NQQkNBaUpCT2phTUNoUXhRNVlkMkFJQU41bUhtUGI2S3RrQ3JfWEV2N3kteXhXbVU3Z0ctR292TzEwdG9WaUk?oc=5",
+    "source": "Yahoo Autos",
+    "domain": "autos.yahoo.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-02T20:44:00+00:00",
+    "first_seen_at": "2026-09-02T20:56:12+00:00",
+    "route": "googlenews",
+    "query": "(\"GSK\" OR \"The Gym Group\" OR \"Hamborner REIT\" OR \"Haworth\" OR \"Hays\" OR \"Hertz\")",
+    "tier_hint": null,
+    "summary": "Court Approves Hertz Deal Widening Rental Options for Drivers Using Hand Controls Yahoo Autos",
+    "alias": "Hertz",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Hertz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-02T20:44:00+00:00"
   },
   {
    "name_id": "hertz",
@@ -5674,6 +5686,33 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 23240,
+     "title": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list",
+     "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQa2I5LXpVODNUVF9vYlpFLXZkWmtFNGFFX2pWbXl4alJtQ21falBHTXZid2ZWOTJjY0R0UVB2VFlyTVBBX0JORkdyNUdna3JnYW9URmpzS0FyZkVHMllwNFJHR3Y2NFZIckZwVWhrNFlESlNZTjBjQlpRb3JmeDVRZmhCLU9kZFnSAYwBQVVfeXFMUEs0WlF4ZERGR1haMjZQenQyX19BUHVUckNOSjI3V0hlOGZhNG1CM2xFLU5EcEZqVGpxNWlrb3g5RU4xN0ZyeU8xdWxvb0hFTTVaeTh4Ymc2SzV1RXZUNGhHallWaXhyaFZiQWdxSXZMOTRCS3pxRTE5UmlwWEllQmtlLXZZRDdmamFUMDE",
+     "raw_link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQa2I5LXpVODNUVF9vYlpFLXZkWmtFNGFFX2pWbXl4alJtQ21falBHTXZid2ZWOTJjY0R0UVB2VFlyTVBBX0JORkdyNUdna3JnYW9URmpzS0FyZkVHMllwNFJHR3Y2NFZIckZwVWhrNFlESlNZTjBjQlpRb3JmeDVRZmhCLU9kZFnSAYwBQVVfeXFMUEs0WlF4ZERGR1haMjZQenQyX19BUHVUckNOSjI3V0hlOGZhNG1CM2xFLU5EcEZqVGpxNWlrb3g5RU4xN0ZyeU8xdWxvb0hFTTVaeTh4Ymc2SzV1RXZUNGhHallWaXhyaFZiQWdxSXZMOTRCS3pxRTE5UmlwWEllQmtlLXZZRDdmamFUMDE?oc=5",
+     "source": "Daily Mirror",
+     "domain": "mirror.co.uk",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T02:38:00+00:00",
+     "first_seen_at": "2026-09-02T20:56:12+00:00",
+     "route": "googlenews",
+     "query": "(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\")",
+     "tier_hint": null,
+     "summary": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list Daily Mirror",
+     "alias": "Morrisons",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "rating"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
    "sources": 2,
@@ -6483,7 +6522,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Recordati\")"
+     "googlenews:(\"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Recordati\")",
+     "googlenews:(\"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Mobilux\" OR \"Motor Fuel Group\" OR \"Mutares\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -6807,7 +6847,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
+     "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+     "gdelt:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -6837,7 +6878,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
+      "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+      "gdelt:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -6952,7 +6994,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")"
+     "googlenews:(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")",
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
     ],
     "alert_categories": [
      "management"
@@ -7003,7 +7046,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")"
+     "googlenews:(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")",
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
     ],
     "alert_categories": [
      "litigation"
@@ -7108,7 +7152,9 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Organon\" OR \"Otto\" OR \"Pandora\" OR \"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\")",
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")",
+     "googlenews:(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")"
     ],
     "alert_categories": [
      "restructuring"
@@ -7804,37 +7850,6 @@
    },
    "also": [
     {
-     "id": 20323,
-     "title": "Kaplan Fox Shareholder Alert: Deadline to Lead in the Securities Fraud Lawsuit Against Planet Fitness, Inc. (NYSE: PLNT) is September 14, 2026",
-     "url": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxPaWpablFpcWlKQWxBNkd3WWpxZWIxREhhbC1MUWx3VEtDTFpJWTl5R2tvdUtlZUJSYy0wZjRiWnZ6bDgxNUtIQTYzUFdrandpaVBUa0RKSTBBTFlmT05zeXY5X0FQSG9PMDN0Xy1YM1dmTXZMUWxaRHBxNDdDTHlvbjlyc3pmaThIdVJnUFZDX21nZnN3d09fdS03UjdpODAxdzR4X3NnR3MzTTZtY0k5ZUYtVUY2S040MjNFVzRHQzNxQ0Z4aVpmUDcxQVAxZHhHSURrUm1wMEx6YVlsSXlWbmRPN3lYa29YbTJrZ0E3NXpvX0dCakY3cWRja3piaHVyakdjaHNXYVRnT09GeXQwSGsxa3lhNGhJU3JqRENxS2R3Z05EVFJwTW1JTzhDM1c4Z1RNTldHcjNsU1h3Znp5Zw",
-     "raw_link": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxPaWpablFpcWlKQWxBNkd3WWpxZWIxREhhbC1MUWx3VEtDTFpJWTl5R2tvdUtlZUJSYy0wZjRiWnZ6bDgxNUtIQTYzUFdrandpaVBUa0RKSTBBTFlmT05zeXY5X0FQSG9PMDN0Xy1YM1dmTXZMUWxaRHBxNDdDTHlvbjlyc3pmaThIdVJnUFZDX21nZnN3d09fdS03UjdpODAxdzR4X3NnR3MzTTZtY0k5ZUYtVUY2S040MjNFVzRHQzNxQ0Z4aVpmUDcxQVAxZHhHSURrUm1wMEx6YVlsSXlWbmRPN3lYa29YbTJrZ0E3NXpvX0dCakY3cWRja3piaHVyakdjaHNXYVRnT09GeXQwSGsxa3lhNGhJU3JqRENxS2R3Z05EVFJwTW1JTzhDM1c4Z1RNTldHcjNsU1h3Znp5Zw?oc=5",
-     "source": "The Globe and Mail",
-     "domain": "theglobeandmail.com",
-     "country": "GB",
-     "lang": "en",
-     "published_at": "2026-09-01T20:46:11+00:00",
-     "first_seen_at": "2026-09-01T20:55:41+00:00",
-     "route": "googlenews",
-     "query": "(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")",
-     "tier_hint": null,
-     "summary": "Kaplan Fox Shareholder Alert: Deadline to Lead in the Securities Fraud Lawsuit Against Planet Fitness, Inc. (NYSE: PLNT) is September 14, 2026 The Globe and Mail",
-     "alias": "Planet Fitness",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
-      "googlenews:(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")",
-      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
-     ],
-     "alert_categories": [
-      "litigation"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
-    {
      "id": 21105,
      "title": "Kaplan Fox Shareholder Alert: Deadline to Lead in the Securities Fraud Lawsuit Against Planet Fitness, Inc. (NYSE: PLNT) is September 14, 2026",
      "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxNYnBwa0dvalpnTXpMV01LcDJaMEFPQVdZa2o3R3FHekdjd251cnVrRVBJaDdwcXJES2xCTzY5X2lDRWlIWVotV0Y5QVpCcHkzMDBEeGN1RERhVzhBTko2S1RmQnpDdFRWQkpZRExNXzhmb1RWZFNrWUhoV0pLWHZJNjN5WFY3a01ESGhFSHpmTHA0Tnp3dUJYRTJyeU5yTFFxWUxhUnVXMjBGeDRGZTlqZ2tjeWlNMDdrb0kyb2NlTmJsZ0ltR3Z4a2NwOVdYbEpBSXZXcVVXLXFWSldsb0J4LXVLblpFbWZXZU16Y2tjT0dLbHhZLXhEOU5hQ3J0Si1vSVBsZkRlOUk",
@@ -7856,7 +7871,8 @@
       "googlenews:\"Avis Budget\"",
       "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
       "googlenews:(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")",
-      "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
+      "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
+      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
      ],
      "alert_categories": [
       "litigation"
@@ -7884,58 +7900,6 @@
     "US"
    ],
    "latest": "2026-09-01T21:20:01+00:00"
-  },
-  {
-   "name_id": "planetfitness",
-   "name": "Planet Fitness",
-   "cluster_id": 15450,
-   "primary": {
-    "id": 20322,
-    "title": "Portnoy Law Firm Announces Class Action on Behalf of Planet Fitness, Inc. Investors",
-    "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQQV85SlR5OUp0ekQ1NXpWSWMxWDVzUjluYW0zMG12aTlTd3duVlM0UGxwdGF5cUhMZVMzdHcwQzNac2djd01BNzdKMWVZUllFWEc0c2c5V3NvYUxUSG5VeTFENGdUcU5kcUZZOWRCdmJGbW1jSVVvTmw5YVFpZkZ3aGw5UFpWQ2VqZEZfd2RiQmZ6NHZ2TnJRdElRdks4dUZxRG52RzlYcDhZQkdhTVRCQWlTM2FwMnFSV3J4cDdCLTlIb3FnV1lDV1pVN0FyNnQ5RU03UXREOFdHNVRVWFRDcDIwWjRoZ3Ix",
-    "raw_link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQQV85SlR5OUp0ekQ1NXpWSWMxWDVzUjluYW0zMG12aTlTd3duVlM0UGxwdGF5cUhMZVMzdHcwQzNac2djd01BNzdKMWVZUllFWEc0c2c5V3NvYUxUSG5VeTFENGdUcU5kcUZZOWRCdmJGbW1jSVVvTmw5YVFpZkZ3aGw5UFpWQ2VqZEZfd2RiQmZ6NHZ2TnJRdElRdks4dUZxRG52RzlYcDhZQkdhTVRCQWlTM2FwMnFSV3J4cDdCLTlIb3FnV1lDV1pVN0FyNnQ5RU03UXREOFdHNVRVWFRDcDIwWjRoZ3Ix?oc=5",
-    "source": "GlobeNewswire",
-    "domain": "globenewswire.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-01T19:53:00+00:00",
-    "first_seen_at": "2026-09-01T20:55:41+00:00",
-    "route": "googlenews",
-    "query": "(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")",
-    "tier_hint": null,
-    "summary": "Portnoy Law Firm Announces Class Action on Behalf of Planet Fitness, Inc. Investors GlobeNewswire",
-    "alias": "Planet Fitness",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\")",
-     "googlenews:(\"Peach Property\" OR \"Pepco\" OR \"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\")"
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Planet Fitness"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-09-01T19:53:00+00:00"
   },
   {
    "name_id": "premierinn",
@@ -8011,7 +7975,9 @@
     "alias": "Quick",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\" OR \"Rekeep\")"
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -9033,7 +8999,9 @@
     "alias": "Tesco",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -9061,7 +9029,9 @@
      "alias": "Tesco",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")"
+     ],
      "alert_categories": [
       "rating"
      ],
@@ -9705,7 +9675,8 @@
      "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
      "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
-     "googlenews:\"Boots\""
+     "googlenews:\"Boots\"",
+     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -9756,7 +9727,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
+     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
+     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -9786,7 +9758,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
+      "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
+      "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
      ],
      "alert_categories": [],
      "alert_candidate": false,
