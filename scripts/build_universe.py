@@ -77,7 +77,7 @@ A: dict[str, dict] = {
    markets=["FR:fr"],
    aliases=[("Groupe Bertrand", dict(search=True)),
             ("Bertrand Franchise", dict(search=True, search_every=4)),
-            ("Burger King France", dict(weight=0.8)),
+            ("Burger King France", dict(search=True, search_every=2, weight=0.8)),
             ("Hippopotamus", dict(weight=0.6, require_context=["Bertrand", "restaurant", "enseigne"])),
             ("Groupe Flo", dict(weight=0.6, require_context=["Bertrand", "restaurant"]))],
    comps_raw=["McDonalds France", "AmRest Holdings SE", "Napaqaro", "Le Duff"],
@@ -410,6 +410,129 @@ A: dict[str, dict] = {
    aliases=[("Worldline", dict(search=True, inflect=True)),
             ("Payone", dict(weight=0.6, langs=["de"], require_context=["Worldline", "Zahlungs", "payment"]))],
    comps_raw=["Nexi S.p.A.", "Adyen N.V.", "PayPal Holdings, Inc.", "Stripe", "FIS (Worldpay)", "Fiserv, Inc.", "Ingenico", "SumUp", "Dojo", "Viva", "Teya", "Mollie"]),
+
+ "rekeep": dict(name="Rekeep", ticker="REKEEP", home="IT", sector="facility_services",
+   markets=["IT:it"],
+   aliases=[("Rekeep", dict(search=True, inflect=True)), ("Manutencoop", dict(search=True, search_every=8))],
+   comps_raw=["Elior", "Sodexo S.A.", "ISS A/S", "Compass Group plc"],
+   notes="Added 2 Sep 2026 per Lars (core name). Ex Manutencoop Facility Management, Bologna; FM + healthcare/laundry; 2026 notes refinanced Feb 2025. CONFIRM footprint (Poland, Turkey)."),
+
+ "keepmoat": dict(name="Keepmoat", ticker="KEEPMO", home="GB", sector="housebuilding",
+   markets=["GB:en"],
+   aliases=[("Keepmoat", dict(search=True, inflect=True))],
+   comps_raw=["Vistry Group plc", "Persimmon plc", "Barratt Redrow plc", "Taylor Wimpey plc", "Bellway plc"],
+   notes="Added 2 Sep 2026 per Lars (core name). Aermont-owned partnership housebuilder, Doncaster; CEO Ian Hoad since Jul 2025; FY to 31 Oct."),
+
+ "demire": dict(name="DEMIRE", ticker="DEMIRE", home="DE", sector="real_estate",
+   markets=["DE:de"],
+   aliases=[("DEMIRE", dict(search=True, inflect=True)),
+            ("Deutsche Mittelstand Real Estate", dict(weight=0.8)),
+            ("Fair Value REIT", dict(weight=0.6, require_context=["DEMIRE", "Immobilie", "Büro", "Verkauf", "office"]))],
+   comps_raw=["Branicks Group AG", "Aroundtown SA", "Hamborner REIT AG", "Vonovia"],
+   notes="Added 2 Sep 2026 per Lars (core name). Frankfurt office landlord; 2019/2027 bond restructured 2024; running portfolio sales via GlobeNewswire/EQS."),
+
+ "synlab": dict(name="SYNLAB", ticker="SYNLAB", home="DE", sector="labs",
+   markets=["DE:de", "FR:fr", "IT:it", "ES:es", "CH:de", "BE:fr", "BE:nl"],
+   aliases=[("SYNLAB", dict(search=True, inflect=True))],
+   comps_raw=["Biogroup", "Cerba HealthCare", "Eurofins Scientific SE", "Unilabs Group", "Sonic Healthcare Limited"],
+   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). Cinven take-private 2024."),
+
+ "sudzucker": dict(name="Südzucker", ticker="SZUGR", home="DE", sector="sugar",
+   markets=["DE:de", "AT:de", "PL:pl", "FR:fr", "BE:nl", "BE:fr"],
+   aliases=[("Südzucker", dict(search=True, inflect=True)),
+            ("Suedzucker", dict(search=True, search_every=4)),
+            ("Saint Louis Sucre", dict(weight=0.8)),
+            ("CropEnergies", dict(weight=0.6)),
+            ("AGRANA", dict(weight=0.6, require_context=["Südzucker", "Zucker", "sugar", "Fruchtzubereitung"]))],
+   comps_raw=["Tereos", "Nordzucker AG", "Cristal Union SCA", "AB Foods", "British Sugar plc"],
+   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). FY ends Feb; quarterlies Jul/Oct/Jan."),
+
+ "lowell": dict(name="Lowell (Garfunkelux)", ticker="GARFUN", home="GB", sector="debt_purchase",
+   markets=["GB:en", "DE:de", "SE:sv", "DK:da", "NO:nb", "FI:fi"],
+   aliases=[("Lowell", dict(search=True, inflect=True, require_context=["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management", "inkasso", "skuld", "gæld", "perintä"])),
+            ("Garfunkelux", dict(search=True, search_every=4)),
+            ("Lowell Financial", dict(weight=0.9))],
+   comps_raw=["Intrum AB", "Arrow Global", "Hoist Finance", "PRA Group, Inc.", "Encore Capital Group, Inc."],
+   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). UK/DACH/Nordics; Garfunkelux Holdco bonds (investor site lowell.com)."),
+
+
+ # --- added 2 Sep 2026 (evening), Lars: "more names to include: no focus names but names within my universe" ---
+ "quick": dict(name="Quick (France)", ticker="QUICKF", home="FR", sector="restaurants",
+   markets=["FR:fr"],
+   aliases=[("Quick", dict(search=True, require_context=["restaurant", "burger", "fast-food", "fast food", "franchise", "HIG", "enseigne", "Quick France", "restauration rapide"]))],
+   comps_raw=["Groupe Bertrand", "McDonalds France", "AmRest Holdings SE"],
+   notes="Added 2 Sep 2026 per Lars. French Quick network owned by HIG Capital since Aug 2021 (107 restaurants); Burger King France sits under Groupe Bertrand; Quick Belgium/Lux is QSRP (separate). Generic word — context-guarded."),
+
+ "boots": dict(name="Boots UK", ticker="BOOTS", home="GB", sector="pharmacy_retail",
+   markets=["GB:en", "IE:en"],
+   aliases=[("Boots", dict(search=True, require_context=["pharmacy", "chemist", "Walgreens", "Boots UK", "Nottingham", "retailer", "Advantage Card", "No7", "stores", "health and beauty", "Sycamore", "Baldock"]))],
+   comps_raw=["Superdrug", "Walgreens Boots Alliance"],
+   notes="Added 2 Sep 2026 per Lars. Generic word (footwear) — context-guarded. Walgreens (Sycamore-owned since 2025); Alex Baldock (ex-Currys) named CEO 2 Sep 2026."),
+
+ "coop": dict(name="Co-op (Co-operative Group)", ticker="COOPUK", home="GB", sector="food_retail",
+   markets=["GB:en"],
+   aliases=[("Co-operative Group", dict(search=True)),
+            ("Co-op Group", dict(search=True, search_every=4)),
+            ("Co-op", dict(weight=0.6, require_context=["supermarket", "food", "grocery", "Manchester", "convenience", "members", "stores", "retail", "funeralcare", "cyber"]))],
+   comps_raw=["Tesco plc", "Sainsbury's", "Morrisons", "Asda", "Iceland Foods"],
+   notes="Added 2 Sep 2026 per Lars (UK food retail). Generic 'co-op' — the bare alias is context-guarded."),
+
+ "loxam": dict(name="Loxam", ticker="LOXAM", home="FR", sector="equipment_rental",
+   markets=["FR:fr", "IE:en", "SE:sv", "FI:fi", "NO:nb", "DK:da", "ES:es", "BR:pt"],
+   aliases=[("Loxam", dict(search=True, inflect=True)),
+            ("Ramirent", dict(search=True, search_every=2, inflect=True)),
+            ("Nationwide Platforms", dict(weight=0.7)),
+            ("Hune", dict(weight=0.5, langs=["es"], require_context=["alquiler", "maquinaria", "Loxam", "plataformas"]))],
+   comps_raw=["Kiloutou", "Boels Rental", "Ashtead Group", "United Rentals"],
+   notes="Added 2 Sep 2026 per Lars. Ramirent (Nordics/CEE), Nationwide Platforms (UK), Hune (ES), Degraus (BR). CONFIRM footprint."),
+
+ "kiloutou": dict(name="Kiloutou", ticker="KILOUT", home="FR", sector="equipment_rental",
+   markets=["FR:fr", "DE:de", "IT:it", "ES:es", "PL:pl", "DK:da"],
+   aliases=[("Kiloutou", dict(search=True, inflect=True)),
+            ("GSV Materieludlejning", dict(weight=0.7))],
+   comps_raw=["Loxam", "Boels Rental", "Ashtead Group"],
+   notes="Added 2 Sep 2026 per Lars. GSV (DK) acquired 2022; Germany, Italy, Spain, Poland. CONFIRM footprint."),
+
+ "boels": dict(name="Boels Rental", ticker="BOELS", home="NL", sector="equipment_rental",
+   markets=["NL:nl", "BE:nl", "DE:de", "AT:de", "SE:sv", "FI:fi", "NO:nb", "DK:da", "PL:pl", "CZ:cs"],
+   aliases=[("Boels", dict(search=True, inflect=True, require_context=["verhuur", "rental", "Sittard", "Boels Rental", "equipment", "machines", "Topholding", "bond", "obligatie", "Anleihe", "Vermietung", "uthyrning", "vuokraus"])),
+            ("Cramo", dict(search=True, search_every=2, inflect=True)),
+            ("Boels Topholding", dict(weight=0.9))],
+   comps_raw=["Loxam", "Kiloutou", "Ashtead Group", "United Rentals"],
+   notes="Added 2 Sep 2026 per Lars (typed 'boelst' — assumed Boels). Cramo (Nordics) acquired 2020. New bond in market 2 Sep 2026 (GlobeNewswire stabilisation notice). Surname collision — context-guarded."),
+
+ "tmicc": dict(name="The Magnum Ice Cream Company", ticker="MICC", home="NL", sector="food",
+   markets=["NL:nl", "US:en", "DE:de", "IT:it"],
+   aliases=[("Magnum Ice Cream Company", dict(search=True)),
+            ("TMICC", dict(search=True, search_every=2)),
+            ("Magnum", dict(weight=0.5, require_context=["ice cream", "ijs", "Eis", "gelato", "Unilever", "Ben & Jerry", "Wall's", "TMICC", "Cornetto", "Euronext", "MICC"]))],
+   comps_raw=["Froneri", "Unilever"],
+   notes="Added 2 Sep 2026 per Lars ('ice cream'). Unilever ice-cream demerger, listed Euronext Amsterdam (MICC) Dec 2025; SEC 6-K filer. 'Magnum' is generic — context-guarded."),
+
+ "froneri": dict(name="Froneri", ticker="FRONER", home="GB", sector="food",
+   markets=["GB:en", "DE:de", "FR:fr", "IT:it", "ES:es"],
+   aliases=[("Froneri", dict(search=True, inflect=True)), ("R&R Ice Cream", dict(weight=0.7))],
+   comps_raw=["The Magnum Ice Cream Company", "Unilever"],
+   notes="Added 2 Sep 2026 per Lars. Nestlé/PAI ice-cream JV, Northallerton; leveraged loans. CONFIRM footprint."),
+
+ "goldengoose": dict(name="Golden Goose", ticker="GGOOSE", home="IT", sector="fashion",
+   markets=["IT:it", "US:en", "FR:fr"],
+   aliases=[("Golden Goose", dict(search=True, require_context=["sneaker", "sneakers", "Deluxe Brand", "Permira", "luxury", "brand", "Venezia", "Venice", "Marchiori", "IPO", "fashion", "scarpe", "moda", "bond", "Blue Pool"]))],
+   comps_raw=["Skechers", "Birkenstock", "Dr. Martens", "On Holding"],
+   notes="Added 2 Sep 2026 per Lars. Permira-owned; idiom collision ('the golden goose') — context-guarded."),
+
+ "manuchar": dict(name="Manuchar", ticker="MANUCH", home="BE", sector="chemicals_distribution",
+   markets=["BE:nl", "BE:fr", "ES:es", "BR:pt"],
+   aliases=[("Manuchar", dict(search=True, inflect=True))],
+   comps_raw=["Brenntag", "Azelis", "IMCD", "Univar Solutions"],
+   notes="Added 2 Sep 2026 per Lars. Antwerp chemicals distributor, LatAm/Africa/Asia heavy. CONFIRM footprint."),
+
+ "skechers": dict(name="Skechers", ticker="SKX", home="US", sector="footwear",
+   markets=["US:en"],
+   aliases=[("Skechers", dict(search=True, inflect=True))],
+   comps_raw=["Golden Goose", "Nike", "Adidas", "Puma", "Crocs", "Deckers"],
+   notes="Added 2 Sep 2026 per Lars (typed 'sketchers'). Taken private by 3G Capital Sep 2025 with $6bn+ LBO debt."),
+
 }
 
 # Intrum is hand-maintained in config/names/intrum.yaml; only its comps are linked here.
@@ -482,7 +605,6 @@ C: dict[str, tuple] = {
  "enterprise": ("Enterprise Holdings", "US:en", None, {}),
  # debt / servicers
  "hoist": ("Hoist Finance", "SE:sv", None, {}),
- "lowell": ("Lowell (Garfunkelux)", "GB:en", "Lowell", {"ctx": ["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management"], "extra": ["DE:de", "SE:sv"]}),
  "encore": ("Encore Capital Group", "US:en", None, {}),
  # restaurants / food service
  "mcdonaldsfrance": ("McDonald's France", "FR:fr", None, {}),
@@ -502,7 +624,6 @@ C: dict[str, tuple] = {
  "rosasthai": ("Rosa's Thai", "GB:en", None, {}),
  # labs / health
  "eurofins": ("Eurofins Scientific", "FR:fr", None, {"extra": ["LU:fr"]}),
- "synlab": ("SYNLAB", "DE:de", None, {}),
  "sonic": ("Sonic Healthcare", "GB:en", None, {"confirm": True}),
  "labcorp": ("Labcorp", "US:en", None, {}),
  "quest": ("Quest Diagnostics", "US:en", None, {}),
@@ -517,7 +638,6 @@ C: dict[str, tuple] = {
  "danone": ("Danone", "FR:fr", None, {}),
  "lactalis": ("Lactalis", "FR:fr", None, {}),
  "savencia": ("Savencia", "FR:fr", None, {}),
- "sudzucker": ("Südzucker", "DE:de", None, {}),
  "nordzucker": ("Nordzucker", "DE:de", None, {}),
  "abfoods": ("Associated British Foods", "GB:en", None, {}),
  "cristalunion": ("Cristal Union", "FR:fr", None, {}),
@@ -650,10 +770,49 @@ C: dict[str, tuple] = {
  "delonghi": ("De'Longhi", "IT:it", None, {}),
  "dyson": ("Dyson", "GB:en", None, {}),
  "bosch": ("Bosch", "DE:de", None, {"ctx": ["Hausgeräte", "appliances", "BSH", "Konzern"]}),
+
+ # housebuilders (Keepmoat comps, added 2 Sep 2026)
+ "vistry": ("Vistry Group", "GB:en", "Vistry", {}),
+ "persimmon": ("Persimmon", "GB:en", None, {"ctx": ["homes", "housebuilder", "housing", "plc", "shares"]}),
+ "barrattredrow": ("Barratt Redrow", "GB:en", None, {}),
+ "taylorwimpey": ("Taylor Wimpey", "GB:en", None, {}),
+ "bellway": ("Bellway", "GB:en", None, {}),
+
+
+ # added 2 Sep 2026 (evening) — comps for the new universe names
+ "superdrug": ("Superdrug", "GB:en", None, {}),
+ "walgreens": ("Walgreens Boots Alliance", "US:en", "Walgreens", {}),
+ "tesco": ("Tesco", "GB:en", None, {}),
+ "sainsburys": ("Sainsbury's", "GB:en", "Sainsbury's", {}),
+ "morrisons": ("Morrisons", "GB:en", None, {"ctx": ["supermarket", "grocer", "retailer", "stores", "CD&R", "bonds", "Bradford"]}),
+ "asda": ("Asda", "GB:en", None, {}),
+ "icelandfoods": ("Iceland Foods", "GB:en", "Iceland Foods", {}),
+ "ashtead": ("Ashtead Group", "GB:en", "Ashtead", {}),
+ "unitedrentals": ("United Rentals", "US:en", None, {}),
+ "unilever": ("Unilever", "GB:en", None, {"extra": ["NL:nl"]}),
+ "birkenstock": ("Birkenstock", "DE:de", None, {"extra": ["US:en"]}),
+ "drmartens": ("Dr. Martens", "GB:en", "Dr. Martens", {"ctx": ["boots", "footwear", "shares", "plc", "brand", "retailer", "results"]}),
+ "onholding": ("On Holding", "CH:de", "On Holding", {"extra": ["US:en"], "ctx": ["running", "shoes", "sneakers", "Swiss", "Federer", "Cloud", "footwear"]}),
+ "brenntag": ("Brenntag", "DE:de", None, {}),
+ "azelis": ("Azelis", "BE:nl", None, {}),
+ "imcd": ("IMCD", "NL:nl", None, {"ctx": ["chemicals", "distributor", "distributie", "ingredients", "Rotterdam", "shares"]}),
+ "univar": ("Univar Solutions", "US:en", "Univar", {}),
+ "nike": ("Nike", "US:en", None, {"ctx": ["sneakers", "footwear", "shoes", "apparel", "brand", "retail", "Swoosh", "Jordan", "earnings"]}),
+ "adidas": ("Adidas", "DE:de", None, {}),
+ "puma": ("Puma", "DE:de", None, {"ctx": ["Sportartikel", "sneaker", "Herzogenaurach", "shoes", "brand", "Aktie", "Konzern", "footwear", "apparel"]}),
+ "crocs": ("Crocs", "US:en", None, {"ctx": ["shoes", "footwear", "brand", "shares", "earnings", "HEYDUDE", "clogs"]}),
+ "deckers": ("Deckers", "US:en", None, {"ctx": ["UGG", "HOKA", "footwear", "brands", "shares", "earnings"]}),
+
 }
 
 # Sheet comp name -> id (universe ids included so comp links resolve)
 NAME_TO_ID = {
+ "groupe bertrand": "bertrand", "kiloutou": "kiloutou", "loxam": "loxam", "boels rental": "boels", "the magnum ice cream company": "tmicc", "froneri": "froneri", "golden goose": "goldengoose", "skechers": "skechers",
+ "superdrug": "superdrug", "walgreens boots alliance": "walgreens", "tesco plc": "tesco", "sainsbury's": "sainsburys", "morrisons": "morrisons", "asda": "asda", "iceland foods": "icelandfoods",
+ "ashtead group": "ashtead", "united rentals": "unitedrentals", "unilever": "unilever", "birkenstock": "birkenstock", "dr. martens": "drmartens", "on holding": "onholding",
+ "brenntag": "brenntag", "azelis": "azelis", "imcd": "imcd", "univar solutions": "univar", "nike": "nike", "adidas": "adidas", "puma": "puma", "crocs": "crocs", "deckers": "deckers",
+ "elior": "elior", "tereos": "tereos", "biogroup": "biogroup", "rekeep": "rekeep", "keepmoat": "keepmoat", "demire": "demire",
+ "vistry group plc": "vistry", "persimmon plc": "persimmon", "barratt redrow plc": "barrattredrow", "taylor wimpey plc": "taylorwimpey", "bellway plc": "bellway",
  "aroundtown sa": "aroundtown", "cpi property": "cpiproperty", "cpi property group s.a.": "cpiproperty",
  "peach property": "peachproperty", "grandcity properties": "grandcity", "grand city properties": "grandcity",
  "g city europe": "gcity", "hamborner reit ag": "hamborner", "vonovia": "vonovia", "leg immobilien": "leg",
