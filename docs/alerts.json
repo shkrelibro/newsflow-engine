@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T20:28:26+00:00",
+ "generated_at": "2026-09-02T20:54:47+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -2357,7 +2357,9 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
-     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
+     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
+     "googlenews:\"Boots\"",
+     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")"
     ],
     "alert_categories": [
      "management"
@@ -3038,7 +3040,9 @@
     "alias": "DEMIRE",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3096,7 +3100,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 23198,
+     "title": "DEMIRE continues portfolio sales as planned",
+     "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOYUtXQW9yLWtGOW5VQ0JTbklxZHZoTTVicEx3eXR2anh1TEt0YW14azFUY3B3ZXJqNGJtcXZGWEJPbVBFVkdzQnY2MW1raDBiZTdxVHJpZVQtQU9aZEI1QUszVU1RUElWblhHalRDSzUxMjBzZ1dmNnZkYVFRWUtxRnBSMHl5Wkw2YjVzSE1SWjNSdTFDSnc4Z21MTlNabTBDMWswQkNxZTE4NFJBOHhqSkVJODh2Tm510gG-AUFVX3lxTFByaDBJVnJ6b21TM2IyN0lhd0tYYmt6VjhUdVBjVDV0TzNlN2dMVTlzQXlnZnFVOVNfRW5hLUhsNDBSbnczU1dNVVRudjBwNmVrV3ZKR0RiemFPcTBnMXpGN0lmZ3JMWjNYUFpWMHFzc0dRaXBkQndLRlhERFp5WW5mMHVpWFVpV0pVVVRRcXJxbUZoM0RUcHpnZVVsLWJGVDZHdkFTT1pzZXlScktnX0tBTVA2ekRyQ002RlotdUE",
+     "raw_link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOYUtXQW9yLWtGOW5VQ0JTbklxZHZoTTVicEx3eXR2anh1TEt0YW14azFUY3B3ZXJqNGJtcXZGWEJPbVBFVkdzQnY2MW1raDBiZTdxVHJpZVQtQU9aZEI1QUszVU1RUElWblhHalRDSzUxMjBzZ1dmNnZkYVFRWUtxRnBSMHl5Wkw2YjVzSE1SWjNSdTFDSnc4Z21MTlNabTBDMWswQkNxZTE4NFJBOHhqSkVJODh2Tm510gG-AUFVX3lxTFByaDBJVnJ6b21TM2IyN0lhd0tYYmt6VjhUdVBjVDV0TzNlN2dMVTlzQXlnZnFVOVNfRW5hLUhsNDBSbnczU1dNVVRudjBwNmVrV3ZKR0RiemFPcTBnMXpGN0lmZ3JMWjNYUFpWMHFzc0dRaXBkQndLRlhERFp5WW5mMHVpWFVpV0pVVVRRcXJxbUZoM0RUcHpnZVVsLWJGVDZHdkFTT1pzZXlScktnX0tBTVA2ekRyQ002RlotdUE?oc=5",
+     "source": "The Manila Times",
+     "domain": "manilatimes.net",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T05:42:04+00:00",
+     "first_seen_at": "2026-09-02T20:43:11+00:00",
+     "route": "googlenews",
+     "query": "(\"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
+     "tier_hint": null,
+     "summary": "DEMIRE continues portfolio sales as planned The Manila Times",
+     "alias": "DEMIRE",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -5589,20 +5621,20 @@
    "name": "Morrisons",
    "cluster_id": 17239,
    "primary": {
-    "id": 23071,
-    "title": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list",
-    "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQM0dvV0ZDdjZlS0liU1E4OXRDS05MN2tUSzR1YmpVMXNfUlpPWWlyUGV0UVM1QlZoSHQxZ0VpZHpyXy1WMTJETktZV2xrZUx0ZUw1MzdieHhvSVFQRzlNQU9pdE91T2Nxby1GVzNURlVBdHFlbjUtSTNFT1BUcGNtaERrTFRVQQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQM0dvV0ZDdjZlS0liU1E4OXRDS05MN2tUSzR1YmpVMXNfUlpPWWlyUGV0UVM1QlZoSHQxZ0VpZHpyXy1WMTJETktZV2xrZUx0ZUw1MzdieHhvSVFQRzlNQU9pdE91T2Nxby1GVzNURlVBdHFlbjUtSTNFT1BUcGNtaERrTFRVQQ?oc=5",
-    "source": "AOL.co.uk",
-    "domain": "aol.co.uk",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-02T02:38:00+00:00",
-    "first_seen_at": "2026-09-02T20:16:57+00:00",
-    "route": "googlenews",
+    "id": 23190,
+    "title": "Morrisons stores receive one - star hygiene rating with risk to human health - full list",
+    "url": "https://mirror.co.uk/news/uk-news/morrisons-one-star-hygiene-rating-37617090",
+    "raw_link": "https://www.mirror.co.uk/news/uk-news/morrisons-one-star-hygiene-rating-37617090",
+    "source": "mirror.co.uk",
+    "domain": "mirror.co.uk",
+    "country": "United Kingdom",
+    "lang": "english",
+    "published_at": "2026-09-02T04:00:00+00:00",
+    "first_seen_at": "2026-09-02T20:43:11+00:00",
+    "route": "gdelt",
     "query": "(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\")",
     "tier_hint": null,
-    "summary": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list AOL.co.uk",
+    "summary": "",
     "alias": "Morrisons",
     "alias_where": "title",
     "confidence": 1.0,
@@ -5613,10 +5645,38 @@
     "alert_candidate": true,
     "status": "candidate",
     "screen_reason": "",
-    "url_unresolved": true
+    "url_unresolved": false
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 23071,
+     "title": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list",
+     "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQM0dvV0ZDdjZlS0liU1E4OXRDS05MN2tUSzR1YmpVMXNfUlpPWWlyUGV0UVM1QlZoSHQxZ0VpZHpyXy1WMTJETktZV2xrZUx0ZUw1MzdieHhvSVFQRzlNQU9pdE91T2Nxby1GVzNURlVBdHFlbjUtSTNFT1BUcGNtaERrTFRVQQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQM0dvV0ZDdjZlS0liU1E4OXRDS05MN2tUSzR1YmpVMXNfUlpPWWlyUGV0UVM1QlZoSHQxZ0VpZHpyXy1WMTJETktZV2xrZUx0ZUw1MzdieHhvSVFQRzlNQU9pdE91T2Nxby1GVzNURlVBdHFlbjUtSTNFT1BUcGNtaERrTFRVQQ?oc=5",
+     "source": "AOL.co.uk",
+     "domain": "aol.co.uk",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T02:38:00+00:00",
+     "first_seen_at": "2026-09-02T20:16:57+00:00",
+     "route": "googlenews",
+     "query": "(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\")",
+     "tier_hint": null,
+     "summary": "Morrisons stores receive one-star hygiene rating with 'risk to human health' - full list AOL.co.uk",
+     "alias": "Morrisons",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "rating"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "rating"
@@ -5626,12 +5686,14 @@
     "Morrisons"
    ],
    "languages": [
-    "en"
+    "en",
+    "english"
    ],
    "countries": [
-    "GB"
+    "GB",
+    "United Kingdom"
    ],
-   "latest": "2026-09-02T02:38:00+00:00"
+   "latest": "2026-09-02T04:00:00+00:00"
   },
   {
    "name_id": "motelone",
@@ -6744,7 +6806,9 @@
     "alias": "Norwegian Cruise Line",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -6772,7 +6836,9 @@
      "alias": "Norwegian Cruise Line",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "gdelt:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -7928,20 +7994,20 @@
    "name": "Quick (France)",
    "cluster_id": 17295,
    "primary": {
-    "id": 23128,
+    "id": 23211,
     "title": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026",
-    "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNS3lmSnRSTkMwYmRKOHVNOEZtOUVraEtPNF9pcWgtaWF2MkRkalpMazJ4NnZFaWJ5TjBpX3A4RHIxOUExeEg3VVZUQm5sdDdkS1J4OFVna2hEbEpEWlYwSTNFZUdxTUU4TnFCZFJoT0hHOGRfY254MzlDNDBpYkx4RnJZS04yMVhQaGpVdkEwQzhfR2g4WkxXbmpENVd6ZTE1aWZFNHU5TEVJdEtORUhWTE9idUdjSmVrWnhCVDc1T3p0YnoxNmtSX1p6TTcxNldZRFY4QmZXdmdnVFlBb3gzRV80WURrd0c0Q0hjU3lEWmotV1ZxNWc",
-    "raw_link": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNS3lmSnRSTkMwYmRKOHVNOEZtOUVraEtPNF9pcWgtaWF2MkRkalpMazJ4NnZFaWJ5TjBpX3A4RHIxOUExeEg3VVZUQm5sdDdkS1J4OFVna2hEbEpEWlYwSTNFZUdxTUU4TnFCZFJoT0hHOGRfY254MzlDNDBpYkx4RnJZS04yMVhQaGpVdkEwQzhfR2g4WkxXbmpENVd6ZTE1aWZFNHU5TEVJdEtORUhWTE9idUdjSmVrWnhCVDc1T3p0YnoxNmtSX1p6TTcxNldZRFY4QmZXdmdnVFlBb3gzRV80WURrd0c0Q0hjU3lEWmotV1ZxNWc?oc=5",
-    "source": "Saxo",
+    "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPY0JtT25MYm5DWF9TS2lOOGNHUlZ4UGZmYVZMSnJIT3dWQlc5YVY0WHgtbjhxeUozTEZFSmFFS3Jlcm5FeDJBSGxTQzFlNXF6eEQ3allYb3ppcjg5Y2RFNE01amNUVWFwbFNHOWZZU2xlanNhRGNiU190aWZmUkZOR2NFWnpPWTBSRl94ck82ZUR3ZG9FNUMzVVBLb2Y1MkVRQ0JNakZnelQ2WUJCS1FPazZtelRjSG16OHpGaWItV0Jid3ZsaFpJbDVwbENpTnIzZTM2MElGbDFsV2RTUEwtMmdnSk5pZjQtTXRONWl3",
+    "raw_link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPY0JtT25MYm5DWF9TS2lOOGNHUlZ4UGZmYVZMSnJIT3dWQlc5YVY0WHgtbjhxeUozTEZFSmFFS3Jlcm5FeDJBSGxTQzFlNXF6eEQ3allYb3ppcjg5Y2RFNE01amNUVWFwbFNHOWZZU2xlanNhRGNiU190aWZmUkZOR2NFWnpPWTBSRl94ck82ZUR3ZG9FNUMzVVBLb2Y1MkVRQ0JNakZnelQ2WUJCS1FPazZtelRjSG16OHpGaWItV0Jid3ZsaFpJbDVwbENpTnIzZTM2MElGbDFsV2RTUEwtMmdnSk5pZjQtTXRONWl3?oc=5",
+    "source": "home.saxo",
     "domain": "home.saxo",
     "country": "GB",
     "lang": "en",
-    "published_at": "2026-09-02T06:22:20+00:00",
-    "first_seen_at": "2026-09-02T20:16:57+00:00",
+    "published_at": "2026-09-02T06:20:18+00:00",
+    "first_seen_at": "2026-09-02T20:43:11+00:00",
     "route": "googlenews",
     "query": "(\"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\" OR \"Rekeep\")",
     "tier_hint": null,
-    "summary": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026 Saxo",
+    "summary": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026 home.saxo",
     "alias": "Quick",
     "alias_where": "title",
     "confidence": 1.0,
@@ -7955,6 +8021,33 @@
     "url_unresolved": true
    },
    "also": [
+    {
+     "id": 23128,
+     "title": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026",
+     "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNS3lmSnRSTkMwYmRKOHVNOEZtOUVraEtPNF9pcWgtaWF2MkRkalpMazJ4NnZFaWJ5TjBpX3A4RHIxOUExeEg3VVZUQm5sdDdkS1J4OFVna2hEbEpEWlYwSTNFZUdxTUU4TnFCZFJoT0hHOGRfY254MzlDNDBpYkx4RnJZS04yMVhQaGpVdkEwQzhfR2g4WkxXbmpENVd6ZTE1aWZFNHU5TEVJdEtORUhWTE9idUdjSmVrWnhCVDc1T3p0YnoxNmtSX1p6TTcxNldZRFY4QmZXdmdnVFlBb3gzRV80WURrd0c0Q0hjU3lEWmotV1ZxNWc",
+     "raw_link": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNS3lmSnRSTkMwYmRKOHVNOEZtOUVraEtPNF9pcWgtaWF2MkRkalpMazJ4NnZFaWJ5TjBpX3A4RHIxOUExeEg3VVZUQm5sdDdkS1J4OFVna2hEbEpEWlYwSTNFZUdxTUU4TnFCZFJoT0hHOGRfY254MzlDNDBpYkx4RnJZS04yMVhQaGpVdkEwQzhfR2g4WkxXbmpENVd6ZTE1aWZFNHU5TEVJdEtORUhWTE9idUdjSmVrWnhCVDc1T3p0YnoxNmtSX1p6TTcxNldZRFY4QmZXdmdnVFlBb3gzRV80WURrd0c0Q0hjU3lEWmotV1ZxNWc?oc=5",
+     "source": "Saxo",
+     "domain": "home.saxo",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-02T06:22:20+00:00",
+     "first_seen_at": "2026-09-02T20:16:57+00:00",
+     "route": "googlenews",
+     "query": "(\"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\" OR \"Rekeep\")",
+     "tier_hint": null,
+     "summary": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026 Saxo",
+     "alias": "Quick",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "capital_markets"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
     {
      "id": 23129,
      "title": "Market Quick Take - Oil tops USD 95 and global bond yields reach multi-decade highs - 02 September 2026",
@@ -7973,7 +8066,9 @@
      "alias": "Quick",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\" OR \"Rekeep\")"
+     ],
      "alert_categories": [
       "capital_markets"
      ],
@@ -8424,6 +8519,57 @@
    "latest": "2026-09-02T06:43:18+00:00"
   },
   {
+   "name_id": "skechers",
+   "name": "Skechers",
+   "cluster_id": 17350,
+   "primary": {
+    "id": 23201,
+    "title": "Urban Edge to Sell Kohl’s-Anchored Morris Plains Shopping Center for $60 Million",
+    "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1OR1JKSERJQ1JQYi1QV3Z2S2tjS0lPNWxJbjYyQk85WXVPWmp5czRNQjl4cTlVOF9ackFScktqMUxRMXpQRGhpX1ZJWWw5dTJMWGxYMWNnX0EzUTFNUG1sWHNWOEx5Szhfb3QtMW95Zw",
+    "raw_link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1OR1JKSERJQ1JQYi1QV3Z2S2tjS0lPNWxJbjYyQk85WXVPWmp5czRNQjl4cTlVOF9ackFScktqMUxRMXpQRGhpX1ZJWWw5dTJMWGxYMWNnX0EzUTFNUG1sWHNWOEx5Szhfb3QtMW95Zw?oc=5",
+    "source": "Jersey Digs",
+    "domain": "jerseydigs.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-02T15:28:58+00:00",
+    "first_seen_at": "2026-09-02T20:43:11+00:00",
+    "route": "googlenews",
+    "query": "\"Skechers\"",
+    "tier_hint": null,
+    "summary": "Urban Edge to Sell Kohl’s-Anchored Morris Plains Shopping Center for $60 Million Jersey Digs",
+    "alias": "(query)",
+    "alias_where": "none",
+    "confidence": 0.4,
+    "also_routes": [
+     "googlenews:(\"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\" OR \"Südzucker\" OR \"SYNLAB\")"
+    ],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 0.4,
+   "aliases": [
+    "(query)"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-02T15:28:58+00:00"
+  },
+  {
    "name_id": "sodexo",
    "name": "Sodexo",
    "cluster_id": 16110,
@@ -8632,7 +8778,8 @@
      "googlenews:(\"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\" OR \"Stripe\" OR \"Südzucker\" OR \"SumUp\")",
      "googlenews:(\"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\" OR \"Stripe\" OR \"SumUp\" OR \"Superdrug\")",
      "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
-     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
+     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
+     "googlenews:\"Boots\""
     ],
     "alert_categories": [
      "management"
@@ -9021,7 +9168,8 @@
      "googlenews:(\"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\" OR \"Vivion\")",
      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Fressnapf\" OR \"Intrum\" OR \"Paragon Customer Communications\" OR \"Travelodge\")",
      "googlenews:\"Travelodge\"",
-     "googlenews:(\"Bianchi Industry\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\" OR \"Brico Dépôt\")"
+     "googlenews:(\"Bianchi Industry\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\" OR \"Brico Dépôt\")",
+     "googlenews:(\"Paragon Customer Communications\" OR \"Travelodge\" OR \"The Very Group\")"
     ],
     "alert_categories": [
      "management"
@@ -9556,7 +9704,8 @@
     "also_routes": [
      "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
      "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
-     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
+     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
+     "googlenews:\"Boots\""
     ],
     "alert_categories": [
      "m_and_a"
