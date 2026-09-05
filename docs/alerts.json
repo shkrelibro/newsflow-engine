@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-05T22:50:39+00:00",
+ "generated_at": "2026-09-05T23:04:13+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -74,7 +74,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -1573,7 +1575,9 @@
     "alias": "GSK",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"GSK\" OR \"The Gym Group\" OR \"Hamborner REIT\" OR \"Haworth\" OR \"Hays\" OR \"Hertz\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1676,6 +1680,55 @@
     "also_routes": [
      "googlenews:\"Intrum\" site:kauppalehti.fi"
     ],
+    "alert_categories": [
+     "restructuring"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "restructuring"
+   ],
+   "max_confidence": 0.4,
+   "aliases": [
+    "(query)"
+   ],
+   "languages": [
+    "fi"
+   ],
+   "countries": [
+    "FI"
+   ],
+   "latest": "2026-09-04T15:30:05+00:00"
+  },
+  {
+   "name_id": "intrum",
+   "name": "Intrum AB",
+   "cluster_id": 22728,
+   "primary": {
+    "id": 31109,
+    "title": "Huikuri Erkki Olavi kuolinpesä konkurssipesä",
+    "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9ZVnlRVHptaVpPTTRpM0pWRGtxNzUzdnpOeHNLYVF5WDc0Vk5WU19mb0xfS3hXb2xKUi1JZ1NkWnE0SDRLdTVWTHVmOVg1akVkQThkd3diX1lMODJTVzA3YWln",
+    "raw_link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9ZVnlRVHptaVpPTTRpM0pWRGtxNzUzdnpOeHNLYVF5WDc0Vk5WU19mb0xfS3hXb2xKUi1JZ1NkWnE0SDRLdTVWTHVmOVg1akVkQThkd3diX1lMODJTVzA3YWln?oc=5",
+    "source": "kauppalehti.fi",
+    "domain": "kauppalehti.fi",
+    "country": "FI",
+    "lang": "fi",
+    "published_at": "2026-09-04T15:30:05+00:00",
+    "first_seen_at": "2026-09-05T22:53:46+00:00",
+    "route": "googlenews",
+    "query": "\"Intrum\" site:kauppalehti.fi",
+    "tier_hint": null,
+    "summary": "Huikuri Erkki Olavi kuolinpesä konkurssipesä kauppalehti.fi",
+    "alias": "(query)",
+    "alias_where": "none",
+    "confidence": 0.4,
+    "also_routes": [],
     "alert_categories": [
      "restructuring"
     ],
@@ -2368,16 +2421,16 @@
    "name": "Pfizer",
    "cluster_id": 21601,
    "primary": {
-    "id": 29481,
+    "id": 29618,
     "title": "Pfizer Can't Cut Ala. Tax With Shuffled Loans, Court Affirms",
-    "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5abFFpV2VoSmZqeHI5Q0kxRlJKMnFoRW1kM1dVTmdJUndoNzNKbkY1RHVQUmdTTnVnUktOQmJ2RWdfbGQ3akNPSWJWaXNNcVJTTGQtWHp0NWpjYUxHRlAzdHN2dGxkUjdU0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q",
-    "raw_link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5abFFpV2VoSmZqeHI5Q0kxRlJKMnFoRW1kM1dVTmdJUndoNzNKbkY1RHVQUmdTTnVnUktOQmJ2RWdfbGQ3akNPSWJWaXNNcVJTTGQtWHp0NWpjYUxHRlAzdHN2dGxkUjdU0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q?oc=5",
+    "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPN2dfdlM5WEU1ZWxZbHFyVERlbldYMi1NTzFzNFlkMkEtaFRYd2F2TU1jb25jUXBjSEVmRlVleTc4U1ZoUWVsV0pUNWNFOXp5T2JPcWRRQ0NkZ3NYRUdYSDNxT3BpY1dHVm10ZVdHVFlJTlE2enpINXFnaXZxVUpEZnRQUnkxSVZsVWFSbk8zeXhFbW04RmRZUnp6bVFvT3BQMF9HV05rb3VXWDhRVlZDZGdB0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q",
+    "raw_link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPN2dfdlM5WEU1ZWxZbHFyVERlbldYMi1NTzFzNFlkMkEtaFRYd2F2TU1jb25jUXBjSEVmRlVleTc4U1ZoUWVsV0pUNWNFOXp5T2JPcWRRQ0NkZ3NYRUdYSDNxT3BpY1dHVm10ZVdHVFlJTlE2enpINXFnaXZxVUpEZnRQUnkxSVZsVWFSbk8zeXhFbW04RmRZUnp6bVFvT3BQMF9HV05rb3VXWDhRVlZDZGdB0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q?oc=5",
     "source": "Law360",
     "domain": "law360.com",
     "country": "GB",
     "lang": "en",
     "published_at": "2026-09-04T21:42:00+00:00",
-    "first_seen_at": "2026-09-04T22:54:01+00:00",
+    "first_seen_at": "2026-09-05T00:47:32+00:00",
     "route": "googlenews",
     "query": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
     "tier_hint": null,
@@ -2386,7 +2439,6 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
     ],
     "alert_categories": [
@@ -2397,37 +2449,7 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 29618,
-     "title": "Pfizer Can't Cut Ala. Tax With Shuffled Loans, Court Affirms",
-     "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPN2dfdlM5WEU1ZWxZbHFyVERlbldYMi1NTzFzNFlkMkEtaFRYd2F2TU1jb25jUXBjSEVmRlVleTc4U1ZoUWVsV0pUNWNFOXp5T2JPcWRRQ0NkZ3NYRUdYSDNxT3BpY1dHVm10ZVdHVFlJTlE2enpINXFnaXZxVUpEZnRQUnkxSVZsVWFSbk8zeXhFbW04RmRZUnp6bVFvT3BQMF9HV05rb3VXWDhRVlZDZGdB0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q",
-     "raw_link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPN2dfdlM5WEU1ZWxZbHFyVERlbldYMi1NTzFzNFlkMkEtaFRYd2F2TU1jb25jUXBjSEVmRlVleTc4U1ZoUWVsV0pUNWNFOXp5T2JPcWRRQ0NkZ3NYRUdYSDNxT3BpY1dHVm10ZVdHVFlJTlE2enpINXFnaXZxVUpEZnRQUnkxSVZsVWFSbk8zeXhFbW04RmRZUnp6bVFvT3BQMF9HV05rb3VXWDhRVlZDZGdB0gFoQVVfeXFMTlpsUWlXZWhKZmp4cjlDSTFGUkoycWhFbWQzV1VOZ0lSd2g3M0puRjVEdVBSZ1NOdWdSS05CYnZFZ19sZDdqQ09JYlZpc01xUlNMZC1YenQ1amNhTEdGUDN0c3Z0bGRSN1Q?oc=5",
-     "source": "Law360",
-     "domain": "law360.com",
-     "country": "GB",
-     "lang": "en",
-     "published_at": "2026-09-04T21:42:00+00:00",
-     "first_seen_at": "2026-09-05T00:47:32+00:00",
-     "route": "googlenews",
-     "query": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
-     "tier_hint": null,
-     "summary": "Pfizer Can't Cut Ala. Tax With Shuffled Loans, Court Affirms Law360",
-     "alias": "Pfizer",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
-     ],
-     "alert_categories": [
-      "litigation"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
+   "also": [],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -2946,58 +2968,6 @@
     "GB"
    ],
    "latest": "2026-09-05T13:49:31+00:00"
-  },
-  {
-   "name_id": "takeda",
-   "name": "Takeda",
-   "cluster_id": 21649,
-   "primary": {
-    "id": 29494,
-    "title": "Weave Bio and Takeda deploy AI regulatory platform across 14 drug programs",
-    "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxONXl5YlFrM3ZtdTM5Vk43OW1UdVFnMzQxU1g0RGR4eXhNazhHaHpfbmctVDZwbFFsWklMN3poSzdaMWRUUTZ0WkxKNHFyUXl6bjE1Nm5tRnJtbG9YNWFSUzYxc01iRHItSmRCdjJGYXl0MGhrN01jM3dRRFlpcEJxZE1jbVNvVXAwMG41cTZsRHU0ZnowVjBhaUlBenpGamlTYmE3QTFaampXZ3pIMUZkR01CbFgzQTlsM0HSAcABQVVfeXFMT2w2YVFkZl91VzFoRUI2RWxWZ0ZQU3Z0S2pHLW1kVFVURFJITWdWWVVmU090VTkwRWxhQnhTU2dPb28yLWN1TWxkcmV5LU5feFZWVlBKMXZFYzA3NWxaWEdJSjdlN0NEa3JlV1N3UWNnV1pvT0lWdmRubGkxTFhHc0xvc3NBQmJhN3MzckZoUk0yb3Bvd256eGFTTkRpdzM0dDNyYWhDRTVuWGlYSGdOeURyb0FURjBOOUJiNWRhdXJr",
-    "raw_link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxONXl5YlFrM3ZtdTM5Vk43OW1UdVFnMzQxU1g0RGR4eXhNazhHaHpfbmctVDZwbFFsWklMN3poSzdaMWRUUTZ0WkxKNHFyUXl6bjE1Nm5tRnJtbG9YNWFSUzYxc01iRHItSmRCdjJGYXl0MGhrN01jM3dRRFlpcEJxZE1jbVNvVXAwMG41cTZsRHU0ZnowVjBhaUlBenpGamlTYmE3QTFaampXZ3pIMUZkR01CbFgzQTlsM0HSAcABQVVfeXFMT2w2YVFkZl91VzFoRUI2RWxWZ0ZQU3Z0S2pHLW1kVFVURFJITWdWWVVmU090VTkwRWxhQnhTU2dPb28yLWN1TWxkcmV5LU5feFZWVlBKMXZFYzA3NWxaWEdJSjdlN0NEa3JlV1N3UWNnV1pvT0lWdmRubGkxTFhHc0xvc3NBQmJhN3MzckZoUk0yb3Bvd256eGFTTkRpdzM0dDNyYWhDRTVuWGlYSGdOeURyb0FURjBOOUJiNWRhdXJr?oc=5",
-    "source": "Indian Pharma Post",
-    "domain": "indianpharmapost.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-09-04T10:45:30+00:00",
-    "first_seen_at": "2026-09-04T22:54:01+00:00",
-    "route": "googlenews",
-    "query": "(\"Royal Caribbean\" OR \"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\")",
-    "tier_hint": null,
-    "summary": "Weave Bio and Takeda deploy AI regulatory platform across 14 drug programs Indian Pharma Post",
-    "alias": "Takeda",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")",
-     "googlenews:(\"Royal Caribbean\" OR \"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\")"
-    ],
-    "alert_categories": [
-     "regulatory"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "regulatory"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Takeda"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-09-04T10:45:30+00:00"
   },
   {
    "name_id": "tesco",
