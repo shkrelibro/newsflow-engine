@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-05T21:39:44+00:00",
+ "generated_at": "2026-09-05T21:52:58+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -51,6 +51,55 @@
     "LV"
    ],
    "latest": "2026-09-05T07:39:16+00:00"
+  },
+  {
+   "name_id": "amazon",
+   "name": "Amazon",
+   "cluster_id": 15886,
+   "primary": {
+    "id": 31077,
+    "title": "DOJ expands beef price investigation to Walmart , Costco , Amazon and other major retailers",
+    "url": "https://foxla.com/news/doj-expands-beef-price-investigation-walmart-costco-amazon-other-major-retailers",
+    "raw_link": "https://www.foxla.com/news/doj-expands-beef-price-investigation-walmart-costco-amazon-other-major-retailers",
+    "source": "foxla.com",
+    "domain": "foxla.com",
+    "country": "United States",
+    "lang": "english",
+    "published_at": "2026-09-05T18:30:00+00:00",
+    "first_seen_at": "2026-09-05T21:42:38+00:00",
+    "route": "gdelt",
+    "query": "(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")",
+    "tier_hint": null,
+    "summary": "",
+    "alias": "Amazon",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "regulatory"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "regulatory"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Amazon"
+   ],
+   "languages": [
+    "english"
+   ],
+   "countries": [
+    "United States"
+   ],
+   "latest": "2026-09-05T18:30:00+00:00"
   },
   {
    "name_id": "amazon",
@@ -2191,7 +2240,9 @@
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
