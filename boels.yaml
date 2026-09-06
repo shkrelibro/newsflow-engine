@@ -21,5 +21,9 @@ markets:
 aliases:
   - {text: "Boels", inflect: true, search: true, require_context: ["verhuur", "rental", "Sittard", "Boels Rental", "equipment", "machines", "Topholding", "bond", "obligatie", "Anleihe", "Vermietung", "uthyrning", "vuokraus"]}
   - {text: "Cramo", inflect: true, search: true, search_every: 2}
-  - {text: "Boels Topholding", weight: 0.9}
+  - {text: "Boels Topholding", search: true, search_every: 2, weight: 0.9}
 comps: [loxam, kiloutou, ashtead, unitedrentals]
+sources:
+  site_queries:
+    - boels.com
+    - globenewswire.com

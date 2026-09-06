@@ -16,5 +16,12 @@ markets:
 aliases:
   - {text: "Lowell", inflect: true, search: true, require_context: ["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management", "inkasso", "skuld", "gæld", "perintä"]}
   - {text: "Garfunkelux", search: true, search_every: 4}
+  - {text: "Garfunkelux Holdco", search: true, search_every: 2, weight: 0.9}
   - {text: "Lowell Financial", weight: 0.9}
+exclude_terms: ["Hurricane Lowell", "Tropical Storm Lowell", "UMass Lowell", "Lowell Observatory", "Lowell, Massachusetts", "Lowell High School", "Lowell General Hospital", "Lowell police"]
 comps: [intrum, arrow, hoist, pra, encore]
+sources:
+  site_queries:
+    - lowell.com
+    - tisegroup.com
+    - globenewswire.com

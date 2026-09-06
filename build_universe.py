@@ -289,8 +289,11 @@ A: dict[str, dict] = {
  "paragon": dict(name="Paragon Group (Customer Communications)", ticker="PCCGLO", home="GB", sector="business_services",
    markets=["GB:en", "IE:en", "FR:fr", "DE:de"],
    aliases=[("Paragon Customer Communications", dict(search=True)),
+            ("PCC Global", dict(search=True, search_every=2, weight=0.9,
+             require_context=["Paragon", "bond", "notes", "TISE", "listing", "customer communications"])),
             ("Paragon Group", dict(weight=0.6, require_context=["customer communications", "print", "Grenadier", "PCC"]))],
    exclude=["Paragon Banking", "Paragon Bank"],
+   sites=["global.paragon.world", "tisegroup.com"],
    comps_raw=["Quadient", "Williams Lea", "HH Global", "Equiniti", "Xerox Holdings Corporation"],
    notes="CONFIRM entity: Paragon Group Ltd (Grenadier Holdings), not Paragon Banking Group."),
 
@@ -451,7 +454,11 @@ A: dict[str, dict] = {
    markets=["GB:en", "DE:de", "SE:sv", "DK:da", "NO:nb", "FI:fi"],
    aliases=[("Lowell", dict(search=True, inflect=True, require_context=["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management", "inkasso", "skuld", "gæld", "perintä"])),
             ("Garfunkelux", dict(search=True, search_every=4)),
+            ("Garfunkelux Holdco", dict(search=True, search_every=2, weight=0.9)),
             ("Lowell Financial", dict(weight=0.9))],
+   exclude=["Hurricane Lowell", "Tropical Storm Lowell", "UMass Lowell", "Lowell Observatory",
+            "Lowell, Massachusetts", "Lowell High School", "Lowell General Hospital", "Lowell police"],
+   sites=["lowell.com", "tisegroup.com", "globenewswire.com"],
    comps_raw=["Intrum AB", "Arrow Global", "Hoist Finance", "PRA Group, Inc.", "Encore Capital Group, Inc."],
    notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). UK/DACH/Nordics; Garfunkelux Holdco bonds (investor site lowell.com)."),
 
@@ -497,7 +504,8 @@ A: dict[str, dict] = {
    markets=["NL:nl", "BE:nl", "DE:de", "AT:de", "SE:sv", "FI:fi", "NO:nb", "DK:da", "PL:pl", "CZ:cs"],
    aliases=[("Boels", dict(search=True, inflect=True, require_context=["verhuur", "rental", "Sittard", "Boels Rental", "equipment", "machines", "Topholding", "bond", "obligatie", "Anleihe", "Vermietung", "uthyrning", "vuokraus"])),
             ("Cramo", dict(search=True, search_every=2, inflect=True)),
-            ("Boels Topholding", dict(weight=0.9))],
+            ("Boels Topholding", dict(search=True, search_every=2, weight=0.9))],
+   sites=["boels.com", "globenewswire.com"],
    comps_raw=["Loxam", "Kiloutou", "Ashtead Group", "United Rentals"],
    notes="Added 2 Sep 2026 per Lars (typed 'boelst' — assumed Boels). Cramo (Nordics) acquired 2020. New bond in market 2 Sep 2026 (GlobeNewswire stabilisation notice). Surname collision — context-guarded."),
 
@@ -917,7 +925,8 @@ def emit_alias(text: str, o: dict) -> str:
 
 
 def emit(nid: str, name: str, ticker: str, kind: str, home: str, markets: list[str],
-         aliases: list[tuple[str, dict]], comps: list[str], exclude: list[str], sector: str, notes: str) -> str:
+         aliases: list[tuple[str, dict]], comps: list[str], exclude: list[str], sector: str, notes: str,
+         sites: list[str] | None = None) -> str:
     mlines = []
     seen = set()
     for m in markets + (["GB:en"] if "GB:en" not in markets else []):
@@ -946,6 +955,10 @@ def emit(nid: str, name: str, ticker: str, kind: str, home: str, markets: list[s
         out.append("exclude_terms: [" + ", ".join(yaml_str(x) for x in exclude) + "]")
     if comps:
         out.append("comps: [" + ", ".join(comps) + "]")
+    if sites:
+        out.append("sources:")
+        out.append("  site_queries:")
+        out.extend(f"    - {d}" for d in sites)
     return "\n".join(out) + "\n"
 
 
@@ -968,7 +981,8 @@ def main(check_only: bool = False) -> int:
                 unresolved.append(f"{nid}: {raw}")
         aliases = d["aliases"]
         files[nid] = emit(nid, d["name"], d.get("ticker", ""), "name", d["home"], d["markets"],
-                          aliases, comps, d.get("exclude", []), d.get("sector", ""), d.get("notes", ""))
+                          aliases, comps, d.get("exclude", []), d.get("sector", ""), d.get("notes", ""),
+                          d.get("sites", []))
 
     used_comp_ids = {cid for body in files.values() for cid in []}  # comps of tier A
     comp_ids = set()
