@@ -895,6 +895,8 @@ NAME_TO_ID = {
 }
 
 
+HAND_MAINTAINED = {"intrum", "centrient", "tul", "chuanning", "anglikang", "ncpc", "weiqida", "cspc", "aurobindo", "sandoz", "boels", "lowell", "paragon"}
+
 def yaml_str(s: str) -> str:
     return '"' + s.replace('"', '\\"') + '"'
 
@@ -1014,9 +1016,11 @@ def main(check_only: bool = False) -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     # remove previously generated files (keep intrum.yaml)
     for f in OUT.glob("*.yaml"):
-        if f.stem != "intrum":
+        if f.stem not in HAND_MAINTAINED:
             f.unlink()
     for nid, body in sorted(files.items()):
+        if nid in HAND_MAINTAINED:
+            continue  # hand-maintained files carry zh/site/alias detail the tables do not model yet
         (OUT / f"{nid}.yaml").write_text(body, encoding="utf-8")
     print(f"wrote {len(files)} name files (+ intrum.yaml kept)")
     return 0
