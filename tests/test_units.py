@@ -186,7 +186,8 @@ def test_site_queries_are_staggered(cfg, tmp_path):
         # every run sweeps every market at least once via the grouped queries
         assert sum(1 for l in labels if l.startswith("group")) >= len(n.markets)
         per_run.append(len(jobs))
-    assert site_total == len(n.site_queries)          # one full cycle covers every site query exactly once
+    total_site_queries = sum(len(x.site_queries) for x in cfg.names)
+    assert site_total == total_site_queries           # one full cycle covers every site query exactly once (all names)
     assert max(per_run) - min(per_run) < len(n.site_queries)  # no burst run
     forced = build_jobs(cfg, http, store, run_number=1, all_routes=True)
     assert sum(1 for j in forced if "site:" in j.label) >= len(n.site_queries) // every
@@ -343,3 +344,43 @@ def test_coverage_ledger(cfg, tmp_path):
     assert "adler" in cov["flags"]["no_queries"] and "hse" in cov["flags"]["starved"]
     assert cov["summary"]["total"] == len(cfg.names)
     store.close()
+
+
+# --- 6 Sep 2026: boels/lowell/paragon coverage-gap fix (issuer solo searches + official routes) ---
+
+def _load_name(nid):
+    from newsflow.config import load_config
+    cfg = load_config()
+    return next(n for n in cfg.names if n.id == nid)
+
+
+def test_issuer_solo_searches_present():
+    """The holdco/issuer legal names must be searched, not just matched (coverage gap of 5 Sep 2026)."""
+    expectations = {
+        "boels": "Boels Topholding",
+        "lowell": "Garfunkelux Holdco",
+        "paragon": "PCC Global",
+    }
+    for nid, issuer in expectations.items():
+        n = _load_name(nid)
+        searched = {a.text for a in n.aliases if getattr(a, "search", False)}
+        assert issuer in searched, f"{nid}: '{issuer}' must carry search: true (was match-only)"
+
+
+def test_official_site_routes_present():
+    routes = {
+        "boels": {"group.boels.com", "globenewswire.com"},
+        "lowell": {"lowell.com", "tisegroup.com", "globenewswire.com"},
+        "paragon": {"global.paragon.world", "tisegroup.com"},
+    }
+    for nid, doms in routes.items():
+        n = _load_name(nid)
+        assert doms.issubset(set(n.site_queries)), f"{nid}: site_queries missing {doms - set(n.site_queries)}"
+
+
+def test_lowell_us_noise_excluded():
+    """Hurricane Lowell / Lowell MA class must never reach the pile as Lowell (Garfunkelux) mentions."""
+    n = _load_name("lowell")
+    excl = " ".join(n.exclude_terms)
+    for term in ("Hurricane Lowell", "UMass Lowell", "Lowell Observatory"):
+        assert term in excl, f"lowell: exclude_terms missing '{term}'"
