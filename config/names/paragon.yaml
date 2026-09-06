@@ -12,7 +12,12 @@ markets:
   - {country: FR, lang: fr}
   - {country: DE, lang: de}
 aliases:
-  - {text: "Paragon Customer Communications", search: true}
+  - {text: "Paragon Customer Communications", search: true, require_context: ["Paragon", "communications", "print", "Grenadier", "PCC", "document"]}
+  - {text: "PCC Global", search: true, search_every: 2, weight: 0.9, require_context: ["Paragon", "bond", "notes", "TISE", "listing", "customer communications"]}
   - {text: "Paragon Group", weight: 0.6, require_context: ["customer communications", "print", "Grenadier", "PCC"]}
-exclude_terms: ["Paragon Banking", "Paragon Bank"]
+exclude_terms: ["Paragon Banking", "Paragon Bank", "Paragon ID"]
 comps: [quadient, williamslea, hhglobal, equiniti, xerox]
+sources:
+  site_queries:
+    - global.paragon.world
+    - tisegroup.com

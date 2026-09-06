@@ -14,7 +14,14 @@ markets:
   - {country: "NO", lang: nb}
   - {country: FI, lang: fi}
 aliases:
-  - {text: "Lowell", inflect: true, search: true, require_context: ["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management", "inkasso", "skuld", "gæld", "perintä"]}
-  - {text: "Garfunkelux", search: true, search_every: 4}
+  - {text: "Lowell", inflect: true, search: true, weight: 0.95, require_context: ["debt", "collection", "Garfunkelux", "GFKL", "Inkasso", "credit management", "inkasso", "skuld", "gæld", "perintä"]}
+  - {text: "Garfunkelux", search: true, search_every: 4, require_context: ["Garfunkelux", "Lowell", "bond", "notes", "debt", "Inkasso", "TISE", "interest"]}
+  - {text: "Garfunkelux Holdco", search: true, search_every: 2, weight: 0.9, require_context: ["Garfunkelux", "Lowell", "bond", "notes", "debt", "TISE", "interest"]}
   - {text: "Lowell Financial", weight: 0.9}
+exclude_terms: ["Hurricane Lowell", "Tropical Storm Lowell", "UMass Lowell", "Lowell Observatory", "Lowell Sun", "Lowell, Massachusetts", "Lowell MA", "Lowell High School", "Lowell General Hospital", "Lowell police", "Kauai", "Niihau", "Hawaii"]
 comps: [intrum, arrow, hoist, pra, encore]
+sources:
+  site_queries:
+    - lowell.com
+    - tisegroup.com
+    - globenewswire.com
