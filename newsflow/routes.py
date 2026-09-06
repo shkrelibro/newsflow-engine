@@ -44,6 +44,9 @@ GOOGLE_LOCALES: dict[tuple[str, str], tuple[str, str, str]] = {
     ("et", "EE"): ("et-EE", "EE", "EE:et-EE"),
     ("he", "IL"): ("he", "IL", "IL:he"),
     ("zh", "CN"): ("zh-CN", "CN", "CN:zh-Hans"),
+    ("zh", "HK"): ("zh-HK", "HK", "HK:zh-Hant"),
+    ("zh", "TW"): ("zh-TW", "TW", "TW:zh-Hant"),
+    ("en", "HK"): ("en-US", "US", "US:en"),
 }
 
 # Bing market codes.
@@ -56,13 +59,13 @@ GDELT_FIPS: dict[str, str] = {
     "SE": "SW", "GR": "GR", "ES": "SP", "DE": "GM", "IT": "IT", "NL": "NL", "FR": "FR", "GB": "UK",
     "HU": "HU", "PL": "PL", "CZ": "EZ", "SK": "LO", "FI": "FI", "NO": "NO", "DK": "DA", "PT": "PO",
     "CH": "SZ", "AT": "AU", "BE": "BE", "IE": "EI", "LT": "LH", "LV": "LG", "EE": "EN", "RO": "RO",
-    "US": "US",
+    "US": "US", "CN": "CH", "HK": "HK", "IN": "IN", "TW": "TW",
 }
 GDELT_LANGS: dict[str, str] = {
     "sv": "swedish", "el": "greek", "es": "spanish", "de": "german", "it": "italian", "nl": "dutch",
     "fr": "french", "en": "english", "hu": "hungarian", "pl": "polish", "cs": "czech", "sk": "slovak",
     "fi": "finnish", "nb": "norwegian", "no": "norwegian", "da": "danish", "pt": "portuguese",
-    "lt": "lithuanian", "lv": "latvian", "et": "estonian", "ro": "romanian",
+    "lt": "lithuanian", "lv": "latvian", "et": "estonian", "ro": "romanian", "zh": "chinese",
 }
 
 
