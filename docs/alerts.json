@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-08T15:30:36+00:00",
+ "generated_at": "2026-09-08T15:58:56+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -278,7 +278,10 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")",
+     "googlenews:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -717,7 +720,9 @@
     "alias": "Booking",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
+    ],
     "alert_categories": [
      "regulatory",
      "litigation"
@@ -985,57 +990,6 @@
    "latest": "2026-09-08T08:51:51+00:00"
   },
   {
-   "name_id": "cerba",
-   "name": "Cerba HealthCare",
-   "cluster_id": 24774,
-   "primary": {
-    "id": 34000,
-    "title": "Cerba Bank Debt for Sale as $5.8 Billion Restructuring Progresses",
-    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxORWlybGVGTFVwbDJtam9jZklHcm1xaDdTT3B6My02Qkl4aFBaeUtXYkRYemt0ZzR5WVJwbTc1ZXlza3g4dFV2dlV3ZWprOTJtc0NfZDBFdFBuR3BLRXhremlVV2tQQ3ItMmxSeEg3eGJRLXJqdWtIbE9Rc0NzbHlFU1YtRGZzSk81ckRJT0IxcUxYQ0d1SjIyX3Jwak9mZ0FBQS02VFc2VEFKT2pzc2l2TG9pSQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxORWlybGVGTFVwbDJtam9jZklHcm1xaDdTT3B6My02Qkl4aFBaeUtXYkRYemt0ZzR5WVJwbTc1ZXlza3g4dFV2dlV3ZWprOTJtc0NfZDBFdFBuR3BLRXhremlVV2tQQ3ItMmxSeEg3eGJRLXJqdWtIbE9Rc0NzbHlFU1YtRGZzSk81ckRJT0IxcUxYQ0d1SjIyX3Jwak9mZ0FBQS02VFc2VEFKT2pzc2l2TG9pSQ?oc=5",
-    "source": "Bloomberg.com",
-    "domain": "bloomberg.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-07T15:41:06+00:00",
-    "first_seen_at": "2026-09-07T15:58:22+00:00",
-    "route": "googlenews",
-    "query": "(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"Co-operative Group\")",
-    "tier_hint": null,
-    "summary": "Cerba Bank Debt for Sale as $5.8 Billion Restructuring Progresses Bloomberg.com",
-    "alias": "Cerba",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"Co-operative Group\")"
-    ],
-    "alert_categories": [
-     "restructuring"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "restructuring"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Cerba"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-09-07T15:41:06+00:00"
-  },
-  {
    "name_id": "cmacgm",
    "name": "CMA CGM",
    "cluster_id": 25242,
@@ -1292,7 +1246,9 @@
      "alias": "Danone",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"CSPC Pharmaceutical\" OR \"Currys\" OR \"Danone\" OR \"David Lloyd\" OR \"Deckers\" OR \"De'Longhi\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -1369,32 +1325,29 @@
    "latest": "2026-09-08T11:41:00+00:00"
   },
   {
-   "name_id": "danone",
-   "name": "Danone",
-   "cluster_id": 24765,
+   "name_id": "disneyparks",
+   "name": "Disney Parks",
+   "cluster_id": 26580,
    "primary": {
-    "id": 33990,
-    "title": "Danone stock gains attention as Bernstein confirms buy rating after Huel acquisition",
-    "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPNE9vTzFUMENUSjNWR0hNblhtLTh0Z2FudEhTRFRMOTFleVlpOXd6QUg4dlFPSHZ3OTVESkxKdzNidkYySUFtM1dwTmZZMmNid1ZUTVI5SGRnd3JGVVNpSHhOTlZUMXZqakNPRDkzb25mZlJsbTV6aFBVeHUtc3pzWTNNR2I2emF5Umw4MDdGSUVORW0wWVN0bzZBMnFqWVFrQWlNNjlOX1ZtUkt5eEVNdF9XcDU5V1o0OFplWWN6OFZ5RjFTQlp4UE41Y2FFWGpj",
-    "raw_link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPNE9vTzFUMENUSjNWR0hNblhtLTh0Z2FudEhTRFRMOTFleVlpOXd6QUg4dlFPSHZ3OTVESkxKdzNidkYySUFtM1dwTmZZMmNid1ZUTVI5SGRnd3JGVVNpSHhOTlZUMXZqakNPRDkzb25mZlJsbTV6aFBVeHUtc3pzWTNNR2I2emF5Umw4MDdGSUVORW0wWVN0bzZBMnFqWVFrQWlNNjlOX1ZtUkt5eEVNdF9XcDU5V1o0OFplWWN6OFZ5RjFTQlp4UE41Y2FFWGpj?oc=5",
-    "source": "AD HOC NEWS",
-    "domain": "ad-hoc-news.de",
+    "id": 36485,
+    "title": "2026 Candlelight Processional Celebrity Narrators List and Dates",
+    "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOUVU5eFM4aUVyakxSMlVUWDg2MjdyN3UzajhtWFlha2kzbERuTzVndzZOZ2d3VDBwczNWOEQtbGVBVTBLMGU0ZDN0aXVvOVQ1ZW5WSGwxMUd4Q2pSRUszbGNPeDZrMkJtVkpPT2VDQldqR2dOTi00eFBNN29kNFYxZEVxc0lkQVJPY3RqRkFlSGNaWDlvSm1YODBlOENETmhSYUZyYk83M2pRZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOUVU5eFM4aUVyakxSMlVUWDg2MjdyN3UzajhtWFlha2kzbERuTzVndzZOZ2d3VDBwczNWOEQtbGVBVTBLMGU0ZDN0aXVvOVQ1ZW5WSGwxMUd4Q2pSRUszbGNPeDZrMkJtVkpPT2VDQldqR2dOTi00eFBNN29kNFYxZEVxc0lkQVJPY3RqRkFlSGNaWDlvSm1YODBlOENETmhSYUZyYk83M2pRZw?oc=5",
+    "source": "Disney Parks Blog",
+    "domain": "disneyparksblog.com",
     "country": "GB",
     "lang": "en",
-    "published_at": "2026-09-07T15:51:00+00:00",
-    "first_seen_at": "2026-09-07T15:58:22+00:00",
+    "published_at": "2026-09-08T14:41:58+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
     "route": "googlenews",
-    "query": "(\"CSPC Pharmaceutical\" OR \"Currys\" OR \"Danone\" OR \"David Lloyd\" OR \"Deckers\" OR \"De'Longhi\")",
+    "query": "(\"DER Touristik\" OR \"Disney Parks\" OR \"Dojo\" OR \"Domino's Pizza\" OR \"Dr. Martens\" OR \"Dr. Reddy's\")",
     "tier_hint": null,
-    "summary": "Danone stock gains attention as Bernstein confirms buy rating after Huel acquisition AD HOC NEWS",
-    "alias": "Danone",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"CSPC Pharmaceutical\" OR \"Currys\" OR \"Danone\" OR \"David Lloyd\" OR \"Deckers\" OR \"De'Longhi\")"
-    ],
+    "summary": "2026 Candlelight Processional Celebrity Narrators List and Dates Disney Parks Blog",
+    "alias": "Disney Parks",
+    "alias_where": "summary",
+    "confidence": 0.7,
+    "also_routes": [],
     "alert_categories": [
-     "rating",
      "m_and_a"
     ],
     "alert_candidate": true,
@@ -1406,12 +1359,11 @@
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
-    "m_and_a",
-    "rating"
+    "m_and_a"
    ],
-   "max_confidence": 1.0,
+   "max_confidence": 0.7,
    "aliases": [
-    "Danone"
+    "Disney Parks"
    ],
    "languages": [
     "en"
@@ -1419,7 +1371,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-09-07T15:51:00+00:00"
+   "latest": "2026-09-08T14:41:58+00:00"
   },
   {
    "name_id": "dyson",
@@ -1471,6 +1423,55 @@
     "GB"
    ],
    "latest": "2026-09-08T03:11:15+00:00"
+  },
+  {
+   "name_id": "enterprise",
+   "name": "Enterprise Holdings",
+   "cluster_id": 26597,
+   "primary": {
+    "id": 36511,
+    "title": "Virtuix Holdings Inc. Sells First Omni One Enterprise Systems To U.S. Navy?s Morale, Welfare And Recreation Liberty Program",
+    "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPYWtab3JHU0VmVWJqanZTTFVnWVAwWU1GdUhoMzVIMWR6emlHMEk1bUREVFo5Q0hCeEJBNnpvcElnblpGQnh0ZHBYbnp2OXVKMWZacFJXdksyWV9ENTVQT0dtX0xsQ09aNUI1bFpTY1ZvSXRNbTdpM1J4Z1ZkbWVPcldpTldoU0puV1d3SG5PdTJzYmxDdmVQdF9zNW9IUktLSjZOM09lc29NSDZGckxSUkhEWVl0QjA3elJJd0tTTWNiVHlKOXRVZDN4aGJxMWJ4LVg2bklWd0lrSjdaNFJDQk55cE0",
+    "raw_link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPYWtab3JHU0VmVWJqanZTTFVnWVAwWU1GdUhoMzVIMWR6emlHMEk1bUREVFo5Q0hCeEJBNnpvcElnblpGQnh0ZHBYbnp2OXVKMWZacFJXdksyWV9ENTVQT0dtX0xsQ09aNUI1bFpTY1ZvSXRNbTdpM1J4Z1ZkbWVPcldpTldoU0puV1d3SG5PdTJzYmxDdmVQdF9zNW9IUktLSjZOM09lc29NSDZGckxSUkhEWVl0QjA3elJJd0tTTWNiVHlKOXRVZDN4aGJxMWJ4LVg2bklWd0lrSjdaNFJDQk55cE0?oc=5",
+    "source": "marketscreener.com",
+    "domain": "marketscreener.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-08T15:37:39+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")",
+    "tier_hint": null,
+    "summary": "Virtuix Holdings Inc. Sells First Omni One Enterprise Systems To U.S. Navy?s Morale, Welfare And Recreation Liberty Program marketscreener.com",
+    "alias": "Enterprise",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Enterprise"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-08T15:37:39+00:00"
   },
   {
    "name_id": "enterprise",
@@ -2438,57 +2439,6 @@
    "latest": "2026-09-08T04:30:40+00:00"
   },
   {
-   "name_id": "hapag",
-   "name": "Hapag-Lloyd",
-   "cluster_id": 24708,
-   "primary": {
-    "id": 33975,
-    "title": "Shipping: Hapag-Lloyd will Kritik aus Israel an ZIM-Übernahme entkräften",
-    "url": "https://handelsblatt.com/unternehmen/industrie/shipping-hapag-lloyd-will-kritik-aus-israel-an-zim-uebernahme-entkraeften/100252680.html",
-    "raw_link": "https://www.handelsblatt.com/unternehmen/industrie/shipping-hapag-lloyd-will-kritik-aus-israel-an-zim-uebernahme-entkraeften/100252680.html",
-    "source": "Handelsblatt Schlagzeilen",
-    "domain": "handelsblatt.com",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-09-07T15:24:02+00:00",
-    "first_seen_at": "2026-09-07T15:43:42+00:00",
-    "route": "rss",
-    "query": "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
-    "tier_hint": 3,
-    "summary": "Hapag-Lloyd hatte im Februar angekündigt, ZIM Integrated Shipping Services zu übernehmen. Ein nun überarbeitete Vorschlag sichere Israels Zugang zu wichtigen Schifffahrtsrouten.",
-    "alias": "Hapag-Lloyd",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "rss:https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Hapag-Lloyd"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-09-07T15:24:02+00:00"
-  },
-  {
    "name_id": "hellofresh",
    "name": "HelloFresh",
    "cluster_id": 26310,
@@ -2814,7 +2764,10 @@
     "alias": "Intrum",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\")",
+     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -2838,6 +2791,55 @@
    ],
    "countries": [
     "IE"
+   ],
+   "latest": "2026-09-08T12:37:38+00:00"
+  },
+  {
+   "name_id": "intrum",
+   "name": "Intrum AB",
+   "cluster_id": 26577,
+   "primary": {
+    "id": 36481,
+    "title": "Intrum akzeptiert 2027- und 2028-Anleihen zum Rückkauf im Rahmen eines Rückkaufangebots",
+    "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQWmlwU1pYZVBlRm5ycjNxRUhWRjlJeXV4N01JaUhqNDVFSmRRX0hhRmJfb1l4NUlWczZZMjZIdmRMRWszejJZbnNKeThLc2xrY2p2TExlSTFfY3ppVWtuU19yVlgyS3FLXzdRMDZoSnh6c1QxaFhydlhpeUJIX19kN3BMal9tREJRczY1R1hQSmVjcGxTN0VWcjNFRXU4bGJXWS00WldhNW1FUTlMMmZNTUEzUkdEMWJ2cG5jWHJTV1ZCM2N0eG1MSS1wZmxrc211MVV5VV9OdEgtT1pxaGdmejd2UDRxVXdSNFE",
+    "raw_link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQWmlwU1pYZVBlRm5ycjNxRUhWRjlJeXV4N01JaUhqNDVFSmRRX0hhRmJfb1l4NUlWczZZMjZIdmRMRWszejJZbnNKeThLc2xrY2p2TExlSTFfY3ppVWtuU19yVlgyS3FLXzdRMDZoSnh6c1QxaFhydlhpeUJIX19kN3BMal9tREJRczY1R1hQSmVjcGxTN0VWcjNFRXU4bGJXWS00WldhNW1FUTlMMmZNTUEzUkdEMWJ2cG5jWHJTV1ZCM2N0eG1MSS1wZmxrc211MVV5VV9OdEgtT1pxaGdmejd2UDRxVXdSNFE?oc=5",
+    "source": "MarketScreener Deutschland",
+    "domain": "de.marketscreener.com",
+    "country": "AT",
+    "lang": "de",
+    "published_at": "2026-09-08T12:37:38+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
+    "tier_hint": null,
+    "summary": "Intrum akzeptiert 2027- und 2028-Anleihen zum Rückkauf im Rahmen eines Rückkaufangebots MarketScreener Deutschland",
+    "alias": "Intrum",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Intrum"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "AT"
    ],
    "latest": "2026-09-08T12:37:38+00:00"
   },
@@ -3419,6 +3421,57 @@
   {
    "name_id": "labcorp",
    "name": "Labcorp",
+   "cluster_id": 26320,
+   "primary": {
+    "id": 36542,
+    "title": "Labcorp Acquires MLM Medical Labs to Expand Global Clinical Trial Services",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxObTdrTXRQYXlYb01QMWFMNXl5YlJFVzBkaU1UdnlndC14clBSVFZwaThiZGJqLXl1TnJmbW1tQ05hOFVvVUtsejZrTGx0SHhzaFE5aFhDY19IMWtkVzJ5b3EtT0M3WExIWFdkdjVleDd6eUFvdDYzV2tOWktZNHVoQjhZbmJMYTJWUmpKcDRKVTVSVHVCQVJkNGxYcVU1N3dkYXFxb3hfUmx0WWhYSHpWQ2pfdw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxObTdrTXRQYXlYb01QMWFMNXl5YlJFVzBkaU1UdnlndC14clBSVFZwaThiZGJqLXl1TnJmbW1tQ05hOFVvVUtsejZrTGx0SHhzaFE5aFhDY19IMWtkVzJ5b3EtT0M3WExIWFdkdjVleDd6eUFvdDYzV2tOWktZNHVoQjhZbmJMYTJWUmpKcDRKVTVSVHVCQVJkNGxYcVU1N3dkYXFxb3hfUmx0WWhYSHpWQ2pfdw?oc=5",
+    "source": "citybiz.co",
+    "domain": "citybiz.co",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T14:56:35+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")",
+    "tier_hint": null,
+    "summary": "Labcorp Acquires MLM Medical Labs to Expand Global Clinical Trial Services citybiz.co",
+    "alias": "Labcorp",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\")"
+    ],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Labcorp"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T14:56:35+00:00"
+  },
+  {
+   "name_id": "labcorp",
+   "name": "Labcorp",
    "cluster_id": 26441,
    "primary": {
     "id": 36301,
@@ -3439,7 +3492,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")"
+     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")",
+     "googlenews:(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -3490,7 +3544,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")"
+     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")",
+     "googlenews:(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -3541,7 +3596,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")"
+     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")",
+     "googlenews:(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -3643,7 +3699,9 @@
     "alias": "Lufthansa",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Hornbach\" OR \"KiK\" OR \"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"Motel One\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3720,7 +3778,9 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Hornbach\" OR \"KiK\" OR \"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"Motel One\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -3745,7 +3805,9 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Hornbach\" OR \"KiK\" OR \"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"Motel One\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -3822,7 +3884,9 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -4084,57 +4148,6 @@
    "latest": "2026-09-08T03:03:00+00:00"
   },
   {
-   "name_id": "lufthansa",
-   "name": "Lufthansa",
-   "cluster_id": 24810,
-   "primary": {
-    "id": 34044,
-    "title": "Gloy to succeed Stark as Lufthansa Technik CEO",
-    "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNeURmZmN1NVJ0R2dwZ1U0X0l0TFJFQXMzTTAwU0phOWZCa0hHNDRpX285c0lzcy1VZWtfNzVNX3pDWUR3UVVyX3U5R2RaX3pobnY1T3RvNUx0YTRjWTRscWRrakNCcmhoZDNCdV9BSlVaQUV5b0NMV0hXbGVOUENfaGsyYnBoLXdFRkhSMkROUzRpMDlnZEtZc3NQdHdVZ2p4Qkc3amRn",
-    "raw_link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNeURmZmN1NVJ0R2dwZ1U0X0l0TFJFQXMzTTAwU0phOWZCa0hHNDRpX285c0lzcy1VZWtfNzVNX3pDWUR3UVVyX3U5R2RaX3pobnY1T3RvNUx0YTRjWTRscWRrakNCcmhoZDNCdV9BSlVaQUV5b0NMV0hXbGVOUENfaGsyYnBoLXdFRkhSMkROUzRpMDlnZEtZc3NQdHdVZ2p4Qkc3amRn?oc=5",
-    "source": "Aviation Business News",
-    "domain": "aviationbusinessnews.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-09-07T15:13:00+00:00",
-    "first_seen_at": "2026-09-07T15:58:22+00:00",
-    "route": "googlenews",
-    "query": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")",
-    "tier_hint": null,
-    "summary": "Gloy to succeed Stark as Lufthansa Technik CEO Aviation Business News",
-    "alias": "Lufthansa",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Lufthansa"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-09-07T15:13:00+00:00"
-  },
-  {
    "name_id": "merlin",
    "name": "Merlin Entertainments",
    "cluster_id": 26038,
@@ -4269,32 +4282,32 @@
    "latest": "2026-09-07T17:32:02+00:00"
   },
   {
-   "name_id": "merlin",
-   "name": "Merlin Entertainments",
-   "cluster_id": 24752,
+   "name_id": "nike",
+   "name": "Nike",
+   "cluster_id": 26599,
    "primary": {
-    "id": 33972,
-    "title": "Isle of Skye’s Kinloch Lodge sold by family owners",
-    "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSEpBeW9rZDEyRE55YnBmSGl4X09wM0VINDlMeWhzb3FlVGdvSk9OalA1VERNNnFqT0ZDSXd2T24wZjZIcUQ2TE81MF9vOGthenluSUN1Y0dXRzdkMG40RnBnVlhrSnlGRngxX1Z1TlZna1FUUUg3TFFreGJsWmpuc3kwcHN5MDBu",
-    "raw_link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSEpBeW9rZDEyRE55YnBmSGl4X09wM0VINDlMeWhzb3FlVGdvSk9OalA1VERNNnFqT0ZDSXd2T24wZjZIcUQ2TE81MF9vOGthenluSUN1Y0dXRzdkMG40RnBnVlhrSnlGRngxX1Z1TlZna1FUUUg3TFFreGJsWmpuc3kwcHN5MDBu?oc=5",
-    "source": "The Caterer",
-    "domain": "thecaterer.com",
+    "id": 36513,
+    "title": "Nike, Simon Property Group dropped from S&P 100",
+    "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZkpNZ0o5QlppVXoyQWYwcWtuYnJ0bm9ZY2dLVWhVN1ZiUHNaaDFmT2pFejgyMG5IRXRNVGJ0OGNiLUZnTXliYml2cjVwcS1oV09ucnZ1dFBycUJFUG5IcWtCNjNzUVJiUXNwWHotancxUWRla09KTUt3Z2ViV3V6UmpRSDRnaHc",
+    "raw_link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZkpNZ0o5QlppVXoyQWYwcWtuYnJ0bm9ZY2dLVWhVN1ZiUHNaaDFmT2pFejgyMG5IRXRNVGJ0OGNiLUZnTXliYml2cjVwcS1oV09ucnZ1dFBycUJFUG5IcWtCNjNzUVJiUXNwWHotancxUWRla09KTUt3Z2ViV3V6UmpRSDRnaHc?oc=5",
+    "source": "Retail Dive",
+    "domain": "retaildive.com",
     "country": "GB",
     "lang": "en",
-    "published_at": "2026-09-07T09:22:24+00:00",
-    "first_seen_at": "2026-09-07T15:43:42+00:00",
+    "published_at": "2026-09-08T15:35:33+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
     "route": "googlenews",
-    "query": "\"Merlin Entertainments\"",
+    "query": "(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")",
     "tier_hint": null,
-    "summary": "Isle of Skye’s Kinloch Lodge sold by family owners The Caterer",
-    "alias": "(query)",
-    "alias_where": "none",
-    "confidence": 0.4,
+    "summary": "Nike, Simon Property Group dropped from S&P 100 Retail Dive",
+    "alias": "Nike",
+    "alias_where": "title",
+    "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Merlin Entertainments\""
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
     ],
     "alert_categories": [
-     "m_and_a"
+     "rating"
     ],
     "alert_candidate": true,
     "status": "candidate",
@@ -4305,11 +4318,11 @@
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
-    "m_and_a"
+    "rating"
    ],
-   "max_confidence": 0.4,
+   "max_confidence": 1.0,
    "aliases": [
-    "(query)"
+    "Nike"
    ],
    "languages": [
     "en"
@@ -4317,7 +4330,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-09-07T09:22:24+00:00"
+   "latest": "2026-09-08T15:35:33+00:00"
   },
   {
    "name_id": "nike",
@@ -4644,7 +4657,9 @@
      "alias": "Organon",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
+     ],
      "alert_categories": [
       "rating",
       "m_and_a"
@@ -5244,64 +5259,36 @@
    "name": "Planet Fitness",
    "cluster_id": 19421,
    "primary": {
-    "id": 34020,
-    "title": "PLNT Shareholders Have Opportunity to Lead Planet Fitness, Inc. C",
-    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPODd3ckFvblg4SHVMUFFkYjczQ05MRHVQYWVJV0JvWmtBd2M0VzRXa21NUXhXQkMxTjBtMHR5RzVzcUtrellNM0xJdE1ycEVYV1JBcHRyWE1tUEVVTnRmOHBKUjB3b05Qc01pX283MUxxVWM4eWkwNm5XZU5HQ2JKbVo2LUFJNGtxMS1DR2JLSjJuWHR4V05fckt6c3UxY2RTbGFoczVFOE1LY2RaZ2VIVDV2Zw",
-    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPODd3ckFvblg4SHVMUFFkYjczQ05MRHVQYWVJV0JvWmtBd2M0VzRXa21NUXhXQkMxTjBtMHR5RzVzcUtrellNM0xJdE1ycEVYV1JBcHRyWE1tUEVVTnRmOHBKUjB3b05Qc01pX283MUxxVWM4eWkwNm5XZU5HQ2JKbVo2LUFJNGtxMS1DR2JLSjJuWHR4V05fckt6c3UxY2RTbGFoczVFOE1LY2RaZ2VIVDV2Zw?oc=5",
-    "source": "The National Law Review",
-    "domain": "natlawreview.com",
-    "country": "GB",
+    "id": 34155,
+    "title": "Planet Fitness, Inc. (PLNT) Shareholders Who Lost Money Have Opportunity to Lead Securities Fraud Lawsuit",
+    "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPSWUtWGt5RklUWG4tY0VLa2dHcE44NHhrMXlrQ3V6eVpONUVCM09PU2lHeTlELVlfNVJiOFgxckxsVEVPNkNiR2lQVTFvX0lMemZSbm9PR1ZmNnNLY3pPY0N0b1NtUk1IZEVIT1BNWVlrelhKd244TUgyM0hONGkzM01ndnEzRXJOc1gzMHp3cjBSeVQxNnBJSnhPenRnUVRXSjVTX0RUQ3djc0pKVjVmNDZ5eGxYMnhJRlBGTm1OM0MzTU5PbmNWTHRGNkcxZGlKR1dWUXFtVnJSWUtPZkd1dVRXOGFhTzUzTkRTSktYREQ2V0pF",
+    "raw_link": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPSWUtWGt5RklUWG4tY0VLa2dHcE44NHhrMXlrQ3V6eVpONUVCM09PU2lHeTlELVlfNVJiOFgxckxsVEVPNkNiR2lQVTFvX0lMemZSbm9PR1ZmNnNLY3pPY0N0b1NtUk1IZEVIT1BNWVlrelhKd244TUgyM0hONGkzM01ndnEzRXJOc1gzMHp3cjBSeVQxNnBJSnhPenRnUVRXSjVTX0RUQ3djc0pKVjVmNDZ5eGxYMnhJRlBGTm1OM0MzTU5PbmNWTHRGNkcxZGlKR1dWUXFtVnJSWUtPZkd1dVRXOGFhTzUzTkRTSktYREQ2V0pF?oc=5",
+    "source": "Morningstar",
+    "domain": "morningstar.com",
+    "country": "US",
     "lang": "en",
-    "published_at": "2026-09-07T11:47:46+00:00",
-    "first_seen_at": "2026-09-07T15:58:22+00:00",
+    "published_at": "2026-09-07T17:00:00+00:00",
+    "first_seen_at": "2026-09-07T17:17:54+00:00",
     "route": "googlenews",
-    "query": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
+    "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
     "tier_hint": null,
-    "summary": "PLNT Shareholders Have Opportunity to Lead Planet Fitness, Inc. C The National Law Review",
+    "summary": "Planet Fitness, Inc. (PLNT) Shareholders Who Lost Money Have Opportunity to Lead Securities Fraud Lawsuit Morningstar",
     "alias": "Planet Fitness",
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
-     "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
+     "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
+     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
     ],
-    "alert_categories": [],
-    "alert_candidate": false,
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
     "status": "candidate",
     "screen_reason": "",
     "url_unresolved": true
    },
    "also": [
-    {
-     "id": 34155,
-     "title": "Planet Fitness, Inc. (PLNT) Shareholders Who Lost Money Have Opportunity to Lead Securities Fraud Lawsuit",
-     "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPSWUtWGt5RklUWG4tY0VLa2dHcE44NHhrMXlrQ3V6eVpONUVCM09PU2lHeTlELVlfNVJiOFgxckxsVEVPNkNiR2lQVTFvX0lMemZSbm9PR1ZmNnNLY3pPY0N0b1NtUk1IZEVIT1BNWVlrelhKd244TUgyM0hONGkzM01ndnEzRXJOc1gzMHp3cjBSeVQxNnBJSnhPenRnUVRXSjVTX0RUQ3djc0pKVjVmNDZ5eGxYMnhJRlBGTm1OM0MzTU5PbmNWTHRGNkcxZGlKR1dWUXFtVnJSWUtPZkd1dVRXOGFhTzUzTkRTSktYREQ2V0pF",
-     "raw_link": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPSWUtWGt5RklUWG4tY0VLa2dHcE44NHhrMXlrQ3V6eVpONUVCM09PU2lHeTlELVlfNVJiOFgxckxsVEVPNkNiR2lQVTFvX0lMemZSbm9PR1ZmNnNLY3pPY0N0b1NtUk1IZEVIT1BNWVlrelhKd244TUgyM0hONGkzM01ndnEzRXJOc1gzMHp3cjBSeVQxNnBJSnhPenRnUVRXSjVTX0RUQ3djc0pKVjVmNDZ5eGxYMnhJRlBGTm1OM0MzTU5PbmNWTHRGNkcxZGlKR1dWUXFtVnJSWUtPZkd1dVRXOGFhTzUzTkRTSktYREQ2V0pF?oc=5",
-     "source": "Morningstar",
-     "domain": "morningstar.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-09-07T17:00:00+00:00",
-     "first_seen_at": "2026-09-07T17:17:54+00:00",
-     "route": "googlenews",
-     "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
-     "tier_hint": null,
-     "summary": "Planet Fitness, Inc. (PLNT) Shareholders Who Lost Money Have Opportunity to Lead Securities Fraud Lawsuit Morningstar",
-     "alias": "Planet Fitness",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
-      "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
-     ],
-     "alert_categories": [
-      "litigation"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
     {
      "id": 34297,
      "title": "Planet Fitness, Inc. (PLNT) Shareholders Who Lost Money Have Opportunity to Lead Securities Fraud Lawsuit",
@@ -5434,6 +5421,57 @@
   {
    "name_id": "quest",
    "name": "Quest Diagnostics",
+   "cluster_id": 26589,
+   "primary": {
+    "id": 36498,
+    "title": "UBS Adjusts Quest Diagnostics Price Target to $245 From $232, Maintains Neutral Rating",
+    "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNUF9RSTd2NDYxcU84cWp4U2cwQ1JMeWU3OV9jZnFoa0JsQmwwTUcyc1V5TXk4M0otOTB4cGpJdWsxOVZFd1hRODVpX1VaX3hJOXNRRVVkLUdaVXdadl9ubWxCckk4cHJZQmVUTmh2LWFJVE0xMDlqb090UnNjZXk1Q0ZnaXJxaWFhVnFHank5dWNuX3pJdnI0emJabWtsel9wRDZYOHNWSW12dG5oa1RWTkE2Wm5yQVh0OEQyOEtnckdfV2FlYV9FSExOeHRkR3YxU3c",
+    "raw_link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNUF9RSTd2NDYxcU84cWp4U2cwQ1JMeWU3OV9jZnFoa0JsQmwwTUcyc1V5TXk4M0otOTB4cGpJdWsxOVZFd1hRODVpX1VaX3hJOXNRRVVkLUdaVXdadl9ubWxCckk4cHJZQmVUTmh2LWFJVE0xMDlqb090UnNjZXk1Q0ZnaXJxaWFhVnFHank5dWNuX3pJdnI0emJabWtsel9wRDZYOHNWSW12dG5oa1RWTkE2Wm5yQVh0OEQyOEtnckdfV2FlYV9FSExOeHRkR3YxU3c?oc=5",
+    "source": "marketscreener.com",
+    "domain": "marketscreener.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-08T13:42:42+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
+    "tier_hint": null,
+    "summary": "UBS Adjusts Quest Diagnostics Price Target to $245 From $232, Maintains Neutral Rating marketscreener.com",
+    "alias": "Quest Diagnostics",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Puma\" OR \"Quadient\" OR \"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\")"
+    ],
+    "alert_categories": [
+     "rating"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "rating"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Quest Diagnostics"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-08T13:42:42+00:00"
+  },
+  {
+   "name_id": "quest",
+   "name": "Quest Diagnostics",
    "cluster_id": 26408,
    "primary": {
     "id": 36247,
@@ -5507,7 +5545,9 @@
     "alias": "Randstad",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Raízen\" OR \"Randstad\" OR \"The Restaurant\" OR \"Rheavendors\" OR \"Ribera Salud\" OR \"Robert Half\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -5791,6 +5831,57 @@
     "United States"
    ],
    "latest": "2026-09-07T19:45:00+00:00"
+  },
+  {
+   "name_id": "ryanair",
+   "name": "Ryanair",
+   "cluster_id": 26563,
+   "primary": {
+    "id": 36464,
+    "title": "RYANAIR CALLS ON NATS CEO TO QUIT AFTER YET ANOTHER UK ATC SYSTEM FAILURE ON TUES (8 SEPT)",
+    "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQSS1jUXFGWHA1SVVnQjZSMDFJQWxBYWhGYVM5UGJYTEMyN0ktV2NfTm5wdTVFRlktX1dLZl9SR1ZQeTRJVC16S2ZfM3czTVZ3R1UtZ2lpSHJDQ005MENoVHZoSkVjT29LM0tISHh2ZDJmTWFkdndvNlN1RTdxck5JSUJxdEJ3TGptd0U0UzFKQlJvU2FLNEhJZDdUTEpJcTZhYlFzOWpsMTZ5QklQTDdHTkFIOWlnT3YyVFAzeW5qSFdTdw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQSS1jUXFGWHA1SVVnQjZSMDFJQWxBYWhGYVM5UGJYTEMyN0ktV2NfTm5wdTVFRlktX1dLZl9SR1ZQeTRJVC16S2ZfM3czTVZ3R1UtZ2lpSHJDQ005MENoVHZoSkVjT29LM0tISHh2ZDJmTWFkdndvNlN1RTdxck5JSUJxdEJ3TGptd0U0UzFKQlJvU2FLNEhJZDdUTEpJcTZhYlFzOWpsMTZ5QklQTDdHTkFIOWlnT3YyVFAzeW5qSFdTdw?oc=5",
+    "source": "corporate.ryanair.com",
+    "domain": "corporate.ryanair.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T15:24:01+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+    "tier_hint": null,
+    "summary": "RYANAIR CALLS ON NATS CEO TO QUIT AFTER YET ANOTHER UK ATC SYSTEM FAILURE ON TUES (8 SEPT) corporate.ryanair.com",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T15:24:01+00:00"
   },
   {
    "name_id": "ryanair",
@@ -6221,6 +6312,55 @@
     "GB"
    ],
    "latest": "2026-09-07T16:38:06+00:00"
+  },
+  {
+   "name_id": "sandoz",
+   "name": "Sandoz",
+   "cluster_id": 26570,
+   "primary": {
+    "id": 36473,
+    "title": "Sandoz CEO: Tariffs Would Raise Drug Costs",
+    "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPWXdTTjBsbm84Y3J5aE1nNHdZYmpEV3hsc0pqNTB2aXktclc1UVRHNzhCSC1NSk53M3RBTUhBWVNwRktwSWFQZExxc092ZnJSMWNMSGRicDA3Si1rbl9JQ3Q3ek12eS1POWVkRXJ6TkdxMHZfaEFUeXZPbnA3TDhNNHA2ZU1MZms3aGEwNkxfQWM",
+    "raw_link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPWXdTTjBsbm84Y3J5aE1nNHdZYmpEV3hsc0pqNTB2aXktclc1UVRHNzhCSC1NSk53M3RBTUhBWVNwRktwSWFQZExxc092ZnJSMWNMSGRicDA3Si1rbl9JQ3Q3ek12eS1POWVkRXJ6TkdxMHZfaEFUeXZPbnA3TDhNNHA2ZU1MZms3aGEwNkxfQWM?oc=5",
+    "source": "Briefs Finance",
+    "domain": "briefs.co",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T15:02:22+00:00",
+    "first_seen_at": "2026-09-08T15:46:28+00:00",
+    "route": "googlenews",
+    "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+    "tier_hint": null,
+    "summary": "Sandoz CEO: Tariffs Would Raise Drug Costs Briefs Finance",
+    "alias": "Sandoz",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Sandoz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T15:02:22+00:00"
   },
   {
    "name_id": "savencia",
@@ -6857,7 +6997,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -7374,57 +7516,6 @@
     "HU"
    ],
    "latest": "2026-09-07T08:41:00+00:00"
-  },
-  {
-   "name_id": "zim",
-   "name": "ZIM",
-   "cluster_id": 24708,
-   "primary": {
-    "id": 33975,
-    "title": "Shipping: Hapag-Lloyd will Kritik aus Israel an ZIM-Übernahme entkräften",
-    "url": "https://handelsblatt.com/unternehmen/industrie/shipping-hapag-lloyd-will-kritik-aus-israel-an-zim-uebernahme-entkraeften/100252680.html",
-    "raw_link": "https://www.handelsblatt.com/unternehmen/industrie/shipping-hapag-lloyd-will-kritik-aus-israel-an-zim-uebernahme-entkraeften/100252680.html",
-    "source": "Handelsblatt Schlagzeilen",
-    "domain": "handelsblatt.com",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-09-07T15:24:02+00:00",
-    "first_seen_at": "2026-09-07T15:43:42+00:00",
-    "route": "rss",
-    "query": "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
-    "tier_hint": 3,
-    "summary": "Hapag-Lloyd hatte im Februar angekündigt, ZIM Integrated Shipping Services zu übernehmen. Ein nun überarbeitete Vorschlag sichere Israels Zugang zu wichtigen Schifffahrtsrouten.",
-    "alias": "ZIM",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "rss:https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "ZIM"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-09-07T15:24:02+00:00"
   }
  ]
 }
