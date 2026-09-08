@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-08T13:31:53+00:00",
- "sources": 1053,
- "failing": 124,
+ "generated_at": "2026-09-08T13:59:10+00:00",
+ "sources": 1030,
+ "failing": 102,
  "detail": [
   {
    "route": "bingnews",
@@ -78,8 +78,8 @@
   {
    "route": "bingnews",
    "source": "\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\" [en-IE]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -454,8 +454,8 @@
   {
    "route": "bingnews",
    "source": "\"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\" OR \"Fressnapf\" [de-DE]",
-   "ok_runs": 2,
-   "runs": 2,
+   "ok_runs": 1,
+   "runs": 1,
    "items": 0,
    "last_error": ""
   },
@@ -894,8 +894,8 @@
   {
    "route": "bingnews",
    "source": "\"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\" OR \"Rekeep\" [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -1182,8 +1182,8 @@
   {
    "route": "bingnews",
    "source": "\"Vivion\" OR \"Worldline\" [de-DE]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -1216,7 +1216,7 @@
    "source": "\"Worldline\" [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 18,
+   "items": 19,
    "last_error": ""
   },
   {
@@ -1317,23 +1317,7 @@
   },
   {
    "route": "bingnews",
-   "source": "bing0 6 [en-IE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "bingnews",
-   "source": "bing6 2 [de-DE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "bingnews",
-   "source": "bing8 6 [en-GB]",
+   "source": "bing1 6 [de-DE]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -1422,10 +1406,10 @@
   {
    "route": "gdelt",
    "source": "(\"Carnival\" OR \"Castellum\" OR \"Centrakor\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"Chuanning Biotech\") [all/all]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
-   "items": 0,
-   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Carnival%22+OR+%22Castellum%22+OR+%22Centrakor%22+OR+%22Channel+21%22+OR+%22CHRIST+%28jeweller%29%22+OR+%22Chuanning+Biotech%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
+   "items": 243,
+   "last_error": ""
   },
   {
    "route": "gdelt",
@@ -1454,10 +1438,10 @@
   {
    "route": "gdelt",
    "source": "(\"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\") [all/all]",
-   "ok_runs": 2,
+   "ok_runs": 1,
    "runs": 2,
    "items": 0,
-   "last_error": ""
+   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22DEMIRE%22+OR+%22doValue%22+OR+%22Elior%22+OR+%22Europcar%22+OR+%22Evoca%22+OR+%22Flora+Food%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
   },
   {
    "route": "gdelt",
@@ -1505,7 +1489,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Gifi%22+OR+%22Gousto%22+OR+%22Grand+City+Properties%22+OR+%22Greggs%22+OR+%22Groupe+SEB%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
+   "last_error": "GDELT non-JSON response: The specified phrase is too short."
   },
   {
    "route": "gdelt",
@@ -1520,7 +1504,7 @@
    "source": "(\"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\") [all/all]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 2,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -1558,10 +1542,10 @@
   {
    "route": "gdelt",
    "source": "(\"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Mobilux\" OR \"Motor Fuel Group\" OR \"Mutares\") [all/all]",
-   "ok_runs": 2,
+   "ok_runs": 1,
    "runs": 2,
-   "items": 2,
-   "last_error": ""
+   "items": 1,
+   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Manuchar%22+OR+%22Maxeda%22+OR+%22Merlin+Entertainments%22+OR+%22Mobilux%22+OR+%22Motor+Fuel+Group%22+OR+%22Mutares%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
   },
   {
    "route": "gdelt",
@@ -1657,7 +1641,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Savencia%22+OR+%22Sielaff%22+OR+%22Signet+Jewelers%22+OR+%22Sixt%22+OR+%22Sodexo%22+OR+%22Sonic+Healthcare%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
+   "last_error": "GDELT non-JSON response: The specified phrase is too short."
   },
   {
    "route": "gdelt",
@@ -1981,54 +1965,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"B2Holding\" [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"B2Holding\" [fi-FI]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"B2Holding\" [it-IT]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"B2Holding\" [nb-NO]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"B2Holding\" [pl-PL]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"B2Holding\" [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Bertrand Franchise\" [en-GB]",
    "ok_runs": 1,
    "runs": 1,
@@ -2126,10 +2062,10 @@
   {
    "route": "googlenews",
    "source": "\"Boels Topholding\" [pl-PL]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2406,10 +2342,10 @@
   {
    "route": "googlenews",
    "source": "\"Gardant\" [el-CY]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2422,10 +2358,10 @@
   {
    "route": "googlenews",
    "source": "\"Gardant\" [en-GB]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2470,10 +2406,10 @@
   {
    "route": "googlenews",
    "source": "\"Garfunkelux Holdco\" [en-GB]",
-   "ok_runs": 2,
+   "ok_runs": 1,
    "runs": 2,
    "items": 0,
-   "last_error": ""
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2925,7 +2861,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:15min.lt [lt-LT]",
+   "source": "\"Intrum\" site:acm.nl [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -2973,23 +2909,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:agcm.it [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:agefi.fr [fr-FR]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:alicanteplaza.es [es-ES]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3053,11 +2973,19 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:blick.ch [de-CH]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:berlingske.dk [da-DK]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:bfmtv.com [fr-FR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -3101,7 +3029,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:ccpc.ie [sv-SE]",
+   "source": "\"Intrum\" site:businessinsider.com.pl [pl-PL]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3109,7 +3037,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:centralbank.ie [sv-SE]",
+   "source": "\"Intrum\" site:ccpc.ie [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3125,7 +3053,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:cityam.com [en-GB]",
+   "source": "\"Intrum\" site:cnb.cz [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3141,7 +3069,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:cnpd.pt [sv-SE]",
+   "source": "\"Intrum\" site:cnmc.es [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3173,10 +3101,10 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:dagensps.se [sv-SE]",
+   "source": "\"Intrum\" site:creditvillage.news [it-IT]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 2,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3197,6 +3125,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:debtwire.com [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:derstandard.at [de-AT]",
    "ok_runs": 1,
    "runs": 1,
@@ -3205,7 +3141,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:dinheirovivo.pt [pt-PT]",
+   "source": "\"Intrum\" site:diepresse.com [de-AT]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3245,6 +3181,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:e24.no [nb-NO]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:eba.europa.eu [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3277,6 +3221,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:economie.gouv.fr [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:edoeb.admin.ch [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3286,6 +3238,14 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:ejeprime.com [es-ES]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:elconfidencial.com [es-ES]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3309,14 +3269,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:euro2day.gr [el-GR]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 1,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:expansion.com [es-ES]",
    "ok_runs": 1,
    "runs": 1,
@@ -3326,6 +3278,14 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:faz.net [de-DE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:fca.org.uk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3357,39 +3317,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:finansavisen.no [nb-NO]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:finanssivalvonta.fi [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:finanstilsynet.no [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:finanz-szene.de [de-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:fma.gv.at [sv-SE]",
+   "source": "\"Intrum\" site:finanstilsynet.dk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3413,7 +3341,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:fsma.be [sv-SE]",
+   "source": "\"Intrum\" site:ft.com [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3421,7 +3349,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:ft.com [sv-SE]",
+   "source": "\"Intrum\" site:fundssociety.com [es-ES]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3461,23 +3389,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:handelsblatt.com [de-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:hln.be [nl-BE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:hn.cz [cs-CZ]",
+   "source": "\"Intrum\" site:handelszeitung.ch [de-CH]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3486,14 +3398,6 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:hn.se [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:hnonline.sk [sk-SK]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3533,14 +3437,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:imerisia.gr [el-GR]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:imy.se [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3557,14 +3453,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:independent.ie [en-IE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:index.hu [hu-HU]",
    "ok_runs": 1,
    "runs": 1,
@@ -3574,6 +3462,14 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:intrum.at [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:intrum.be [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3605,15 +3501,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.cz [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.de [sv-SE]",
+   "source": "\"Intrum\" site:intrum.dk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3637,6 +3525,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:intrum.hu [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:intrum.ie [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3645,7 +3541,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.it [sv-SE]",
+   "source": "\"Intrum\" site:intrum.lt [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3725,7 +3621,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:kathimerini.gr [el-GR]",
+   "source": "\"Intrum\" site:jornaleconomico.pt [pt-PT]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3733,10 +3629,10 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:kauppalehti.fi [fi-FI]",
+   "source": "\"Intrum\" site:kathimerini.gr [el-GR]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 100,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3758,6 +3654,14 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:konsument.at [de-AT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:konsumentverket.se [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3790,14 +3694,6 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:lecho.be [fr-BE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:lefigaro.fr [fr-FR]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3845,6 +3741,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:mnb.hu [sv-SE]",
+   "ok_runs": 0,
+   "runs": 1,
+   "items": 0,
+   "last_error": "skipped: run time budget reached"
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:money.pl [pl-PL]",
    "ok_runs": 1,
    "runs": 1,
@@ -3861,10 +3765,10 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:naih.hu [sv-SE]",
+   "source": "\"Intrum\" site:naftemporiki.gr [el-GR]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 0,
+   "items": 1,
    "last_error": ""
   },
   {
@@ -3901,6 +3805,22 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:news.sky.com [en-GB]",
+   "ok_runs": 0,
+   "runs": 1,
+   "items": 0,
+   "last_error": "skipped: run time budget reached"
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:novinky.cz [cs-CZ]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:nrc.nl [nl-NL]",
    "ok_runs": 1,
    "runs": 1,
@@ -3917,19 +3837,27 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:orf.at [de-AT]",
+   "source": "\"Intrum\" site:ot.gr [el-GR]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 0,
+   "items": 1,
    "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:parkiet.com [pl-PL]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:placera.se [sv-SE]",
+   "ok_runs": 1,
    "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "items": 5,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:portfolio.hu [hu-HU]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 1,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -3949,31 +3877,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:privatbankar.hu [hu-HU]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:realtid.se [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:reorg.com [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:repubblica.it [it-IT]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3997,7 +3901,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:rtl.nl [nl-NL]",
+   "source": "\"Intrum\" site:rte.ie [en-IE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -4045,14 +3949,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:svd.se [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:synigoroskatanaloti.gr [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -4065,6 +3961,22 @@
    "ok_runs": 1,
    "runs": 1,
    "items": 1,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:telegraaf.nl [nl-NL]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:telex.hu [hu-HU]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -4101,6 +4013,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:trends.knack.be [nl-BE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:uodo.gov.pl [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -4117,7 +4037,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:uoou.gov.cz [sv-SE]",
+   "source": "\"Intrum\" site:verbraucherzentrale.de [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -4125,7 +4045,23 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:vozpopuli.com [es-ES]",
+   "source": "\"Intrum\" site:vz.lt [lt-LT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:wiwo.de [de-DE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:yle.fi [fi-FI]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -4221,22 +4157,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Manutencoop\" [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Manutencoop\" [it-IT]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Maxeda\" [nl-NL]",
    "ok_runs": 2,
    "runs": 2,
@@ -4248,7 +4168,7 @@
    "source": "\"MediaMarkt\" [de-AT]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 112,
+   "items": 110,
    "last_error": ""
   },
   {
@@ -4256,7 +4176,7 @@
    "source": "\"MediaMarkt\" [de-CH]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 112,
+   "items": 109,
    "last_error": ""
   },
   {
@@ -4264,7 +4184,7 @@
    "source": "\"MediaMarkt\" [de-DE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 112,
+   "items": 109,
    "last_error": ""
   },
   {
@@ -4272,7 +4192,7 @@
    "source": "\"MediaMarkt\" [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 15,
+   "items": 16,
    "last_error": ""
   },
   {
@@ -4280,16 +4200,16 @@
    "source": "\"MediaMarkt\" [es-ES]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 24,
+   "items": 25,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"MediaMarkt\" [hu-HU]",
-   "ok_runs": 4,
+   "ok_runs": 3,
    "runs": 4,
    "items": 1,
-   "last_error": ""
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -4304,7 +4224,7 @@
    "source": "\"MediaMarkt\" [nl-NL]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 31,
+   "items": 30,
    "last_error": ""
   },
   {
@@ -4494,10 +4414,10 @@
   {
    "route": "googlenews",
    "source": "\"PCC Global\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4896,7 +4816,7 @@
    "source": "\"Teva Pharmaceutical\" [en-US]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 8,
+   "items": 9,
    "last_error": ""
   },
   {
@@ -4952,16 +4872,16 @@
    "source": "\"Upfield\" [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 15,
+   "items": 14,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Upfield\" [en-US]",
-   "ok_runs": 2,
+   "ok_runs": 1,
    "runs": 2,
-   "items": 16,
-   "last_error": ""
+   "items": 7,
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -4984,7 +4904,7 @@
    "source": "\"Very Group\" [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 16,
+   "items": 15,
    "last_error": ""
   },
   {
@@ -4992,7 +4912,7 @@
    "source": "\"Very Group\" [en-IE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 16,
+   "items": 15,
    "last_error": ""
   },
   {
@@ -5094,10 +5014,10 @@
   {
    "route": "googlenews",
    "source": "\"伊犁川宁\" [en-GB]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5128,7 +5048,7 @@
    "source": "\"华北制药\" [zh-CN]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 1,
+   "items": 2,
    "last_error": ""
   },
   {
@@ -5248,7 +5168,7 @@
    "source": "\"石药集团\" [zh-CN]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 24,
+   "items": 22,
    "last_error": ""
   },
   {
@@ -5280,7 +5200,7 @@
    "source": "\"联邦制药\" [zh-CN]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 14,
+   "items": 13,
    "last_error": ""
   },
   {
@@ -5336,7 +5256,7 @@
    "source": "(\"1-2-3.tv\" OR \"Adidas\" OR \"Arla Foods\" OR \"Aroundtown\" OR \"Aurelius\" OR \"Bayer\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 198,
+   "items": 187,
    "last_error": ""
   },
   {
@@ -5352,7 +5272,7 @@
    "source": "(\"ACS Dobfar\" OR \"Arcaplanet\" OR \"Bianchi Industry\" OR \"De'Longhi\" OR \"Kedrion\" OR \"Morellato\") [it-IT]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 14,
+   "items": 16,
    "last_error": ""
   },
   {
@@ -5360,15 +5280,15 @@
    "source": "(\"Action\" OR \"Adyen\" OR \"Air France-KLM\" OR \"Basic-Fit\" OR \"Booking\" OR \"C&A\") [nl-NL]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 85,
+   "items": 87,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Adecco\" OR \"Covis Pharma\" OR \"Octapharma\" OR \"On Holding\" OR \"Peach Property\" OR \"Sandoz\") [de-CH]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 21,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 43,
    "last_error": ""
   },
   {
@@ -5390,17 +5310,9 @@
   {
    "route": "googlenews",
    "source": "(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\") [en-GB]",
-   "ok_runs": 4,
-   "runs": 4,
-   "items": 17,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "(\"Adler Group\" OR \"Branicks\" OR \"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Fressnapf\") site:bundeskartellamt.de [en-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
+   "ok_runs": 3,
+   "runs": 3,
+   "items": 13,
    "last_error": ""
   },
   {
@@ -5416,15 +5328,7 @@
    "source": "(\"Adler Group\" OR \"Cerba\" OR \"Vivion\") [fr-LU]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 4,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Co-operative Group\" OR \"Froneri\" OR \"Keepmoat\") site:gov.uk [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 46,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -5440,15 +5344,15 @@
    "source": "(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\") [en-IE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 305,
+   "items": 313,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 100,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 200,
    "last_error": ""
   },
   {
@@ -5456,7 +5360,7 @@
    "source": "(\"Air France-KLM\" OR \"Alten\" OR \"Brico Dépôt\" OR \"Centrakor\" OR \"Compagnie des Alpes\" OR \"Conforama\") [fr-FR]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 34,
+   "items": 30,
    "last_error": ""
   },
   {
@@ -5464,7 +5368,7 @@
    "source": "(\"AmRest\" OR \"Parques Reunidos\" OR \"Primark\" OR \"Quirónsalud\" OR \"Ribera Salud\" OR \"Unilabs\") [es-ES]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 55,
+   "items": 54,
    "last_error": ""
   },
   {
@@ -5488,15 +5392,15 @@
    "source": "(\"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\" OR \"Arcaplanet\" OR \"Arla Foods\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 16,
+   "items": 17,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Anglikang\" OR \"Chuanning Biotech\" OR \"COSCO\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\") [en-CN]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 10,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 19,
    "last_error": ""
   },
   {
@@ -5512,7 +5416,7 @@
    "source": "(\"Applegreen\" OR \"Primark\" OR \"Ryanair\") [en-IE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 119,
+   "items": 123,
    "last_error": ""
   },
   {
@@ -5534,9 +5438,9 @@
   {
    "route": "googlenews",
    "source": "(\"Aroundtown\" OR \"Asda\" OR \"Ashtead\" OR \"Aspen Pharmacare\" OR \"Aurelius\" OR \"Aurobindo Pharma\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 53,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 106,
    "last_error": ""
   },
   {
@@ -5552,14 +5456,14 @@
    "source": "(\"Arrow Global\" OR \"Boels\" OR \"Ceconomy\" OR \"Centrient\" OR \"Flora Food\" OR \"Heimstaden\") [nl-NL]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 11,
+   "items": 12,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Arrow Global\" OR \"Ceconomy\" OR \"doValue\" OR \"Intrum\") [pt-PT]",
-   "ok_runs": 3,
-   "runs": 3,
+   "ok_runs": 4,
+   "runs": 4,
    "items": 0,
    "last_error": ""
   },
@@ -5576,7 +5480,7 @@
    "source": "(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\") [en-IN]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 61,
+   "items": 63,
    "last_error": ""
   },
   {
@@ -5592,7 +5496,7 @@
    "source": "(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\") [nb-NO]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 1,
+   "items": 2,
    "last_error": ""
   },
   {
@@ -5613,6 +5517,14 @@
   },
   {
    "route": "googlenews",
+   "source": "(\"Axactor\" OR \"B2 Impact\") site:forbrukertilsynet.no [en-NO]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "(\"Axactor\" OR \"Ceconomy\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Froneri\") [es-ES]",
    "ok_runs": 4,
    "runs": 4,
@@ -5622,9 +5534,9 @@
   {
    "route": "googlenews",
    "source": "(\"Azelis\" OR \"Balder\" OR \"Barratt Redrow\" OR \"Basic-Fit\" OR \"Bayer\" OR \"Bellway\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 47,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 97,
    "last_error": ""
   },
   {
@@ -5632,7 +5544,7 @@
    "source": "(\"Azelis\" OR \"C&A\") [nl-BE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 3,
+   "items": 2,
    "last_error": ""
   },
   {
@@ -5654,9 +5566,9 @@
   {
    "route": "googlenews",
    "source": "(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 100,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 200,
    "last_error": ""
   },
   {
@@ -5678,17 +5590,17 @@
   {
    "route": "googlenews",
    "source": "(\"Birkenstock\" OR \"Bosch\" OR \"Brenntag\" OR \"C&A\" OR \"Channel 21\" OR \"CHRIST (jeweller)\") [de-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 32,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 70,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\") [de-AT]",
-   "ok_runs": 4,
-   "runs": 4,
-   "items": 51,
+   "ok_runs": 3,
+   "runs": 3,
+   "items": 39,
    "last_error": ""
   },
   {
@@ -5710,8 +5622,8 @@
   {
    "route": "googlenews",
    "source": "(\"Boels\" OR \"Design Holding\" OR \"Heimstaden\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\") [da-DK]",
-   "ok_runs": 4,
-   "runs": 4,
+   "ok_runs": 3,
+   "runs": 3,
    "items": 1,
    "last_error": ""
   },
@@ -5736,7 +5648,7 @@
    "source": "(\"CA Immo\" OR \"Swarovski\") [de-AT]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 18,
+   "items": 19,
    "last_error": ""
   },
   {
@@ -5744,7 +5656,7 @@
    "source": "(\"CPI Property\" OR \"CSL Behring\" OR \"DER Touristik\" OR \"Fitness First\" OR \"Grand City Properties\" OR \"Hamborner REIT\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 18,
+   "items": 19,
    "last_error": ""
   },
   {
@@ -5782,9 +5694,9 @@
   {
    "route": "googlenews",
    "source": "(\"Carnival\" OR \"Circle K\" OR \"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\") [en-US]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 100,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 200,
    "last_error": ""
   },
   {
@@ -5792,7 +5704,7 @@
    "source": "(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"Co-operative Group\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 73,
+   "items": 71,
    "last_error": ""
   },
   {
@@ -5800,7 +5712,7 @@
    "source": "(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"PureGym\" OR \"SYNLAB\") [de-CH]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 34,
+   "items": 35,
    "last_error": ""
   },
   {
@@ -5840,7 +5752,7 @@
    "source": "(\"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\" OR \"Fressnapf\") [de-DE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 15,
+   "items": 16,
    "last_error": ""
   },
   {
@@ -5848,7 +5760,7 @@
    "source": "(\"Circle K\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 91,
+   "items": 90,
    "last_error": ""
   },
   {
@@ -5856,7 +5768,7 @@
    "source": "(\"Circle K\") [nb-NO]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 11,
+   "items": 12,
    "last_error": ""
   },
   {
@@ -5864,23 +5776,23 @@
    "source": "(\"Covis Pharma\" OR \"CPI Property\" OR \"Crane Merchandising\" OR \"Cristal Union\" OR \"Crocs\" OR \"CSL Behring\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 37,
+   "items": 40,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\") [fr-FR]",
-   "ok_runs": 2,
-   "runs": 2,
-   "items": 44,
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 23,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\") [en-GB]",
-   "ok_runs": 4,
-   "runs": 4,
-   "items": 10,
+   "ok_runs": 3,
+   "runs": 3,
+   "items": 7,
    "last_error": ""
   },
   {
@@ -5888,7 +5800,7 @@
    "source": "(\"DER Touristik\" OR \"Disney Parks\" OR \"Dojo\" OR \"Domino's Pizza\" OR \"Dr. Martens\" OR \"Dr. Reddy's\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 80,
+   "items": 78,
    "last_error": ""
   },
   {
@@ -5904,15 +5816,15 @@
    "source": "(\"Design Holding\" OR \"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"Grifols\" OR \"Grünenthal\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 15,
+   "items": 17,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Dyson\" OR \"easyHotel\" OR \"easyJet holidays\" OR \"EG Group\" OR \"Encore Capital\" OR \"Endo International\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 50,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 102,
    "last_error": ""
   },
   {
@@ -5928,7 +5840,7 @@
    "source": "(\"Eurofins Scientific\") [fr-LU]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 14,
+   "items": 15,
    "last_error": ""
   },
   {
@@ -5936,7 +5848,7 @@
    "source": "(\"Finnair\") [fi-FI]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 5,
+   "items": 4,
    "last_error": ""
   },
   {
@@ -5944,15 +5856,15 @@
    "source": "(\"Fiserv\" OR \"Worldpay\" OR \"Fitness First\" OR \"Fnac Darty\" OR \"FrieslandCampina\" OR \"GANNI\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 21,
+   "items": 23,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\") [en-US]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 32,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 60,
    "last_error": ""
   },
   {
@@ -5960,7 +5872,7 @@
    "source": "(\"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"House of HR\" OR \"Intrum\" OR \"iQera\") [fr-FR]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 3,
+   "items": 2,
    "last_error": ""
   },
   {
@@ -5968,15 +5880,15 @@
    "source": "(\"FrieslandCampina\" OR \"IMCD\" OR \"Inter IKEA\" OR \"Lyfius\" OR \"Mollie\" OR \"Randstad\") [nl-NL]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 37,
+   "items": 40,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Froneri\" OR \"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\") [de-DE]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 52,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 69,
    "last_error": ""
   },
   {
@@ -5984,7 +5896,7 @@
    "source": "(\"G City Europe\" OR \"Gifi\" OR \"Gousto\" OR \"Grand City Properties\" OR \"Greggs\" OR \"Groupe SEB\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 71,
+   "items": 69,
    "last_error": ""
   },
   {
@@ -5992,7 +5904,7 @@
    "source": "(\"GSK\" OR \"The Gym Group\" OR \"Hamborner REIT\" OR \"Haworth\" OR \"Hays\" OR \"Hertz\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 69,
+   "items": 71,
    "last_error": ""
   },
   {
@@ -6006,9 +5918,9 @@
   {
    "route": "googlenews",
    "source": "(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\") [en-US]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 133,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 176,
    "last_error": ""
   },
   {
@@ -6016,7 +5928,7 @@
    "source": "(\"Grifols\" OR \"Grünenthal\" OR \"Intrum\" OR \"Kiloutou\" OR \"Loxam\" OR \"Manuchar\") [es-ES]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 51,
+   "items": 55,
    "last_error": ""
   },
   {
@@ -6024,7 +5936,7 @@
    "source": "(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"Elior\" OR \"Europcar\") [fr-FR]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 52,
+   "items": 56,
    "last_error": ""
   },
   {
@@ -6045,6 +5957,14 @@
   },
   {
    "route": "googlenews",
+   "source": "(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Home Shopping Europe\" OR \"Mutares\" OR \"STADA\") site:verbraucherzentrale.de [en-DE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "(\"HH Global\" OR \"Hikma Pharmaceuticals\" OR \"Hoist Finance\" OR \"Hornbach\" OR \"ibis budget\" OR \"Iceland Foods\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
@@ -6056,7 +5976,7 @@
    "source": "(\"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 138,
+   "items": 144,
    "last_error": ""
   },
   {
@@ -6064,7 +5984,7 @@
    "source": "(\"HelloFresh\" OR \"House of HR\" OR \"Intrum\" OR \"Maxeda\" OR \"Takko\" OR \"Magnum Ice Cream Company\") [nl-NL]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 10,
+   "items": 9,
    "last_error": ""
   },
   {
@@ -6072,15 +5992,15 @@
    "source": "(\"Hornbach\" OR \"KiK\" OR \"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"Motel One\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 123,
+   "items": 129,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\" OR \"Merlin Entertainments\") [de-DE]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 32,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 42,
    "last_error": ""
   },
   {
@@ -6088,7 +6008,7 @@
    "source": "(\"IMCD\" OR \"Ingenico\" OR \"Inovie\" OR \"Inter IKEA\" OR \"ISS\" OR \"Jet2\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 65,
+   "items": 63,
    "last_error": ""
   },
   {
@@ -6120,7 +6040,7 @@
    "source": "(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 54,
+   "items": 53,
    "last_error": ""
   },
   {
@@ -6128,7 +6048,7 @@
    "source": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 95,
+   "items": 101,
    "last_error": ""
   },
   {
@@ -6141,10 +6061,18 @@
   },
   {
    "route": "googlenews",
+   "source": "(\"Lowell\" OR \"Merlin Entertainments\" OR \"Motor Fuel Group\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PureGym\") site:ico.org.uk [en-GB]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "(\"Loxam\" OR \"Manuchar\" OR \"Tereos\") [pt-BR]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 5,
+   "items": 6,
    "last_error": ""
   },
   {
@@ -6184,7 +6112,7 @@
    "source": "(\"Maisons du Monde\" OR \"Maje\" OR \"Marley Spoon\" OR \"McDonald's France\" OR \"MillerKnoll\" OR \"Mollie\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 32,
+   "items": 30,
    "last_error": ""
   },
   {
@@ -6200,7 +6128,7 @@
    "source": "(\"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Mobilux\" OR \"Motor Fuel Group\" OR \"Mutares\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 24,
+   "items": 25,
    "last_error": ""
   },
   {
@@ -6208,7 +6136,7 @@
    "source": "(\"Mediterranean Shipping Company\" OR \"MSC Cruises\" OR \"Natuzzi\" OR \"Nexi\" OR \"Rheavendors\" OR \"SandenVendo\") [it-IT]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 5,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -6224,7 +6152,7 @@
    "source": "(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 63,
+   "items": 58,
    "last_error": ""
   },
   {
@@ -6232,7 +6160,7 @@
    "source": "(\"Mutares\" OR \"Paragon Customer Communications\" OR \"PRA Group\" OR \"STADA\" OR \"Südzucker\" OR \"SYNLAB\") [de-DE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 27,
+   "items": 28,
    "last_error": ""
   },
   {
@@ -6240,15 +6168,15 @@
    "source": "(\"NKD\" OR \"Nordzucker\" OR \"Otto\" OR \"Premier Inn\" OR \"Primark\" OR \"Puma\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 77,
+   "items": 80,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Nando's\" OR \"Napaqaro\" OR \"Natuzzi\" OR \"N Brown\" OR \"Norwegian Cruise Line\" OR \"North China Pharmaceutical\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 19,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 39,
    "last_error": ""
   },
   {
@@ -6272,7 +6200,7 @@
    "source": "(\"Octapharma\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"Otto\" OR \"Pandora\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 80,
+   "items": 76,
    "last_error": ""
   },
   {
@@ -6280,7 +6208,7 @@
    "source": "(\"PRA Group\" OR \"SYNLAB\" OR \"Travelodge\" OR \"TUI\") [es-ES]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 75,
+   "items": 73,
    "last_error": ""
   },
   {
@@ -6288,7 +6216,7 @@
    "source": "(\"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\") [en-US]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 104,
+   "items": 103,
    "last_error": ""
   },
   {
@@ -6320,7 +6248,7 @@
    "source": "(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 100,
+   "items": 98,
    "last_error": ""
   },
   {
@@ -6328,7 +6256,7 @@
    "source": "(\"Parkland\") [en-CA]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 28,
+   "items": 27,
    "last_error": ""
   },
   {
@@ -6336,7 +6264,7 @@
    "source": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 114,
+   "items": 115,
    "last_error": ""
   },
   {
@@ -6344,7 +6272,7 @@
    "source": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\") [en-US]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 115,
+   "items": 117,
    "last_error": ""
   },
   {
@@ -6352,7 +6280,7 @@
    "source": "(\"Puma\" OR \"Quadient\" OR \"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 69,
+   "items": 66,
    "last_error": ""
   },
   {
@@ -6360,7 +6288,7 @@
    "source": "(\"QVC\" OR \"Sielaff\" OR \"Sixt\" OR \"Sonnenklar TV\" OR \"SumUp\" OR \"TAG Immobilien\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 17,
+   "items": 21,
    "last_error": ""
   },
   {
@@ -6368,7 +6296,7 @@
    "source": "(\"Quick\" OR \"Südzucker\" OR \"SYNLAB\" OR \"Tereos\" OR \"Thom Group\" OR \"Worldline\") [fr-FR]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 102,
+   "items": 101,
    "last_error": ""
   },
   {
@@ -6376,23 +6304,23 @@
    "source": "(\"Raízen\" OR \"Randstad\" OR \"The Restaurant\" OR \"Rheavendors\" OR \"Ribera Salud\" OR \"Robert Half\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 45,
+   "items": 44,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Raízen\") [pt-BR]",
-   "ok_runs": 2,
-   "runs": 2,
-   "items": 2,
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 1,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\" OR \"Südzucker\" OR \"SYNLAB\") [en-GB]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 50,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 66,
    "last_error": ""
   },
   {
@@ -6400,7 +6328,7 @@
    "source": "(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\") [it-IT]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 15,
+   "items": 14,
    "last_error": ""
   },
   {
@@ -6416,7 +6344,7 @@
    "source": "(\"Royal Caribbean\" OR \"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\") [en-US]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 80,
+   "items": 84,
    "last_error": ""
   },
   {
@@ -6424,7 +6352,7 @@
    "source": "(\"Sandro\" OR \"Savencia\" OR \"Sodexo\" OR \"Zadig & Voltaire\") [fr-FR]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 19,
+   "items": 17,
    "last_error": ""
   },
   {
@@ -6432,7 +6360,7 @@
    "source": "(\"Savencia\" OR \"Sielaff\" OR \"Signet Jewelers\" OR \"Sixt\" OR \"Sodexo\" OR \"Sonic Healthcare\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 18,
+   "items": 20,
    "last_error": ""
   },
   {
@@ -6440,7 +6368,7 @@
    "source": "(\"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\" OR \"Stripe\" OR \"SumUp\" OR \"Superdrug\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 67,
+   "items": 68,
    "last_error": ""
   },
   {
@@ -6456,7 +6384,7 @@
    "source": "(\"Südzucker\" OR \"SYNLAB\" OR \"TUI\" OR \"Worldline\") [nl-BE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 35,
+   "items": 36,
    "last_error": ""
   },
   {
@@ -6472,7 +6400,7 @@
    "source": "(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\") [fr-BE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 14,
+   "items": 15,
    "last_error": ""
   },
   {
@@ -6480,7 +6408,7 @@
    "source": "(\"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\" OR \"Vivion\" OR \"Wagamama\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 138,
+   "items": 137,
    "last_error": ""
   },
   {
@@ -6504,7 +6432,7 @@
    "source": "(\"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Travelodge\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 46,
+   "items": 47,
    "last_error": ""
   },
   {
@@ -6512,7 +6440,7 @@
    "source": "(\"Takko\" OR \"Teva\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"TUI Cruises\" OR \"TUI\") [de-DE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 100,
+   "items": 99,
    "last_error": ""
   },
   {
@@ -6534,16 +6462,16 @@
   {
    "route": "googlenews",
    "source": "(\"Thermoplan\" OR \"Third Space\" OR \"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\") [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 7,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 16,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Thermoplan\") [de-CH]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -6560,15 +6488,15 @@
    "source": "(\"Triton Partners\" OR \"Vonovia\" OR \"WMF\" OR \"Zooplus\") [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 69,
+   "items": 61,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\") [en-GB]",
-   "ok_runs": 2,
-   "runs": 2,
-   "items": 116,
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 58,
    "last_error": ""
   },
   {
@@ -6576,15 +6504,15 @@
    "source": "(\"Unilever\") [nl-NL]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 2,
+   "items": 3,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\") [en-US]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 28,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 67,
    "last_error": ""
   },
   {
@@ -6622,8 +6550,8 @@
   {
    "route": "googlenews",
    "source": "(\"Weiqida\") [en-CN]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -6632,7 +6560,7 @@
    "source": "(\"Wickes\" OR \"Williams Lea\" OR \"Wizz Air\" OR \"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\") [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 45,
+   "items": 52,
    "last_error": ""
   },
   {
@@ -6672,7 +6600,7 @@
    "source": "(\"ZIM\") [he-IL]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -6680,7 +6608,7 @@
    "source": "(\"airBaltic\" OR \"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Intrum\" OR \"Lowell\") [fi-FI]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 5,
+   "items": 4,
    "last_error": ""
   },
   {
@@ -6688,7 +6616,7 @@
    "source": "(\"airBaltic\" OR \"Intrum\") [lt-LT]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 10,
+   "items": 9,
    "last_error": ""
   },
   {
@@ -6696,7 +6624,7 @@
    "source": "(\"airBaltic\") [et-EE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -6709,18 +6637,10 @@
   },
   {
    "route": "googlenews",
-   "source": "(\"airBaltic\") site:sam.gov.lv [en-LV]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\") [it-IT]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 88,
+   "items": 86,
    "last_error": ""
   },
   {
@@ -6728,7 +6648,7 @@
    "source": "(\"doValue\" OR \"Intrum\") [el-GR]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 2,
+   "items": 1,
    "last_error": ""
   },
   {
@@ -6757,15 +6677,23 @@
   },
   {
    "route": "googlenews",
-   "source": "(\"ibis budget\" OR \"Ingenico\" OR \"Inovie\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"Leroy Merlin\") [fr-FR]",
-   "ok_runs": 2,
-   "runs": 2,
-   "items": 7,
+   "source": "(\"iQera\" OR \"Isabel Marant\" OR \"Kiloutou\" OR \"Loxam\" OR \"Mobilux\" OR \"Quick\") site:economie.gouv.fr [en-FR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
    "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "comps0 6 [de-CH]",
+   "source": "(\"ibis budget\" OR \"Ingenico\" OR \"Inovie\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"Leroy Merlin\") [fr-FR]",
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 6,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "comps0 1 [pt-BR]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6773,7 +6701,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps0 6 [en-CN]",
+   "source": "comps1 6 [fr-FR]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6781,7 +6709,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps1 1 [de-CH]",
+   "source": "comps35 6 [en-GB]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6789,7 +6717,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps1 1 [en-CN]",
+   "source": "group0 6 names [da-DK]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6797,7 +6725,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps1 6 [de-DE]",
+   "source": "group0 6 names [de-AT]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6805,7 +6733,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps1 6 [en-GB]",
+   "source": "group0 6 names [en-GB]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -6813,119 +6741,7 @@
   },
   {
    "route": "googlenews",
-   "source": "comps1 6 [en-US]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps12 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps23 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps3 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps3 6 [en-US]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps34 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps4 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps5 6 [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "comps7 4 [en-US]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group0 4 names [pt-PT]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group1 6 names [en-US]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group2 6 names [de-DE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group3 6 names [de-DE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group9 6 names [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "reg autoritedelaconcurrence.fr [FR]",
+   "source": "group3 6 names [en-GB]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
@@ -7102,18 +6918,18 @@
   {
    "route": "rss",
    "source": "AD Amersfoort (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "skipped: run time budget reached"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Affaritaliani (IT)",
-   "ok_runs": 4,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 20,
-   "last_error": ""
+   "items": 15,
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -7150,10 +6966,10 @@
   {
    "route": "rss",
    "source": "Bankingnews (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "skipped: run time budget reached"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7270,10 +7086,10 @@
   {
    "route": "rss",
    "source": "Cinco Días (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 239,
-   "last_error": "skipped: run time budget reached"
+   "items": 319,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7321,7 +7137,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "no feed url (discovery pending)"
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -7366,10 +7182,10 @@
   {
    "route": "rss",
    "source": "De Telegraaf DFT (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "skipped: run time budget reached"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7408,7 +7224,7 @@
    "source": "Der Standard Wirtschaft (AT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 627,
+   "items": 628,
    "last_error": ""
   },
   {
@@ -7416,7 +7232,7 @@
    "source": "Die Presse Wirtschaft (AT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 315,
+   "items": 319,
    "last_error": ""
   },
   {
@@ -7432,7 +7248,7 @@
    "source": "Dinheiro Vivo (PT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 89,
+   "items": 88,
    "last_error": ""
   },
   {
@@ -7440,7 +7256,7 @@
    "source": "E15 (CZ)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 194,
+   "items": 193,
    "last_error": ""
   },
   {
@@ -7494,10 +7310,10 @@
   {
    "route": "rss",
    "source": "El Confidencial Empresas (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 45,
-   "last_error": "skipped: run time budget reached"
+   "items": 60,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7614,10 +7430,10 @@
   {
    "route": "rss",
    "source": "Globes (IL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 45,
-   "last_error": "skipped: run time budget reached"
+   "items": 60,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7656,7 +7472,7 @@
    "source": "Hallands Nyheter (Varberg) (SE)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 108,
+   "items": 85,
    "last_error": ""
   },
   {
@@ -7688,16 +7504,16 @@
    "source": "Het Financieele Dagblad (NL)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 158,
+   "items": 157,
    "last_error": ""
   },
   {
    "route": "rss",
    "source": "Het Nieuwsblad (Gent) (BE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "skipped: run time budget reached"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7726,10 +7542,10 @@
   {
    "route": "rss",
    "source": "Il Sole 24 Ore Finanza (IT)",
-   "ok_runs": 4,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 16,
-   "last_error": ""
+   "items": 12,
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -7745,23 +7561,23 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (discovery pending)"
   },
   {
    "route": "rss",
    "source": "Index Gazdaság (HU)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 167,
+   "items": 172,
    "last_error": ""
   },
   {
    "route": "rss",
    "source": "Insider.gr (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 180,
-   "last_error": "skipped: run time budget reached"
+   "items": 240,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7880,16 +7696,16 @@
    "source": "La Información (ES)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 168,
+   "items": 164,
    "last_error": ""
   },
   {
    "route": "rss",
    "source": "La Tribune (FR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "skipped: run time budget reached"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7926,10 +7742,10 @@
   {
    "route": "rss",
    "source": "Luxemburger Wort (LU)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "skipped: run time budget reached"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7945,7 +7761,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "no feed url (discovery pending)"
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -7966,10 +7782,10 @@
   {
    "route": "rss",
    "source": "NRC Economie (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 436,
-   "last_error": "skipped: run time budget reached"
+   "items": 582,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7985,7 +7801,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "no feed url (discovery pending)"
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -8040,7 +7856,7 @@
    "source": "ORF Wirtschaft (AT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 86,
+   "items": 85,
    "last_error": ""
   },
   {
@@ -8086,10 +7902,10 @@
   {
    "route": "rss",
    "source": "Portfolio.hu (HU)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "skipped: run time budget reached"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8177,7 +7993,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "no feed url (discovery pending)"
+   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "rss",
@@ -8334,10 +8150,10 @@
   {
    "route": "rss",
    "source": "Valor Econômico (BR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "skipped: run time budget reached"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8361,7 +8177,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (discovery pending)"
   },
   {
    "route": "rss",
@@ -8406,10 +8222,10 @@
   {
    "route": "rss",
    "source": "in.gr Οικονομία (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "skipped: run time budget reached"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8422,27 +8238,27 @@
   {
    "route": "rss",
    "source": "Äripäev (EE)",
-   "ok_runs": 4,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 100,
-   "last_error": ""
+   "items": 75,
+   "last_error": "skipped: run time budget reached"
   }
  ],
  "stats": {
-  "items": 36107,
-  "candidates": 31875,
-  "screened": 4232,
-  "matches": 36164,
-  "runs": 860,
-  "clusters": 26309,
+  "items": 36262,
+  "candidates": 32019,
+  "screened": 4243,
+  "matches": 36319,
+  "runs": 861,
+  "clusters": 26418,
   "pages_tracked": 20,
   "feeds_known": 100
  },
  "coverage": {
   "summary": {
    "total": 303,
-   "ok": 238,
-   "quiet": 65,
+   "ok": 239,
+   "quiet": 64,
    "starved": 0,
    "no_queries": 0
   },
@@ -8500,7 +8316,6 @@
     "vendo",
     "vivacom",
     "weiqida",
-    "williamslea",
     "wmf"
    ]
   }
