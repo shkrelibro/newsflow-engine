@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-08T11:09:49+00:00",
+ "generated_at": "2026-09-08T11:32:36+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -74,7 +74,9 @@
     "alias": "(query)",
     "alias_where": "none",
     "confidence": 0.4,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Air Baltic\""
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -637,7 +639,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Carnival\" OR \"Circle K\" OR \"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\")"
+     "googlenews:(\"Carnival\" OR \"Circle K\" OR \"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\")",
+     "googlenews:(\"Carnival\" OR \"Castellum\" OR \"Centrakor\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"Chuanning Biotech\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -715,57 +718,6 @@
     "AT"
    ],
    "latest": "2026-09-08T08:51:51+00:00"
-  },
-  {
-   "name_id": "ceconomy",
-   "name": "Ceconomy",
-   "cluster_id": 24339,
-   "primary": {
-    "id": 33388,
-    "title": "Disney+ verliert vor Gericht und muss beliebte Funktion streichen",
-    "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB4YjFiYmhoNGd5MzBJMkM0aWRYempnOGhEd1R1WjhXOWM4OXlnZ2h1VnpoZ0NaMTh3TFN6dEJuRWdBUFJCQ2RXQlRva3dpeWc2T25pMktEQ0lHb3JkVS1feFVQTk1PSjRZUGVRY3BR",
-    "raw_link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB4YjFiYmhoNGd5MzBJMkM0aWRYempnOGhEd1R1WjhXOWM4OXlnZ2h1VnpoZ0NaMTh3TFN6dEJuRWdBUFJCQ2RXQlRva3dpeWc2T25pMktEQ0lHb3JkVS1feFVQTk1PSjRZUGVRY3BR?oc=5",
-    "source": "techbook",
-    "domain": "techbook.de",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-09-07T11:21:00+00:00",
-    "first_seen_at": "2026-09-07T11:20:07+00:00",
-    "route": "googlenews",
-    "query": "\"MediaMarkt\"",
-    "tier_hint": null,
-    "summary": "Disney+ verliert vor Gericht und muss beliebte Funktion streichen techbook",
-    "alias": "(query)",
-    "alias_where": "none",
-    "confidence": 0.4,
-    "also_routes": [
-     "googlenews:\"MediaMarkt\""
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 0.4,
-   "aliases": [
-    "(query)"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-09-07T11:21:00+00:00"
   },
   {
    "name_id": "cerba",
@@ -872,7 +824,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"Co-operative Group\")"
+      "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"Co-operative Group\")",
+      "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
      ],
      "alert_categories": [],
      "alert_candidate": false,
@@ -1021,7 +974,9 @@
     "alias": "(query)",
     "alias_where": "none",
     "confidence": 0.4,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Co-op Group\""
+    ],
     "alert_categories": [
      "management",
      "litigation"
@@ -1433,7 +1388,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\" OR \"Finnair\")"
+     "googlenews:(\"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\" OR \"Finnair\")",
+     "googlenews:(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -1484,7 +1440,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\" OR \"Finnair\")"
+     "googlenews:(\"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\" OR \"Finnair\")",
+     "googlenews:(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")"
     ],
     "alert_categories": [
      "rating"
@@ -2617,8 +2574,36 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 35784,
+     "title": "Harald Gloy named as the new CEO of Lufthansa Technik AG",
+     "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOWmo0dkZ5endSWmIydVNVMmlBaklNcG02dktRSENydlBsMldtOXlFRnlWWlpxM2JteHZPRXpqRVF3OTZSc1lBZ29maUI5NGVHRk9fMjJmbmNpLUpqRGtMY0hUbHJobDZEVEdnWnJXTmVvWW1nYm1pZ2lBQURWejh0TVh1eURFbW9PRzFMRS1EcFdqTW04eUZLOHJibU9ubHVJd1hfWlZtTEN1UEtrcDlpMTNxY25TTTFJMW5FaFAwcnI3T25vZGc",
+     "raw_link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOWmo0dkZ5endSWmIydVNVMmlBaklNcG02dktRSENydlBsMldtOXlFRnlWWlpxM2JteHZPRXpqRVF3OTZSc1lBZ29maUI5NGVHRk9fMjJmbmNpLUpqRGtMY0hUbHJobDZEVEdnWnJXTmVvWW1nYm1pZ2lBQURWejh0TVh1eURFbW9PRzFMRS1EcFdqTW04eUZLOHJibU9ubHVJd1hfWlZtTEN1UEtrcDlpMTNxY25TTTFJMW5FaFAwcnI3T25vZGc?oc=5",
+     "source": "Aircraft Interiors International",
+     "domain": "aircraftinteriorsinternational.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-08T10:48:41+00:00",
+     "first_seen_at": "2026-09-08T11:20:00+00:00",
+     "route": "googlenews",
+     "query": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")",
+     "tier_hint": null,
+     "summary": "Harald Gloy named as the new CEO of Lufthansa Technik AG Aircraft Interiors International",
+     "alias": "Lufthansa",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -2633,7 +2618,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-09-08T07:04:26+00:00"
+   "latest": "2026-09-08T10:48:41+00:00"
   },
   {
    "name_id": "lufthansa",
@@ -2863,7 +2848,10 @@
     "alias": "(query)",
     "alias_where": "none",
     "confidence": 0.4,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Mobilux\" OR \"Motor Fuel Group\" OR \"Mutares\")",
+     "googlenews:(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\")"
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -3251,7 +3239,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")",
+     "googlenews:(\"Octapharma\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"Otto\" OR \"Pandora\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -3280,6 +3269,64 @@
      "alias": "Organon",
      "alias_where": "title",
      "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Octapharma\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"Otto\" OR \"Pandora\")"
+     ],
+     "alert_categories": [
+      "rating",
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 35831,
+     "title": "Sun Pharma Secures Ratings Boost From Moody’s, S&P on $11.75-Billion Organon Acquisition Bid",
+     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNTDhuVXJ6RDZwcldqY0FENXQtMFJRMUxjdXBrRU1NUGxMcG5MdWpqeTNzMkZmN0tNalROYW5RQkRZcVhyNjU0QWoxa1E5SWhWNDlxVERwejVSU21EeUhMcml3blROOU5FclRPOEVFTExNaUFsank2bUVweXlMTGZNSUsteTdFOXRvVmJMUW9kWFV2dE9WUE1ZaVE3Tlc4X1pubW5XYzZnLWJPMWdRSHdLVUdMLURVZkN2d21rUDNPRjdyb3RnUFI40gHMAUFVX3lxTE9MZ0FudHVFOVgxWFBLWk5rNDJFcGhxUVZuMGQ0WV9wRHhIVkFMdU1aMHE3UEpPTS1sQmhOcWhmNnNMNmpUQXYybThmQXA5dXZLbE84aVQ5MnBRc05waGtoaFl3UjFsMjN0Wlh0eXphZUF2akdpMm1EeEhId0FGX0hmQjBBZlF0elVoZEw0VmdYeHVtZ01iSjY3cjJtMFBQeVJEXzlBems5RndHNDBraS1BaUlITXRpSWotV0s4UDlRQWJJLWozYWpoMkxnVg",
+     "raw_link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNTDhuVXJ6RDZwcldqY0FENXQtMFJRMUxjdXBrRU1NUGxMcG5MdWpqeTNzMkZmN0tNalROYW5RQkRZcVhyNjU0QWoxa1E5SWhWNDlxVERwejVSU21EeUhMcml3blROOU5FclRPOEVFTExNaUFsank2bUVweXlMTGZNSUsteTdFOXRvVmJMUW9kWFV2dE9WUE1ZaVE3Tlc4X1pubW5XYzZnLWJPMWdRSHdLVUdMLURVZkN2d21rUDNPRjdyb3RnUFI40gHMAUFVX3lxTE9MZ0FudHVFOVgxWFBLWk5rNDJFcGhxUVZuMGQ0WV9wRHhIVkFMdU1aMHE3UEpPTS1sQmhOcWhmNnNMNmpUQXYybThmQXA5dXZLbE84aVQ5MnBRc05waGtoaFl3UjFsMjN0Wlh0eXphZUF2akdpMm1EeEhId0FGX0hmQjBBZlF0elVoZEw0VmdYeHVtZ01iSjY3cjJtMFBQeVJEXzlBems5RndHNDBraS1BaUlITXRpSWotV0s4UDlRQWJJLWozYWpoMkxnVg?oc=5",
+     "source": "Free Press Journal",
+     "domain": "freepressjournal.in",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-08T10:56:04+00:00",
+     "first_seen_at": "2026-09-08T11:20:00+00:00",
+     "route": "googlenews",
+     "query": "(\"Octapharma\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"Otto\" OR \"Pandora\")",
+     "tier_hint": null,
+     "summary": "Sun Pharma Secures Ratings Boost From Moody’s, S&P on $11.75-Billion Organon Acquisition Bid Free Press Journal",
+     "alias": "Organon",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "rating",
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 35830,
+     "title": "Sun Pharma gets ratings boost from Moody's, S&P over ₹11.75-billion Organon & Co acquisition bid",
+     "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxOdnBPb3U2SzNibXpNbmRMTmNsS0gwdnhnZkZOcHMwZVUya2N5ZDFLa3NPMDFMdFpVOU9VTDhtRGRpenBVd0pnY29nM2dfdE5DcVlwQ0RUUFNXTUx1SUdVYl8wcWJFb0NqVUNncDRQQ2NKb3AxNmtKVHZpVlg3TkxVTU1McHhoaHhncTkxNEpiYnFMWVBiZkpoYVI0NVhoSEEtNGE0a0VpdW5NWVNSd2wxN2s0MUE2M2Zib0E1bk0ybWRiWExrSV9jRnNFRHNWNi1NbFZtcHZiTmtsT3JKLXhSVVVfY2M2MURrR1HSAfABQVVfeXFMTnJwS2Y2QXZWaGxhdTU5Q1YxaFlZWFBPNHJiU0ZwZTBLRml3cHh0eFE4Skhuay0wYml1cDFjSk56eEZ1ZUxISzV5WWxBTmVXX0FYODI3OGMyelk0MjhGdmhJSEJkN095aF9uYWtQTFBrWXJnVVZrR21zelk0VWp5NEhYMmdQSEkxclRpOUpucTJndjQtMzhtbUtEZkZHQUsxQXhnWGJSVDF0bUgwRkRKZS1sM3NTWU9sbURfYV9CVFI5UEIyWm81RmE0OW5PaTJqTzI0YlJ3dkhELTJSTXhKR0JsYWcyMVF0NHVwcHkzZGFJ",
+     "raw_link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxOdnBPb3U2SzNibXpNbmRMTmNsS0gwdnhnZkZOcHMwZVUya2N5ZDFLa3NPMDFMdFpVOU9VTDhtRGRpenBVd0pnY29nM2dfdE5DcVlwQ0RUUFNXTUx1SUdVYl8wcWJFb0NqVUNncDRQQ2NKb3AxNmtKVHZpVlg3TkxVTU1McHhoaHhncTkxNEpiYnFMWVBiZkpoYVI0NVhoSEEtNGE0a0VpdW5NWVNSd2wxN2s0MUE2M2Zib0E1bk0ybWRiWExrSV9jRnNFRHNWNi1NbFZtcHZiTmtsT3JKLXhSVVVfY2M2MURrR1HSAfABQVVfeXFMTnJwS2Y2QXZWaGxhdTU5Q1YxaFlZWFBPNHJiU0ZwZTBLRml3cHh0eFE4Skhuay0wYml1cDFjSk56eEZ1ZUxISzV5WWxBTmVXX0FYODI3OGMyelk0MjhGdmhJSEJkN095aF9uYWtQTFBrWXJnVVZrR21zelk0VWp5NEhYMmdQSEkxclRpOUpucTJndjQtMzhtbUtEZkZHQUsxQXhnWGJSVDF0bUgwRkRKZS1sM3NTWU9sbURfYV9CVFI5UEIyWm81RmE0OW5PaTJqTzI0YlJ3dkhELTJSTXhKR0JsYWcyMVF0NHVwcHkzZGFJ?oc=5",
+     "source": "thehindubusinessline.com",
+     "domain": "thehindubusinessline.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-08T11:15:33+00:00",
+     "first_seen_at": "2026-09-08T11:20:00+00:00",
+     "route": "googlenews",
+     "query": "(\"Octapharma\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"Otto\" OR \"Pandora\")",
+     "tier_hint": null,
+     "summary": "Sun Pharma gets ratings boost from Moody's, S&P over ₹11.75-billion Organon & Co acquisition bid thehindubusinessline.com",
+     "alias": "Organon",
+     "alias_where": "title",
+     "confidence": 1.0,
      "also_routes": [],
      "alert_categories": [
       "rating",
@@ -3291,7 +3338,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 4,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a",
@@ -3307,7 +3354,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-09-08T10:32:54+00:00"
+   "latest": "2026-09-08T11:15:33+00:00"
   },
   {
    "name_id": "paypal",
@@ -3331,7 +3378,9 @@
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -4391,6 +4440,108 @@
   {
    "name_id": "ryanair",
    "name": "Ryanair",
+   "cluster_id": 26055,
+   "primary": {
+    "id": 35780,
+    "title": "Ryanair Continues Share Buybacks With Late-August, Early-September 2026 Cancellations",
+    "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPNzZNX3AtZmNDWjhzVW0xcWxYbW1oeURocGNvRkE4Y1hYbm5tYVNOMWhlenJvRmo2TDZvNW8ySkEyYUt5My0xSWxJUFlDdFpod25mbVFfLWYtSVpVTEN6VzlWSU9GaDVyMzFQVllzUll6b01idUlESGYxN29jS0hnQWxiWUQ1S0RKQ25GVl9TNE51SUhRR0lWSHBmdGVTNEM2amZ0Q0lfT1JqMkNHb0NqbWJnUTBVZGZ2OEY0M0xLRTZYODZSMmlmeUJoMDdTRVhOZEE",
+    "raw_link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPNzZNX3AtZmNDWjhzVW0xcWxYbW1oeURocGNvRkE4Y1hYbm5tYVNOMWhlenJvRmo2TDZvNW8ySkEyYUt5My0xSWxJUFlDdFpod25mbVFfLWYtSVpVTEN6VzlWSU9GaDVyMzFQVllzUll6b01idUlESGYxN29jS0hnQWxiWUQ1S0RKQ25GVl9TNE51SUhRR0lWSHBmdGVTNEM2amZ0Q0lfT1JqMkNHb0NqbWJnUTBVZGZ2OEY0M0xLRTZYODZSMmlmeUJoMDdTRVhOZEE?oc=5",
+    "source": "tipranks.com",
+    "domain": "tipranks.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T10:51:57+00:00",
+    "first_seen_at": "2026-09-08T11:20:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+    "tier_hint": null,
+    "summary": "Ryanair Continues Share Buybacks With Late-August, Early-September 2026 Cancellations tipranks.com",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+    ],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T10:51:57+00:00"
+  },
+  {
+   "name_id": "ryanair",
+   "name": "Ryanair",
+   "cluster_id": 26053,
+   "primary": {
+    "id": 35775,
+    "title": "Ryanair (RYAAY) cancels more shares in ongoing buyback",
+    "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQeURTUU1JUzNGV05heUFSdmNTOGdtMHBDLUFYWHlMYlhMRlhjUUtiMDM0VUlXQmhFRGZzemNIT3lpQ3JSZUdKTnQtRFR5V1FzdGk3WDVmbHk1V2pjQUFKbTRkcXZQa1ZEQl9IVGN5Nkt0dE1rOFpfVEM4RndBbm1wN0NGeTYxVm9nMEZ1R2dDQ3NUeEdDVzdQSkpkQXk2M2k1Tkl4QWhFZDVKUjBocW5HOFJ6cDNpOWpR",
+    "raw_link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQeURTUU1JUzNGV05heUFSdmNTOGdtMHBDLUFYWHlMYlhMRlhjUUtiMDM0VUlXQmhFRGZzemNIT3lpQ3JSZUdKTnQtRFR5V1FzdGk3WDVmbHk1V2pjQUFKbTRkcXZQa1ZEQl9IVGN5Nkt0dE1rOFpfVEM4RndBbm1wN0NGeTYxVm9nMEZ1R2dDQ3NUeEdDVzdQSkpkQXk2M2k1Tkl4QWhFZDVKUjBocW5HOFJ6cDNpOWpR?oc=5",
+    "source": "Stock Titan",
+    "domain": "stocktitan.net",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T10:23:20+00:00",
+    "first_seen_at": "2026-09-08T11:20:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+    "tier_hint": null,
+    "summary": "Ryanair (RYAAY) cancels more shares in ongoing buyback Stock Titan",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+    ],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T10:23:20+00:00"
+  },
+  {
+   "name_id": "ryanair",
+   "name": "Ryanair",
    "cluster_id": 25019,
    "primary": {
     "id": 34352,
@@ -5079,6 +5230,55 @@
   {
    "name_id": "tesco",
    "name": "Tesco",
+   "cluster_id": 26096,
+   "primary": {
+    "id": 35835,
+    "title": "Broker appoints ex-Tesco Insurance leader as new non executive chair",
+    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQ3g0dWl1ZUhWYTdCWHQ3dXQxUlByMEQxMHRRYlNjVDdqQ00ybEJ3a0lBWHlKTHA3WGVQUlBJODVmYVUxNVNlVGJmclpCX0VYbFRSZ1NRS0JXcC1ob3c1czB3UFpuYWpIUU1NOE81eEJWUzRSVGt2MkZDNFdqWWRIOG5HZVpQVDJ1YzFwQktiYlkzX1hxWE9iYnJRc1dSMzdyQkhFekhmTDlURFF2QlRGY3BNUlpLdUZsd04zM2JUVQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQ3g0dWl1ZUhWYTdCWHQ3dXQxUlByMEQxMHRRYlNjVDdqQ00ybEJ3a0lBWHlKTHA3WGVQUlBJODVmYVUxNVNlVGJmclpCX0VYbFRSZ1NRS0JXcC1ob3c1czB3UFpuYWpIUU1NOE81eEJWUzRSVGt2MkZDNFdqWWRIOG5HZVpQVDJ1YzFwQktiYlkzX1hxWE9iYnJRc1dSMzdyQkhFekhmTDlURFF2QlRGY3BNUlpLdUZsd04zM2JUVQ?oc=5",
+    "source": "insurancetimes.co.uk",
+    "domain": "insurancetimes.co.uk",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T11:21:27+00:00",
+    "first_seen_at": "2026-09-08T11:20:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")",
+    "tier_hint": null,
+    "summary": "Broker appoints ex-Tesco Insurance leader as new non executive chair insurancetimes.co.uk",
+    "alias": "Tesco",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Tesco"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T11:21:27+00:00"
+  },
+  {
+   "name_id": "tesco",
+   "name": "Tesco",
    "cluster_id": 24433,
    "primary": {
     "id": 33511,
@@ -5283,6 +5483,55 @@
   {
    "name_id": "unilever",
    "name": "Unilever",
+   "cluster_id": 26080,
+   "primary": {
+    "id": 35812,
+    "title": "Kraft Heinz appoints Unilever executive as new CFO",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQTTF3QktsSGJlbzJ2cDI1dFc2RTA1c3FMb3FUdXZqT0QySVBRX2xRR0N3MEtMQXBsQmhTZ29FX081c3Fmam5Md0tjSVh1TGs3VTYydEM1VmJvQzhfRG1ZU2Zzdkg4aW9LZFowTHN1NmJoX0hDWXQ4OXFlMlFaNVF2cmxBOXVOSWhqOEk4cjN0SEVrNmZMSWdDQ1RxNA",
+    "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQTTF3QktsSGJlbzJ2cDI1dFc2RTA1c3FMb3FUdXZqT0QySVBRX2xRR0N3MEtMQXBsQmhTZ29FX081c3Fmam5Md0tjSVh1TGs3VTYydEM1VmJvQzhfRG1ZU2Zzdkg4aW9LZFowTHN1NmJoX0hDWXQ4OXFlMlFaNVF2cmxBOXVOSWhqOEk4cjN0SEVrNmZMSWdDQ1RxNA?oc=5",
+    "source": "Grocery Gazette",
+    "domain": "grocerygazette.co.uk",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T11:18:49+00:00",
+    "first_seen_at": "2026-09-08T11:20:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\")",
+    "tier_hint": null,
+    "summary": "Kraft Heinz appoints Unilever executive as new CFO Grocery Gazette",
+    "alias": "Unilever",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Unilever"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T11:18:49+00:00"
+  },
+  {
+   "name_id": "unilever",
+   "name": "Unilever",
    "cluster_id": 25989,
    "primary": {
     "id": 35689,
@@ -5302,7 +5551,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -5430,6 +5681,57 @@
     "GB"
    ],
    "latest": "2026-09-07T12:12:48+00:00"
+  },
+  {
+   "name_id": "univar",
+   "name": "Univar Solutions",
+   "cluster_id": 26081,
+   "primary": {
+    "id": 35813,
+    "title": "Univar Solutions Appoints Matt Robuck Vice President of Data & AI",
+    "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQOHdJSkRzb0labWtHYnIzeE1jeWk1ZjQ3OUtCdThzNmt6Y1h0SE9yU0xOSEFtX3UxaEp1eDdOc0dwbXpvN2o1MXZzRnR4OUcwM0Z0RFpDM3dYak1qQ1duNW5yWFl3X3RkZms2SUtTNVJuNlNtR1dPekJ2MkdlcFBObzYtTWlTeFBiMkYxb2tiT3hlM3pvd1Q2Rmd0UTREdWxIM2o4ZHh1Tlg4M3ViSUE",
+    "raw_link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQOHdJSkRzb0labWtHYnIzeE1jeWk1ZjQ3OUtCdThzNmt6Y1h0SE9yU0xOSEFtX3UxaEp1eDdOc0dwbXpvN2o1MXZzRnR4OUcwM0Z0RFpDM3dYak1qQ1duNW5yWFl3X3RkZms2SUtTNVJuNlNtR1dPekJ2MkdlcFBObzYtTWlTeFBiMkYxb2tiT3hlM3pvd1Q2Rmd0UTREdWxIM2o4ZHh1Tlg4M3ViSUE?oc=5",
+    "source": "cdomagazine.tech",
+    "domain": "cdomagazine.tech",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-08T11:00:00+00:00",
+    "first_seen_at": "2026-09-08T11:20:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\")",
+    "tier_hint": null,
+    "summary": "Univar Solutions Appoints Matt Robuck Vice President of Data & AI cdomagazine.tech",
+    "alias": "Univar",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Univar"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-08T11:00:00+00:00"
   },
   {
    "name_id": "univar",
