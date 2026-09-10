@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-10T21:08:25+00:00",
+ "generated_at": "2026-09-10T21:28:44+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -306,7 +306,9 @@
     "alias": "Adyen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -636,57 +638,6 @@
   {
    "name_id": "amazon",
    "name": "Amazon",
-   "cluster_id": 31402,
-   "primary": {
-    "id": 43883,
-    "title": "Amazon faces lawsuit alleging discrimination against pregnant workers",
-    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPdkUwcW1Ybm5fTWRkS2lDN2FKY0JqVlp3eHdhR3VTRjdEN241NVNOemJFWU51SWstUi02cEtGbkxjZ2F6QmxxcFlKR25NRDRKQVZ4VUNEcDZUczQzb0lfY2NmVEVudHJZZHZXZFJfWHJRV1pYNkRMLWhfY3RIbEMxc3JPLVpWcXAzMHA1di11ZllaSzZ2dlN1enZ3UF9mOWNxUHVWQlZwUkpySGh1Mk9oYVJnaWhTWWlpdnRIS24tRQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPdkUwcW1Ybm5fTWRkS2lDN2FKY0JqVlp3eHdhR3VTRjdEN241NVNOemJFWU51SWstUi02cEtGbkxjZ2F6QmxxcFlKR25NRDRKQVZ4VUNEcDZUczQzb0lfY2NmVEVudHJZZHZXZFJfWHJRV1pYNkRMLWhfY3RIbEMxc3JPLVpWcXAzMHA1di11ZllaSzZ2dlN1enZ3UF9mOWNxUHVWQlZwUkpySGh1Mk9oYVJnaWhTWWlpdnRIS24tRQ?oc=5",
-    "source": "ABC10",
-    "domain": "abc10.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-09-10T19:04:00+00:00",
-    "first_seen_at": "2026-09-10T19:28:01+00:00",
-    "route": "googlenews",
-    "query": "(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")",
-    "tier_hint": null,
-    "summary": "Amazon faces lawsuit alleging discrimination against pregnant workers ABC10",
-    "alias": "Amazon",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")"
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Amazon"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-09-10T19:04:00+00:00"
-  },
-  {
-   "name_id": "amazon",
-   "name": "Amazon",
    "cluster_id": 28764,
    "primary": {
     "id": 40389,
@@ -1002,7 +953,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 12,
+   "sources": 13,
    "alert_candidate": true,
    "alert_categories": [
     "litigation"
@@ -1020,7 +971,58 @@
     "US",
     "United States"
    ],
-   "latest": "2026-09-10T16:19:09+00:00"
+   "latest": "2026-09-10T19:44:00+00:00"
+  },
+  {
+   "name_id": "amazon",
+   "name": "Amazon",
+   "cluster_id": 31402,
+   "primary": {
+    "id": 43883,
+    "title": "Amazon faces lawsuit alleging discrimination against pregnant workers",
+    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPdkUwcW1Ybm5fTWRkS2lDN2FKY0JqVlp3eHdhR3VTRjdEN241NVNOemJFWU51SWstUi02cEtGbkxjZ2F6QmxxcFlKR25NRDRKQVZ4VUNEcDZUczQzb0lfY2NmVEVudHJZZHZXZFJfWHJRV1pYNkRMLWhfY3RIbEMxc3JPLVpWcXAzMHA1di11ZllaSzZ2dlN1enZ3UF9mOWNxUHVWQlZwUkpySGh1Mk9oYVJnaWhTWWlpdnRIS24tRQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPdkUwcW1Ybm5fTWRkS2lDN2FKY0JqVlp3eHdhR3VTRjdEN241NVNOemJFWU51SWstUi02cEtGbkxjZ2F6QmxxcFlKR25NRDRKQVZ4VUNEcDZUczQzb0lfY2NmVEVudHJZZHZXZFJfWHJRV1pYNkRMLWhfY3RIbEMxc3JPLVpWcXAzMHA1di11ZllaSzZ2dlN1enZ3UF9mOWNxUHVWQlZwUkpySGh1Mk9oYVJnaWhTWWlpdnRIS24tRQ?oc=5",
+    "source": "ABC10",
+    "domain": "abc10.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-10T19:04:00+00:00",
+    "first_seen_at": "2026-09-10T19:28:01+00:00",
+    "route": "googlenews",
+    "query": "(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")",
+    "tier_hint": null,
+    "summary": "Amazon faces lawsuit alleging discrimination against pregnant workers ABC10",
+    "alias": "Amazon",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")"
+    ],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Amazon"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-10T19:04:00+00:00"
   },
   {
    "name_id": "amazon",
@@ -2230,7 +2232,9 @@
     "alias": "Aramark",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\" OR \"Arcaplanet\" OR \"Arla Foods\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -2279,7 +2283,9 @@
     "alias": "Aramark",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\" OR \"Arcaplanet\" OR \"Arla Foods\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -2489,6 +2495,57 @@
     "GB"
    ],
    "latest": "2026-09-09T13:27:17+00:00"
+  },
+  {
+   "name_id": "avis",
+   "name": "Avis Budget Group",
+   "cluster_id": 31591,
+   "primary": {
+    "id": 44214,
+    "title": "CAR INVESTOR ALERT: Bronstein, Gewirtz and Grossman, LLC Announces that Avis Budget Group, Inc. Shareholders Have Opportunity to Lead Class Action Lawsuit!",
+    "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQSEVyR1RSTW5GYjZYVVJULXRMRmlsbWdYcTlHbklibWxTMGVUaWh5NUhOcnEzaGExZElyUVV6V1BsZ1pvX1M5bVVzU19jQ3BuMXFQTTVFaUdKZDluclQwMUYtZk9SVEpRZmRQZjc1Znl2UkxCTFVuZ0dqV3VpUUhrRnlKUmpnbFJ2RGpOSDI5LWkyQ0w4OG0tV0FNR3loWHFwR1BYb2dFMmY4czdSSE1Qa3Q4SkEyV21wRFJHeGY1dFFRcFFZYkp6b1l4T3d3TEJ3NXZUaW5BbmxCNEtNZ1VZOEI2WQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQSEVyR1RSTW5GYjZYVVJULXRMRmlsbWdYcTlHbklibWxTMGVUaWh5NUhOcnEzaGExZElyUVV6V1BsZ1pvX1M5bVVzU19jQ3BuMXFQTTVFaUdKZDluclQwMUYtZk9SVEpRZmRQZjc1Znl2UkxCTFVuZ0dqV3VpUUhrRnlKUmpnbFJ2RGpOSDI5LWkyQ0w4OG0tV0FNR3loWHFwR1BYb2dFMmY4czdSSE1Qa3Q4SkEyV21wRFJHeGY1dFFRcFFZYkp6b1l4T3d3TEJ3NXZUaW5BbmxCNEtNZ1VZOEI2WQ?oc=5",
+    "source": "ACCESS Newswire",
+    "domain": "accessnewswire.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-10T21:13:54+00:00",
+    "first_seen_at": "2026-09-10T21:16:12+00:00",
+    "route": "googlenews",
+    "query": "(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
+    "tier_hint": null,
+    "summary": "CAR INVESTOR ALERT: Bronstein, Gewirtz and Grossman, LLC Announces that Avis Budget Group, Inc. Shareholders Have Opportunity to Lead Class Action Lawsuit! ACCESS Newswire",
+    "alias": "Avis Budget",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
+    ],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Avis Budget"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-10T21:13:54+00:00"
   },
   {
    "name_id": "avis",
@@ -2765,40 +2822,8 @@
     "screen_reason": "",
     "url_unresolved": false
    },
-   "also": [
-    {
-     "id": 40123,
-     "title": "CAR Deadline: CAR Investors with Losses in Excess of $100K Have Opportunity to Lead Avis Budget Group, Inc. Securities Fraud Lawsuit Against Pentwater Capital Management LP",
-     "url": "https://news.google.com/rss/articles/CBMizgJBVV95cUxQR1pUb2VCY3dCY29QVE93N0pmdHV5OVBYQWVxYUpCbnpROUY1VDlHMFFLTnczd3EwaHN1LThvWkVrdWJyMUF4NHFIZEJybGkxLTJjNG5Kbm93VlFUOXlTbmR4Z19XSEQtTGVFQzNKcVIwdHdrTUtENExzbHZPeExmWVdWeXczNktIZndIQXFVVTNWX2c0bHpZYkRtRDFmcjR5NjlTdDg3LVZpVEVVMzh2VDlQQzNVbk9CZEZYMXhEYVlrUlQ0SjJUYk94aXZNdFZpdVJSNndFdm84XzFMVENoQm42d3ZLM3pZSV8ybzloMmV3aUM2Y3k0cU5ZQjlmNnE5NFlYZnhPa3NXbkhlMXAtN3lvSENfQ0huZndJSUQ2VFJsWmpNNWxudUs1bGEtMVk2TmktcWdPQzNCZGJCd2tOcC1IOWNfN3dybUJwR0hB",
-     "raw_link": "https://news.google.com/rss/articles/CBMizgJBVV95cUxQR1pUb2VCY3dCY29QVE93N0pmdHV5OVBYQWVxYUpCbnpROUY1VDlHMFFLTnczd3EwaHN1LThvWkVrdWJyMUF4NHFIZEJybGkxLTJjNG5Kbm93VlFUOXlTbmR4Z19XSEQtTGVFQzNKcVIwdHdrTUtENExzbHZPeExmWVdWeXczNktIZndIQXFVVTNWX2c0bHpZYkRtRDFmcjR5NjlTdDg3LVZpVEVVMzh2VDlQQzNVbk9CZEZYMXhEYVlrUlQ0SjJUYk94aXZNdFZpdVJSNndFdm84XzFMVENoQm42d3ZLM3pZSV8ybzloMmV3aUM2Y3k0cU5ZQjlmNnE5NFlYZnhPa3NXbkhlMXAtN3lvSENfQ0huZndJSUQ2VFJsWmpNNWxudUs1bGEtMVk2TmktcWdPQzNCZGJCd2tOcC1IOWNfN3dybUJwR0hB?oc=5",
-     "source": "Morningstar",
-     "domain": "morningstar.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-09-09T20:29:00+00:00",
-     "first_seen_at": "2026-09-09T21:16:15+00:00",
-     "route": "googlenews",
-     "query": "(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")",
-     "tier_hint": null,
-     "summary": "CAR Deadline: CAR Investors with Losses in Excess of $100K Have Opportunity to Lead Avis Budget Group, Inc. Securities Fraud Lawsuit Against Pentwater Capital Management LP Morningstar",
-     "alias": "Avis Budget",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
-      "googlenews:\"Avis Budget\"",
-      "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
-     ],
-     "alert_categories": [
-      "litigation"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "litigation"
@@ -2808,11 +2833,9 @@
     "Avis Budget"
    ],
    "languages": [
-    "en",
     "english"
    ],
    "countries": [
-    "US",
     "United States"
    ],
    "latest": "2026-09-09T20:45:00+00:00"
@@ -3228,7 +3251,9 @@
     "alias": "Booking",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -3339,6 +3364,57 @@
     "US"
    ],
    "latest": "2026-09-10T15:06:19+00:00"
+  },
+  {
+   "name_id": "booking",
+   "name": "Booking Holdings",
+   "cluster_id": 31593,
+   "primary": {
+    "id": 44218,
+    "title": "Booking.com blocked by European court over acquisition of Etraveli",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSmlKcUxQMGdfcXM5dzFPYmFjN2pZSjR0Um01Qmttc3phaEM3bWl6WElQMnJ6ZDFFeHdfeHd5T2V3SzdfaWx2S2ZMTnZhVHZOVjAwc2k4bEMtUnJFWTdTdHZUak8yajlCTXRmR0tocjhjdmxjdDlEckFxMy1XcUFQd2hXUWVaRDZRZ2lUV1VVdjNpNEdFb1lZbTQxTWxIZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNSmlKcUxQMGdfcXM5dzFPYmFjN2pZSjR0Um01Qmttc3phaEM3bWl6WElQMnJ6ZDFFeHdfeHd5T2V3SzdfaWx2S2ZMTnZhVHZOVjAwc2k4bEMtUnJFWTdTdHZUak8yajlCTXRmR0tocjhjdmxjdDlEckFxMy1XcUFQd2hXUWVaRDZRZ2lUV1VVdjNpNEdFb1lZbTQxTWxIZw?oc=5",
+    "source": "Voyages d'affaires",
+    "domain": "voyages-d-affaires.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-10T14:42:24+00:00",
+    "first_seen_at": "2026-09-10T21:16:12+00:00",
+    "route": "googlenews",
+    "query": "(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")",
+    "tier_hint": null,
+    "summary": "Booking.com blocked by European court over acquisition of Etraveli Voyages d'affaires",
+    "alias": "Booking",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a",
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation",
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Booking"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-10T14:42:24+00:00"
   },
   {
    "name_id": "booking",
@@ -5792,6 +5868,57 @@
   {
    "name_id": "enterprise",
    "name": "Enterprise Holdings",
+   "cluster_id": 31584,
+   "primary": {
+    "id": 44203,
+    "title": "Axon Enterprise (NASDAQ:AXON) CEO Sells $5,089,900.00 in Stock",
+    "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNGJlYUJxZVE1T2laQUlZNUJtVVgzT2NlNU1kQ1RxX21PQnk3bHo5OWxnLVBZbm1IbzA2Tk1zZFl3MVV0TDVpc0l4S01qYkx1bTBfSF9RdFcwb3VIRDVKdVpIejVwa1FSbFA0X0xfMk9sTFZIMmN4S3VXcFBPUW5hQ1RPeFZzUzJ0SEFhbFZtdzRPR3g4U1hnOFU3bzVWdm1qUkRrMTZ2VFQtT3h2Z0VtbkFnSEpKc1Ewcmc",
+    "raw_link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNGJlYUJxZVE1T2laQUlZNUJtVVgzT2NlNU1kQ1RxX21PQnk3bHo5OWxnLVBZbm1IbzA2Tk1zZFl3MVV0TDVpc0l4S01qYkx1bTBfSF9RdFcwb3VIRDVKdVpIejVwa1FSbFA0X0xfMk9sTFZIMmN4S3VXcFBPUW5hQ1RPeFZzUzJ0SEFhbFZtdzRPR3g4U1hnOFU3bzVWdm1qUkRrMTZ2VFQtT3h2Z0VtbkFnSEpKc1Ewcmc?oc=5",
+    "source": "MarketBeat",
+    "domain": "marketbeat.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-10T21:12:07+00:00",
+    "first_seen_at": "2026-09-10T21:16:12+00:00",
+    "route": "googlenews",
+    "query": "(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")",
+    "tier_hint": null,
+    "summary": "Axon Enterprise (NASDAQ:AXON) CEO Sells $5,089,900.00 in Stock MarketBeat",
+    "alias": "Enterprise",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a",
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a",
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Enterprise"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-10T21:12:07+00:00"
+  },
+  {
+   "name_id": "enterprise",
+   "name": "Enterprise Holdings",
    "cluster_id": 31533,
    "primary": {
     "id": 44126,
@@ -5811,7 +5938,9 @@
     "alias": "Enterprise",
     "alias_where": "summary",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -5860,7 +5989,9 @@
     "alias": "Enterprise",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -9075,57 +9206,6 @@
    "latest": "2026-09-09T23:00:21+00:00"
   },
   {
-   "name_id": "lufthansa",
-   "name": "Lufthansa",
-   "cluster_id": 29162,
-   "primary": {
-    "id": 40122,
-    "title": "Lufthansa setzt bei Lug - Übernahme auf Kümmerlein",
-    "url": "https://lto.de/recht/kanzleien-unternehmen/k/lufthansa-cargo-uebernahme-lug-aircargo-handling-dettmer-group",
-    "raw_link": "https://www.lto.de/recht/kanzleien-unternehmen/k/lufthansa-cargo-uebernahme-lug-aircargo-handling-dettmer-group",
-    "source": "lto.de",
-    "domain": "lto.de",
-    "country": "Germany",
-    "lang": "german",
-    "published_at": "2026-09-09T18:15:00+00:00",
-    "first_seen_at": "2026-09-09T21:16:15+00:00",
-    "route": "gdelt",
-    "query": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")",
-    "tier_hint": null,
-    "summary": "",
-    "alias": "Lufthansa",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "gdelt:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Lufthansa"
-   ],
-   "languages": [
-    "german"
-   ],
-   "countries": [
-    "Germany"
-   ],
-   "latest": "2026-09-09T18:15:00+00:00"
-  },
-  {
    "name_id": "maersk",
    "name": "Maersk",
    "cluster_id": 16534,
@@ -9605,9 +9685,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 44199,
+     "title": "Is PayPal Stock a Buy, Sell, or Hold at 80% Below Its Record High?",
+     "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPWXB1NGJvZjUxYkhWbUUyRlBGZFU0MXVlSGJNV2pRT2tudnc4ZEp1eS1tOFJUOG14Um9KWFJFYmNFR2U4bzItNDhfamNWLUpwZ0JBd2FqY3hzLXBXa1duYU9qVXFnWWhzdDlwWGRXaS1BQjVmTmd0dmY5R1B1Tl9fUFR0VnFfYV8tVGhoWmRHQnNfdnVUZ3g1X1dTMUJvQUdXNzRWM3VZS3NkWjliS1JGcHNJRlpvQlkyQU5iTW44LVRzazZYeHV6ZkRKaGRsQ1BwcS1rWmpuN0lacUhmMDExYw",
+     "raw_link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPWXB1NGJvZjUxYkhWbUUyRlBGZFU0MXVlSGJNV2pRT2tudnc4ZEp1eS1tOFJUOG14Um9KWFJFYmNFR2U4bzItNDhfamNWLUpwZ0JBd2FqY3hzLXBXa1duYU9qVXFnWWhzdDlwWGRXaS1BQjVmTmd0dmY5R1B1Tl9fUFR0VnFfYV8tVGhoWmRHQnNfdnVUZ3g1X1dTMUJvQUdXNzRWM3VZS3NkWjliS1JGcHNJRlpvQlkyQU5iTW44LVRzazZYeHV6ZkRKaGRsQ1BwcS1rWmpuN0lacUhmMDExYw?oc=5",
+     "source": "The Globe and Mail",
+     "domain": "theglobeandmail.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-09-10T15:40:00+00:00",
+     "first_seen_at": "2026-09-10T21:16:12+00:00",
+     "route": "googlenews",
+     "query": "(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")",
+     "tier_hint": null,
+     "summary": "Is PayPal Stock a Buy, Sell, or Hold at 80% Below Its Record High? The Globe and Mail",
+     "alias": "PayPal",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -9622,6 +9729,7 @@
    ],
    "countries": [
     "GB",
+    "US",
     "United States"
    ],
    "latest": "2026-09-10T17:15:00+00:00"
@@ -11182,8 +11290,38 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 44209,
+     "title": "Is Royal Caribbean Cruises Stock Underperforming the S&P 500?",
+     "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQWW9YUmFBZndoXzRNZE9MUjhWeDJleUVDbk01bFhkRnVXWDBXcklnaXZodUZCTGdoQVJQZHY2Q1NwZXlMcWNNTy1jYlpIVHduVVltMExXbHlSNTgwQnN5eVRlNXZPczdiXzhIZXB6U0pyQmtuOVBRMUowbER2ZExGVlhPbFpKOFpMcEloemZVSQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQWW9YUmFBZndoXzRNZE9MUjhWeDJleUVDbk01bFhkRnVXWDBXcklnaXZodUZCTGdoQVJQZHY2Q1NwZXlMcWNNTy1jYlpIVHduVVltMExXbHlSNTgwQnN5eVRlNXZPczdiXzhIZXB6U0pyQmtuOVBRMUowbER2ZExGVlhPbFpKOFpMcEloemZVSQ?oc=5",
+     "source": "inkl",
+     "domain": "inkl.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-10T12:38:27+00:00",
+     "first_seen_at": "2026-09-10T21:16:12+00:00",
+     "route": "googlenews",
+     "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+     "tier_hint": null,
+     "summary": "Is Royal Caribbean Cruises Stock Underperforming the S&P 500? inkl",
+     "alias": "Royal Caribbean",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Royal Caribbean\" OR \"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\")"
+     ],
+     "alert_categories": [
+      "rating"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "rating"
@@ -11196,6 +11334,7 @@
     "en"
    ],
    "countries": [
+    "GB",
     "US"
    ],
    "latest": "2026-09-10T12:38:27+00:00"
@@ -11514,7 +11653,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 30,
+   "sources": 31,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -11558,7 +11697,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")",
+     "googlenews:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
     ],
     "alert_categories": [
      "management"
@@ -11700,7 +11840,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")",
+      "googlenews:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
      ],
      "alert_categories": [
       "management"
@@ -15724,7 +15865,9 @@
      "alias": "Unilever",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Unilever\" OR \"United Rentals\" OR \"Univar\" OR \"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\")"
+     ],
      "alert_categories": [
       "management"
      ],
@@ -16749,7 +16892,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")"
+     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")",
+     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -16800,7 +16944,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"ZIM\")"
+     "googlenews:(\"ZIM\")",
+     "googlenews:(\"ZIM\" OR \"Zooplus\")"
     ],
     "alert_categories": [
      "m_and_a",
