@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-10T07:01:03+00:00",
+ "generated_at": "2026-09-10T07:30:22+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -234,7 +234,10 @@
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
+     "gdelt:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
+    ],
     "alert_categories": [
      "capital_markets",
      "restructuring"
@@ -2659,7 +2662,9 @@
     "alias": "Avis Budget",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -5280,6 +5285,55 @@
    "latest": "2026-09-09T11:27:30+00:00"
   },
   {
+   "name_id": "cmacgm",
+   "name": "CMA CGM",
+   "cluster_id": 29773,
+   "primary": {
+    "id": 41086,
+    "title": "CMA CGM says it met obligations in $186m Samsung dispute",
+    "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPTWd6WnVEZklGekxydl9NZ1QtNjF2a1pjR1FLNFUyVjdLTnE4WjRwb0FKOFJCYk9pMDRCczdKbC1oV3ZLOU9sOWloNlBzRXA3eGhqbHB6Vkg3NEF0MnFYcnA1dzRqWGVSV09Wd3lpMUVNczVHWnQ1QlZTZ3NBTG5EVVByR0o",
+    "raw_link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPTWd6WnVEZklGekxydl9NZ1QtNjF2a1pjR1FLNFUyVjdLTnE4WjRwb0FKOFJCYk9pMDRCczdKbC1oV3ZLOU9sOWloNlBzRXA3eGhqbHB6Vkg3NEF0MnFYcnA1dzRqWGVSV09Wd3lpMUVNczVHWnQ1QlZTZ3NBTG5EVVByR0o?oc=5",
+    "source": "Splash247",
+    "domain": "splash247.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-09-10T07:24:49+00:00",
+    "first_seen_at": "2026-09-10T07:18:14+00:00",
+    "route": "googlenews",
+    "query": "(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")",
+    "tier_hint": null,
+    "summary": "CMA CGM says it met obligations in $186m Samsung dispute Splash247",
+    "alias": "CMA CGM",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "CMA CGM"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-09-10T07:24:49+00:00"
+  },
+  {
    "name_id": "comcast",
    "name": "Comcast",
    "cluster_id": 29450,
@@ -5863,57 +5917,6 @@
     "GB"
    ],
    "latest": "2026-09-09T17:01:30+00:00"
-  },
-  {
-   "name_id": "comcast",
-   "name": "Comcast",
-   "cluster_id": 27524,
-   "primary": {
-    "id": 37822,
-    "title": "Comcast Corporation $CMCSA Shares Sold by Murphy Pohlad Asset Management LLC",
-    "url": "https://tickerreport.com/banking-finance/13577319/comcast-corporation-cmcsa-shares-sold-by-murphy-pohlad-asset-management-llc.html",
-    "raw_link": "https://www.tickerreport.com/banking-finance/13577319/comcast-corporation-cmcsa-shares-sold-by-murphy-pohlad-asset-management-llc.html",
-    "source": "tickerreport.com",
-    "domain": "tickerreport.com",
-    "country": "United States",
-    "lang": "english",
-    "published_at": "2026-09-08T23:45:00+00:00",
-    "first_seen_at": "2026-09-09T07:18:27+00:00",
-    "route": "gdelt",
-    "query": "(\"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\")",
-    "tier_hint": null,
-    "summary": "",
-    "alias": "Comcast",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "gdelt:(\"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Comcast"
-   ],
-   "languages": [
-    "english"
-   ],
-   "countries": [
-    "United States"
-   ],
-   "latest": "2026-09-08T23:45:00+00:00"
   },
   {
    "name_id": "conforama",
