@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-12T10:52:26+00:00",
+ "generated_at": "2026-09-12T11:06:42+00:00",
  "alerts": [
   {
    "name_id": "abfoods",
@@ -76,7 +76,9 @@
     "alias": "Adidas",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"1-2-3.tv\" OR \"Adidas\" OR \"Arla Foods\" OR \"Aroundtown\" OR \"Aurelius\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -2292,7 +2294,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Circle K\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\")"
+     "googlenews:(\"Circle K\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\")",
+     "googlenews:(\"Carnival\" OR \"Circle K\" OR \"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\")"
     ],
     "alert_categories": [
      "litigation"
@@ -4596,58 +4599,6 @@
    "latest": "2026-09-11T15:00:00+00:00"
   },
   {
-   "name_id": "mutares",
-   "name": "Mutares",
-   "cluster_id": 32534,
-   "primary": {
-    "id": 45707,
-    "title": "Puma: Vertriebsvorstand Bäumer tritt zurück, bleibt aber BVB-Aufsichtsrat",
-    "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5RWDExRG1tdzlrVnZ2XzBGMVFqZHRnb2NTSUZHZ19WS25fYVJ6SW15TmdYSkRha2tzREd3cmpRRUdfeEJoSHd1cmYxb0lOdVZ5MTJMY2xEUlZGSnh0a0VhQ21JZGNUZGZtWDFfaEw5NnRjb2tXZ1BmcjBQSHjSAYIBQVVfeXFMTW5PQUJxWkRwRk1oaGdIcFJ1eGZRaFJoaTUzTXc4UnZ0azJHT2IySlpERldyZ0NPZmh0eUwxMkxHUkVDZmlaS3oyNXp6OTJOMkY2TUFjV1ZUTVdQZ2Y4bE9yUGQtSFVyd3FLakN0cURXNXgtUDU0Uk9TY1dDS2FNZnEzUQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5RWDExRG1tdzlrVnZ2XzBGMVFqZHRnb2NTSUZHZ19WS25fYVJ6SW15TmdYSkRha2tzREd3cmpRRUdfeEJoSHd1cmYxb0lOdVZ5MTJMY2xEUlZGSnh0a0VhQ21JZGNUZGZtWDFfaEw5NnRjb2tXZ1BmcjBQSHjSAYIBQVVfeXFMTW5PQUJxWkRwRk1oaGdIcFJ1eGZRaFJoaTUzTXc4UnZ0azJHT2IySlpERldyZ0NPZmh0eUwxMkxHUkVDZmlaS3oyNXp6OTJOMkY2TUFjV1ZUTVdQZ2Y4bE9yUGQtSFVyd3FLakN0cURXNXgtUDU0Uk9TY1dDS2FNZnEzUQ?oc=5",
-    "source": "4investors.de",
-    "domain": "4investors.de",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-09-11T06:42:17+00:00",
-    "first_seen_at": "2026-09-11T10:57:44+00:00",
-    "route": "googlenews",
-    "query": "\"Mutares\"",
-    "tier_hint": null,
-    "summary": "Puma: Vertriebsvorstand Bäumer tritt zurück, bleibt aber BVB-Aufsichtsrat 4investors.de",
-    "alias": "(query)",
-    "alias_where": "none",
-    "confidence": 0.4,
-    "also_routes": [
-     "googlenews:(\"Mutares\" OR \"Paragon Customer Communications\" OR \"PRA Group\" OR \"STADA\" OR \"Südzucker\" OR \"SYNLAB\")",
-     "googlenews:\"Mutares\""
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 0.4,
-   "aliases": [
-    "(query)"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-09-11T06:42:17+00:00"
-  },
-  {
    "name_id": "ncl",
    "name": "Norwegian Cruise Line",
    "cluster_id": 33856,
@@ -4698,6 +4649,55 @@
     "US"
    ],
    "latest": "2026-09-12T06:49:34+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 34059,
+   "primary": {
+    "id": 47970,
+    "title": "PayPal Rejected $60.50 a Share. Its CEO’s Pay Plan Already Said $68",
+    "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE0tLTNQRmZqRXlhNk1KcXotaTNKZW52ZEJ3dXNta1h2azF4dG56UVNMZXdjQ2d0eXI3VGxjeVlNYm1nNWNjVVFfRnQyemtsQ0Nzd0o3Z2t2cHE5ejNGMFNjdHhubWJYbEl6eGNlSWdnLXlPOHVLN2ZSeXpJcw",
+    "raw_link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE0tLTNQRmZqRXlhNk1KcXotaTNKZW52ZEJ3dXNta1h2azF4dG56UVNMZXdjQ2d0eXI3VGxjeVlNYm1nNWNjVVFfRnQyemtsQ0Nzd0o3Z2t2cHE5ejNGMFNjdHhubWJYbEl6eGNlSWdnLXlPOHVLN2ZSeXpJcw?oc=5",
+    "source": "Business Model Analyst",
+    "domain": "businessmodelanalyst.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-12T11:00:00+00:00",
+    "first_seen_at": "2026-09-12T10:54:22+00:00",
+    "route": "googlenews",
+    "query": "(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")",
+    "tier_hint": null,
+    "summary": "PayPal Rejected $60.50 a Share. Its CEO’s Pay Plan Already Said $68 Business Model Analyst",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-12T11:00:00+00:00"
   },
   {
    "name_id": "paypal",
@@ -8125,59 +8125,6 @@
     "NL"
    ],
    "latest": "2026-09-11T11:51:13+00:00"
-  },
-  {
-   "name_id": "tmicc",
-   "name": "The Magnum Ice Cream Company",
-   "cluster_id": 32541,
-   "primary": {
-    "id": 45715,
-    "title": "Ceo Ben & Jerry's: Bestuur was disfunctioneel en 'toxic'",
-    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNX0lHbHRpX0NaNW4ybWhXOUwxTGVRN2V5ZTlDSmhPWXFwX0sxc2tybVRJd1VNdkpYc3Q5cGdkWjNtbk5mTVZPMmZHZXdLUnR5alpCT3g3YkZWV0NOSV9MQTR4SkRMTGhOME0xVHJtX2NJVWw3SmI3LU45aGx6SGRtZUhCMDFxU2dQZjRv",
-    "raw_link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNX0lHbHRpX0NaNW4ybWhXOUwxTGVRN2V5ZTlDSmhPWXFwX0sxc2tybVRJd1VNdkpYc3Q5cGdkWjNtbk5mTVZPMmZHZXdLUnR5alpCT3g3YkZWV0NOSV9MQTR4SkRMTGhOME0xVHJtX2NJVWw3SmI3LU45aGx6SGRtZUhCMDFxU2dQZjRv?oc=5",
-    "source": "Distrifood",
-    "domain": "distrifood.nl",
-    "country": "NL",
-    "lang": "nl",
-    "published_at": "2026-09-11T10:18:16+00:00",
-    "first_seen_at": "2026-09-11T10:57:44+00:00",
-    "route": "googlenews",
-    "query": "\"Magnum Ice Cream Company\"",
-    "tier_hint": null,
-    "summary": "Ceo Ben & Jerry's: Bestuur was disfunctioneel en 'toxic' Distrifood",
-    "alias": "(query)",
-    "alias_where": "none",
-    "confidence": 0.4,
-    "also_routes": [
-     "googlenews:(\"HelloFresh\" OR \"House of HR\" OR \"Intrum\" OR \"Maxeda\" OR \"Takko\" OR \"Magnum Ice Cream Company\")",
-     "googlenews:(\"Unilever\")",
-     "googlenews:\"Magnum Ice Cream Company\""
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 0.4,
-   "aliases": [
-    "(query)"
-   ],
-   "languages": [
-    "nl"
-   ],
-   "countries": [
-    "NL"
-   ],
-   "latest": "2026-09-11T10:18:16+00:00"
   },
   {
    "name_id": "tuicruises",
