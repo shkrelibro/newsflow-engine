@@ -1,0 +1,282 @@
+#!/usr/bin/env python3
+"""Render the coverage brief from the engine's exports. Deterministic, no model calls.
+
+The brief used to be rebuilt from a prose instruction on every cut, which meant eight chances a
+day for the layout to drift and for the reconciliation arithmetic to stop adding up. Everything
+here that can be computed is computed: the editorial filter, every count, the drop table and the
+reconciliation. What is left for judgement is the ranking of the shortlist and the "so what" line
+under each item, and those arrive through --judgement as JSON.
+
+If no judgement file is supplied the page still renders, complete and correct, with the headline
+and the source standing in for the commentary. A thin brief is an acceptable failure; a missing
+one, or one whose numbers do not add up, is not.
+
+    python scripts/build_brief.py --docs docs --out brief.html
+    python scripts/build_brief.py --docs docs --out brief.html --judgement j.json
+    python scripts/build_brief.py --shortlist            # emit the shortlist as JSON and stop
+
+Judgement JSON:
+    {"lead": [<cluster_id>, ...],          # order of the lead section; the rest fall to Carried
+     "so": {"<cluster_id>": "one paragraph"},
+     "translate": {"<cluster_id>": "English rendering of a non-English headline"},
+     "tags": {"<cluster_id>": ["low-grade source"]}}
+"""
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import re
+import sys
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+# Re-daters and aggregators that republish a wire story under a new date. They are not sources and
+# a brief led by them is led by its own junk. Keep this in step with config/noise.yaml.
+JUNK_DOMAINS = {
+    "ad-hoc-news.de", "boerse-global.de", "finanztrends.de", "boerse-express.de",
+    "news.inbox.eu", "tipranks.com", "marketbeat.com", "themarketsdaily.com",
+    "tickerreport.com", "dailypolitical.com", "fuelcarmagazine.com", "fuelcarmagazine",
+}
+
+# What moves a bond price, in order. Anything uncategorised sorts after these.
+CATEGORY_ORDER = ["rating", "capital_markets", "restructuring", "m_and_a",
+                  "regulatory", "litigation", "management"]
+CATEGORY_LABEL = {"rating": "Rating", "capital_markets": "Capital markets",
+                  "restructuring": "Restructuring", "m_and_a": "M&A",
+                  "regulatory": "Regulatory", "litigation": "Litigation",
+                  "management": "Management"}
+
+
+def junky(domain: str) -> bool:
+    return any(j in (domain or "") for j in JUNK_DOMAINS)
+
+
+def rank(row: dict) -> tuple:
+    """Lower sorts first: categorised before not, by category priority, then by corroboration."""
+    cats = row["cats"]
+    pri = min((CATEGORY_ORDER.index(c) for c in cats if c in CATEGORY_ORDER), default=99)
+    return (0 if cats else 1, pri, -row["sources"], row["name"])
+
+
+def collect(latest: dict) -> list[dict]:
+    rows = []
+    for nm in latest.get("names", []):
+        for c in nm.get("candidates", []) or []:
+            p = c["primary"]
+            rows.append({
+                "id": c["cluster_id"], "nid": nm["id"], "name": nm["name"],
+                "comp": nm["kind"] == "comp",
+                "title": p["title"], "source": p["source"], "domain": p["domain"],
+                "country": p["country"], "lang": p["lang"], "url": p["url"],
+                "seen": p["first_seen_at"], "published": p.get("published_at"),
+                "where": p.get("alias_where"), "confidence": p.get("confidence"),
+                "cats": c.get("alert_categories") or [], "sources": c.get("sources") or 1,
+            })
+    return rows
+
+
+def partition(rows: list[dict]) -> dict:
+    """The editorial filter, and every number the reconciliation needs, in one pass."""
+    tierA = [r for r in rows if not r["comp"]]
+    comps = [r for r in rows if r["comp"]]
+    out = {"all": len(rows), "A": len(tierA), "C": len(comps)}
+    for key, pool in (("A", tierA), ("C", comps)):
+        bearing = [r for r in pool if r["where"] == "title"]
+        out[f"{key}_bearing"] = len(bearing)
+        out[f"{key}_standfirst"] = sum(1 for r in pool if r["where"] == "summary")
+        out[f"{key}_inherited"] = sum(1 for r in pool if r["where"] == "none")
+        clean = [r for r in bearing if not junky(r["domain"])]
+        out[f"{key}_junk"] = len(bearing) - len(clean)
+        out[f"{key}_clean"] = len(clean)
+        out[f"{key}_rows"] = sorted(clean, key=rank)
+    return out
+
+
+def quiet_block(coverage: dict) -> dict:
+    names = coverage.get("names", {})
+    tierA = {k: v for k, v in names.items() if v.get("kind") != "comp"}
+    quiet = sorted((v for v in tierA.values() if v.get("state") == "quiet"),
+                   key=lambda v: -(v.get("ok_24h") or 0))
+    never = [v for v in quiet if not v.get("mentions_total")]
+    return {"total": len(tierA), "quiet": quiet, "never": never,
+            "queries": sum(v.get("ok_24h") or 0 for v in quiet),
+            "starved": len(coverage.get("flags", {}).get("starved", [])),
+            "no_queries": len(coverage.get("flags", {}).get("no_queries", []))}
+
+
+def health_block(latest: dict) -> dict:
+    sh = latest.get("source_health", {}) or {}
+    detail = sh.get("detail") or []
+    dead = [x for x in detail if (x.get("ok_runs") or 0) == 0]
+    buckets = {"budget": 0, "tripped": 0, "rate_limited": 0, "http": 0, "no_feed": 0, "other": 0}
+    for x in dead:
+        e = (x.get("last_error") or "").lower()
+        if "time budget" in e:
+            buckets["budget"] += 1
+        elif "tripped" in e:
+            buckets["tripped"] += 1
+        elif "429" in e:
+            buckets["rate_limited"] += 1
+        elif "no feed url" in e:
+            buckets["no_feed"] += 1
+        elif "http" in e or "403" in e or "404" in e:
+            buckets["http"] += 1
+        else:
+            buckets["other"] += 1
+    total = sh.get("sources") or len(detail)
+    return {"total": total, "dead": len(dead), "answering": total - len(dead), **buckets}
+
+
+# ----------------------------------------------------------------------------- rendering
+def e(s) -> str:
+    return html.escape(str(s or ""), quote=True)
+
+
+def item_html(r: dict, j: dict, lead: bool) -> str:
+    so = (j.get("so") or {}).get(str(r["id"]))
+    trans = (j.get("translate") or {}).get(str(r["id"]))
+    extra = (j.get("tags") or {}).get(str(r["id"])) or []
+    tags = [f'<span class="tag">{e(r["country"])}</span>',
+            f'<span class="tag">{e(r["source"][:34])}</span>']
+    if r["sources"] > 1:
+        tags.append(f'<span class="tag">{r["sources"]} sources</span>')
+    for c in r["cats"]:
+        tags.append(f'<span class="tag cat">{e(CATEGORY_LABEL.get(c, c))}</span>')
+    for t in extra:
+        tags.append(f'<span class="tag">{e(t)}</span>')
+    headline = trans or r["title"]
+    orig = f'<p class="orig">{e(r["title"])}</p>' if trans else ""
+    body = f'<p class="so">{so}</p>' if so else ""
+    if lead:
+        return (f'<article class="item"><div class="meta"><span class="credit">{e(r["name"])}</span>'
+                f'{"".join(tags)}<span>{e(r["seen"][11:16])}Z</span></div>{orig}'
+                f'<h3><a href="{e(r["url"])}" rel="noopener">{e(headline)}</a></h3>{body}</article>')
+    return (f'<li><div class="meta"><span class="credit">{e(r["name"])}</span>{"".join(tags)}</div>'
+            f'<div class="t"><a href="{e(r["url"])}" rel="noopener">{e(headline)}</a></div>'
+            f'{body}</li>')
+
+
+def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
+    rows = collect(latest)
+    P = partition(rows)
+    Q = quiet_block(coverage)
+    H = health_block(latest)
+    st = latest.get("stats", {})
+    stamp = latest.get("generated_at", "")
+
+    lead_ids = [str(x) for x in (j.get("lead") or [])]
+    by_id = {str(r["id"]): r for r in P["A_rows"]}
+    lead = [by_id[i] for i in lead_ids if i in by_id]
+    if not lead:                                   # no judgement supplied: take the categorised ones
+        lead = [r for r in P["A_rows"] if r["cats"]][:6]
+    lead_set = {r["id"] for r in lead}
+    carried = [r for r in P["A_rows"] if r["id"] not in lead_set and
+               (r["cats"] or r["sources"] > 1 or (j.get("so") or {}).get(str(r["id"])))]
+    comp_carried = [r for r in P["C_rows"] if r["cats"]][:8]
+    published = len(lead) + len(carried)
+    review_dropped = P["A_clean"] - published
+
+    dropped = [r for r in P["A_rows"] if r["id"] not in lead_set and r not in carried]
+    by_name: dict[str, list] = {}
+    for r in dropped:
+        by_name.setdefault(r["name"], []).append(r)
+    drops = sorted(by_name.items(), key=lambda kv: -len(kv[1]))
+
+    def drop_rows() -> str:
+        out = []
+        for name, rs in drops[:8]:
+            doms = ", ".join(sorted({x["domain"] for x in rs})[:3])
+            out.append(f'<tr><td class="n">{len(rs)}</td><td class="name">{e(name)}</td>'
+                       f'<td class="c">{e(rs[0]["title"][:96])}…<br><span style="opacity:.7">{e(doms)}</span></td></tr>')
+        rest = sum(len(rs) for _, rs in drops[8:])
+        if rest:
+            out.append(f'<tr><td class="n">{rest}</td><td class="name">{len(drops)-8} others</td>'
+                       f'<td class="c">One or two clusters each.</td></tr>')
+        return "\n".join(out)
+
+    never = " · ".join(f'{e(v["name"])} ({v.get("ok_24h", 0)}q)' for v in Q["never"])
+    quietly = " · ".join(f'{e(v["name"])} ({v.get("ok_24h", 0)}q)'
+                         for v in Q["quiet"] if v.get("mentions_total"))
+
+    fields = dict(
+        cut=e(cut), date=e(datetime.now(timezone.utc).strftime("%A %-d %B %Y")),
+        tier_a=Q["total"], comps=st.get("runs") and (303 - Q["total"]) or 0,
+        stamp=e(stamp[11:16]), run=f'{st.get("runs", 0):,}',
+        clusters=f'{st.get("clusters", 0):,}', items=f'{st.get("items", 0):,}',
+        candidates=P["all"], carried_n=published,
+        answering=f'{H["answering"]:,}', sources=f'{H["total"]:,}',
+        feeds=st.get("feeds_known", 0),
+        dead=H["dead"], budget=H["budget"], tripped=H["tripped"],
+        rate=H["rate_limited"], http=H["http"], nofeed=H["no_feed"],
+        lead_items="\n".join(item_html(r, j, True) for r in lead),
+        lead_n=len(lead),
+        carried_items="\n".join(item_html(r, j, False) for r in carried) or
+                      '<li><div class="t">Nothing else cleared the filter in this window.</div></li>',
+        comp_items="\n".join(item_html(r, j, False) for r in comp_carried) or
+                   '<li><div class="t">No comp item carried a category in this window.</div></li>',
+        comp_cat=sum(1 for r in P["C_rows"] if r["cats"]), comp_pub=len(comp_carried),
+        drop_n=review_dropped, drop_rows=drop_rows(),
+        q_quiet=len(Q["quiet"]), q_total=Q["total"], q_never=never or "none",
+        q_quietly=quietly or "none", q_queries=f'{Q["queries"]:,}',
+        q_starved=Q["starved"], q_noq=Q["no_queries"],
+        r_all=P["all"], r_A=P["A"], r_C=P["C"],
+        rA_inherit=P["A_inherited"], rA_stand=P["A_standfirst"], rA_bear=P["A_bearing"],
+        rA_junk=P["A_junk"], rA_clean=P["A_clean"], rA_drop=review_dropped, rA_pub=published,
+        rC_inherit=P["C_inherited"] + P["C_standfirst"], rC_bear=P["C_bearing"],
+        rC_junk=P["C_junk"], rC_clean=P["C_clean"], rC_cat=sum(1 for r in P["C_rows"] if r["cats"]),
+        rC_pub=len(comp_carried),
+        stamp_full=e(stamp),
+    )
+    # Targeted substitution, not str.format: the template carries a full stylesheet and every CSS
+    # brace would be read as a field. Longest keys first so {r_A} cannot eat part of {rA_bear}.
+    out = TEMPLATE
+    for k in sorted(fields, key=len, reverse=True):
+        out = out.replace("{" + k + "}", str(fields[k]))
+    leftover = set(re.findall(r"\{([a-z_]+)\}", out.split("</style>", 1)[-1]))
+    if leftover:
+        raise SystemExit(f"template has unfilled fields: {sorted(leftover)}")
+    return out
+
+
+TEMPLATE = Path(__file__).with_name("brief_template.html").read_text(encoding="utf-8") \
+    if Path(__file__).with_name("brief_template.html").exists() else ""
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--docs", default="docs", help="directory holding latest.json and coverage.json")
+    ap.add_argument("--out", default="brief.html")
+    ap.add_argument("--judgement", help="JSON of lead order, so-what text and translations")
+    ap.add_argument("--cut", default=None, help="label for this cut, e.g. '13:00 London'")
+    ap.add_argument("--shortlist", action="store_true",
+                    help="print the filtered shortlist as JSON and stop, for the judgement pass")
+    a = ap.parse_args()
+
+    docs = Path(a.docs)
+    latest = json.loads((docs / "latest.json").read_text(encoding="utf-8"))
+    coverage = json.loads((docs / "coverage.json").read_text(encoding="utf-8"))
+
+    if a.shortlist:
+        P = partition(collect(latest))
+        json.dump({"tier_a": [{k: r[k] for k in
+                               ("id", "name", "title", "source", "domain", "country", "lang",
+                                "cats", "sources", "seen", "url")} for r in P["A_rows"]],
+                   "comps": [{k: r[k] for k in
+                              ("id", "name", "title", "source", "cats", "sources")}
+                             for r in P["C_rows"] if r["cats"]],
+                   "counts": {k: v for k, v in P.items() if not k.endswith("_rows")}},
+                  sys.stdout, ensure_ascii=False, indent=1)
+        return 0
+
+    if not TEMPLATE:
+        sys.exit("scripts/brief_template.html is missing; the layout lives there")
+    j = json.loads(Path(a.judgement).read_text(encoding="utf-8")) if a.judgement else {}
+    cut = a.cut or datetime.now(timezone.utc).strftime("%H:%M UTC")
+    Path(a.out).write_text(render(latest, coverage, j, cut), encoding="utf-8")
+    print(f"wrote {a.out}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

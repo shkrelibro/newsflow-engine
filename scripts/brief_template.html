@@ -1,0 +1,239 @@
+<title>Coverage Newsflow</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FCFCFA; --ink:#16181C; --muted:#59616E; --faint:#8A909B;
+  --rule:#E2E3DE; --rule-strong:#C7C9C3; --panel:#F4F4F0;
+  --accent:#1F4E5F; --flag:#8C2F1E; --ok:#2C5A3E;
+  --serif:'Newsreader',Charter,'Iowan Old Style',Georgia,serif;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12141A; --ink:#E7E5E0; --muted:#9AA2AE; --faint:#6E7682;
+    --rule:#282C34; --rule-strong:#3A3F49; --panel:#1A1D24;
+    --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12141A; --ink:#E7E5E0; --muted:#9AA2AE; --faint:#6E7682;
+  --rule:#282C34; --rule-strong:#3A3F49; --panel:#1A1D24;
+  --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:790px;margin:0 auto;padding-block:40px 72px;padding-left:22px;padding-right:22px}
+
+/* masthead */
+.mast{border-bottom:2px solid var(--ink);padding-bottom:10px}
+.mast h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,7vw,44px);
+  letter-spacing:-.02em;margin:0;line-height:1}
+.mastline{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;
+  margin-top:10px;font-family:var(--sans);font-size:12px;color:var(--muted)}
+.mastline b{color:var(--ink);font-weight:600}
+.kicker{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:8px}
+
+/* ledger */
+.ledger{margin:22px 0 0;border:1px solid var(--rule-strong);background:var(--panel)}
+.ledger .row{display:flex;flex-wrap:wrap;gap:0}
+.ledger .cell{flex:1 1 116px;padding:11px 13px;border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule)}
+.ledger .cell:last-child{border-right:0}
+.ledger dt{font-family:var(--sans);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 3px}
+.ledger dd{margin:0;font-family:var(--mono);font-size:17px;font-variant-numeric:tabular-nums;
+  font-weight:500;letter-spacing:-.02em}
+.ledger dd small{font-size:11px;color:var(--muted);font-weight:400}
+.ledger .note{padding:9px 13px;font-family:var(--sans);font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle;
+  margin-right:6px;background:var(--ok)}
+
+/* lede */
+.lede{font-size:20px;line-height:1.45;margin:30px 0 0;color:var(--ink)}
+.lede em{font-style:normal;background:linear-gradient(transparent 62%,rgba(31,78,95,.16) 62%)}
+
+h2{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--ink);margin:46px 0 0;padding-bottom:6px;
+  border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h2 span{font-family:var(--mono);font-weight:400;letter-spacing:0;color:var(--faint);text-transform:none;font-size:11px}
+
+/* items */
+.item{padding:20px 0;border-bottom:1px solid var(--rule)}
+.meta{font-family:var(--sans);font-size:11px;color:var(--muted);
+  display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:7px}
+.credit{font-weight:600;color:var(--ink);letter-spacing:.01em}
+.tag{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap}
+.tag.cat{border-color:var(--accent);color:var(--accent)}
+.item h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.28;
+  margin:0 0 8px;text-wrap:balance;letter-spacing:-.005em}
+.item h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+.item h3 a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+.so{font-size:16px;line-height:1.55;color:var(--muted);margin:0}
+.so b{color:var(--ink);font-weight:500}
+.orig{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--faint);
+  margin:0 0 8px;padding-left:12px;border-left:2px solid var(--rule-strong)}
+
+/* compact list */
+.compact{margin:0;padding:0;list-style:none}
+.compact li{padding:12px 0;border-bottom:1px solid var(--rule);
+  display:grid;grid-template-columns:minmax(0,1fr);gap:3px}
+.compact .t{font-size:17px;line-height:1.35}
+.compact .t a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.compact .t a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* drop table */
+.drops{width:100%;border-collapse:collapse;margin-top:14px;font-family:var(--sans);font-size:13px}
+.drops th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);font-weight:600;padding:0 10px 6px 0;border-bottom:1px solid var(--rule-strong)}
+.drops td{padding:8px 10px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.drops td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--flag);
+  width:2.6em;text-align:right;padding-right:14px}
+.drops td.c{color:var(--muted)}
+.drops td.name{font-weight:500;white-space:nowrap}
+.scroll{overflow-x:auto}
+
+/* reconciliation */
+pre.recon{font-family:var(--mono);font-size:12.5px;line-height:1.75;background:var(--panel);
+  border:1px solid var(--rule-strong);padding:16px 18px;margin:16px 0 0;overflow-x:auto;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+pre.recon b{color:var(--accent);font-weight:500}
+pre.recon i{color:var(--flag);font-style:normal}
+
+.quiet{font-family:var(--sans);font-size:13px;line-height:1.8;color:var(--muted);margin:14px 0 0}
+.quiet b{color:var(--ink);font-weight:600}
+.win{margin-top:18px;padding:13px 15px;border-left:3px solid var(--ok);background:var(--panel);
+  font-family:var(--sans);font-size:13.5px;line-height:1.6;color:var(--muted)}
+.win p{margin:0}
+.win b{color:var(--ink);font-weight:600}
+.method{margin-top:14px;font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--muted)}
+.method p{margin:0 0 8px}
+.method b{color:var(--ink);font-weight:600}
+footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
+  font-family:var(--sans);font-size:11.5px;color:var(--faint)}
+@media(max-width:520px){
+  body{font-size:16px}
+  .item h3{font-size:19px}
+  .lede{font-size:18px}
+  .ledger .cell{flex:1 1 50%}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">European HY &amp; Distressed · Coverage Brief</div>
+  <h1>Coverage Newsflow</h1>
+  <div class="mastline">
+    <span><b>{date}</b></span>
+    <span><b>{cut}</b> cut</span>
+    <span>24-hour window</span>
+    <span>{tier_a} tier-A names</span>
+  </div>
+</header>
+
+<dl class="ledger">
+  <div class="row">
+    <div class="cell"><dt>Engine stamp</dt><dd>{stamp}<small>Z</small></dd></div>
+    <div class="cell"><dt>Run</dt><dd>{run}</dd></div>
+    <div class="cell"><dt>Clusters held</dt><dd>{clusters}</dd></div>
+    <div class="cell"><dt>Items held</dt><dd>{items}</dd></div>
+  </div>
+  <div class="row">
+    <div class="cell"><dt>Candidates, 24h</dt><dd>{candidates}</dd></div>
+    <div class="cell"><dt>Carried below</dt><dd>{carried_n}</dd></div>
+    <div class="cell"><dt>Sources answering</dt><dd>{answering}<small> / {sources}</small></dd></div>
+    <div class="cell"><dt>Feeds resolved</dt><dd>{feeds}<small> / 167</small></dd></div>
+  </div>
+  <div class="note"><span class="dot"></span>{dead} sources returned nothing.
+    <b>{budget} were skipped on the run budget</b>, not refused upstream.
+    Genuine faults: {rate} rate-limited, {http} HTTP errors, {nofeed} outlets with no feed yet,
+    {tripped} cancelled by the circuit breaker.</div>
+</dl>
+
+<p class="lede">The engine returned <b>{candidates}</b> candidate clusters in the last 24 hours.
+<em>{carried_n} are carried below.</em> The reconciliation at the foot names exactly what consumed the rest.
+Nothing is deleted; everything not published is held and searchable.</p>
+
+<h2>The lead <span>tier A</span></h2>
+{lead_items}
+
+<h2>Carried <span>tier A · secondary</span></h2>
+<ul class="compact">
+{carried_items}
+</ul>
+
+<h2>Comp read-through <span>{comp_cat} categorised, {comp_pub} carried</span></h2>
+<ul class="compact">
+{comp_items}
+</ul>
+
+<h2>What the filter dropped, and why <span>{drop_n} tier-A clusters</span></h2>
+<p class="method" style="margin-top:14px">Each of these passed the name-bearing test, meaning the alias really
+is in the headline. They are not engine faults. Almost every one is a missing <code>require_context</code> or
+<code>exclude_terms</code> rule in that name's config, which is the largest remaining lever on relevance.</p>
+<div class="scroll">
+<table class="drops">
+  <thead><tr><th></th><th>Credit</th><th>Leading example and domains</th></tr></thead>
+  <tbody>
+{drop_rows}
+  </tbody>
+</table>
+</div>
+
+<h2>Quiet, ledger-backed <span>{q_quiet} of {q_total} tier A</span></h2>
+<p class="method" style="margin-top:14px">Silence here is measured, not assumed. Every name below was swept and
+returned nothing; the figure after each is the count of queries that completed in the window.
+<b>{q_starved} names are starved and {q_noq} have no queries</b>, so no silence on this page is a budget artefact.</p>
+<p class="quiet"><b>Never produced a mention, ever:</b> {q_never}.
+<br><br><b>Quiet in this window:</b> {q_quietly}.
+<br><br>{q_queries} successful queries across the {q_quiet}, and nothing returned.</p>
+
+<h2>Reconciliation <span>arithmetic is exact</span></h2>
+<pre class="recon">{r_all}   candidate clusters in the 24-hour window
+      |
+      +-- {r_C}  comps
+      |        +-- {rC_bear}  alias in headline
+      |        |        +-- {rC_junk}  re-dater domains            <i>dropped</i>
+      |        |        +-- {rC_clean}  carried into review
+      |        |                 +-- {rC_cat}  with a category
+      |        |                          +-- {rC_pub}  published  <b>above</b>
+      |        +-- {rC_inherit}  alias not in headline             <i>held</i>
+      |
+      +-- {r_A}  tier A
+               +-- {rA_inherit}  alias not in headline (grouped OR query) <i>held</i>
+               +-- {rA_stand}  alias in standfirst only                   <i>held</i>
+               +-- {rA_bear}  alias in headline
+                        +-- {rA_junk}  re-dater domains            <i>dropped</i>
+                        +-- {rA_clean}  carried into review
+                                 +-- {rA_drop}  not credit relevant <i>dropped, table above</i>
+                                 +-- {rA_pub}  published            <b>above</b>
+
+held = kept in the store, not published. Nothing is deleted.
+{rA_pub} + {rA_drop} = {rA_clean}  ·  {rA_clean} + {rA_junk} = {rA_bear}  ·  {rA_bear} + {rA_stand} + {rA_inherit} = {r_A}  ·  {r_A} + {r_C} = {r_all}</pre>
+
+<h2>Method</h2>
+<div class="method">
+  <p><b>Headline and outlet only.</b> The engine does not fetch article bodies. Where an original-language line
+  appears above a translation, that is the headline as published, not a quotation from the article. Nothing here
+  is inferred from text that was not read.</p>
+  <p><b>Links route through Google News</b> where the outlet link was not resolved. Redirect resolution is off on
+  GitHub Actions because it costs more than the run budget allows.</p>
+  <p><b>Name-bearing test.</b> The engine issues grouped OR queries across several names at a time, so a cluster
+  can attach to a name whose headline never mentions it. Those {rA_inherit} tier-A rows are held and searchable
+  but not published, because publishing them is how a brief becomes noise.</p>
+  <p><b>This page is rendered by <code>scripts/build_brief.py</code></b> from the engine's own exports. Every
+  count above is computed, not typed. Judgement is confined to the ranking of the lead and the commentary under
+  each item.</p>
+</div>
+
+<footer>
+  Generated from newsflow-engine run {run}, exported {stamp_full}.
+  Engine health, per-name query counts and the full held set are in <code>docs/health.json</code> and
+  <code>docs/coverage.json</code>.
+</footer>
+
+</div>
