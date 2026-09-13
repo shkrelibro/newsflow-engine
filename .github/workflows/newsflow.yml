@@ -52,13 +52,14 @@ jobs:
       # saved from, or the entry does not match and every run starts from nothing.
       - name: Set the committed backup aside
         run: |
-          if [ -f data/newsflow.db ]; then
-            mkdir -p data/backup
-            mv data/newsflow.db data/backup/newsflow.db
-            echo "committed backup moved to data/backup/newsflow.db"
-          else
-            echo "no committed backup in this checkout"
-          fi
+          mkdir -p data/backup
+          for f in data/newsflow.db data/newsflow.db.gz; do
+            if [ -f "$f" ]; then
+              mv "$f" "data/backup/$(basename "$f")"
+              echo "committed backup moved to data/backup/$(basename "$f")"
+            fi
+          done
+          ls -la data/backup/ 2>/dev/null || echo "no committed backup in this checkout"
 
       - name: Restore database from the cache
         uses: actions/cache/restore@v4
@@ -69,7 +70,10 @@ jobs:
 
       # Keep whichever of the two copies has seen more runs. Both counters only ever increase.
       - name: Use the newer of the cache and the committed backup
-        run: python -m newsflow pick-db --candidate data/backup/newsflow.db --target data/newsflow.db
+        run: |
+          python -m newsflow pick-db --target data/newsflow.db \
+            --candidate data/backup/newsflow.db.gz \
+            --candidate data/backup/newsflow.db
 
       - name: Run engine
         id: engine
@@ -136,17 +140,50 @@ jobs:
           path: data/newsflow.db
           key: newsflow-db-v2-${{ github.run_id }}
 
-      - name: Commit outputs
+      # The exports go up on their own, in their own commit, and nothing else rides along. They
+      # used to share a commit with the database backup, and on 13 September the database passed
+      # GitHub's 100MB per-file limit: the push was rejected, and because a rejected push takes
+      # the whole commit with it, every export stopped publishing while the engine carried on
+      # collecting perfectly well. The brief went dark for a reason that had nothing to do with
+      # the news. Keep the product's publishing path free of anything that can grow.
+      - name: Publish the exports
         if: always()
         run: |
           git config user.name "newsflow-bot"
           git config user.email "newsflow-bot@users.noreply.github.com"
           git add docs
-          # back the database up in git once a day (first run after 00:00 UTC) or on a manual run
-          if [ "$(date -u +%H)" = "00" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            git add -f data/newsflow.db
-          fi
           git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" || echo "nothing to commit"
+          git pull --rebase origin "${{ github.ref_name }}" || true
+          git push
+
+      # The backup, separately, compressed, and best effort. Once a day (first run after 00:00
+      # UTC) or on a manual run. gzip takes the database to roughly a third, which is what keeps
+      # it under the limit; if it ever stops fitting, say so loudly and skip it rather than
+      # failing, because a missing backup is a degraded safety net while a failed job is an
+      # outage. continue-on-error keeps this off the job's result for the same reason.
+      - name: Back the database up (daily, compressed, best effort)
+        if: always() && steps.engine.outcome == 'success'
+        continue-on-error: true
+        run: |
+          if [ "$(date -u +%H)" != "00" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "not a backup cycle"; exit 0
+          fi
+          [ -f data/newsflow.db ] || { echo "no database to back up"; exit 0; }
+          raw=$(stat -c%s data/newsflow.db)
+          gzip -6 -c data/newsflow.db > data/newsflow.db.gz
+          gz=$(stat -c%s data/newsflow.db.gz)
+          echo "database $(( raw / 1000000 ))MB, compressed backup $(( gz / 1000000 ))MB"
+          if [ "$gz" -gt 95000000 ]; then
+            echo "::warning::compressed backup is $(( gz / 1000000 ))MB, above the 95MB ceiling GitHub allows. Not committing it. Prune harder or move the state off git."
+            rm -f data/newsflow.db.gz
+            exit 0
+          fi
+          git config user.name "newsflow-bot"
+          git config user.email "newsflow-bot@users.noreply.github.com"
+          git add -f data/newsflow.db.gz
+          # retire the old uncompressed backup from the tree; it can no longer be pushed
+          git rm -q --cached --ignore-unmatch data/newsflow.db
+          git commit -m "newsflow database backup $(date -u +%Y-%m-%d) [skip ci]" || echo "nothing to commit"
           git pull --rebase origin "${{ github.ref_name }}" || true
           git push
 
