@@ -77,3 +77,23 @@ events:
     any_of: ["Q2", "résultats", "results", "semestre", "half-year", "H1"]
     within_hours: 30
     note: The investor site lists a Q2 2026 financial presentation for 16 September. First test of the fixed newsroom watcher on a scheduled event. If this misses, the watcher is pointed at the wrong page.
+
+  # Added 13 September after the question "why is there nothing on Branicks, Wagamama...":
+  # both were in the store within hours. Branicks never reached a brief because every headline
+  # that week came from screened churn domains (fixed: signal-bearing tier-A rows from those
+  # domains are now flagged, not dropped). Wagamama was never briefed because the brief did not
+  # exist until 13 September.
+  - id: branicks-sp-sd-2026-09-11
+    name: branicks
+    date: 2026-09-11
+    contains: ["Branicks"]
+    any_of: ["auf SD", "selective default", "Rating auf"]
+    within_hours: 24
+    note: Finanztrends. S&P cuts Branicks to SD on the bridge-notes exchange; the churn sites were the only coverage that week.
+  - id: wagamama-q1-2026-09-11
+    name: wagamama
+    date: 2026-09-11
+    contains: ["Wagamama"]
+    any_of: ["returns to growth", "results", "trading update", "quarter"]
+    within_hours: 24
+    note: MCA Insight. The quarterly update, caught the morning it ran and never briefed because the brief did not exist yet.
