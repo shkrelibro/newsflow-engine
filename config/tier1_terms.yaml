@@ -18,7 +18,8 @@ categories:
     - "αξιολόγησ|υποβάθμισ|αναβάθμισ"
   capital_markets:
     - "\\bbonds?\\b"
-    - "\\bnotes\\b"
+    # "analyst notes weak demand" is not an issuance
+    - "\\bnotes\\s+(?:due|offering|issue|issuance|priced|tender)|(?:senior|secured|unsecured|floating|fixed|PIK|convertible)[\\s-]+(?:rate\\s+)?notes\\b|\\d+(?:[.,]\\d+)?\\s?%\\s+notes\\b|\\bnotes\\s+20\\d\\d\\b"
     - "senior secured"
     - "obligation(?:er|erna|s|en)?\\b"
     - "företrädesemission|nyemission|riktad emission|emission övertecknad"
@@ -49,35 +50,49 @@ categories:
   m_and_a:
     - "\\bacqui(?:re|res|red|sition)"
     - "förvärv\\w*"
-    - "\\bsells?\\b|\\bsold\\b|divest\\w*"
+    # "sells" needs an M&A object: "sells portfolio", "sells stake", "sold to". Bare "sells" and
+    # "Should You Sell?" are retail and stock tips, and both reached a published brief.
+    - "\\b(?:sells?|sold)\\s+(?:\\w+\\s+){0,3}?(?:stake|unit|division|business|subsidiary|arm|portfolio|shares?|majority|minority|\\d+\\s*%)|\\bsold\\s+to\\b|divest\\w*"
+    # the transaction types that were missing altogether
+    - "take-?private|taken\\s+private|going\\s+private|\\bbuy-?out\\b|\\bLBO\\b|\\bbid\\s+for\\b|offer\\s+for\\s+(?:the\\s+)?(?:company|group|shares)|spin-?off|carve-?out|\\bIPO\\b|\\bOPA\\b|Börsengang|introduction\\s+en\\s+bourse|delist\\w*"
     - "säljer|avyttr\\w*"
     - "portfolio (?:sale|acquisition|purchase)|portfölj\\w*"
-    - "Übernahme|übernimmt|verkauft"
-    - "adquiere|adquisición|venta de|\\bvende\\b"
-    - "acquisisce|acquisizione|cessione"
+    # "verkauft" is Lidl selling vacuum cleaners unless it sells a stake, a unit, or to someone
+    - "Übernahme|übernimmt|verkauft\\s+(?:Tochter|Sparte|Anteil|Beteiligung|Mehrheit|Minderheit|Geschäftsbereich|Portfolio|\\d+\\s*%|an\\b)"
+    - "adquiere|adquisición|venta de (?:la |el |una |su )?(?:filial|participación|cartera|negocio|unidad|división)|\\bvende\\s+(?:su|la|el|una)?\\s*(?:filial|participación|cartera|negocio|unidad)"
+    - "acquisisce|acquisizione|\\bcessione\\b"
     - "πώληση|εξαγορά|χαρτοφυλάκι"
-    - "overname|verkoopt"
-    - "rachat|cession"
+    - "\\bovername\\b|verkoopt\\s+(?:belang|dochter|divisie|onderdeel|aan\\b)"
+    # "cession" without a boundary matched inside procession, recession, succession, concession
+    - "\\brachat\\b|\\bcession\\b|rachète|acquiert|reprise\\s+de|\\bvend\\s+(?:sa|ses|son|la|le|une|des)?\\s*(?:filiale|participation|division|activité|branche|portefeuille)"
     - "przejęcie|sprzedaż portfela|felvásárl\\w*|portfólió"
     - "joint venture|\\bJV\\b"
-    - "\\bmerger\\b|fusion\\b|fusione|fusión|fusionerar"
+    # a deal in front of a competition authority is still a deal
+    - "merger\\s+control|deal\\s+(?:concessions|remedies|approval|clearance)|antitrust\\s+(?:approval|clearance|review|probe)|Fusionskontrolle|Kartellamt|contrôle\\s+des\\s+concentrations|(?:EU|European\\s+Commission|CMA)\\s+(?:clears|approves|blocks)"
+    # "fusion\\b" matched the tail of diffusion and confusion
+    - "\\bmerger\\b|\\bfusion\\b|\\bfusione\\b|\\bfusión\\b|fusionerar"
   regulatory:
     - "regulator\\w*|supervisor\\w*|tillsyn"
     - "Finansinspektionen|BaFin|\\bFCA\\b|Finanssivalvonta|FIN-FSA|Finanstilsynet"
     - "Bank of Greece|Τράπεζα της Ελλάδος|Banca d'Italia|Banco de España|ACPR"
     - "Forbrugerombudsmanden|Consumer Ombudsman|Konsumentverket|Verbraucherzentrale|Consumentenbond"
     - "Datenschutz|dataskydd|GDPR|\\bIMY\\b|AEPD|Garante"
-    - "\\bfine[ds]?\\b|böter|Bußgeld|\\bmulta\\b|πρόστιμο|grzywn\\w*|bírság|pokut\\w*"
+    - "\\bfined\\b|\\bfines\\b|\\bfine\\s+of\\b|[\\d.,]+\\s*(?:m|bn|million|billion)?\\s+fine\\b|böter|Bußgeld|\\bmulta\\b|πρόστιμο|grzywn\\w*|bírság|pokut\\w*"
     - "licen[cs]e|tillstånd|toimilupa|Lizenz|άδεια"
     - "sanction\\w*|sanktion\\w*"
     - "investigation|utredning|Untersuchung|investigación|έρευνα"
     - "ulovlige gebyrer|olagliga avgifter|unlawful fees"
   management:
     - "\\bCEO\\b|\\bCFO\\b|\\bVD\\b|verkställande direktör|finanschef|Vorstandsvorsitz\\w*|consejero delegado|amministratore delegato|διευθύνων σύμβουλος|prezes|vezérigazgató"
-    - "\\bchair(?:man|woman|person)?\\b|ordförande|Aufsichtsrat|presidente del consejo"
+    # "chair" alone is furniture
+    - "\\bchair(?:man|woman|person)\\b|\\bchair\\s+of\\b|ordförande|Aufsichtsrat|presidente del consejo"
     - "resign\\w*|avgår|lämnar|steps down|dimite|dimissioni|démission|παραίτ\\w*|rezygn\\w*|lemond|tritt zurück"
-    - "appoint\\w*|utsedd|utser|nommé|nombra|nomina\\b|ernannt|διορί\\w*|powoł\\w*|kinevez\\w*"
+    # An appointment only counts at the top of the house. CEO, CFO, Vorstandsvorsitz and the rest
+    # already fire on their own line above, so a bare "appoints" added only the appointments that
+    # are not credit events: a Chief Culture & People Officer, an SVP of HR at a subsidiary.
+    - "(?:appoint\\w*|utsedd|utser|nomm[ée]\\w*|nombra|nomina\\b|ernenn\\w*|ernannt|beruft|berufen|διορί\\w*|powoł\\w*|kinevez\\w*).{0,60}?\\b(?:CEO|CFO|COO|chief\\s+(?:executive|financial|operating)|chair(?:man|woman)|managing\\s+director|Vorstandsvorsitz\\w*|Finanzvorstand|directeur\\s+général|consejero\\s+delegado|amministratore\\s+delegato|verkställande\\s+direktör|\\bVD\\b)"
   litigation:
     - "lawsuit|stämning|stämmer|class action|action de groupe|\\bKlage\\b|demanda colectiva|αγωγή|pozew|εξώδικο"
     - "\\bcourt\\b|domstol|tribunal|Gericht|tribunale|δικαστήρι|bíróság"
-    - "verdict|\\bUrteil\\b|sentencia|sentenza"
+    # "hartes Urteil" is readers judging a dirndl; a court verdict names the court or the party
+    - "\\bverdict\\b|Gerichtsurteil|\\bUrteil\\s+(?:des|vom|im|gegen|zu)\\b|sentencia\\s+(?:judicial|del\\s+tribunal|contra)|sentenza\\s+(?:del|della|contro)"
