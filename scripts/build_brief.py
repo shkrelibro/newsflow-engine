@@ -28,6 +28,7 @@ import html
 import json
 import re
 import sys
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -47,6 +48,42 @@ CATEGORY_LABEL = {"rating": "Rating", "capital_markets": "Capital markets",
                   "regulatory": "Regulatory", "litigation": "Litigation",
                   "management": "Management"}
 
+
+
+def resolve_and_date(url: str, timeout: float = 6.0) -> tuple[str, int | None]:
+    """Follow the aggregator redirect and read the year out of the outlet's own path.
+
+    91% of links arrive as Google News tokens, which carry no date, so the engine cannot check a
+    claimed publication date against anything. The outlet's URL usually can: publishers put the
+    date in the path when the article is created and it does not move when the page is re-dated.
+    On 13 September a 2009 C&A story arrived stamped that morning and nothing in the pipeline
+    could contradict it.
+
+    Only the handful of rows the brief intends to publish are resolved, so this is twenty or so
+    requests per cut rather than seven hundred per run, which is why it belongs here and not in
+    the engine. Best effort: a failure returns the original URL and no year, and an unverifiable
+    date is reported as unverifiable rather than assumed good.
+    """
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "newsflow-brief/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            final = resp.geturl() or url
+    except Exception:                                    # noqa: BLE001 - never fail a cut over this
+        return url, None
+    return final, url_year(final)
+
+
+_URL_YEAR = re.compile(r"(?:^|[/\-_.])((?:19|20)\d{2})(?:[/\-_.]|$)")
+
+
+def url_year(url: str) -> int | None:
+    from urllib.parse import urlsplit
+    try:
+        path = urlsplit(url).path
+    except ValueError:
+        return None
+    years = [int(m.group(1)) for m in _URL_YEAR.finditer(path) if 1990 <= int(m.group(1)) <= 2100]
+    return min(years) if years else None
 
 def junky(domain: str) -> bool:
     return any(j in (domain or "") for j in JUNK_DOMAINS)
@@ -249,6 +286,9 @@ def main() -> int:
     ap.add_argument("--out", default="brief.html")
     ap.add_argument("--judgement", help="JSON of lead order, so-what text and translations")
     ap.add_argument("--cut", default=None, help="label for this cut, e.g. '13:00 London'")
+    ap.add_argument("--resolve", action="store_true",
+                    help="follow each shortlisted link to the outlet and drop anything whose URL "
+                         "path shows an older year; catches re-dated archive pages")
     ap.add_argument("--shortlist", action="store_true",
                     help="print the filtered shortlist as JSON and stop, for the judgement pass")
     a = ap.parse_args()
@@ -259,13 +299,32 @@ def main() -> int:
 
     if a.shortlist:
         P = partition(collect(latest))
+        if a.resolve:
+            dropped = []
+            this_year = datetime.now(timezone.utc).year
+            for key in ("A_rows", "C_rows"):
+                keep = []
+                for r in P[key]:
+                    final, year = resolve_and_date(r["url"])
+                    r["resolved_url"] = final
+                    r["url_year"] = year
+                    if year is not None and year < this_year:
+                        dropped.append({"name": r["name"], "title": r["title"],
+                                        "year": year, "url": final})
+                    else:
+                        keep.append(r)
+                P[key] = keep
+            P["redated"] = dropped
+            print(f"resolved links; dropped {len(dropped)} re-dated", file=sys.stderr)
         json.dump({"tier_a": [{k: r[k] for k in
                                ("id", "name", "title", "source", "domain", "country", "lang",
                                 "cats", "sources", "seen", "url")} for r in P["A_rows"]],
                    "comps": [{k: r[k] for k in
                               ("id", "name", "title", "source", "cats", "sources")}
                              for r in P["C_rows"] if r["cats"]],
-                   "counts": {k: v for k, v in P.items() if not k.endswith("_rows")}},
+                   "redated": P.get("redated", []),
+                   "counts": {k: v for k, v in P.items()
+                              if not k.endswith("_rows") and k != "redated"}},
                   sys.stdout, ensure_ascii=False, indent=1)
         return 0
 
