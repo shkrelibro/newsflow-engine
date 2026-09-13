@@ -80,8 +80,14 @@ def test_end_to_end(cfg, tmp_path, fake_http_factory, googlenews_xml, bing_xml, 
     assert name["screened"]["count"] == 1 and "noise_domain" in name["screened"]["by_reason"]
     assert latest["alerts"] and latest["alerts"][0]["alert_candidate"]
     assert latest["source_health"]["failing"] == 1
-    primaries = {c["primary"]["title"] for c in name["candidates"]}
-    assert any("525 000 000 EUR" in t for t in primaries)
+    # The bond pricing arrives from Google and Bing at the SAME url but under different titles,
+    # "Intrum offentliggör prissättning av seniora säkerställda obligationer om 525 000 000 EUR"
+    # and "Intrum emitterar nya obligationer". The two jobs run on different threads, so whichever
+    # finishes first sets the stored title. Asserting on the Google wording alone failed about one
+    # run in six, which is the worst kind of red CI: intermittent, and therefore ignored.
+    titles = {c["primary"]["title"] for c in name["candidates"]}
+    titles |= {a["title"] for c in name["candidates"] for a in (c.get("also") or [])}
+    assert any("obligationer" in t for t in titles), titles
     assert (out / "index.html").exists() and (out / "alerts.json").exists() and (out / "health.json").exists()
     assert (out / "daily" / "2026-08-22.json").exists()
     html = (out / "index.html").read_text(encoding="utf-8")
@@ -293,3 +299,55 @@ def test_stale_rejects_undated_search_hits_and_re_dated_archive_urls(cfg, tmp_pa
     assert "Intrum newsroom item" in kept     # undated is meaningful from a page watcher
     assert "Intrum re-dated archive piece" not in kept
     assert "Intrum undated hit" not in kept
+
+
+def test_export_revalidates_stored_matches_against_the_current_config(cfg, tmp_path):
+    """A config fix must reach the next brief, not the one after the junk ages out.
+
+    Matches are made at collection and stored. On 13 September the context guards merged at
+    lunchtime and the 15:08 brief still published American college football under Quick and a
+    village carnival procession under Carnival Corporation, because those rows were matched that
+    morning and the export re-served them unchanged.
+    """
+    from newsflow.export import build_export
+    from newsflow.models import RawItem, SourceResult
+    from newsflow.pipeline import JobSpec
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    store = Store(cfg.db_path)
+
+    good = "Intrum emitterar nya obligationer om 525 000 000 EUR"
+    junk = "Three Quick Takeaways From No. 11 Oklahoma's Loss to Michigan"
+
+    def job():
+        items = [
+            RawItem(title=good, link="https://ex.invalid/2026/09/intrum-bond", route="googlenews",
+                    query="q", published_at=NOW, name_ids=["intrum"], lang="sv"),
+            RawItem(title=junk, link="https://ex.invalid/2026/09/oklahoma", route="googlenews",
+                    query="q", published_at=NOW, name_ids=["quick"], lang="en"),
+        ]
+        return items, SourceResult("googlenews", "mixed", True, 2, "", 0.1)
+
+    run_once(cfg, store, http=None, now=NOW, jobs=[JobSpec("mixed", "googlenews", job)])
+
+    # Force the junk row into the store as a live candidate for Quick, as an older config would
+    # have left it, so the export has something to revalidate out.
+    row = store.conn.execute("SELECT id FROM items WHERE title=?", (junk,)).fetchone()
+    if row is None:                                   # already rejected at collection: also fine
+        store.conn.execute(
+            "INSERT INTO items(canonical_url, raw_link, title, title_key, first_seen_at, route, "
+            "status, cluster_id, run_id) VALUES (?,?,?,?,?,?,?,?,?)",
+            ("https://ex.invalid/2026/09/oklahoma", "https://ex.invalid/2026/09/oklahoma", junk,
+             "okl", NOW.isoformat(), "googlenews", "candidate", 99, 1))
+        iid = store.conn.execute("SELECT id FROM items WHERE title=?", (junk,)).fetchone()["id"]
+        store.conn.execute(
+            "INSERT INTO matches(item_id, name_id, alias, where_, confidence) VALUES (?,?,?,?,?)",
+            (iid, "quick", "Quick", "title", 1.0))
+        store.conn.commit()
+
+    data = build_export(cfg, store, NOW, 24.0)
+    titles = {c["primary"]["title"] for n in data["names"] for c in n["candidates"]}
+    assert good in titles                              # a real match survives
+    assert junk not in titles                          # the stale one does not reach the pile
+    quick = next(n for n in data["names"] if n["id"] == "quick")
+    assert quick["candidate_count"] == 0
