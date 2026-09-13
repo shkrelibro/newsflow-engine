@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  issues: write        # the failure alert opens or comments on an issue
 
 concurrency:
   group: newsflow-run
@@ -58,6 +59,41 @@ jobs:
             python -m newsflow run
           fi
 
+      # A monitor that fails quietly is worse than no monitor, because you trust it. The engine
+      # can exit 0 having fetched nothing at all: every route refused, the database missing, the
+      # config loading no names. None of that raises an error on its own, so assert it here.
+      - name: Assert the run actually produced something
+        run: |
+          python - <<'PY'
+          import sqlite3, sys, os
+          db = "data/newsflow.db"
+          if not os.path.exists(db):
+              sys.exit("FAIL: no database after the run; nothing was stored")
+          c = sqlite3.connect(db)
+          c.row_factory = sqlite3.Row
+          run = c.execute("SELECT * FROM runs ORDER BY id DESC LIMIT 1").fetchone()
+          if run is None:
+              sys.exit("FAIL: the runs table is empty; the engine stored nothing")
+          fetched = run["items_fetched"] or 0
+          notes = run["notes"] or ""
+          print(f"run {run['id']} at {run['started_at']}: fetched={fetched} {notes}")
+
+          # Which routes answered at all this run
+          rows = c.execute(
+              "SELECT route, SUM(items) items, COUNT(*) jobs FROM source_results "
+              "WHERE run_id=? GROUP BY route", (run["id"],)).fetchall()
+          for r in rows:
+              print(f"  {r['route']:12} jobs={r['jobs']:5} items={r['items'] or 0}")
+          live = [r["route"] for r in rows if (r["items"] or 0) > 0]
+
+          if fetched == 0 and not live:
+              sys.exit("FAIL: every route returned nothing. This is an outage, not a quiet news day.")
+          if "tripped=" in notes:
+              print(f"::warning::a route was tripped for being refused upstream: {notes}")
+          if not live:
+              sys.exit("FAIL: no route produced a single item this run")
+          PY
+
       - name: Save database
         uses: actions/cache/save@v4
         if: always()
@@ -78,3 +114,44 @@ jobs:
           git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" || echo "nothing to commit"
           git pull --rebase origin "${{ github.ref_name }}" || true
           git push
+
+      # Make failures shout. GitHub emails the repository owner when an issue is opened or
+      # commented on, so this reaches you without configuring a webhook or SMTP. One open issue
+      # is reused for consecutive failures so a sustained outage does not create 96 issues a day.
+      - name: Alert on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          gh label create newsflow-failure --color B60205 \
+            --description "The newsflow engine failed a scheduled run" >/dev/null 2>&1
+          url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body=$(printf '%s\n' \
+            "The scheduled newsflow run failed at $(date -u +%Y-%m-%dT%H:%MZ)." \
+            "" \
+            "Run log: $url" \
+            "" \
+            "Nothing new was collected on this cycle. If this repeats, the engine is down and the" \
+            "absence of a brief is not a quiet news day.")
+          existing=$(gh issue list --label newsflow-failure --state open --limit 1 \
+            --json number --jq '.[0].number' 2>/dev/null)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "newsflow engine failed" --body "$body" \
+              --label newsflow-failure
+          fi
+
+      # Close the alert once a run succeeds again, so an open issue always means "broken now".
+      - name: Clear the alert on a good run
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          existing=$(gh issue list --label newsflow-failure --state open --limit 1 \
+            --json number --jq '.[0].number' 2>/dev/null)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Recovered: run ${{ github.run_id }} succeeded."
+          fi
