@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import shutil
 import sys
 import time
 from datetime import datetime, timezone
@@ -16,7 +15,7 @@ from .config import load_config
 from .export import write_exports
 from .pipeline import StateRollback, build_jobs, make_http, run_once
 from .routes import discover_feed
-from .store import Store, db_generation
+from .store import Store, db_generation, unpack_db
 
 
 def _setup_logging(verbose: bool) -> None:
@@ -129,7 +128,7 @@ def cmd_pick_db(args) -> int:
     """
     target = Path(args.target)
     best, best_gen, why = None, (-1, -1), []
-    for path in (target, Path(args.candidate)):
+    for path in [target] + [Path(c) for c in (args.candidate or [])]:
         gen = db_generation(path)
         why.append(f"{path} runs={gen[0]} items={gen[1]}")
         if gen > best_gen:
@@ -138,12 +137,13 @@ def cmd_pick_db(args) -> int:
     if best is None or best_gen[0] < 0:
         print(f"no usable database: {target} will be created empty")
         return 0
-    if best.resolve() != target.resolve():
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(best, target)
-        print(f"using {best} ({best_gen[0]} runs)")
-    else:
+    if best.resolve() == target.resolve():
         print(f"keeping {target} ({best_gen[0]} runs)")
+        return 0
+    if not unpack_db(best, target):
+        print(f"FAILED to install {best} at {target}")
+        return 1
+    print(f"using {best} ({best_gen[0]} runs)")
     return 0
 
 
@@ -245,7 +245,8 @@ def main(argv=None) -> int:
     ck.set_defaults(fn=cmd_check)
 
     pd = sub.add_parser("pick-db", help="keep whichever of two database copies has seen more runs")
-    pd.add_argument("--candidate", required=True, help="the copy restored from the Actions cache")
+    pd.add_argument("--candidate", action="append", required=True,
+                    help="another copy to consider; repeat the flag for each (e.g. the committed backup, plain or .gz)")
     pd.add_argument("--target", default="data/newsflow.db", help="where the run expects the database")
     pd.set_defaults(fn=cmd_pick_db)
 

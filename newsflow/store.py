@@ -1,8 +1,11 @@
 """SQLite storage. Every fetched mention is kept with provenance, even when screened."""
 from __future__ import annotations
 
+import gzip
 import json
+import shutil
 import sqlite3
+import tempfile
 import threading
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -11,19 +14,47 @@ from typing import Any, Iterable, Optional
 from .models import Item, SourceResult
 
 
+def unpack_db(path: str | Path, target: str | Path) -> bool:
+    """Write a possibly gzipped database at `path` out to `target` as a plain SQLite file.
+
+    The committed backup is gzipped because GitHub rejects any file over 100MB and the database
+    passed that in September; it compresses to roughly a third. Returns False if there is nothing
+    usable to unpack.
+    """
+    p, t = Path(path), Path(target)
+    if not p.exists() or p.stat().st_size == 0:
+        return False
+    t.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        if p.suffix == ".gz":
+            with gzip.open(p, "rb") as src, open(t, "wb") as dst:
+                shutil.copyfileobj(src, dst, length=1 << 20)
+        elif p.resolve() != t.resolve():
+            shutil.copyfile(p, t)
+        return True
+    except (OSError, EOFError, gzip.BadGzipFile):
+        return False
+
+
 def db_generation(path: str | Path) -> tuple[int, int]:
     """How far along a database file is, as (runs, items). (-1, -1) if it cannot be read.
 
-    Used to choose between two candidate copies of the database. The engine carries its state in
-    the GitHub Actions cache, which is keyed per run and restored by key prefix, so a restore can
-    hand back an older surviving entry rather than the newest one. The copy committed to git is at
-    most a day old but never goes backwards. Both counters only ever increase, so the copy with
-    the higher run count is the one that has seen more of the world, and is the one to carry on
-    from. A truncated or corrupt file scores (-1, -1) and therefore always loses.
+    Used to choose between candidate copies of the database. The engine carries its state in the
+    GitHub Actions cache, which is keyed per run and restored by key prefix, so a restore can hand
+    back an older surviving entry rather than the newest one. The copy committed to git is at most
+    a day old but never goes backwards. Both counters only ever increase, so the copy with the
+    higher run count is the one that has seen more of the world, and is the one to carry on from.
+    A truncated or corrupt file scores (-1, -1) and therefore always loses.
+
+    Accepts a gzipped file, which is how the committed backup is stored.
     """
     p = Path(path)
     if not p.exists() or p.stat().st_size == 0:
         return (-1, -1)
+    if p.suffix == ".gz":
+        with tempfile.TemporaryDirectory() as tmp:
+            plain = Path(tmp) / "unpacked.db"
+            return db_generation(plain) if unpack_db(p, plain) else (-1, -1)
     try:
         conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
         try:
