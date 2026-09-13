@@ -116,19 +116,22 @@ def cmd_stats(args) -> int:
 
 
 def cmd_pick_db(args) -> int:
-    """Choose between two copies of the database and install the better one at the target path.
+    """Choose between two copies of the database and leave the better one at the target path.
 
     The engine has two sources of previous state: the Actions cache, which is current but can
-    hand back an older surviving entry when the cache evicts, and the copy committed to git,
-    which is at most a day old but never goes backwards. Restore the cache to a side path, run
-    this, and the run starts on whichever copy has seen more runs. Without it, a stale cache
-    restore silently overwrites a perfectly good committed backup.
+    hand back an older surviving entry when entries are evicted, and the copy committed to git,
+    which is at most a day old but never goes backwards. Keep both, compare them here, and the
+    run starts on whichever has seen more runs. Without this, whichever copy happens to land at
+    the target path wins, and a stale one silently replaces a good one.
+
+    The two arguments are symmetric: neither is assumed to be the newer one, which is the whole
+    point. The output names both paths and their counts so the log says which was chosen and why.
     """
     target = Path(args.target)
     best, best_gen, why = None, (-1, -1), []
-    for label, path in (("committed", target), ("cache", Path(args.candidate))):
+    for path in (target, Path(args.candidate)):
         gen = db_generation(path)
-        why.append(f"{label}={path} runs={gen[0]} items={gen[1]}")
+        why.append(f"{path} runs={gen[0]} items={gen[1]}")
         if gen > best_gen:
             best, best_gen = path, gen
     print(" | ".join(why))
