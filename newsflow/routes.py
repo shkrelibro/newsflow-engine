@@ -312,7 +312,19 @@ def extract_feed_links(html: str, base_url: str) -> list[str]:
     return [urljoin(base_url, h) for h in p.feeds]
 
 
-COMMON_FEED_PATHS = ["/rss", "/feed", "/rss.xml", "/feed.xml", "/feeds", "/rss/", "/feed/", "/index.xml", "/atom.xml"]
+COMMON_FEED_PATHS = [
+    "/rss", "/feed", "/rss.xml", "/feed.xml", "/feeds", "/rss/", "/feed/", "/index.xml", "/atom.xml",
+    # paths European publishers actually use, learned from the outlets that discovery kept missing
+    "/rss/", "/rss/index.xml", "/rss/home.xml", "/rss/nyheter", "/rss/ekonomi",
+    "/feeds/all.rss", "/feeds/rss", "/feed/rss", "/rssfeed", "/rssfeeds", "/rss-feeds",
+    "/arc/outboundfeeds/rss/", "/api/rss", "/rss/wirtschaft", "/rss/economia", "/rss/economie",
+    "/laatste-nieuws/rss", "/rss/nieuws", "/xml/rss", "/rss/tuoreimmat", "/rss/full.xml",
+]
+
+# Pages that list a publisher's feeds rather than being one. Discovery follows these one level.
+FEED_INDEX_PATHS = ["/rss", "/rss/", "/feeds", "/feeds/", "/rss-feeds", "/rssfeeds", "/hjelp/rss", "/service/rss"]
+
+_FEEDISH = re.compile(r"(rss|atom|feed)", re.I)
 
 
 def looks_like_article(url: str, text: str, base_url: str, link_pattern: str = "") -> bool:
@@ -370,29 +382,87 @@ def fetch_feed(http: Http, feed_url: str, name_ids: list[str], tier: int, countr
     return items, SourceResult("rss", label or feed_url, err is None, len(items), err or "", secs)
 
 
-def discover_feed(http: Http, homepage: str) -> str:
-    """Find an RSS/Atom feed for an outlet: <link rel=alternate> first, then common paths."""
+def _feedish_anchors(html: str, base_url: str) -> list[str]:
+    """Anchors whose href or text mentions rss/atom/feed.
+
+    Most European publishers never declare <link rel=alternate>; they link an "RSS" page from the
+    footer instead, so the declared-link-only search finds nothing on exactly the titles that matter.
+    """
+    out: list[str] = []
+    for href, text in extract_links(html, base_url):
+        if _FEEDISH.search(href) or _FEEDISH.search(text or ""):
+            out.append(href)
+    return out
+
+
+def discover_feed(http: Http, homepage: str) -> tuple[str, str]:
+    """Find an RSS/Atom feed for an outlet. Returns (feed_url, reason_if_not_found).
+
+    Four passes, cheapest first: declared <link rel=alternate>; feed-ish anchors on the homepage;
+    common paths under both the configured URL and the site root; and any feed linked from a feed
+    index page. The reason is stored so a persistent failure is diagnosable instead of silent.
+    """
+    ACCEPT = "application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8"
+    tried: set[str] = set()
+    home_fetched = False
+    index_pages: list[str] = []
+
+    def try_url(url: str) -> tuple[str, bool]:
+        """Returns (feed_url_if_valid, looked_like_an_index_page)."""
+        if url in tried:
+            return "", False
+        tried.add(url)
+        try:
+            text = http.get_text(url, accept=ACCEPT)
+        except FetchError:
+            return "", False
+        if parse_feed_text(text).entries:
+            return url, False
+        # not a feed; if it is HTML mentioning feeds, it may be a feed index worth following
+        return "", bool(_FEEDISH.search(text[:20000]))
+
     candidates: list[str] = []
     try:
         html = http.get_text(homepage, is_page=True)
+        home_fetched = True
         candidates.extend(extract_feed_links(html, homepage))
+        candidates.extend(_feedish_anchors(html, homepage))
     except FetchError:
         pass
-    base = homepage.rstrip("/")
-    candidates.extend(base + p for p in COMMON_FEED_PATHS)
-    seen: set[str] = set()
+
+    # Both the configured URL and the site root. An outlet configured as a section page
+    # (news.sky.com/business, is.fi/taloussanomat/) otherwise never gets its root tried at all.
+    parts = urlsplit(homepage)
+    bases = [homepage.rstrip("/")]
+    root = f"{parts.scheme}://{parts.netloc}"
+    if root.rstrip("/") not in bases:
+        bases.append(root)
+    for b in bases:
+        candidates.extend(b + p for p in COMMON_FEED_PATHS)
+
     for c in candidates:
-        if c in seen:
-            continue
-        seen.add(c)
+        found, is_index = try_url(c)
+        if found:
+            return found, ""
+        if is_index:
+            index_pages.append(c)
+
+    # Follow feed index pages one level: "/rss" is very often a list of feeds, not a feed.
+    for b in bases:
+        index_pages.extend(b + p for p in FEED_INDEX_PATHS)
+    for page in index_pages[:6]:
         try:
-            text = http.get_text(c, accept="application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8")
+            html = http.get_text(page, is_page=True)
         except FetchError:
             continue
-        feed = parse_feed_text(text)
-        if feed.entries:
-            return c
-    return ""
+        for c in extract_feed_links(html, page) + _feedish_anchors(html, page):
+            found, _ = try_url(c)
+            if found:
+                return found, ""
+
+    if not home_fetched:
+        return "", f"homepage unreachable; {len(tried)} candidates tried"
+    return "", f"no feed found; {len(tried)} candidates tried"
 
 
 def fetch_page_links(http: Http, page_url: str) -> tuple[list[tuple[str, str]], SourceResult]:
