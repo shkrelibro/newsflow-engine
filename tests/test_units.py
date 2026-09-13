@@ -442,3 +442,58 @@ def test_discover_prefers_a_declared_feed_link(fake_http_factory):
     })
     url, _ = discover_feed(http, "https://site.invalid")
     assert url == "https://site.invalid/declared.xml"
+
+
+# ------------------------------------------------------------ database choice
+def test_db_generation_ranks_copies_and_survives_a_corrupt_file(tmp_path):
+    """pick-db has to be able to tell a good database from a stale one and from rubbish."""
+    from newsflow.store import Store, db_generation
+
+    fresh = tmp_path / "fresh.db"
+    stale = tmp_path / "stale.db"
+    for path, runs in ((fresh, 5), (stale, 2)):
+        s = Store(str(path))
+        for _ in range(runs):
+            s.start_run(datetime(2026, 9, 1, tzinfo=timezone.utc))
+        s.close()
+
+    assert db_generation(fresh)[0] == 5
+    assert db_generation(stale)[0] == 2
+    assert db_generation(fresh) > db_generation(stale)
+
+    missing = tmp_path / "nope.db"
+    assert db_generation(missing) == (-1, -1)
+
+    empty = tmp_path / "empty.db"
+    empty.write_bytes(b"")
+    assert db_generation(empty) == (-1, -1)
+
+    junk = tmp_path / "junk.db"
+    junk.write_bytes(b"this is not a database" * 100)
+    assert db_generation(junk) == (-1, -1)              # rubbish always loses
+
+
+def test_pick_db_keeps_the_committed_backup_when_the_cache_is_older(tmp_path):
+    """The failure this exists to prevent: a stale cache restore overwriting a good backup."""
+    from newsflow.cli import main
+    from newsflow.store import Store, db_generation
+
+    target = tmp_path / "data" / "newsflow.db"
+    cache = tmp_path / "data" / "cache" / "newsflow.db"
+    for path, runs in ((target, 900), (cache, 400)):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        s = Store(str(path))
+        for _ in range(runs):
+            s.start_run(datetime(2026, 9, 1, tzinfo=timezone.utc))
+        s.close()
+
+    assert main(["pick-db", "--candidate", str(cache), "--target", str(target)]) == 0
+    assert db_generation(target)[0] == 900             # the backup was kept
+
+    # and the other way round: a current cache replaces an old backup
+    s = Store(str(cache))
+    for _ in range(1000):
+        s.start_run(datetime(2026, 9, 2, tzinfo=timezone.utc))
+    s.close()
+    assert main(["pick-db", "--candidate", str(cache), "--target", str(target)]) == 0
+    assert db_generation(target)[0] == 1400

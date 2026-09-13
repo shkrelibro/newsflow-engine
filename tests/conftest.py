@@ -50,8 +50,14 @@ def tagpage_run2() -> str:
 
 
 @pytest.fixture
-def cfg():
-    return load_config(REPO / "config")
+def cfg(tmp_path):
+    c = load_config(REPO / "config")
+    # Point the database and the export directory at the test's own tmp dir. Without this a test
+    # reads the repository's live docs/, and the rollback guard correctly refuses to run an empty
+    # test database against the 1,000-odd runs recorded in the committed export.
+    c.engine["db_path"] = str(tmp_path / "newsflow.db")
+    c.export["out_dir"] = str(tmp_path / "docs")
+    return c
 
 
 class FakeHttp:

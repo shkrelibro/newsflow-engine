@@ -179,3 +179,68 @@ def test_circuit_breaker_does_not_trip_when_a_route_returns_items(cfg, tmp_path)
     assert s.tripped_routes == []
     assert s.tripped == 0
     assert seq["n"] == 30                            # every job ran
+
+
+# ------------------------------------------------------- state rollback guard
+def test_rollback_guard_stops_a_run_on_state_older_than_the_last_export(cfg, tmp_path, monkeypatch):
+    """A cache restore that hands back an older database must stop the run, loudly.
+
+    This is the one failure that would discredit the brief: the engine forgets what it already
+    reported and re-publishes weeks-old stories as new, and nothing in the run summary says so.
+    """
+    import pytest
+
+    from newsflow.pipeline import StateRollback
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    monkeypatch.delenv("NEWSFLOW_ALLOW_STATE_RESET", raising=False)
+    out = cfg.out_dir
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "health.json").write_text(json.dumps({"stats": {"runs": 900}}), encoding="utf-8")
+
+    store = Store(cfg.db_path)                       # empty: 0 runs against 900 published
+    with pytest.raises(StateRollback) as err:
+        run_once(cfg, store, http=None, now=NOW, jobs=[])
+    assert "900" in str(err.value)
+    assert store.run_count() == 0                    # and it did not record a run on the way out
+
+    # the escape hatch is for a deliberate reset
+    monkeypatch.setenv("NEWSFLOW_ALLOW_STATE_RESET", "1")
+    s = run_once(cfg, store, http=None, now=NOW, jobs=[])
+    assert s.run_id > 0
+
+
+def test_rollback_guard_allows_a_database_that_is_level_or_ahead(cfg, tmp_path, monkeypatch):
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    monkeypatch.delenv("NEWSFLOW_ALLOW_STATE_RESET", raising=False)
+    store = Store(cfg.db_path)
+
+    # no export yet: nothing to compare against, so the run proceeds
+    assert run_once(cfg, store, http=None, now=NOW, jobs=[]).run_id > 0
+
+    out = cfg.out_dir
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "health.json").write_text(json.dumps({"stats": {"runs": 1}}), encoding="utf-8")
+    assert run_once(cfg, store, http=None, now=NOW, jobs=[]).run_id > 0     # level, then ahead
+    assert run_once(cfg, store, http=None, now=NOW, jobs=[]).run_id > 0
+
+
+def test_prune_keeps_runs_and_items_and_drops_the_old_ledger(cfg, tmp_path):
+    """Pruning is what keeps the database inside the cache; it must not touch the run history."""
+    from newsflow.models import SourceResult
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    cfg.engine["keep_source_results_days"] = 10
+    store = Store(cfg.db_path)
+
+    old = store.start_run(NOW.replace(year=2020))
+    store.finish_run(old, NOW.replace(year=2020), 0, 0, notes="")
+    store.add_source_results(old, [SourceResult("rss", "old feed", True, 1, "", 0.1)])
+    assert store.conn.execute("SELECT COUNT(*) FROM source_results").fetchone()[0] == 1
+
+    runs_before = store.run_count()
+    run_once(cfg, store, http=None, now=NOW, jobs=[])
+
+    rows = store.conn.execute("SELECT run_id FROM source_results").fetchall()
+    assert all(r["run_id"] != old for r in rows)            # the 2020 ledger is gone
+    assert store.run_count() == runs_before + 1             # the run history is not
