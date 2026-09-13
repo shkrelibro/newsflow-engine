@@ -188,9 +188,23 @@ is in the headline. They are not engine faults. Almost every one is a missing <c
 <p class="method" style="margin-top:14px">Silence here is measured, not assumed. Every name below was swept and
 returned nothing; the figure after each is the count of queries that completed in the window.
 <b>{q_starved} names are starved and {q_noq} have no queries</b>, so no silence on this page is a budget artefact.</p>
-<p class="quiet"><b>Never produced a mention, ever:</b> {q_never}.
-<br><br><b>Quiet in this window:</b> {q_quietly}.
-<br><br>{q_queries} successful queries across the {q_quiet}, and nothing returned.</p>
+<p class="quiet"><b>Tier A, never produced a mention, ever:</b> {q_never}.
+<br><br><b>Tier A, quiet in this window:</b> {q_quietly}.
+<br><br>{q_queries} successful queries across those {q_quiet}, and nothing returned.</p>
+
+<h2>Comp coverage <span>{c_total} comps</span></h2>
+<p class="method" style="margin-top:14px">The comp set is {c_total} of the {all_names} credits swept and is not
+a second-class list; a comp that is never heard from carries the same diagnostic weight as a tier-A name that is
+never heard from. <b>{c_quiet} comps were quiet in this window and {c_never_n} have never produced a mention at
+all</b>, on {c_ok} successful queries out of {c_jobs} attempted.</p>
+<p class="quiet"><b>Comps never heard from, ever:</b> {c_never}.</p>
+
+<div class="win">
+  <p><b>Every one of the {all_names} names was swept in this window.</b> {all_ok} successful queries out of
+  {all_jobs} attempted, <b>{unswept} names with no successful query at all</b> ({unswept_names}),
+  {q_starved} starved and {q_noq} with no queries configured. That is the completeness claim, and it is the only
+  one this page makes: every name was asked, and the silences below were measured rather than assumed.</p>
+</div>
 
 <h2>Reconciliation <span>arithmetic is exact</span></h2>
 <pre class="recon">{r_all}   candidate clusters in the 24-hour window

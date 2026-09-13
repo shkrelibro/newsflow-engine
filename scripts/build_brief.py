@@ -131,15 +131,39 @@ def partition(rows: list[dict]) -> dict:
 
 
 def quiet_block(coverage: dict) -> dict:
+    """Silence, and the proof that it was measured rather than assumed.
+
+    Reported for comps as well as tier A. A brief that only vouches for the names it leads with
+    is not a coverage document: the comp set is 230 of the 303 credits swept, and a comp that is
+    never heard from is the same diagnostic signal as a tier-A name that is never heard from.
+    Inovie, a direct Biogroup comparable, has taken 96 successful queries and produced nothing,
+    ever, and that fact was invisible until it was printed.
+    """
     names = coverage.get("names", {})
-    tierA = {k: v for k, v in names.items() if v.get("kind") != "comp"}
-    quiet = sorted((v for v in tierA.values() if v.get("state") == "quiet"),
-                   key=lambda v: -(v.get("ok_24h") or 0))
-    never = [v for v in quiet if not v.get("mentions_total")]
-    return {"total": len(tierA), "quiet": quiet, "never": never,
-            "queries": sum(v.get("ok_24h") or 0 for v in quiet),
-            "starved": len(coverage.get("flags", {}).get("starved", [])),
-            "no_queries": len(coverage.get("flags", {}).get("no_queries", []))}
+    out: dict = {
+        "starved": len(coverage.get("flags", {}).get("starved", [])),
+        "no_queries": len(coverage.get("flags", {}).get("no_queries", [])),
+    }
+    for key, want_comp in (("a", False), ("c", True)):
+        pool = [v for v in names.values() if (v.get("kind") == "comp") is want_comp]
+        quiet = sorted((v for v in pool if v.get("state") == "quiet"),
+                       key=lambda v: -(v.get("ok_24h") or 0))
+        out[f"{key}_total"] = len(pool)
+        out[f"{key}_quiet"] = quiet
+        out[f"{key}_never"] = [v for v in quiet if not v.get("mentions_total")]
+        out[f"{key}_jobs"] = sum(v.get("jobs_24h") or 0 for v in pool)
+        out[f"{key}_ok"] = sum(v.get("ok_24h") or 0 for v in pool)
+        # A name the engine never even queried is the one failure this block exists to catch.
+        out[f"{key}_unswept"] = [v["name"] for v in pool if not v.get("ok_24h")]
+    out["total"] = out["a_total"] + out["c_total"]
+    out["jobs"] = out["a_jobs"] + out["c_jobs"]
+    out["ok"] = out["a_ok"] + out["c_ok"]
+    out["unswept"] = out["a_unswept"] + out["c_unswept"]
+    # kept for the existing template fields
+    out["quiet"] = out["a_quiet"]
+    out["never"] = out["a_never"]
+    out["queries"] = sum(v.get("ok_24h") or 0 for v in out["a_quiet"])
+    return out
 
 
 def health_block(latest: dict) -> dict:
@@ -254,9 +278,15 @@ def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
                    '<li><div class="t">No comp item carried a category in this window.</div></li>',
         comp_cat=sum(1 for r in P["C_rows"] if r["cats"]), comp_pub=len(comp_carried),
         drop_n=review_dropped, drop_rows=drop_rows(),
-        q_quiet=len(Q["quiet"]), q_total=Q["total"], q_never=never or "none",
+        q_quiet=len(Q["a_quiet"]), q_total=Q["a_total"], q_never=never or "none",
         q_quietly=quietly or "none", q_queries=f'{Q["queries"]:,}',
         q_starved=Q["starved"], q_noq=Q["no_queries"],
+        c_total=Q["c_total"], c_quiet=len(Q["c_quiet"]), c_never_n=len(Q["c_never"]),
+        c_never=" · ".join(f'{e(v["name"])} ({v.get("ok_24h", 0)}q)' for v in Q["c_never"]) or "none",
+        c_jobs=f'{Q["c_jobs"]:,}', c_ok=f'{Q["c_ok"]:,}',
+        all_names=Q["total"], all_jobs=f'{Q["jobs"]:,}', all_ok=f'{Q["ok"]:,}',
+        unswept=len(Q["unswept"]),
+        unswept_names=", ".join(e(n) for n in Q["unswept"][:12]) or "none",
         r_all=P["all"], r_A=P["A"], r_C=P["C"],
         rA_inherit=P["A_inherited"], rA_stand=P["A_standfirst"], rA_bear=P["A_bearing"],
         rA_junk=P["A_junk"], rA_clean=P["A_clean"], rA_drop=review_dropped, rA_pub=published,
