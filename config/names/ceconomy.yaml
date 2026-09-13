@@ -19,7 +19,7 @@ markets:
   - {country: GB, lang: en}
 aliases:
   - {text: "Ceconomy", inflect: true, search: true}
-  - {text: "MediaMarkt", inflect: true, search: true, weight: 0.9}
+  - {text: "MediaMarkt", inflect: true, search: true, weight: 0.9, require_context: ["Ceconomy", "MediaMarktSaturn", "Umsatz", "Quartal", "Geschäftsjahr", "Anleihe", "Konzern", "JD.com", "Übernahme", "Filialnetz", "Vorstand", "Prognose", "Bilanz", "Aktie"]}
   - {text: "MediaMarktSaturn", weight: 0.9}
   - {text: "Saturn", langs: [de], weight: 0.5, require_context: ["MediaMarkt", "Ceconomy", "Elektronik", "Markt"]}
 comps: [fnacdarty, amazon, currys, aoworld]
