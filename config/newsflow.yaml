@@ -11,6 +11,11 @@ engine:
   resolve_redirects: false    # try to resolve Google News links to the outlet URL (slower; off on GitHub Actions)
   honour_robots_for_pages: true
   db_path: data/newsflow.db
+  circuit_breaker:
+    enabled: true
+    consecutive_empty: 25     # a route answering ok-but-empty this many times in a row is being
+                              # refused upstream, not finding nothing; its remaining jobs are
+                              # cancelled so the other routes keep the run's time budget
   rate_limits:
     default_seconds: 1.0
     googlenews_seconds: 2.5

@@ -106,3 +106,76 @@ def test_idempotent_rerun(cfg, tmp_path, fake_http_factory, googlenews_xml, bing
     assert s2.new_items == 0                      # everything already stored
     assert store.stats()["items"] == 6
     store.close()
+
+
+def test_circuit_breaker_cancels_a_route_that_answers_empty(cfg, tmp_path):
+    """A route that keeps answering ok-but-empty is being refused upstream, not finding nothing.
+
+    It must be tripped and its queued jobs cancelled, so the rest of the run keeps its budget.
+    Google News does exactly this: it answers slowly and empty rather than with an error.
+    """
+    import time as _time
+
+    from newsflow.models import RawItem, SourceResult
+    from newsflow.pipeline import JobSpec
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    cfg.engine["circuit_breaker"] = {"enabled": True, "consecutive_empty": 5}
+    cfg.engine["max_workers"] = 1
+    store = Store(cfg.db_path)
+
+    calls = {"googlenews": 0, "rss": 0}
+
+    def blocked_google():
+        calls["googlenews"] += 1
+        _time.sleep(0.02)                      # slow and empty, the signature of being refused
+        return [], SourceResult("googlenews", "g", True, 0, "", 0.02)
+
+    def working_rss():
+        calls["rss"] += 1
+        it = RawItem(title="Intrum sells a portfolio", link=f"https://ex.invalid/r{calls['rss']}",
+                     route="rss", query="feed", published_at=NOW, name_ids=["intrum"])
+        return [it], SourceResult("rss", "r", True, 1, "", 0.01)
+
+    jobs = [JobSpec(f"g{i}", "googlenews", blocked_google) for i in range(40)]
+    jobs += [JobSpec(f"r{i}", "rss", working_rss) for i in range(5)]
+
+    s = run_once(cfg, store, http=None, now=NOW, jobs=jobs)
+
+    assert s.tripped_routes == ["googlenews"]        # only the refusing route
+    assert s.tripped > 0                             # its queued jobs were cancelled
+    assert calls["googlenews"] < 40                  # it did not run them all
+    assert calls["rss"] == 5                         # the working route still ran in full
+    assert s.skipped == 0                            # the breaker fired, not the time budget
+    assert any("tripped" in r.error for r in s.source_results if r.error)
+
+
+def test_circuit_breaker_does_not_trip_when_a_route_returns_items(cfg, tmp_path):
+    """An empty streak broken by a job that finds something must reset the counter.
+
+    A quiet name on a quiet day legitimately returns nothing; that must not trip the route.
+    """
+    from newsflow.models import RawItem, SourceResult
+    from newsflow.pipeline import JobSpec
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    cfg.engine["circuit_breaker"] = {"enabled": True, "consecutive_empty": 5}
+    cfg.engine["max_workers"] = 1
+    store = Store(cfg.db_path)
+
+    seq = {"n": 0}
+
+    def alternating():
+        seq["n"] += 1
+        if seq["n"] % 3 == 0:                        # every third job finds something
+            it = RawItem(title="Intrum sells a portfolio", link=f"https://ex.invalid/{seq['n']}",
+                         route="googlenews", query='"Intrum"', published_at=NOW, name_ids=["intrum"])
+            return [it], SourceResult("googlenews", "g", True, 1, "", 0.01)
+        return [], SourceResult("googlenews", "g", True, 0, "", 0.01)
+
+    jobs = [JobSpec(f"g{i}", "googlenews", alternating) for i in range(30)]
+    s = run_once(cfg, store, http=None, now=NOW, jobs=jobs)
+
+    assert s.tripped_routes == []
+    assert s.tripped == 0
+    assert seq["n"] == 30                            # every job ran

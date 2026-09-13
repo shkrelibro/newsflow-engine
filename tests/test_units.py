@@ -384,3 +384,61 @@ def test_lowell_us_noise_excluded():
     excl = " ".join(n.exclude_terms)
     for term in ("Hurricane Lowell", "UMass Lowell", "Lowell Observatory"):
         assert term in excl, f"lowell: exclude_terms missing '{term}'"
+
+
+# ---------------------------------------------------------------------------
+# Feed discovery. The outlets that discovery kept missing are the ones that matter:
+# Boersen-Zeitung, WirtschaftsWoche, NZZ, Milano Finanza, Kauppalehti, Puls Biznesu,
+# De Tijd, Kathimerini. They do not declare <link rel=alternate>; they link an RSS
+# page from the footer, and their homepage is sometimes a section URL.
+# ---------------------------------------------------------------------------
+
+FEED_XML = """<?xml version="1.0"?><rss version="2.0"><channel><title>Wirtschaft</title>
+<item><title>Cheplapharm platziert neue Anleihe</title><link>https://ex.invalid/a1</link>
+<pubDate>Mon, 08 Sep 2026 08:00:00 GMT</pubDate></item></channel></rss>"""
+
+
+def test_discover_follows_a_footer_link_to_a_feed_index(fake_http_factory):
+    from newsflow.routes import discover_feed
+
+    homepage = "https://www.boersen-zeitung.de"
+    http = fake_http_factory({
+        "boersen-zeitung.de/rss/wirtschaft.xml": FEED_XML,
+        "boersen-zeitung.de/rss": '<html><body><a href="/rss/wirtschaft.xml">Wirtschaft RSS</a></body></html>',
+        "boersen-zeitung.de": '<html><body><footer><a href="/rss">RSS-Feeds</a></footer></body></html>',
+    })
+    url, reason = discover_feed(http, homepage)
+    assert url == "https://www.boersen-zeitung.de/rss/wirtschaft.xml"
+    assert reason == ""
+
+
+def test_discover_tries_the_site_root_for_a_section_homepage(fake_http_factory):
+    """news.sky.com/business + '/rss' is not a feed; the root has to be tried too."""
+    from newsflow.routes import discover_feed
+
+    http = fake_http_factory({
+        "news.sky.com/feeds/rss": FEED_XML,
+        "news.sky.com": "<html><body>no feed declared here</body></html>",
+    })
+    url, _ = discover_feed(http, "https://news.sky.com/business")
+    assert url == "https://news.sky.com/feeds/rss"
+
+
+def test_discover_reports_why_it_failed(fake_http_factory):
+    from newsflow.routes import discover_feed
+
+    http = fake_http_factory({"example.invalid": "<html><body>nothing here at all</body></html>"})
+    url, reason = discover_feed(http, "https://example.invalid")
+    assert url == ""
+    assert "candidates tried" in reason          # diagnosable, not a silent blank
+
+
+def test_discover_prefers_a_declared_feed_link(fake_http_factory):
+    from newsflow.routes import discover_feed
+
+    http = fake_http_factory({
+        "site.invalid/declared.xml": FEED_XML,
+        "site.invalid": '<html><head><link rel="alternate" type="application/rss+xml" href="/declared.xml"></head></html>',
+    })
+    url, _ = discover_feed(http, "https://site.invalid")
+    assert url == "https://site.invalid/declared.xml"

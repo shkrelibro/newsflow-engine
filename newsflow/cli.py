@@ -78,14 +78,14 @@ def cmd_discover(args) -> int:
                 print(f"{o.country} {o.name}: configured {o.feed_url}")
                 found += 1
                 continue
-            url = discover_feed(http, o.homepage)
-            store.set_feed(o.homepage, url, now, "" if url else "no feed found")
+            url, reason = discover_feed(http, o.homepage)
+            store.set_feed(o.homepage, url, now, "" if url else reason)
             if url:
                 found += 1
                 print(f"{o.country} {o.name}: {url}")
             else:
                 missing.append(f"{o.country} {o.name}")
-                print(f"{o.country} {o.name}: NOT FOUND (site-restricted Google News queries still cover it)")
+                print(f"{o.country} {o.name}: NOT FOUND ({reason}); site-restricted Google News queries still cover it")
         print(f"\n{found} feeds known, {len(missing)} outlets without a feed")
         return 0
     finally:

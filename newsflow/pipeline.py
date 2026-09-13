@@ -57,6 +57,8 @@ class RunSummary:
     source_results: list[SourceResult] = field(default_factory=list)
     errors: int = 0
     skipped: int = 0
+    tripped: int = 0
+    tripped_routes: list[str] = field(default_factory=list)
 
 
 def make_http(cfg: Config) -> Http:
@@ -310,10 +312,12 @@ def _outlet_job(http: Http, store: Store, outlet: Outlet, discover: bool) -> tup
         row = store.get_feed(outlet.homepage)
         feed_url = row["feed_url"] if row else ""
         if not feed_url and discover:
-            feed_url = discover_feed(http, outlet.homepage)
-            store.set_feed(outlet.homepage, feed_url, now, "" if feed_url else "no feed found")
+            feed_url, reason = discover_feed(http, outlet.homepage)
+            store.set_feed(outlet.homepage, feed_url, now, "" if feed_url else reason)
     if not feed_url:
-        return [], SourceResult("rss", f"{outlet.name} ({outlet.country})", False, 0, "no feed url (discovery pending)", 0.0)
+        row = store.get_feed(outlet.homepage)
+        why = (row["last_error"] if row and row["last_error"] else "discovery pending")
+        return [], SourceResult("rss", f"{outlet.name} ({outlet.country})", False, 0, f"no feed url ({why})", 0.0)
     items, result = fetch_feed(http, feed_url, [], outlet.tier, outlet.country, outlet.lang, f"{outlet.name} ({outlet.country})")
     if result.ok:
         store.feed_ok(outlet.homepage, now)
@@ -469,6 +473,17 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
         if items:
             process_items(cfg, store, matcher, http, items, run_id, now, summary, lookback)
 
+    # Circuit breaker. An upstream that starts refusing us (Google News in particular) answers
+    # slowly and empty rather than with an error, so the route burns the whole time budget on
+    # nothing and starves every other route. After enough consecutive ok-but-empty responses the
+    # route is tripped for the rest of the run and its queued jobs are cancelled, which hands the
+    # remaining budget to the routes that are still working. Any job returning items resets it.
+    breaker = cfg.engine.get("circuit_breaker", {}) or {}
+    breaker_on = bool(breaker.get("enabled", True))
+    trip_after = int(breaker.get("consecutive_empty", 25))
+    empty_streak: dict[str, int] = {}
+    tripped: set[str] = set()
+
     ex = ThreadPoolExecutor(max_workers=workers)
     futures = {ex.submit(spec.fn): spec for spec in specs}
     pending = set(futures)
@@ -482,6 +497,29 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
             except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
                 items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
             handle(spec, items, res)
+            if breaker_on and spec.route not in tripped:
+                if res.ok and res.items == 0:
+                    empty_streak[spec.route] = empty_streak.get(spec.route, 0) + 1
+                    if empty_streak[spec.route] >= trip_after:
+                        tripped.add(spec.route)
+                        log.warning(
+                            "route %s tripped after %d consecutive empty responses: cancelling its "
+                            "remaining jobs so the rest of the run keeps its budget",
+                            spec.route, empty_streak[spec.route],
+                        )
+                elif res.items:
+                    empty_streak[spec.route] = 0
+            if tripped:
+                for pf in list(pending):
+                    ps = futures[pf]
+                    if ps.route in tripped and pf.cancel():
+                        pending.discard(pf)
+                        results.append(SourceResult(
+                            ps.route, ps.label, False, 0,
+                            f"skipped: {ps.route} tripped after {trip_after} consecutive empty responses",
+                            0.0, list(ps.name_ids),
+                        ))
+                        summary.tripped += 1
             if time.monotonic() > deadline and pending:
                 stopped = True
                 break
@@ -502,11 +540,15 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
         log.warning("time budget of %.0f min reached: %d jobs skipped (they run on the next cycle)", budget, summary.skipped)
 
     summary.source_results = results
-    summary.errors = sum(1 for r in results if not r.ok) - summary.skipped
+    summary.tripped_routes = sorted(tripped)
+    summary.errors = sum(1 for r in results if not r.ok) - summary.skipped - summary.tripped
     store.add_source_results(run_id, results)
     summary.finished_at = datetime.now(timezone.utc)
-    store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=f"errors={summary.errors} skipped={summary.skipped} stale={summary.stale} unrelated={summary.unrelated}")
+    notes = f"errors={summary.errors} skipped={summary.skipped} stale={summary.stale} unrelated={summary.unrelated}"
+    if summary.tripped:
+        notes += f" tripped={summary.tripped} routes={','.join(summary.tripped_routes)}"
+    store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=notes)
     if own_http:
         http.close()
-    log.info("run %s done: fetched=%d new=%d candidates=%d screened=%d alerts=%d errors=%d skipped=%d", run_id, summary.fetched, summary.new_items, summary.candidates, summary.screened, summary.alerts, summary.errors, summary.skipped)
+    log.info("run %s done: fetched=%d new=%d candidates=%d screened=%d alerts=%d errors=%d skipped=%d tripped=%d%s", run_id, summary.fetched, summary.new_items, summary.candidates, summary.screened, summary.alerts, summary.errors, summary.skipped, summary.tripped, f" ({','.join(summary.tripped_routes)})" if summary.tripped_routes else "")
     return summary
