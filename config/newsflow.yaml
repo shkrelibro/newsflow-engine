@@ -26,6 +26,10 @@ engine:
     googlenews_seconds: 2.5
     bing_seconds: 2.0
     gdelt_seconds: 6.0
+    max_penalty_seconds: 60   # a host that answers 429 has its spacing widened, doubling from its
+                              # own base up to this cap, and earns it back on clean responses.
+                              # Without it each of ~100 GDELT jobs a run rediscovered the limit
+                              # separately: 16 rate-limited responses in a single window.
 
 routes:
   googlenews:
