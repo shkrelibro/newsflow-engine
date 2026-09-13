@@ -14,3 +14,10 @@ aliases:
   - {text: "HSE24", search: true, search_every: 2}
   - {text: "HSE", langs: [de], weight: 0.4, require_context: ["Teleshopping", "Homeshopping", "Ismaning", "HSE24"]}
 comps: [channel21, qvc, 123tv, sonnenklar]
+
+# Own newsroom: an independent route that does not depend on Google News returning
+# anything for this name. Added after the engine recorded zero mentions for it.
+sources:
+  feeds: []
+  pages:
+    - {url: "https://www.presseportal.ch/de/nr/100007850", name: "HSE press releases (Presseportal)", tier: 0, country: DE, lang: de, require_alias: true, link_pattern: "/de/pm/100007850/.+"}

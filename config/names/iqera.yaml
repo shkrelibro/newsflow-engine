@@ -14,3 +14,10 @@ aliases:
   - {text: "iQera", inflect: true, search: true}
   - {text: "MCS Groupe", langs: [fr], weight: 0.6}
 comps: [dovalue, intrum, b2impact, axactor]
+
+# Own newsroom: an independent route that does not depend on Google News returning
+# anything for this name. Added after the engine recorded zero mentions for it.
+sources:
+  feeds: []
+  pages:
+    - {url: "https://www.iqera.com/fr/communique-de-presse/", name: "iQera communiques de presse", tier: 0, country: FR, lang: fr, require_alias: false, link_pattern: "communique-de-presse/.+"}
