@@ -13,3 +13,10 @@ aliases:
   - {text: "Mobilux", inflect: true, search: true}
   - {text: "BUT", langs: [fr], weight: 0.6, require_context: ["magasin", "ameublement", "enseigne", "Mobilux", "meuble", "distribution"]}
 comps: [interikea, conforama, maisonsdumonde, gifi, centrakor]
+
+# Own newsroom: an independent route that does not depend on Google News returning
+# anything for this name. Added after the engine recorded zero mentions for it.
+sources:
+  feeds: []
+  pages:
+    - {url: "https://www.autoritedelaconcurrence.fr/fr/communiques-de-presse", name: "Autorite de la concurrence communiques", tier: 0, country: FR, lang: fr, require_alias: true}
