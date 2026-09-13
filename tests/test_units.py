@@ -529,3 +529,53 @@ def test_pick_db_reads_a_gzipped_backup(tmp_path):
     bad = tmp_path / "bad.db.gz"
     bad.write_bytes(b"not gzip at all")
     assert db_generation(bad) == (-1, -1)
+
+
+# ------------------------------------------------------ require_context boundaries
+def test_require_context_matches_words_not_substrings(cfg):
+    """The guard is only a guard if its terms have to appear as words.
+
+    Quick's context list names its owner, HIG. Substring matching made "hig" satisfy it inside
+    "Michigan", so a French burger chain collected American college football for months.
+    """
+    from newsflow.match import Matcher
+    m = Matcher.from_config(cfg)
+
+    def hit(title, lang="en"):
+        return bool(m.match(title, "", lang, only=["quick"]))
+
+    assert not hit("Three Quick Takeaways From No. 11 Oklahoma's Loss to Michigan")
+    assert not hit("Couch: 3 quick takes on Michigan State football's 35-7 win")
+    assert not hit("High school volleyball: Quick adjustments help Houston top Riverside")
+    assert hit("Quick ouvre 20 nouveaux restaurants en France", "fr")      # plural of a term
+    assert hit("Quick, l'enseigne de restauration rapide, cède 30 franchises", "fr")
+
+
+def test_require_context_allows_a_short_inflection(cfg):
+    """"store" must satisfy "stores"; the allowance is on the right only."""
+    from newsflow.match import Matcher
+    m = Matcher.from_config(cfg)
+    assert m.match("Boots to close 300 stores, says the retailer", "", "en", only=["boots"])
+    # Nottingham must not be satisfied by Nottinghamshire: five characters, past the allowance
+    assert not m.match("Nottinghamshire's champions honoured at Boots and Beret 2026 Awards",
+                       "", "en", only=["boots"])
+
+
+def test_common_noun_aliases_are_guarded(cfg):
+    """Enterprise and Carnival between them produced 85 clusters in a single day."""
+    from newsflow.match import Matcher
+    m = Matcher.from_config(cfg)
+    assert not m.match("Auburn @ Enterprise | 2026 Week 3", "", "en", only=["enterprise"])
+    assert not m.match("RF destroyed an enterprise in Rivne region", "", "en", only=["enterprise"])
+    assert m.match("Enterprise Holdings expands its rental car fleet", "", "en", only=["enterprise"])
+    assert not m.match("Colyton carnival procession set to light up town streets", "", "en", only=["carnival"])
+    assert m.match("Carnival Corporation lifts cruise bookings guidance", "", "en", only=["carnival"])
+
+
+def test_tui_does_not_inflect_into_the_dutch_word_for_garden(cfg):
+    """TUI is three letters; inflection turned "tuin" into a coverage name."""
+    from newsflow.match import Matcher
+    m = Matcher.from_config(cfg)
+    assert not m.match("Ligt je tuin er treurig bij? Zo laat je gras en planten herleven",
+                       "", "nl", only=["tuigroup"])
+    assert m.match("TUI verkauft 80 Prozent Eigenprodukte", "", "de", only=["tuigroup"])
