@@ -10,6 +10,32 @@ from typing import Any, Iterable, Optional
 
 from .models import Item, SourceResult
 
+
+def db_generation(path: str | Path) -> tuple[int, int]:
+    """How far along a database file is, as (runs, items). (-1, -1) if it cannot be read.
+
+    Used to choose between two candidate copies of the database. The engine carries its state in
+    the GitHub Actions cache, which is keyed per run and restored by key prefix, so a restore can
+    hand back an older surviving entry rather than the newest one. The copy committed to git is at
+    most a day old but never goes backwards. Both counters only ever increase, so the copy with
+    the higher run count is the one that has seen more of the world, and is the one to carry on
+    from. A truncated or corrupt file scores (-1, -1) and therefore always loses.
+    """
+    p = Path(path)
+    if not p.exists() or p.stat().st_size == 0:
+        return (-1, -1)
+    try:
+        conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+        try:
+            runs = int(conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])
+            items = int(conn.execute("SELECT COUNT(*) FROM items").fetchone()[0])
+            return (runs, items)
+        finally:
+            conn.close()
+    except sqlite3.Error:
+        return (-1, -1)
+
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -153,6 +179,47 @@ class Store:
 
     def run_count(self) -> int:
         return int(self.conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])
+
+    def prune_source_results(self, keep_days: int, now: datetime, keep_run_id: Optional[int] = None) -> int:
+        """Drop the per-job coverage ledger older than keep_days.
+
+        source_results is by far the largest table and it is append-only: roughly 40,000 rows a
+        day against 2,000 items. Health reads the last few runs and coverage reads 24 hours, so
+        nothing downstream needs months of it. Keeping the database small is what keeps it inside
+        the Actions cache, which is where the engine's dedupe state lives between runs.
+
+        The cutoff is measured from the run's own clock, not SQLite's `datetime('now')`, and the
+        current run is excluded outright. A backfill is timestamped in the past, and without both
+        of those a backfill would delete the ledger it had just written and blank its own health.
+        """
+        if keep_days <= 0:
+            return 0
+        cutoff = _iso(now - timedelta(days=int(keep_days)))
+        sql = "DELETE FROM source_results WHERE run_id IN (SELECT id FROM runs WHERE started_at < ?"
+        params: list[Any] = [cutoff]
+        if keep_run_id is not None:
+            sql += " AND id != ?"
+            params.append(keep_run_id)
+        cur = self.conn.execute(sql + ")", params)
+        self.conn.commit()
+        return int(cur.rowcount or 0)
+
+    def vacuum_if_bloated(self, min_free_ratio: float = 0.15) -> bool:
+        """VACUUM when enough of the file is free space to be worth reclaiming.
+
+        Deleting rows does not shrink a SQLite file: the pages go on a free list and are reused.
+        That is fine for a database living on a disk and wrong for one being copied into and out
+        of a cache on every run, where the file size is the thing that costs. VACUUM rewrites the
+        file without the free pages; it needs roughly twice the file size in scratch space and a
+        few seconds, so it runs only once the free list is worth the rewrite.
+        """
+        pages = int(self.conn.execute("PRAGMA page_count").fetchone()[0])
+        free = int(self.conn.execute("PRAGMA freelist_count").fetchone()[0])
+        if pages <= 0 or free / pages < min_free_ratio:
+            return False
+        self.conn.execute("VACUUM")
+        self.conn.commit()
+        return True
 
     # ---- items -----------------------------------------------------------
     def get_item_by_url(self, canonical_url: str) -> Optional[sqlite3.Row]:
@@ -333,12 +400,10 @@ class Store:
             "feeds_known": q("SELECT COUNT(*) FROM feeds WHERE feed_url != ''"),
         }
 
-    def prune(self, keep_days: int, now: datetime) -> int:
-        cutoff = _iso(now - timedelta(days=keep_days))
-        cur = self.conn.execute("DELETE FROM source_results WHERE run_id IN (SELECT id FROM runs WHERE started_at < ?)", (cutoff,))
-        self.conn.execute("DELETE FROM runs WHERE started_at < ?", (cutoff,))
-        self.conn.commit()
-        return cur.rowcount
+    # There used to be a prune() here that also deleted rows from `runs`. It was never called, and
+    # it is now a hazard: the run count is the signal the rollback guard uses to tell a restored
+    # database apart from an older one, so `runs` has to stay append-only. Use
+    # prune_source_results() instead, which drops only the per-job ledger.
 
     def close(self) -> None:
         self.conn.close()

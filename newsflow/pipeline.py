@@ -1,7 +1,9 @@
 """The run: build jobs, fetch, normalise, match, screen, cluster, store."""
 from __future__ import annotations
 
+import json
 import logging
+import os
 import random
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -442,8 +444,64 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
 # Entry point
 # ----------------------------------------------------------------------
 
+class StateRollback(RuntimeError):
+    """The database this run was handed has seen fewer runs than the last published export."""
+
+
+def published_run_count(cfg: Config) -> int:
+    """Runs recorded in the last export the engine committed, or -1 if there is no export yet.
+
+    The exports are committed to git on every run, so whatever is in the working tree after
+    checkout is a floor: the engine cannot legitimately know less than it has already published.
+    """
+    for name in ("health.json", "latest.json"):
+        path = cfg.out_dir / name
+        if not path.exists():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        runs = (data.get("stats") or {}).get("runs")
+        if isinstance(runs, int):
+            return runs
+    return -1
+
+
+def assert_state_not_rolled_back(cfg: Config, store: Store) -> None:
+    """Refuse to run on state older than what was last published.
+
+    The engine's memory of what it has already reported lives in `seen_links` and the cluster
+    history, carried between runs in the Actions cache. A cache restore matches by key prefix, so
+    when entries are evicted it can hand back an older surviving copy. Running on that copy does
+    not fail: it quietly re-reports weeks-old stories as new, which is the one failure mode that
+    would discredit the whole brief, and nothing in the run summary would say so.
+
+    So compare what the database knows against what was last published and stop if it went
+    backwards. Set NEWSFLOW_ALLOW_STATE_RESET=1 to start deliberately from an empty database.
+    """
+    if os.environ.get("NEWSFLOW_ALLOW_STATE_RESET"):
+        log.warning("NEWSFLOW_ALLOW_STATE_RESET is set: the rollback guard is off for this run")
+        return
+    published = published_run_count(cfg)
+    if published < 0:
+        return
+    have = store.run_count()
+    if have >= published:
+        return
+    raise StateRollback(
+        f"the database has {have} runs but the last published export recorded {published}, so it "
+        f"is {published - have} runs behind. The state carried between runs came back from an "
+        "older copy: the engine has forgotten part of what it already reported and would publish "
+        "those stories again as new. Nothing was run. Either recover the newer copy of "
+        f"{cfg.db_path}, or accept the loss by re-running with allow_state_reset ticked "
+        "(NEWSFLOW_ALLOW_STATE_RESET=1), which re-reports at most the lookback window once."
+    )
+
+
 def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill_days: Optional[int] = None, all_routes: bool = False, now: Optional[datetime] = None, jobs: Optional[list] = None, budget_minutes: Optional[float] = None) -> RunSummary:
     now = now or datetime.now(timezone.utc)
+    assert_state_not_rolled_back(cfg, store)
     own_http = http is None
     http = http or make_http(cfg)
     matcher = Matcher.from_config(cfg)
@@ -548,6 +606,20 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     if summary.tripped:
         notes += f" tripped={summary.tripped} routes={','.join(summary.tripped_routes)}"
     store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=notes)
+
+    # Keep the database small enough to survive in the Actions cache. source_results is the
+    # per-job coverage ledger: about 40,000 rows a day against 2,000 items, and by far the largest
+    # table. Health reads the last few runs of it and coverage reads 24 hours, so months of it are
+    # dead weight. The `runs` and `items` tables are never pruned; the run count has to stay
+    # monotonic for the rollback guard, and the item history is the archive.
+    keep_days = int(cfg.engine.get("keep_source_results_days", 10))
+    if keep_days > 0:
+        dropped = store.prune_source_results(keep_days, now, keep_run_id=run_id)
+        if dropped:
+            log.info("pruned %d source_results rows older than %d days", dropped, keep_days)
+        if store.vacuum_if_bloated():
+            log.info("vacuumed the database to reclaim the freed pages")
+
     if own_http:
         http.close()
     log.info("run %s done: fetched=%d new=%d candidates=%d screened=%d alerts=%d errors=%d skipped=%d tripped=%d%s", run_id, summary.fetched, summary.new_items, summary.candidates, summary.screened, summary.alerts, summary.errors, summary.skipped, summary.tripped, f" ({','.join(summary.tripped_routes)})" if summary.tripped_routes else "")

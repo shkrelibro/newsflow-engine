@@ -1,20 +1,22 @@
-"""Command line: run | loop | backfill | export | discover-feeds | stats | check-config | jobs."""
+"""Command line: run | loop | backfill | export | discover-feeds | stats | check-config | pick-db | jobs."""
 from __future__ import annotations
 
 import argparse
 import json
 import logging
+import shutil
 import sys
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 from . import __version__
 from .alerts import push_alerts
 from .config import load_config
 from .export import write_exports
-from .pipeline import build_jobs, make_http, run_once
+from .pipeline import StateRollback, build_jobs, make_http, run_once
 from .routes import discover_feed
-from .store import Store
+from .store import Store, db_generation
 
 
 def _setup_logging(verbose: bool) -> None:
@@ -29,7 +31,14 @@ def cmd_run(args) -> int:
     cfg = load_config(args.config)
     store = Store(cfg.db_path)
     try:
-        summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False))
+        try:
+            summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False))
+        except StateRollback as exc:
+            # Not a crash: a deliberate refusal to run on state that went backwards. Print it
+            # plainly and exit non-zero so the workflow's failure alert fires with a readable
+            # reason rather than a traceback.
+            print(f"REFUSED: {exc}", file=sys.stderr)
+            return 2
         write_exports(cfg, store)
         sent = push_alerts(cfg, store)
         print(json.dumps({
@@ -104,6 +113,35 @@ def cmd_stats(args) -> int:
         return 0
     finally:
         store.close()
+
+
+def cmd_pick_db(args) -> int:
+    """Choose between two copies of the database and install the better one at the target path.
+
+    The engine has two sources of previous state: the Actions cache, which is current but can
+    hand back an older surviving entry when the cache evicts, and the copy committed to git,
+    which is at most a day old but never goes backwards. Restore the cache to a side path, run
+    this, and the run starts on whichever copy has seen more runs. Without it, a stale cache
+    restore silently overwrites a perfectly good committed backup.
+    """
+    target = Path(args.target)
+    best, best_gen, why = None, (-1, -1), []
+    for label, path in (("committed", target), ("cache", Path(args.candidate))):
+        gen = db_generation(path)
+        why.append(f"{label}={path} runs={gen[0]} items={gen[1]}")
+        if gen > best_gen:
+            best, best_gen = path, gen
+    print(" | ".join(why))
+    if best is None or best_gen[0] < 0:
+        print(f"no usable database: {target} will be created empty")
+        return 0
+    if best.resolve() != target.resolve():
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(best, target)
+        print(f"using {best} ({best_gen[0]} runs)")
+    else:
+        print(f"keeping {target} ({best_gen[0]} runs)")
+    return 0
 
 
 def cmd_check(args) -> int:
@@ -202,6 +240,11 @@ def main(argv=None) -> int:
 
     ck = sub.add_parser("check-config", help="validate and summarise the configuration")
     ck.set_defaults(fn=cmd_check)
+
+    pd = sub.add_parser("pick-db", help="keep whichever of two database copies has seen more runs")
+    pd.add_argument("--candidate", required=True, help="the copy restored from the Actions cache")
+    pd.add_argument("--target", default="data/newsflow.db", help="where the run expects the database")
+    pd.set_defaults(fn=cmd_pick_db)
 
     cv = sub.add_parser("coverage", help="per-country audit of languages, routes, feeds, pages and site queries")
     cv.set_defaults(fn=cmd_coverage)
