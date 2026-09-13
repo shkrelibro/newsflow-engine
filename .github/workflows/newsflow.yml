@@ -12,6 +12,11 @@ on:
         description: "Widen the window to N days (use 30 on the very first run to seed the pile)"
         required: false
         default: ""
+      allow_state_reset:
+        description: "Accept a database that has gone backwards (only after a cache loss; the engine will re-report recent items once)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -36,18 +41,33 @@ jobs:
       - run: pip install -r requirements.txt
 
       # The SQLite database is carried between runs in the Actions cache (a new key every run,
-      # restored by prefix). It is also committed once a day as a backup.
-      - name: Restore database
+      # restored by prefix). It is also committed once a day as a backup, and the checkout above
+      # has already put that backup at data/newsflow.db.
+      #
+      # The cache restore therefore goes to a SIDE PATH, not over the backup. A prefix restore
+      # returns any surviving entry, not necessarily the newest, and at ~96 runs a day against a
+      # 10GB repository cache the older entries are evicted constantly. Restoring straight over
+      # data/newsflow.db would silently replace a good backup with a stale copy, and the engine
+      # would re-report old stories as new without anything saying so.
+      - name: Restore database from the cache
         uses: actions/cache/restore@v4
         with:
-          path: data/newsflow.db
+          path: data/cache/newsflow.db
           key: newsflow-db-v2-${{ github.run_id }}
           restore-keys: newsflow-db-v2-
 
+      # Keep whichever of the two copies has seen more runs. Both counters only ever increase.
+      - name: Use the newer of the cache and the committed backup
+        run: python -m newsflow pick-db --candidate data/cache/newsflow.db --target data/newsflow.db
+
       - name: Run engine
+        id: engine
         env:
           NEWSFLOW_WEBHOOK_URL: ${{ secrets.NEWSFLOW_WEBHOOK_URL }}
           NEWSFLOW_SMTP_PASSWORD: ${{ secrets.NEWSFLOW_SMTP_PASSWORD }}
+          # Only ever set by a manual run with the box ticked. It turns off the guard that refuses
+          # to start on state older than the last published export.
+          NEWSFLOW_ALLOW_STATE_RESET: ${{ github.event.inputs.allow_state_reset == 'true' && '1' || '' }}
         run: |
           # Scheduled runs follow the every_n_runs cadences in config/newsflow.yaml (tuned for 15 minutes).
           # Manual runs use --all-routes so every route runs; add backfill_days to widen the windows.
@@ -94,9 +114,13 @@ jobs:
               sys.exit("FAIL: no route produced a single item this run")
           PY
 
+      # Save whatever the engine collected, including on a run the assertion step above flagged as
+      # an outage: that database still holds the new seen_links. Do NOT save when the engine
+      # refused to start on rolled-back state, or the stale copy gets a fresh cache key and
+      # outlives the good one.
       - name: Save database
         uses: actions/cache/save@v4
-        if: always()
+        if: always() && steps.engine.outcome == 'success'
         with:
           path: data/newsflow.db
           key: newsflow-db-v2-${{ github.run_id }}
