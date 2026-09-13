@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Iterable
+from typing import Iterable, Optional
 
 from .config import Alias, Config, NameConfig
 
@@ -24,10 +24,33 @@ def _alias_regex(alias: Alias) -> re.Pattern:
     return re.compile(pat, re.IGNORECASE | re.UNICODE)
 
 
+def _context_regex(alias: Alias) -> Optional[re.Pattern]:
+    """Word-boundary matcher for an alias's require_context terms.
+
+    These used to be tested with a plain substring check, which quietly destroyed the guard on
+    any short term. Quick's context list names its owner, HIG, and "hig" is a substring of
+    "Michigan", so every American football headline mentioning Michigan satisfied the guard and
+    a French burger chain collected nine college-sport stories in a day. Nottingham did the same
+    inside Nottinghamshire for Boots. The terms are the analyst's; requiring them to appear as
+    words is the only sane reading of what they meant.
+    """
+    if not alias.require_context:
+        return None
+    parts = []
+    for term in alias.require_context:
+        t = re.escape(term.strip())
+        t = t.replace(r"\ ", r"[\s\-]+")       # "fast food" also matches "fast-food"
+        # Strict on the left, forgiving on the right: "restaurant" must also satisfy
+        # "restaurants" and "store" must satisfy "stores", but nothing may match mid-word,
+        # which is what let HIG hide inside Michigan and Nottingham inside Nottinghamshire.
+        parts.append(rf"(?<![\w]){t}(?:[\w\'\u2019\-]{{0,3}})?(?![\w])")
+    return re.compile("|".join(parts), re.IGNORECASE | re.UNICODE)
+
+
 @dataclass
 class CompiledName:
     cfg: NameConfig
-    aliases: list[tuple[Alias, re.Pattern]]
+    aliases: list[tuple[Alias, re.Pattern, Optional[re.Pattern]]]
     exclude: list[re.Pattern]
     noise_domains: list[str]
     noise_titles: list[re.Pattern]
@@ -54,7 +77,7 @@ class Matcher:
         self.by_id = {n.cfg.id: n for n in self.names}
         # one cheap alternation over every alias text: full scans (shared feeds) only run the
         # per-name matchers when this hits, which keeps 200+ entities fast
-        texts = sorted({a.text for n in self.names for a, _ in n.aliases}, key=len, reverse=True)
+        texts = sorted({a.text for n in self.names for a, *_ in n.aliases}, key=len, reverse=True)
         if texts:
             self.prefilter = re.compile("|".join(re.escape(t) for t in texts), re.IGNORECASE | re.UNICODE)
 
@@ -66,7 +89,7 @@ class Matcher:
             names.append(
                 CompiledName(
                     cfg=n,
-                    aliases=[(a, _alias_regex(a)) for a in n.aliases],
+                    aliases=[(a, _alias_regex(a), _context_regex(a)) for a in n.aliases],
                     exclude=[re.compile(re.escape(t), re.IGNORECASE) for t in n.exclude_terms],
                     noise_domains=[d.lower() for d in n.noise_domains],
                     noise_titles=[re.compile(p, re.IGNORECASE) for p in n.noise_title_patterns],
@@ -96,7 +119,7 @@ class Matcher:
                 continue
             best: MatchResult | None = None
             excluded = any(p.search(text_all) for p in cn.exclude)
-            for alias, pat in cn.aliases:
+            for alias, pat, ctx in cn.aliases:
                 if not alias.applies_to(lang):
                     continue
                 where = ""
@@ -106,7 +129,7 @@ class Matcher:
                     where = "summary"
                 if not where:
                     continue
-                if alias.require_context and not any(c.lower() in text_all.lower() for c in alias.require_context):
+                if ctx is not None and not ctx.search(text_all):
                     if rejected is not None:
                         rejected.add(cn.cfg.id)
                     continue
