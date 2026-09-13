@@ -637,3 +637,31 @@ def test_retry_after_header_parsing():
     assert got is not None and 30 <= got <= 45
     past = datetime.now(timezone.utc) - timedelta(hours=1)
     assert retry_after_seconds(resp(format_datetime(past))) == 0.0
+
+
+def test_brief_reads_the_domain_screen_from_config(tmp_path):
+    """One source of truth. The hardcoded copy drifted within a day of being written."""
+    import sys
+    sys.path.insert(0, "scripts")
+    import build_brief as bb
+
+    f = tmp_path / "noise.yaml"
+    f.write_text(
+        "# comment\n"
+        "domains:\n"
+        "  - ad-hoc-news.de\n"
+        "  - boerse-express.com     # note .com, not .de\n"
+        "  - kauppalehti.fi/porssi\n"
+        "\n"
+        "title_patterns:\n"
+        "  - \"Stock Price\"\n",
+        encoding="utf-8")
+    got = bb.load_junk(f)
+    assert "boerse-express.com" in got          # the one-letter gap that let Branicks through
+    assert "kauppalehti.fi/porssi" in got       # path rules survive the parse
+    assert "Stock Price" not in got             # title patterns are not domains
+    assert set(bb.FALLBACK_JUNK) <= got         # the fallback is a floor, never a ceiling
+
+    missing = bb.load_junk(tmp_path / "absent.yaml")
+    assert missing == set(bb.FALLBACK_JUNK)     # a missing file must not empty the screen
+    assert bb.load_junk(None) == set(bb.FALLBACK_JUNK)
