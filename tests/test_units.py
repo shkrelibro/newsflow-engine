@@ -665,3 +665,57 @@ def test_brief_reads_the_domain_screen_from_config(tmp_path):
     missing = bb.load_junk(tmp_path / "absent.yaml")
     assert missing == set(bb.FALLBACK_JUNK)     # a missing file must not empty the screen
     assert bb.load_junk(None) == set(bb.FALLBACK_JUNK)
+
+
+# --------------------------------------------------- the headlines Lars actually complained about
+def test_the_five_published_headlines_that_should_never_have_been():
+    """Regression test built from the real complaint, verbatim.
+
+    Every one of these reached a published brief on 13 September. They are the specification for
+    what institutional-grade excludes, so they are the test, not a paraphrase of the test.
+    """
+    import sys
+    sys.path.insert(0, "scripts")
+    import build_brief as bb
+
+    never = [
+        "Skechers’ Sparkly $80 Sneakers with Memory Foam Are on Sale for $30",
+        "I went on a Nile river cruise with TUI - every day brought a new highlight",
+        "Colyton carnival procession set to light up town streets",
+        "Ab Donnerstag ( 17 . 9 .) in der Filiale , online schon jetzt : Lidl verkauft "
+        "Dyson - Alternative von Grundig für 70 Euro",
+        "Ist das Dirndl-Kleid von Adidas Top oder Flop? t-online-Leser fällen hartes Urteil",
+        "Three Quick Takeaways From No. 11 Oklahoma's Loss to Michigan",
+        "HelloFresh Landelijk (J): HDM O16 aan kop na winst op Victoria",
+        "MediaMarkt mahlt den Preis: Siemens-Kaffeevollautomat für 499 statt 1259 Euro",
+        "BRANICKS GROUP AKTIE Analysen | Trading-Empfehlungen | A41YEE",
+    ]
+    for title in never:
+        assert bb.disqualified(title), f"still reaches the judgement pass: {title}"
+
+
+def test_real_credit_headlines_survive_the_disqualifier():
+    """The other half of the contract. A false drop is invisible, so it is the costlier error."""
+    import sys
+    sys.path.insert(0, "scripts")
+    import build_brief as bb
+
+    keep = [
+        "CVC faces shareholder revolt over €10.7bn Recordati take-private",
+        "Cerba HealthCare : les biologistes au coeur du bras de fer sur près de 5 milliards de dette",
+        "Hapag-Lloyd setzt trotz israelischem Veto auf ZIM-Übernahme",
+        "Pēc pēkšņi izziņotas valdības ārkārtas sēdes jaunu lēmumu par \"airBaltic\" nav",
+        "„Intrum Global Business Services“ atleis 76 darbuotojus",
+        "Branicks Group Aktie: Anleihe bis Ende 2026 verlängert",
+        "SFL Corporation agrees $750m charter extension with Hapag-Lloyd",
+        "Ochsenfurt/Uffenheim: Historisch schlechte Zuckerrübenernte in Sicht",
+        "Cheplapharm platziert Anleihe über 950 Millionen Euro",
+        "Labcorp Acquires MLM Medical Labs To Expand Global Clinical Trial Laboratory Network",
+        "Südzucker senkt Prognose für das Geschäftsjahr nach schwachem Zuckerergebnis",
+    ]
+    for title in keep:
+        assert not bb.disqualified(title), f"false drop: {title}"
+    # and the ones that carry a hard signal are flagged as such for the judgement pass
+    assert bb.credit_signal("Cheplapharm platziert Anleihe über 950 Millionen Euro")
+    assert bb.credit_signal("CVC faces shareholder revolt over €10.7bn Recordati take-private")
+    assert not bb.credit_signal("CMA CGM lance l’extension de son terminal de Beyrouth")
