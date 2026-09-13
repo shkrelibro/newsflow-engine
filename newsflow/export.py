@@ -219,6 +219,16 @@ def write_exports(cfg: Config, store: Store, now: datetime | None = None) -> Pat
     (out / "daily" / f"{now.date().isoformat()}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "alerts.json").write_text(json.dumps({"generated_at": data["generated_at"], "alerts": data["alerts"]}, ensure_ascii=False, indent=1), encoding="utf-8")
     coverage = build_coverage(cfg, store, now)
+    # The golden set: did the machine catch what is known to have happened. Exported so the brief
+    # can print it and so a miss survives as a fact rather than an absence.
+    try:
+        from .golden import check as golden_check, load_golden, summarise as golden_summarise
+        events = load_golden(cfg.root / "golden.yaml")
+        golden = golden_summarise(golden_check(store, events, now)) if events else {"events": 0, "results": []}
+    except Exception as exc:  # noqa: BLE001 - never let the accountability check block the exports
+        golden = {"events": 0, "results": [], "error": str(exc)[:200]}
+    golden["generated_at"] = data["generated_at"]
+    (out / "golden.json").write_text(json.dumps(golden, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "coverage.json").write_text(json.dumps(coverage, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "health.json").write_text(json.dumps({"generated_at": data["generated_at"], **data["source_health"], "stats": data["stats"], "coverage": {"summary": coverage["summary"], "flags": coverage["flags"]}}, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "index.html").write_text(render_index(data), encoding="utf-8")

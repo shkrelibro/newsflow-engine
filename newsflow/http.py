@@ -26,6 +26,16 @@ class FetchError(Exception):
     pass
 
 
+class BudgetExceeded(FetchError):
+    """The run's time budget passed while this request was still queueing for its host.
+
+    Raised instead of sleeping. Without it the budget only stopped NEW jobs from starting: a job
+    already in flight against a host on a 60 second penalty would still sit through its three
+    attempts, and four workers doing that pushed whole runs past GitHub's 20 minute job limit,
+    which cancels the job silently (no exports, no alert, and the database of that run is lost).
+    """
+
+
 @dataclass
 class RateLimiter:
     """Minimum spacing between requests, per host, thread-safe, with adaptive backoff.
@@ -51,12 +61,16 @@ class RateLimiter:
         with self._lock:
             return self._penalty.get(host, 0.0)
 
-    def wait(self, host: str) -> None:
+    def wait(self, host: str, deadline: Optional[float] = None) -> None:
+        """Sleep until this host's next slot. With a deadline (time.monotonic()), refuse instead
+        of sleeping when the slot would fall after it, and leave the slot unclaimed."""
         with self._lock:
             spacing = self.per_host.get(host, self.default_seconds) + self._penalty.get(host, 0.0)
             now = time.monotonic()
             last = self._last.get(host, 0.0)
             delay = max(0.0, last + spacing - now)
+            if deadline is not None and now + delay > deadline:
+                raise BudgetExceeded(f"run time budget reached while waiting for {host}")
             self._last[host] = now + delay
         if delay > 0:
             time.sleep(delay)
@@ -124,12 +138,20 @@ class Http:
         self.retries = retries
         self.limiter = limiter or RateLimiter()
         self.honour_robots_for_pages = honour_robots_for_pages
+        # time.monotonic() value set by the run; once passed, no request waits or retries again
+        self.deadline: Optional[float] = None
         self._robots: dict[str, Optional[urllib.robotparser.RobotFileParser]] = {}
         self._client = httpx.Client(
             headers={"User-Agent": user_agent, "Accept-Language": "*"},
             timeout=timeout,
             follow_redirects=True,
         )
+
+    def _nap(self, seconds: float) -> None:
+        """Sleep between attempts, unless that would carry the run past its deadline."""
+        if self.deadline is not None and time.monotonic() + seconds > self.deadline:
+            raise BudgetExceeded("run time budget reached before the next attempt")
+        time.sleep(seconds)
 
     # ------------------------------------------------------------------
     def get(self, url: str, *, is_page: bool = False, accept: str = "") -> httpx.Response:
@@ -139,7 +161,7 @@ class Http:
         headers = {"Accept": accept} if accept else {}
         last_exc: Optional[Exception] = None
         for attempt in range(self.retries + 1):
-            self.limiter.wait(host)
+            self.limiter.wait(host, self.deadline)
             try:
                 resp = self._client.get(url, headers=headers)
                 if resp.status_code == 429 or resp.status_code >= 500:
@@ -148,7 +170,13 @@ class Http:
                     hinted = retry_after_seconds(resp)
                     penalty = self.limiter.penalise(host, hinted)
                     last_exc = FetchError(f"HTTP {resp.status_code} for {url}")
-                    time.sleep(hinted if hinted is not None else min(penalty, 2.0 * (attempt + 1)))
+                    # A Retry-After is honoured up to the same cap as the penalty. An upstream that
+                    # asks for an hour gets the next cycle, not a worker asleep for an hour.
+                    if hinted is not None:
+                        nap = min(hinted, self.limiter.max_penalty_seconds)
+                    else:
+                        nap = min(penalty, 2.0 * (attempt + 1))
+                    self._nap(nap)
                     continue
                 if resp.status_code >= 400:
                     raise FetchError(f"HTTP {resp.status_code} for {url}")
@@ -156,7 +184,7 @@ class Http:
                 return resp
             except (httpx.HTTPError, OSError) as exc:
                 last_exc = exc
-                time.sleep(1.0 * (attempt + 1))
+                self._nap(1.0 * (attempt + 1))
         raise FetchError(str(last_exc) if last_exc else f"failed {url}")
 
     def get_text(self, url: str, *, is_page: bool = False, accept: str = "") -> str:
@@ -165,7 +193,10 @@ class Http:
     def head_final_url(self, url: str) -> str:
         """Resolve redirects without reading the body; returns the final URL."""
         host = urlsplit(url).netloc
-        self.limiter.wait(host)
+        try:
+            self.limiter.wait(host, self.deadline)
+        except BudgetExceeded:
+            return url          # unresolved is a valid answer; a crashed run is not
         try:
             resp = self._client.head(url)
             if resp.status_code < 400 and str(resp.url):

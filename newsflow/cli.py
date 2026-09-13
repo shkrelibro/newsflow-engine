@@ -1,4 +1,4 @@
-"""Command line: run | loop | backfill | export | discover-feeds | stats | check-config | pick-db | jobs."""
+"""Command line: run | loop | backfill | export | discover-feeds | stats | check-config | golden | pick-db | jobs."""
 from __future__ import annotations
 
 import argparse
@@ -13,6 +13,7 @@ from . import __version__
 from .alerts import push_alerts
 from .config import load_config
 from .export import write_exports
+from .golden import check as golden_check, load_golden, summarise as golden_summarise
 from .pipeline import StateRollback, build_jobs, make_http, run_once
 from .routes import discover_feed
 from .store import Store, db_generation, unpack_db
@@ -147,6 +148,47 @@ def cmd_pick_db(args) -> int:
     return 0
 
 
+def cmd_golden(args) -> int:
+    """Check the store against config/golden.yaml and say, per event, hit or miss and how fast.
+
+    Exit code is 0 unless --strict, in which case any miss that is not documented as expected
+    fails the command. The workflow runs it non-strict and annotates, so a miss is visible on
+    every run without being able to stop the exports publishing.
+    """
+    cfg = load_config(args.config)
+    events = load_golden(cfg.root / "golden.yaml")
+    if not events:
+        print("no golden set configured (config/golden.yaml)")
+        return 0
+    store = Store(cfg.db_path)
+    try:
+        results = golden_check(store, events)
+    finally:
+        store.close()
+    summ = golden_summarise(results)
+    for r in results:
+        if r.pending:
+            flag = "PENDING"
+        elif r.hit and r.event.expect == "miss":
+            flag = "HIT (was a known miss: hole closed)"
+        elif r.hit:
+            flag = f"hit  {r.latency_hours:5.1f}h"
+        elif r.event.expect == "miss":
+            flag = "miss (known)"
+        else:
+            flag = "MISS"
+        extra = f"  {r.route}/{r.status} {r.source[:24]} :: {r.title[:60]}" if r.hit else ""
+        print(f"{flag:36} {r.event.id:32} {r.event.name:14}{extra}")
+        if flag == "MISS":
+            print(f"::warning title=golden set miss::{r.event.id}: {r.event.note[:140]}")
+    print(f"\n{summ['hits']} hit, {summ['misses']} missed ({summ['known_misses']} known), "
+          f"{summ['pending']} pending, of {summ['events']}"
+          + (f"; median latency {summ['median_latency_hours']:.1f}h" if summ['median_latency_hours'] is not None else ""))
+    if args.strict and summ["new_misses"]:
+        return 1
+    return 0
+
+
 def cmd_check(args) -> int:
     cfg = load_config(args.config)
     print(f"config: {cfg.root}")
@@ -243,6 +285,10 @@ def main(argv=None) -> int:
 
     ck = sub.add_parser("check-config", help="validate and summarise the configuration")
     ck.set_defaults(fn=cmd_check)
+
+    gd = sub.add_parser("golden", help="check the store against the golden set of known events")
+    gd.add_argument("--strict", action="store_true", help="exit 1 on any miss not documented as expected")
+    gd.set_defaults(fn=cmd_golden)
 
     pd = sub.add_parser("pick-db", help="keep whichever of two database copies has seen more runs")
     pd.add_argument("--candidate", action="append", required=True,

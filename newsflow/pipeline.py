@@ -13,7 +13,7 @@ from typing import Callable, Optional
 
 from .config import Config, NameConfig, Outlet, PageSource
 from .dedupe import similar, title_key
-from .http import Http, RateLimiter
+from .http import BudgetExceeded, Http, RateLimiter
 from .match import Matcher
 from .models import Item, RawItem, SourceResult
 from .normalize import canonical_url, domain_of, is_google_news_link, url_year
@@ -548,6 +548,9 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     workers = max(1, int(cfg.engine.get("max_workers", 4)))
     budget = float(cfg.engine.get("max_run_minutes", 12)) if budget_minutes is None else float(budget_minutes)
     deadline = time.monotonic() + budget * 60
+    # The HTTP layer gets the same deadline, so a job already in flight when the budget runs out
+    # stops at its next wait instead of sitting through its retries against a slow host.
+    http.deadline = deadline
     results: list[SourceResult] = []
     log.info("run %s (#%d): %d jobs, %d workers, budget %.0f min, lookback %.0f h", run_id, run_number, len(specs), workers, budget, lookback)
 
@@ -579,6 +582,10 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
             pending.discard(fut)
             try:
                 items, res = fut.result()
+            except BudgetExceeded:
+                # not a failure of the source: it was in flight when the budget ran out
+                items, res = [], SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0)
+                summary.skipped += 1
             except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
                 items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
             handle(spec, items, res)
@@ -619,6 +626,9 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
             else:
                 try:
                     items, res = fut.result()
+                except BudgetExceeded:
+                    items, res = [], SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0)
+                    summary.skipped += 1
                 except Exception as exc:  # noqa: BLE001
                     items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
                 handle(spec, items, res)
