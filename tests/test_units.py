@@ -579,3 +579,61 @@ def test_tui_does_not_inflect_into_the_dutch_word_for_garden(cfg):
     assert not m.match("Ligt je tuin er treurig bij? Zo laat je gras en planten herleven",
                        "", "nl", only=["tuigroup"])
     assert m.match("TUI verkauft 80 Prozent Eigenprodukte", "", "de", only=["tuigroup"])
+
+
+# ---------------------------------------------------------------- adaptive backoff
+def test_rate_limiter_widens_after_a_refusal_and_earns_it_back():
+    """A run fires ~100 GDELT jobs; without memory each one rediscovers the rate limit."""
+    from newsflow.http import RateLimiter
+    rl = RateLimiter(default_seconds=1.0, per_host={"api.gdeltproject.org": 6.0},
+                     max_penalty_seconds=60.0)
+    h = "api.gdeltproject.org"
+    assert rl.penalty(h) == 0.0
+
+    assert rl.penalise(h) == 6.0            # starts at the host's own base spacing
+    assert rl.penalise(h) == 12.0           # then doubles
+    assert rl.penalise(h) == 24.0
+    assert rl.penalise(h) == 48.0
+    assert rl.penalise(h) == 60.0           # capped: one bad upstream cannot stall the run
+    assert rl.penalise(h) == 60.0
+
+    rl.relax(h); assert rl.penalty(h) == 30.0
+    rl.relax(h); assert rl.penalty(h) == 15.0
+    for _ in range(8):
+        rl.relax(h)
+    assert rl.penalty(h) == 0.0             # fully recovered, back to base spacing
+
+    other = RateLimiter(default_seconds=1.0)
+    other.penalise("a.example")
+    assert other.penalty("b.example") == 0.0   # the penalty is per host, not global
+
+
+def test_rate_limiter_honours_retry_after():
+    from newsflow.http import RateLimiter
+    rl = RateLimiter(default_seconds=1.0, max_penalty_seconds=60.0)
+    assert rl.penalise("h", 30.0) == 30.0      # the server's number wins over doubling
+    assert rl.penalise("h", 5.0) == 30.0       # and a smaller hint never narrows an open penalty
+    assert rl.penalise("h", 90.0) == 60.0      # still capped
+
+
+def test_retry_after_header_parsing():
+    """Retry-After is either seconds or an HTTP date; both appear in the wild."""
+    from email.utils import format_datetime
+    from datetime import datetime, timedelta, timezone
+
+    import httpx
+
+    from newsflow.http import retry_after_seconds
+
+    def resp(value=None):
+        headers = {"Retry-After": value} if value is not None else {}
+        return httpx.Response(429, headers=headers)
+
+    assert retry_after_seconds(resp()) is None
+    assert retry_after_seconds(resp("12")) == 12.0
+    assert retry_after_seconds(resp("not a number")) is None
+    future = datetime.now(timezone.utc) + timedelta(seconds=40)
+    got = retry_after_seconds(resp(format_datetime(future)))
+    assert got is not None and 30 <= got <= 45
+    past = datetime.now(timezone.utc) - timedelta(hours=1)
+    assert retry_after_seconds(resp(format_datetime(past))) == 0.0

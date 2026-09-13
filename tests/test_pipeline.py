@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from newsflow.export import write_exports
 from newsflow.pipeline import _page_job, run_once
@@ -244,3 +244,52 @@ def test_prune_keeps_runs_and_items_and_drops_the_old_ledger(cfg, tmp_path):
     rows = store.conn.execute("SELECT run_id FROM source_results").fetchall()
     assert all(r["run_id"] != old for r in rows)            # the 2020 ledger is gone
     assert store.run_count() == runs_before + 1             # the run history is not
+
+
+# ------------------------------------------------------------------ stale dates
+def test_stale_rejects_undated_search_hits_and_re_dated_archive_urls(cfg, tmp_path):
+    """A claimed date is not a fact.
+
+    On 13 September a 2009 C&A story arrived through Google News stamped that morning. Two holes
+    let that class through: an item with no date skipped the age check entirely, and a recent
+    claimed date was never tested against the year in the URL path.
+    """
+    from newsflow.models import RawItem, SourceResult
+    from newsflow.pipeline import JobSpec
+
+    cfg = _cfg_with_tmp(cfg, tmp_path)
+    store = Store(cfg.db_path)
+    old = NOW - timedelta(days=400)
+
+    def job():
+        items = [
+            # 1. honestly old: rejected before, rejected now
+            RawItem(title="Intrum old news", link="https://ex.invalid/a", route="googlenews",
+                    query="q", published_at=old, name_ids=["intrum"]),
+            # 2. undated from a search route: used to sail straight through
+            RawItem(title="Intrum undated hit", link="https://ex.invalid/b", route="googlenews",
+                    query="q", published_at=None, name_ids=["intrum"]),
+            # 3. re-dated archive page: claims today, URL says 2009
+            RawItem(title="Intrum re-dated archive piece",
+                    link="https://ex.invalid/2009/03/intrum-story/", route="googlenews",
+                    query="q", published_at=NOW, name_ids=["intrum"]),
+            # 4. genuinely today, with a current year in the path: kept
+            RawItem(title="Intrum sells a portfolio",
+                    link="https://ex.invalid/2026/09/intrum-sells/", route="googlenews",
+                    query="q", published_at=NOW, name_ids=["intrum"]),
+            # 5. undated from a PAGE watcher: a new link on a watched newsroom is the event
+            RawItem(title="Intrum newsroom item", link="https://ex.invalid/press/new",
+                    route="page", query="page", published_at=None, name_ids=["intrum"]),
+        ]
+        return items, SourceResult("googlenews", "mixed", True, len(items), "", 0.1)
+
+    s = run_once(cfg, store, http=None, now=NOW, jobs=[JobSpec("mixed", "googlenews", job)])
+
+    assert s.fetched == 5
+    assert s.stale == 3                       # old, undated-search, re-dated archive
+    assert s.new_items == 2                   # the current one and the page watcher's
+    kept = {r["title"] for r in store.conn.execute("SELECT title FROM items").fetchall()}
+    assert "Intrum sells a portfolio" in kept
+    assert "Intrum newsroom item" in kept     # undated is meaningful from a page watcher
+    assert "Intrum re-dated archive piece" not in kept
+    assert "Intrum undated hit" not in kept
