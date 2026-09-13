@@ -29,7 +29,11 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The engine stops starting fetches at max_run_minutes (12) and now also stops waiting on
+    # slow hosts at that point, so a run is ~15 minutes with the cache traffic. This is headroom,
+    # not a target: a job that hits it is CANCELLED, which publishes nothing and (unlike a
+    # failure) raised no alert until the alert step below learned to fire on cancellation too.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -53,12 +57,19 @@ jobs:
       - name: Set the committed backup aside
         run: |
           mkdir -p data/backup
-          for f in data/newsflow.db data/newsflow.db.gz; do
-            if [ -f "$f" ]; then
-              mv "$f" "data/backup/$(basename "$f")"
-              echo "committed backup moved to data/backup/$(basename "$f")"
-            fi
-          done
+          # The compressed backup lives at its own path, so it is copied and the tracked file is
+          # left exactly as checked out: a tracked file that has been moved away is an unstaged
+          # change, and "git pull --rebase" refuses to run with unstaged changes. That is what
+          # made every publish fail whenever a file was uploaded to the repository during a run.
+          if [ -f data/newsflow.db.gz ]; then
+            cp data/newsflow.db.gz data/backup/newsflow.db.gz
+            echo "committed backup copied to data/backup/newsflow.db.gz"
+          fi
+          # A legacy uncompressed backup shares the cache's path and must get out of its way.
+          if [ -f data/newsflow.db ]; then
+            mv data/newsflow.db data/backup/newsflow.db
+            echo "legacy uncompressed backup moved to data/backup/newsflow.db"
+          fi
           ls -la data/backup/ 2>/dev/null || echo "no committed backup in this checkout"
 
       - name: Restore database from the cache
@@ -129,6 +140,13 @@ jobs:
               sys.exit("FAIL: no route produced a single item this run")
           PY
 
+      # Did the machine catch what is known to have happened? config/golden.yaml lists real events;
+      # this checks the store for each and annotates any miss on the run. It never fails the job:
+      # a miss is a finding to act on, not an outage, and it must not stop the exports publishing.
+      - name: Golden set, did the engine catch what is known to have happened
+        if: always() && steps.engine.outcome == 'success'
+        run: python -m newsflow golden
+
       # Save whatever the engine collected, including on a run the assertion step above flagged as
       # an outage: that database still holds the new seen_links. Do NOT save when the engine
       # refused to start on rolled-back state, or the stale copy gets a fresh cache key and
@@ -153,8 +171,23 @@ jobs:
           git config user.email "newsflow-bot@users.noreply.github.com"
           git add docs
           git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" || echo "nothing to commit"
-          git pull --rebase origin "${{ github.ref_name }}" || true
-          git push
+          # Files are uploaded to this repository by hand while runs are in progress, so the
+          # branch has usually moved by now. Rebase onto it (autostash: the working tree is
+          # allowed to be dirty) and try three times, because an upload can land between the
+          # rebase and the push as well.
+          landed=0
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin "${{ github.ref_name }}" && git push; then
+              landed=1; break
+            fi
+            echo "publish attempt $attempt did not land; retrying in 20s"
+            git rebase --abort 2>/dev/null || true
+            sleep 20
+          done
+          if [ "$landed" != 1 ]; then
+            echo "::error::the exports could not be pushed after 3 attempts"
+            exit 1
+          fi
 
       # The backup, separately, compressed, and best effort. Once a day (first run after 00:00
       # UTC) or on a manual run. gzip takes the database to roughly a third, which is what keeps
@@ -184,14 +217,22 @@ jobs:
           # retire the old uncompressed backup from the tree; it can no longer be pushed
           git rm -q --cached --ignore-unmatch data/newsflow.db
           git commit -m "newsflow database backup $(date -u +%Y-%m-%d) [skip ci]" || echo "nothing to commit"
-          git pull --rebase origin "${{ github.ref_name }}" || true
-          git push
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin "${{ github.ref_name }}" && git push; then
+              break
+            fi
+            echo "backup push attempt $attempt did not land; retrying in 20s"
+            git rebase --abort 2>/dev/null || true
+            sleep 20
+          done
 
       # Make failures shout. GitHub emails the repository owner when an issue is opened or
       # commented on, so this reaches you without configuring a webhook or SMTP. One open issue
       # is reused for consecutive failures so a sustained outage does not create 96 issues a day.
+      # A job that overruns timeout-minutes is cancelled, not failed, and failure() is false for
+      # it. Four runs in a row were lost that way on 13 September without a single alert.
       - name: Alert on failure
-        if: failure()
+        if: failure() || cancelled()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -199,12 +240,17 @@ jobs:
           gh label create newsflow-failure --color B60205 \
             --description "The newsflow engine failed a scheduled run" >/dev/null 2>&1
           url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ "${{ job.status }}" = "cancelled" ]; then
+            what="was cancelled (most likely it overran the job time limit; the engine step: ${{ steps.engine.outcome }})"
+          else
+            what="failed (engine step: ${{ steps.engine.outcome }})"
+          fi
           body=$(printf '%s\n' \
-            "The scheduled newsflow run failed at $(date -u +%Y-%m-%dT%H:%MZ)." \
+            "The scheduled newsflow run $what at $(date -u +%Y-%m-%dT%H:%MZ)." \
             "" \
             "Run log: $url" \
             "" \
-            "Nothing new was collected on this cycle. If this repeats, the engine is down and the" \
+            "Nothing new was published on this cycle. If this repeats, the engine is down and the" \
             "absence of a brief is not a quiet news day.")
           existing=$(gh issue list --label newsflow-failure --state open --limit 1 \
             --json number --jq '.[0].number' 2>/dev/null)
