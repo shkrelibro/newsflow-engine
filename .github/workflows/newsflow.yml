@@ -44,21 +44,32 @@ jobs:
       # restored by prefix). It is also committed once a day as a backup, and the checkout above
       # has already put that backup at data/newsflow.db.
       #
-      # The cache restore therefore goes to a SIDE PATH, not over the backup. A prefix restore
-      # returns any surviving entry, not necessarily the newest, and at ~96 runs a day against a
-      # 10GB repository cache the older entries are evicted constantly. Restoring straight over
-      # data/newsflow.db would silently replace a good backup with a stale copy, and the engine
-      # would re-report old stories as new without anything saying so.
+      # A prefix restore returns any surviving entry, not necessarily the newest, and at ~96 runs
+      # a day against a 10GB repository cache the older entries are evicted constantly. So the
+      # committed backup is moved aside BEFORE the restore rather than being overwritten by it,
+      # and the two copies are compared afterwards. Do not "protect" the backup by restoring the
+      # cache to a different path instead: the cache must be restored to exactly the path it was
+      # saved from, or the entry does not match and every run starts from nothing.
+      - name: Set the committed backup aside
+        run: |
+          if [ -f data/newsflow.db ]; then
+            mkdir -p data/backup
+            mv data/newsflow.db data/backup/newsflow.db
+            echo "committed backup moved to data/backup/newsflow.db"
+          else
+            echo "no committed backup in this checkout"
+          fi
+
       - name: Restore database from the cache
         uses: actions/cache/restore@v4
         with:
-          path: data/cache/newsflow.db
+          path: data/newsflow.db
           key: newsflow-db-v2-${{ github.run_id }}
           restore-keys: newsflow-db-v2-
 
       # Keep whichever of the two copies has seen more runs. Both counters only ever increase.
       - name: Use the newer of the cache and the committed backup
-        run: python -m newsflow pick-db --candidate data/cache/newsflow.db --target data/newsflow.db
+        run: python -m newsflow pick-db --candidate data/backup/newsflow.db --target data/newsflow.db
 
       - name: Run engine
         id: engine
