@@ -11,6 +11,11 @@ engine:
   resolve_redirects: false    # try to resolve Google News links to the outlet URL (slower; off on GitHub Actions)
   honour_robots_for_pages: true
   db_path: data/newsflow.db
+  keep_source_results_days: 10   # the per-job coverage ledger is ~40,000 rows a day and the
+                                 # largest table in the database. Health reads the last few runs
+                                 # and coverage reads 24 hours, so older rows are dead weight, and
+                                 # a smaller database is what survives the Actions cache. Items,
+                                 # clusters and runs are never pruned. 0 disables.
   circuit_breaker:
     enabled: true
     consecutive_empty: 25     # a route answering ok-but-empty this many times in a row is being
