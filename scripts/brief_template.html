@@ -4,7 +4,7 @@
 :root{
   --paper:#FCFCFA; --ink:#16181C; --muted:#59616E; --faint:#8A909B;
   --rule:#E2E3DE; --rule-strong:#C7C9C3; --panel:#F4F4F0;
-  --accent:#1F4E5F; --flag:#8C2F1E; --ok:#2C5A3E;
+  --accent:#1F4E5F; --flag:#8C2F1E; --ok:#2C5A3E; --warn:#8A6A1E;
   --serif:'Newsreader',Charter,'Iowan Old Style',Georgia,serif;
   --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -13,13 +13,13 @@
   :root:not([data-theme="light"]){
     --paper:#12141A; --ink:#E7E5E0; --muted:#9AA2AE; --faint:#6E7682;
     --rule:#282C34; --rule-strong:#3A3F49; --panel:#1A1D24;
-    --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C;
+    --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C; --warn:#D4B26A;
   }
 }
 :root[data-theme="dark"]{
   --paper:#12141A; --ink:#E7E5E0; --muted:#9AA2AE; --faint:#6E7682;
   --rule:#282C34; --rule-strong:#3A3F49; --panel:#1A1D24;
-  --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C;
+  --accent:#7FB0C0; --flag:#D98570; --ok:#7FB08C; --warn:#D4B26A;
 }
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);
@@ -68,6 +68,15 @@ h2 span{font-family:var(--mono);font-weight:400;letter-spacing:0;color:var(--fai
 .tag{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
   padding:2px 6px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap}
 .tag.cat{border-color:var(--accent);color:var(--accent)}
+.tag.warn{border-color:var(--flag);color:var(--flag)}
+h3.grp{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;color:var(--accent);margin:26px 0 0;padding:0}
+h3.grp:first-of-type{margin-top:16px}
+.stale{margin:22px 0 0;padding:13px 15px;border-left:3px solid var(--warn);background:var(--panel);
+  font-family:var(--sans);font-size:13.5px;line-height:1.6;color:var(--muted)}
+.stale p{margin:0}
+.stale b{color:var(--ink);font-weight:600}
+.ledger dd.zero{color:var(--muted)}
 .item h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.28;
   margin:0 0 8px;text-wrap:balance;letter-spacing:-.005em}
 .item h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule-strong)}
@@ -139,8 +148,8 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
   <div class="row">
     <div class="cell"><dt>Engine stamp</dt><dd>{stamp}<small>Z</small></dd></div>
     <div class="cell"><dt>Run</dt><dd>{run}</dd></div>
-    <div class="cell"><dt>Clusters held</dt><dd>{clusters}</dd></div>
-    <div class="cell"><dt>Items held</dt><dd>{items}</dd></div>
+    <div class="cell"><dt>New in {since_h}h</dt><dd>{fresh}</dd></div>
+    <div class="cell"><dt>Export age</dt><dd>{age_min}<small> min</small></dd></div>
   </div>
   <div class="row">
     <div class="cell"><dt>Candidates, 24h</dt><dd>{candidates}</dd></div>
@@ -154,9 +163,11 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
     {tripped} cancelled by the circuit breaker.</div>
 </dl>
 
-<p class="lede">The engine returned <b>{candidates}</b> candidate clusters in the last 24 hours.
-<em>{carried_n} are carried below.</em> The reconciliation at the foot names exactly what consumed the rest.
-Nothing is deleted; everything not published is held and searchable.</p>
+{stale_note}
+
+<p class="lede">The engine returned <b>{candidates}</b> candidate clusters in the last 24 hours, of which
+<b>{fresh}</b> entered in the last {since_h}. <em>{carried_n} are carried below.</em> The reconciliation at the
+foot names exactly what consumed the rest. Nothing is deleted; everything not published is held and searchable.</p>
 
 <h2>The lead <span>tier A</span></h2>
 {lead_items}

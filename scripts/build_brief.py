@@ -32,13 +32,48 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-# Re-daters and aggregators that republish a wire story under a new date. They are not sources and
-# a brief led by them is led by its own junk. Keep this in step with config/noise.yaml.
-JUNK_DOMAINS = {
-    "ad-hoc-news.de", "boerse-global.de", "finanztrends.de", "boerse-express.de",
+# Re-daters, aggregators and quote-page mills. The authoritative list is config/noise.yaml in the
+# repository; this is only the fallback used when that file was not supplied.
+#
+# It used to be a hardcoded copy with a comment asking whoever changed one to change the other,
+# which lasted exactly one day: 54 of the 65 configured domains never reached this filter, among
+# them boerse-express.com, which sat one letter from the boerse-express.de that was listed, and
+# the kauppalehti.fi registry paths behind 81 Intrum stubs in a single window. A list that has to
+# be kept in step by hand is a list that will drift, so read the real one.
+FALLBACK_JUNK = {
+    "ad-hoc-news.de", "boerse-global.de", "finanztrends.de",
+    "boerse-express.de", "boerse-express.com",
     "news.inbox.eu", "tipranks.com", "marketbeat.com", "themarketsdaily.com",
-    "tickerreport.com", "dailypolitical.com", "fuelcarmagazine.com", "fuelcarmagazine",
+    "tickerreport.com", "dailypolitical.com", "fuelcarmagazine.com",
 }
+JUNK_DOMAINS: set[str] = set(FALLBACK_JUNK)
+
+
+def load_junk(path: "Path | None") -> set[str]:
+    """Read the domain screen out of config/noise.yaml, falling back to FALLBACK_JUNK.
+
+    Parsed by hand rather than with PyYAML: this script is fetched standalone into a scheduled
+    session and must not depend on a package being installed there. The file's shape is a fixed
+    "domains:" block of "  - value" lines, so a five-line reader is enough and cannot fail in a
+    way that silently empties the screen.
+    """
+    if path is None or not path.exists():
+        return set(FALLBACK_JUNK)
+    domains: set[str] = set()
+    in_block = False
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.split("#", 1)[0].rstrip()
+        if not line:
+            continue
+        if not line.startswith((" ", "\t", "-")):
+            in_block = line.strip() == "domains:"
+            continue
+        if in_block and line.lstrip().startswith("- "):
+            value = line.lstrip()[2:].strip().strip("\"'")
+            if value:
+                domains.add(value)
+    # Never let a parse failure quietly widen what gets published.
+    return domains | set(FALLBACK_JUNK) if domains else set(FALLBACK_JUNK)
 
 # What moves a bond price, in order. Anything uncategorised sorts after these.
 CATEGORY_ORDER = ["rating", "capital_markets", "restructuring", "m_and_a",
@@ -111,6 +146,28 @@ def collect(latest: dict) -> list[dict]:
                 "cats": c.get("alert_categories") or [], "sources": c.get("sources") or 1,
             })
     return rows
+
+
+def new_since(rows: list[dict], hours: float, now: datetime) -> int:
+    """Clusters first seen within the last `hours`.
+
+    The brief runs eight times a day against an engine that runs every fifteen minutes, so a cut
+    can legitimately land on an unchanged pile. Saying so is the difference between a restatement
+    and a silent repeat, and on 13 September a cut published the previous window's items with no
+    indication that nothing had moved.
+    """
+    cutoff = now - timedelta(hours=hours)
+    n = 0
+    for r in rows:
+        try:
+            seen = datetime.fromisoformat(r["seen"])
+        except (TypeError, ValueError):
+            continue
+        if seen.tzinfo is None:
+            seen = seen.replace(tzinfo=timezone.utc)
+        if seen >= cutoff:
+            n += 1
+    return n
 
 
 def partition(rows: list[dict]) -> dict:
@@ -218,13 +275,22 @@ def item_html(r: dict, j: dict, lead: bool) -> str:
             f'{body}</li>')
 
 
-def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
+def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float = 3.0) -> str:
     rows = collect(latest)
     P = partition(rows)
     Q = quiet_block(coverage)
     H = health_block(latest)
     st = latest.get("stats", {})
     stamp = latest.get("generated_at", "")
+    now = datetime.now(timezone.utc)
+    try:
+        exported = datetime.fromisoformat(stamp)
+        if exported.tzinfo is None:
+            exported = exported.replace(tzinfo=timezone.utc)
+        age_min = int((now - exported).total_seconds() // 60)
+    except (TypeError, ValueError):
+        age_min = -1
+    fresh = new_since(rows, since_hours, now)
 
     lead_ids = [str(x) for x in (j.get("lead") or [])]
     by_id = {str(r["id"]): r for r in P["A_rows"]}
@@ -232,6 +298,22 @@ def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
     if not lead:                                   # no judgement supplied: take the categorised ones
         lead = [r for r in P["A_rows"] if r["cats"]][:6]
     lead_set = {r["id"] for r in lead}
+    # Group the lead under its category, keeping the judgement's order within each group and the
+    # order in which categories first appear. Run-length grouping alternated headings whenever a
+    # categorised and an uncategorised item sat next to each other.
+    #
+    # "Not flagged by the engine" is deliberate, not a fallback label: the keyword detector missed
+    # the FT's Recordati story and the Les Echos Cerba story, the two most important items of
+    # 13 September. Naming that on the page keeps the gap visible instead of quietly absorbing it.
+    order: list[str] = []
+    bucket: dict[str, list[dict]] = {}
+    for r in lead:
+        label = CATEGORY_LABEL.get(r["cats"][0], "Other") if r["cats"] else "Not flagged by the engine"
+        if label not in bucket:
+            bucket[label] = []
+            order.append(label)
+        bucket[label].append(r)
+    groups = [(label, bucket[label]) for label in order]
     carried = [r for r in P["A_rows"] if r["id"] not in lead_set and
                (r["cats"] or r["sources"] > 1 or (j.get("so") or {}).get(str(r["id"])))]
     comp_carried = [r for r in P["C_rows"] if r["cats"]][:8]
@@ -270,7 +352,10 @@ def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
         feeds=st.get("feeds_known", 0),
         dead=H["dead"], budget=H["budget"], tripped=H["tripped"],
         rate=H["rate_limited"], http=H["http"], nofeed=H["no_feed"],
-        lead_items="\n".join(item_html(r, j, True) for r in lead),
+        lead_items="\n".join(
+            f'<h3 class="grp">{e(label)}</h3>' + "\n".join(item_html(r, j, True) for r in rs)
+            for label, rs in groups) or
+            '<p class="method">Nothing cleared the filter into the lead in this window.</p>',
         lead_n=len(lead),
         carried_items="\n".join(item_html(r, j, False) for r in carried) or
                       '<li><div class="t">Nothing else cleared the filter in this window.</div></li>',
@@ -281,6 +366,16 @@ def render(latest: dict, coverage: dict, j: dict, cut: str) -> str:
         q_quiet=len(Q["a_quiet"]), q_total=Q["a_total"], q_never=never or "none",
         q_quietly=quietly or "none", q_queries=f'{Q["queries"]:,}',
         q_starved=Q["starved"], q_noq=Q["no_queries"],
+        fresh=fresh, since_h=int(since_hours), age_min=age_min if age_min >= 0 else "unknown",
+        stale_note=(
+            "<div class=\"stale\"><p><b>Read this as a restatement, not an update.</b> "
+            f"No cluster has entered the window in the last {int(since_hours)} hours, and the engine "
+            f"last exported {age_min} minutes ago. The pile behind this cut is the same one behind "
+            "the previous brief.</p></div>"
+            if fresh == 0 else
+            ("<div class=\"stale\"><p><b>The pile may be incomplete.</b> The engine last exported "
+             f"{age_min} minutes ago, so the most recent hours are not represented. Absence of an item "
+             "below is not evidence that nothing happened.</p></div>" if age_min > 120 else "")),
         c_total=Q["c_total"], c_quiet=len(Q["c_quiet"]), c_never_n=len(Q["c_never"]),
         c_never=" · ".join(f'{e(v["name"])} ({v.get("ok_24h", 0)}q)' for v in Q["c_never"]) or "none",
         c_jobs=f'{Q["c_jobs"]:,}', c_ok=f'{Q["c_ok"]:,}',
@@ -316,12 +411,22 @@ def main() -> int:
     ap.add_argument("--out", default="brief.html")
     ap.add_argument("--judgement", help="JSON of lead order, so-what text and translations")
     ap.add_argument("--cut", default=None, help="label for this cut, e.g. '13:00 London'")
+    ap.add_argument("--noise", default="config/noise.yaml",
+                    help="path to config/noise.yaml; the domain screen is read from it")
+    ap.add_argument("--since-hours", type=float, default=3.0, dest="since_hours",
+                    help="how far back counts as new for this cut (default 3, the usual gap)")
     ap.add_argument("--resolve", action="store_true",
                     help="follow each shortlisted link to the outlet and drop anything whose URL "
                          "path shows an older year; catches re-dated archive pages")
     ap.add_argument("--shortlist", action="store_true",
                     help="print the filtered shortlist as JSON and stop, for the judgement pass")
     a = ap.parse_args()
+
+    global JUNK_DOMAINS
+    noise = Path(a.noise) if a.noise else None
+    JUNK_DOMAINS = load_junk(noise)
+    print(f"domain screen: {len(JUNK_DOMAINS)} domains from "
+          f"{noise if noise and noise.exists() else 'the built-in fallback'}", file=sys.stderr)
 
     docs = Path(a.docs)
     latest = json.loads((docs / "latest.json").read_text(encoding="utf-8"))
@@ -362,7 +467,7 @@ def main() -> int:
         sys.exit("scripts/brief_template.html is missing; the layout lives there")
     j = json.loads(Path(a.judgement).read_text(encoding="utf-8")) if a.judgement else {}
     cut = a.cut or datetime.now(timezone.utc).strftime("%H:%M UTC")
-    Path(a.out).write_text(render(latest, coverage, j, cut), encoding="utf-8")
+    Path(a.out).write_text(render(latest, coverage, j, cut, a.since_hours), encoding="utf-8")
     print(f"wrote {a.out}")
     return 0
 
