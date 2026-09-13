@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import base64
 import re
+from typing import Optional
 from urllib.parse import parse_qsl, unquote, urlencode, urlsplit, urlunsplit
 
 TRACKING_PARAMS = {
@@ -92,3 +93,26 @@ def canonical_url(url: str) -> str:
 
 def is_google_news_link(url: str) -> bool:
     return "news.google.com" in urlsplit(url).netloc.lower()
+
+
+_URL_YEAR = re.compile(r"(?:^|[/\-_.])((?:19|20)\d{2})(?:[/\-_.]|$)")
+
+
+def url_year(url: str) -> Optional[int]:
+    """The publication year encoded in a URL path, if there is one.
+
+    Most publishers put the date in the path: /2009/03/ca-investiert/, -2009-03-12-, /archiv/2009/.
+    That is written once when the article is created and does not move, which makes it the one
+    date on a re-dated page that can still be trusted. Returns None when the path carries no year,
+    which is common and is not evidence of anything.
+    """
+    try:
+        path = urlsplit(url).path
+    except ValueError:
+        return None
+    best = None
+    for m in _URL_YEAR.finditer(path):
+        year = int(m.group(1))
+        if 1990 <= year <= 2100:
+            best = year if best is None else min(best, year)
+    return best

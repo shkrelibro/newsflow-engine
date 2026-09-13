@@ -16,7 +16,7 @@ from .dedupe import similar, title_key
 from .http import Http, RateLimiter
 from .match import Matcher
 from .models import Item, RawItem, SourceResult
-from .normalize import canonical_url, domain_of, is_google_news_link
+from .normalize import canonical_url, domain_of, is_google_news_link, url_year
 from .routes import (
     discover_feed,
     fetch_bing_news,
@@ -73,6 +73,7 @@ def make_http(cfg: Config) -> Http:
             "www.bing.com": float(rl.get("bing_seconds", 2.0)),
             "api.gdeltproject.org": float(rl.get("gdelt_seconds", 6.0)),
         },
+        max_penalty_seconds=float(rl.get("max_penalty_seconds", 60.0)),
     )
     return Http(
         user_agent=str(eng.get("user_agent", "newsflow-engine/0.1")),
@@ -357,14 +358,40 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
         summary.fetched += 1
         if not raw.title or not raw.link:
             continue
+        # Staleness, three ways, because a claimed date is not a fact.
+        #
+        # 1. The claimed date is old. The straightforward case.
+        # 2. The claimed date is missing. This used to skip the check entirely, so an undated
+        #    item of any age went through. Undated is normal and meaningful for a page watcher,
+        #    where a new link on a watched newsroom IS the event; it is not acceptable from a
+        #    search route, where an undated hit is simply unverifiable.
+        # 3. The claimed date is recent but the URL says otherwise. Publishers re-date archive
+        #    pages, and on 13 September a 2009 C&A story arrived stamped that morning. The year
+        #    in the URL path is written when the article is created and does not move, so where
+        #    the two disagree, the URL wins.
         if raw.published_at and raw.published_at < cutoff:
             summary.stale += 1
+            continue
+        if not raw.published_at and raw.route in SEARCH_ROUTES:
+            summary.stale += 1
+            continue
+        year = url_year(raw.link)
+        if year and year < cutoff.year:
+            summary.stale += 1
+            log.debug("stale by URL year %s: %s", year, raw.title[:80])
             continue
         canon = canonical_url(raw.link)
         if resolve and is_google_news_link(canon):
             resolved = http.head_final_url(canon)  # type: ignore[union-attr]
             if resolved and not is_google_news_link(resolved):
                 canon = canonical_url(resolved)
+                # The aggregator link carries no date; the outlet's own path usually does, so
+                # this is the first point at which a re-dated archive page can be caught.
+                year = url_year(canon)
+                if year and year < cutoff.year:
+                    summary.stale += 1
+                    log.debug("stale by resolved URL year %s: %s", year, raw.title[:80])
+                    continue
         domain = raw.source_domain or domain_of(canon)
 
         existing = store.get_item_by_url(canon)

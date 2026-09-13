@@ -9,6 +9,8 @@ Policy (documented in README):
 from __future__ import annotations
 
 import threading
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import time
 import urllib.robotparser
 from dataclasses import dataclass, field
@@ -26,22 +28,86 @@ class FetchError(Exception):
 
 @dataclass
 class RateLimiter:
-    """Minimum spacing between requests, per host, thread-safe."""
+    """Minimum spacing between requests, per host, thread-safe, with adaptive backoff.
+
+    The fixed spacing alone is not enough. A run issues around a hundred GDELT jobs, and when
+    GDELT starts refusing, each job used to rediscover that independently: two retries, a couple
+    of seconds each, then a failure, a hundred times over. Sixteen rate-limited responses in a
+    single window. So a host that refuses us widens its own spacing for the rest of the run, and
+    a host that answers cleanly earns that back gradually.
+    """
 
     default_seconds: float = 1.0
     per_host: dict[str, float] = field(default_factory=dict)
+    max_penalty_seconds: float = 60.0
     _last: dict[str, float] = field(default_factory=dict)
+    _penalty: dict[str, float] = field(default_factory=dict)
     _lock: threading.Lock = field(default_factory=threading.Lock)
 
-    def wait(self, host: str) -> None:
-        spacing = self.per_host.get(host, self.default_seconds)
+    def base_spacing(self, host: str) -> float:
+        return self.per_host.get(host, self.default_seconds)
+
+    def penalty(self, host: str) -> float:
         with self._lock:
+            return self._penalty.get(host, 0.0)
+
+    def wait(self, host: str) -> None:
+        with self._lock:
+            spacing = self.per_host.get(host, self.default_seconds) + self._penalty.get(host, 0.0)
             now = time.monotonic()
             last = self._last.get(host, 0.0)
             delay = max(0.0, last + spacing - now)
             self._last[host] = now + delay
         if delay > 0:
             time.sleep(delay)
+
+    def penalise(self, host: str, seconds: Optional[float] = None) -> float:
+        """Widen this host's spacing after a refusal. Returns the new penalty.
+
+        With a Retry-After header, honour it. Without one, double, starting from the host's own
+        base spacing, and cap it so one bad upstream cannot stall the whole run.
+        """
+        with self._lock:
+            current = self._penalty.get(host, 0.0)
+            base = self.per_host.get(host, self.default_seconds)
+            if seconds is not None:
+                proposed = max(seconds, current)
+            else:
+                proposed = current * 2 if current else base
+            self._penalty[host] = min(self.max_penalty_seconds, proposed)
+            return self._penalty[host]
+
+    def relax(self, host: str) -> None:
+        """Give back half the penalty after a clean response; a recovered host must not stay slow."""
+        with self._lock:
+            current = self._penalty.get(host, 0.0)
+            if not current:
+                return
+            nxt = current / 2.0
+            if nxt < 0.25:
+                self._penalty.pop(host, None)
+            else:
+                self._penalty[host] = nxt
+
+
+def retry_after_seconds(resp: "httpx.Response") -> Optional[float]:
+    """Parse Retry-After, which is either a count of seconds or an HTTP date."""
+    raw = (resp.headers.get("Retry-After") or "").strip()
+    if not raw:
+        return None
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        pass
+    try:
+        when = parsedate_to_datetime(raw)
+    except (TypeError, ValueError):
+        return None
+    if when is None:
+        return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    return max(0.0, (when - datetime.now(timezone.utc)).total_seconds())
 
 
 class Http:
@@ -77,11 +143,16 @@ class Http:
             try:
                 resp = self._client.get(url, headers=headers)
                 if resp.status_code == 429 or resp.status_code >= 500:
+                    # Remember the refusal on the host, not just in this call, so the next job
+                    # against the same host starts out slower instead of walking into it again.
+                    hinted = retry_after_seconds(resp)
+                    penalty = self.limiter.penalise(host, hinted)
                     last_exc = FetchError(f"HTTP {resp.status_code} for {url}")
-                    time.sleep(2.0 * (attempt + 1))
+                    time.sleep(hinted if hinted is not None else min(penalty, 2.0 * (attempt + 1)))
                     continue
                 if resp.status_code >= 400:
                     raise FetchError(f"HTTP {resp.status_code} for {url}")
+                self.limiter.relax(host)
                 return resp
             except (httpx.HTTPError, OSError) as exc:
                 last_exc = exc
