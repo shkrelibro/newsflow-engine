@@ -197,6 +197,13 @@ def junky(domain: str) -> bool:
     return any(j in (domain or "") for j in JUNK_DOMAINS)
 
 
+# What a churn site writes when nothing has happened: the share reacted, analysts rated, the
+# price moved. A screened-domain row that is only this stays screened even when a signal word
+# is in it; one the engine has categorised, or one that names money without talking about the
+# share, comes through flagged.
+STOCK_CHATTER = re.compile(r"\b(?:Aktie|Aktien|Aktienkurs|stock|shares?|Kurs|Analysten?|analysts?|Kursziel)\b", re.IGNORECASE)
+
+
 def rank(row: dict) -> tuple:
     """Lower sorts first: categorised before not, by category priority, then by corroboration."""
     cats = row["cats"]
@@ -253,8 +260,27 @@ def partition(rows: list[dict]) -> dict:
         out[f"{key}_bearing"] = len(bearing)
         out[f"{key}_standfirst"] = sum(1 for r in pool if r["where"] == "summary")
         out[f"{key}_inherited"] = sum(1 for r in pool if r["where"] == "none")
-        clean = [r for r in bearing if not junky(r["domain"])]
-        out[f"{key}_junk"] = len(bearing) - len(clean)
+        # The domain screen exists for re-daters and churn sites. On a small tier-A name in
+        # restructuring, those churn sites can be the ONLY coverage there is: in the week to
+        # 12 September every Branicks headline that mattered (S&P to SD, bridge notes accepted,
+        # bondholders extending to end-2026) came from finanztrends, boerse-express and
+        # ad-hoc-news, and the screen dropped all of it. So a tier-A row from a screened domain
+        # survives when the headline itself carries a hard credit signal or an engine category,
+        # and it arrives flagged as a re-dater domain with its date unverified, for judgement
+        # to weigh rather than for the screen to decide. Comps stay screened: read-through from
+        # a churn site is not worth the noise.
+        clean, junk = [], []
+        for r in bearing:
+            if not junky(r["domain"]):
+                clean.append(r)
+            elif key == "A" and not disqualified(r["title"]) and (
+                    r["cats"] or (credit_signal(r["title"]) and not STOCK_CHATTER.search(r["title"]))):
+                r["redater"] = True
+                clean.append(r)
+            else:
+                junk.append(r)
+        out[f"{key}_junk"] = len(junk)
+        out[f"{key}_redater_kept"] = sum(1 for r in clean if r.get("redater"))
         # Classes that are never a credit event are removed here, before anything is offered for
         # judgement. The reason is kept on the row so the drop table can name it.
         kept = []
@@ -346,6 +372,10 @@ def item_html(r: dict, j: dict, lead: bool) -> str:
         tags.append(f'<span class="tag">{r["sources"]} sources</span>')
     for c in r["cats"]:
         tags.append(f'<span class="tag cat">{e(CATEGORY_LABEL.get(c, c))}</span>')
+    if r.get("redater"):
+        tags.append('<span class="tag">re-dater domain</span>')
+        if "date unverified" not in extra:
+            tags.append('<span class="tag">date unverified</span>')
     for t in extra:
         tags.append(f'<span class="tag">{e(t)}</span>')
     headline = trans or r["title"]
@@ -497,6 +527,7 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
         r_all=P["all"], r_A=P["A"], r_C=P["C"],
         rA_inherit=P["A_inherited"], rA_stand=P["A_standfirst"], rA_bear=P["A_bearing"],
         rA_junk=P["A_junk"], rA_clean=P["A_clean"], rA_drop=review_dropped, rA_pub=published,
+        rA_redater=P.get("A_redater_kept", 0),
         rC_inherit=P["C_inherited"] + P["C_standfirst"], rC_bear=P["C_bearing"],
         rC_junk=P["C_junk"], rC_clean=P["C_clean"], rC_cat=sum(1 for r in P["C_rows"] if r["cats"]),
         rC_pub=len(comp_carried),
@@ -565,9 +596,9 @@ def main() -> int:
                 P[key] = keep
             P["redated"] = dropped
             print(f"resolved links; dropped {len(dropped)} re-dated", file=sys.stderr)
-        json.dump({"tier_a": [{k: r[k] for k in
+        json.dump({"tier_a": [{k: r.get(k) for k in
                                ("id", "name", "title", "source", "domain", "country", "lang",
-                                "cats", "sources", "seen", "url", "signal")} for r in P["A_rows"]],
+                                "cats", "sources", "seen", "url", "signal", "redater")} for r in P["A_rows"]],
                    "comps": [{k: r.get(k) for k in
                               ("id", "name", "title", "source", "cats", "sources", "signal")}
                              for r in P["C_rows"]],
