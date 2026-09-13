@@ -497,3 +497,35 @@ def test_pick_db_keeps_the_committed_backup_when_the_cache_is_older(tmp_path):
     s.close()
     assert main(["pick-db", "--candidate", str(cache), "--target", str(target)]) == 0
     assert db_generation(target)[0] == 1400
+
+
+def test_pick_db_reads_a_gzipped_backup(tmp_path):
+    """The committed backup is gzipped, because the plain file passed GitHub's 100MB limit."""
+    import gzip
+    import shutil as _sh
+
+    from newsflow.cli import main
+    from newsflow.store import Store, db_generation
+
+    plain = tmp_path / "backup.db"
+    s = Store(str(plain))
+    for _ in range(900):
+        s.start_run(datetime(2026, 9, 1, tzinfo=timezone.utc))
+    s.close()
+
+    packed = tmp_path / "backup.db.gz"
+    with open(plain, "rb") as src, gzip.open(packed, "wb") as dst:
+        _sh.copyfileobj(src, dst)
+    plain.unlink()
+
+    assert db_generation(packed) == (900, 0)           # counted without unpacking by hand
+
+    target = tmp_path / "data" / "newsflow.db"         # nothing came back from the cache
+    assert main(["pick-db", "--candidate", str(packed), "--target", str(target)]) == 0
+    assert db_generation(target)[0] == 900             # and it is a usable plain database
+    assert target.read_bytes()[:15] == b"SQLite format 3"
+
+    # a corrupt archive must lose rather than crash
+    bad = tmp_path / "bad.db.gz"
+    bad.write_bytes(b"not gzip at all")
+    assert db_generation(bad) == (-1, -1)
