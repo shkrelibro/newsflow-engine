@@ -45,6 +45,39 @@ domains:
   - moomoo.com
   - marketscreener.com/quote
 
+  # --- Re-daters and churn, added 13 September 2026 -------------------------------------------
+  # These republish a wire story or auto-generate commentary under a fresh timestamp, so a stale
+  # fact arrives looking like news. They were named in the editorial checklist for months and
+  # never encoded here, which is why the tier-A tape kept being led by its own junk. Measured on
+  # the 24 hours to 12:53Z: these domains supplied 96 of 488 name-bearing clusters, 20%.
+  # Screened items are still stored and counted; they are simply not published.
+  - ad-hoc-news.de          # 25 clusters, the largest single source in the tier-A book
+  - boerse-global.de
+  - boerse-express.com      # note .com, not .de
+  - boerse-express.de
+  - finanztrends.de
+  - news.inbox.eu           # every airBaltic row it carried was a re-date
+  - tipranks.com
+  - marketbeat.com          # 14
+  - themarketsdaily.com
+  - tickerreport.com
+  - dailypolitical.com
+  - kalkinemedia.com
+  - etfdailynews.com
+  - wkrb13.com
+  - modernreaders.com
+
+  # --- Product listings and shopping copy ------------------------------------------------------
+  # Consumer-brand comps (Nike, Adidas, Skechers, Boots, Dyson) attract retail listing pages that
+  # carry the brand in the title and nothing else. 40 clusters from one domain in a day.
+  - fuelcarmagazine.com     # 40, the single largest domain in the whole name-bearing book
+  - highsnobiety.com
+  - hypebeast.com
+  - shopping.yahoo.com
+  - gofeminin.de
+  - thetraveler.org
+  - joyn.de
+
 title_patterns:
   - "^Erste Schätzungen"
   - "Aktie: Quartalszahlen am"
@@ -67,3 +100,17 @@ title_patterns:
   - "nepincasso"
   - "oplichters"
   - "Betrügerische Inkassoschreiben"
+
+  # --- Retail promotion and listing headlines, added 13 September 2026 -------------------------
+  # MediaMarkt and Saturn generate deal-of-the-day copy daily; it carries Ceconomy's brands and
+  # is never a credit event.
+  - "on sale for"
+  - "discount code"
+  - "promo code"
+  - "coupon"
+  - "Best Shoes For"
+  - "^Top .*-Deal"
+  - "Angebot sticht heraus"
+  - "coolen Angebote"
+  - "mahlt den Preis"
+  - "statt [0-9]+ Euro"
