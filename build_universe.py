@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Generate config/names/*.yaml from the curated universe tables below.
 
-Source of truth: Lars's coverage sheet (July 2026 v2.0), 56 tier-A names (column A)
+Source of truth: the desk coverage sheet (July 2026 v2.0), 56 tier-A names (column A)
 with comps. Footprints, aliases and context rules drafted by Claude on 23 Aug 2026;
-entries marked CONFIRM in notes need Lars's review. Re-running overwrites generated
+entries marked CONFIRM in notes need desk review. Re-running overwrites generated
 files; intrum.yaml is hand-maintained and never touched.
 
 Usage: python scripts/build_universe.py [--check]
@@ -418,13 +418,13 @@ A: dict[str, dict] = {
    markets=["IT:it"],
    aliases=[("Rekeep", dict(search=True, inflect=True)), ("Manutencoop", dict(search=True, search_every=8))],
    comps_raw=["Elior", "Sodexo S.A.", "ISS A/S", "Compass Group plc"],
-   notes="Added 2 Sep 2026 per Lars (core name). Ex Manutencoop Facility Management, Bologna; FM + healthcare/laundry; 2026 notes refinanced Feb 2025. CONFIRM footprint (Poland, Turkey)."),
+   notes="Added 2 Sep 2026 per the desk (core name). Ex Manutencoop Facility Management, Bologna; FM + healthcare/laundry; 2026 notes refinanced Feb 2025. CONFIRM footprint (Poland, Turkey)."),
 
  "keepmoat": dict(name="Keepmoat", ticker="KEEPMO", home="GB", sector="housebuilding",
    markets=["GB:en"],
    aliases=[("Keepmoat", dict(search=True, inflect=True))],
    comps_raw=["Vistry Group plc", "Persimmon plc", "Barratt Redrow plc", "Taylor Wimpey plc", "Bellway plc"],
-   notes="Added 2 Sep 2026 per Lars (core name). Aermont-owned partnership housebuilder, Doncaster; CEO Ian Hoad since Jul 2025; FY to 31 Oct."),
+   notes="Added 2 Sep 2026 per the desk (core name). Aermont-owned partnership housebuilder, Doncaster; CEO Ian Hoad since Jul 2025; FY to 31 Oct."),
 
  "demire": dict(name="DEMIRE", ticker="DEMIRE", home="DE", sector="real_estate",
    markets=["DE:de"],
@@ -432,13 +432,13 @@ A: dict[str, dict] = {
             ("Deutsche Mittelstand Real Estate", dict(weight=0.8)),
             ("Fair Value REIT", dict(weight=0.6, require_context=["DEMIRE", "Immobilie", "Büro", "Verkauf", "office"]))],
    comps_raw=["Branicks Group AG", "Aroundtown SA", "Hamborner REIT AG", "Vonovia"],
-   notes="Added 2 Sep 2026 per Lars (core name). Frankfurt office landlord; 2019/2027 bond restructured 2024; running portfolio sales via GlobeNewswire/EQS."),
+   notes="Added 2 Sep 2026 per the desk (core name). Frankfurt office landlord; 2019/2027 bond restructured 2024; running portfolio sales via GlobeNewswire/EQS."),
 
  "synlab": dict(name="SYNLAB", ticker="SYNLAB", home="DE", sector="labs",
    markets=["DE:de", "FR:fr", "IT:it", "ES:es", "CH:de", "BE:fr", "BE:nl"],
    aliases=[("SYNLAB", dict(search=True, inflect=True))],
    comps_raw=["Biogroup", "Cerba HealthCare", "Eurofins Scientific SE", "Unilabs Group", "Sonic Healthcare Limited"],
-   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). Cinven take-private 2024."),
+   notes="Promoted from comp to tier-A 2 Sep 2026 per the desk (core name). Cinven take-private 2024."),
 
  "sudzucker": dict(name="Südzucker", ticker="SZUGR", home="DE", sector="sugar",
    markets=["DE:de", "AT:de", "PL:pl", "FR:fr", "BE:nl", "BE:fr"],
@@ -448,7 +448,7 @@ A: dict[str, dict] = {
             ("CropEnergies", dict(weight=0.6)),
             ("AGRANA", dict(weight=0.6, require_context=["Südzucker", "Zucker", "sugar", "Fruchtzubereitung"]))],
    comps_raw=["Tereos", "Nordzucker AG", "Cristal Union SCA", "AB Foods", "British Sugar plc"],
-   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). FY ends Feb; quarterlies Jul/Oct/Jan."),
+   notes="Promoted from comp to tier-A 2 Sep 2026 per the desk (core name). FY ends Feb; quarterlies Jul/Oct/Jan."),
 
  "lowell": dict(name="Lowell (Garfunkelux)", ticker="GARFUN", home="GB", sector="debt_purchase",
    markets=["GB:en", "DE:de", "SE:sv", "DK:da", "NO:nb", "FI:fi"],
@@ -460,21 +460,21 @@ A: dict[str, dict] = {
             "Lowell, Massachusetts", "Lowell High School", "Lowell General Hospital", "Lowell police"],
    sites=["lowell.com", "tisegroup.com", "globenewswire.com"],
    comps_raw=["Intrum AB", "Arrow Global", "Hoist Finance", "PRA Group, Inc.", "Encore Capital Group, Inc."],
-   notes="Promoted from comp to tier-A 2 Sep 2026 per Lars (core name). UK/DACH/Nordics; Garfunkelux Holdco bonds (investor site lowell.com)."),
+   notes="Promoted from comp to tier-A 2 Sep 2026 per the desk (core name). UK/DACH/Nordics; Garfunkelux Holdco bonds (investor site lowell.com)."),
 
 
- # --- added 2 Sep 2026 (evening), Lars: "more names to include: no focus names but names within my universe" ---
+ # --- added 2 Sep 2026 (evening), desk note: "more names to include: no focus names but names within my universe" ---
  "quick": dict(name="Quick (France)", ticker="QUICKF", home="FR", sector="restaurants",
    markets=["FR:fr"],
    aliases=[("Quick", dict(search=True, require_context=["restaurant", "burger", "fast-food", "fast food", "franchise", "HIG", "enseigne", "Quick France", "restauration rapide"]))],
    comps_raw=["Groupe Bertrand", "McDonalds France", "AmRest Holdings SE"],
-   notes="Added 2 Sep 2026 per Lars. French Quick network owned by HIG Capital since Aug 2021 (107 restaurants); Burger King France sits under Groupe Bertrand; Quick Belgium/Lux is QSRP (separate). Generic word — context-guarded."),
+   notes="Added 2 Sep 2026 per the desk. French Quick network owned by HIG Capital since Aug 2021 (107 restaurants); Burger King France sits under Groupe Bertrand; Quick Belgium/Lux is QSRP (separate). Generic word — context-guarded."),
 
  "boots": dict(name="Boots UK", ticker="BOOTS", home="GB", sector="pharmacy_retail",
    markets=["GB:en", "IE:en"],
    aliases=[("Boots", dict(search=True, require_context=["pharmacy", "chemist", "Walgreens", "Boots UK", "Nottingham", "retailer", "Advantage Card", "No7", "stores", "health and beauty", "Sycamore", "Baldock"]))],
    comps_raw=["Superdrug", "Walgreens Boots Alliance"],
-   notes="Added 2 Sep 2026 per Lars. Generic word (footwear) — context-guarded. Walgreens (Sycamore-owned since 2025); Alex Baldock (ex-Currys) named CEO 2 Sep 2026."),
+   notes="Added 2 Sep 2026 per the desk. Generic word (footwear) — context-guarded. Walgreens (Sycamore-owned since 2025); Alex Baldock (ex-Currys) named CEO 2 Sep 2026."),
 
  "coop": dict(name="Co-op (Co-operative Group)", ticker="COOPUK", home="GB", sector="food_retail",
    markets=["GB:en"],
@@ -482,7 +482,7 @@ A: dict[str, dict] = {
             ("Co-op Group", dict(search=True, search_every=4)),
             ("Co-op", dict(weight=0.6, require_context=["supermarket", "food", "grocery", "Manchester", "convenience", "members", "stores", "retail", "funeralcare", "cyber"]))],
    comps_raw=["Tesco plc", "Sainsbury's", "Morrisons", "Asda", "Iceland Foods"],
-   notes="Added 2 Sep 2026 per Lars (UK food retail). Generic 'co-op' — the bare alias is context-guarded."),
+   notes="Added 2 Sep 2026 per the desk (UK food retail). Generic 'co-op' — the bare alias is context-guarded."),
 
  "loxam": dict(name="Loxam", ticker="LOXAM", home="FR", sector="equipment_rental",
    markets=["FR:fr", "IE:en", "SE:sv", "FI:fi", "NO:nb", "DK:da", "ES:es", "BR:pt"],
@@ -491,14 +491,14 @@ A: dict[str, dict] = {
             ("Nationwide Platforms", dict(weight=0.7)),
             ("Hune", dict(weight=0.5, langs=["es"], require_context=["alquiler", "maquinaria", "Loxam", "plataformas"]))],
    comps_raw=["Kiloutou", "Boels Rental", "Ashtead Group", "United Rentals"],
-   notes="Added 2 Sep 2026 per Lars. Ramirent (Nordics/CEE), Nationwide Platforms (UK), Hune (ES), Degraus (BR). CONFIRM footprint."),
+   notes="Added 2 Sep 2026 per the desk. Ramirent (Nordics/CEE), Nationwide Platforms (UK), Hune (ES), Degraus (BR). CONFIRM footprint."),
 
  "kiloutou": dict(name="Kiloutou", ticker="KILOUT", home="FR", sector="equipment_rental",
    markets=["FR:fr", "DE:de", "IT:it", "ES:es", "PL:pl", "DK:da"],
    aliases=[("Kiloutou", dict(search=True, inflect=True)),
             ("GSV Materieludlejning", dict(weight=0.7))],
    comps_raw=["Loxam", "Boels Rental", "Ashtead Group"],
-   notes="Added 2 Sep 2026 per Lars. GSV (DK) acquired 2022; Germany, Italy, Spain, Poland. CONFIRM footprint."),
+   notes="Added 2 Sep 2026 per the desk. GSV (DK) acquired 2022; Germany, Italy, Spain, Poland. CONFIRM footprint."),
 
  "boels": dict(name="Boels Rental", ticker="BOELS", home="NL", sector="equipment_rental",
    markets=["NL:nl", "BE:nl", "DE:de", "AT:de", "SE:sv", "FI:fi", "NO:nb", "DK:da", "PL:pl", "CZ:cs"],
@@ -507,7 +507,7 @@ A: dict[str, dict] = {
             ("Boels Topholding", dict(search=True, search_every=2, weight=0.9))],
    sites=["boels.com", "globenewswire.com"],
    comps_raw=["Loxam", "Kiloutou", "Ashtead Group", "United Rentals"],
-   notes="Added 2 Sep 2026 per Lars (typed 'boelst' — assumed Boels). Cramo (Nordics) acquired 2020. New bond in market 2 Sep 2026 (GlobeNewswire stabilisation notice). Surname collision — context-guarded."),
+   notes="Added 2 Sep 2026 per the desk (typed 'boelst' — assumed Boels). Cramo (Nordics) acquired 2020. New bond in market 2 Sep 2026 (GlobeNewswire stabilisation notice). Surname collision — context-guarded."),
 
  "tmicc": dict(name="The Magnum Ice Cream Company", ticker="MICC", home="NL", sector="food",
    markets=["NL:nl", "US:en", "DE:de", "IT:it"],
@@ -515,31 +515,31 @@ A: dict[str, dict] = {
             ("TMICC", dict(search=True, search_every=2)),
             ("Magnum", dict(weight=0.5, require_context=["ice cream", "ijs", "Eis", "gelato", "Unilever", "Ben & Jerry", "Wall's", "TMICC", "Cornetto", "Euronext", "MICC"]))],
    comps_raw=["Froneri", "Unilever"],
-   notes="Added 2 Sep 2026 per Lars ('ice cream'). Unilever ice-cream demerger, listed Euronext Amsterdam (MICC) Dec 2025; SEC 6-K filer. 'Magnum' is generic — context-guarded."),
+   notes="Added 2 Sep 2026 per the desk ('ice cream'). Unilever ice-cream demerger, listed Euronext Amsterdam (MICC) Dec 2025; SEC 6-K filer. 'Magnum' is generic — context-guarded."),
 
  "froneri": dict(name="Froneri", ticker="FRONER", home="GB", sector="food",
    markets=["GB:en", "DE:de", "FR:fr", "IT:it", "ES:es"],
    aliases=[("Froneri", dict(search=True, inflect=True)), ("R&R Ice Cream", dict(weight=0.7))],
    comps_raw=["The Magnum Ice Cream Company", "Unilever"],
-   notes="Added 2 Sep 2026 per Lars. Nestlé/PAI ice-cream JV, Northallerton; leveraged loans. CONFIRM footprint."),
+   notes="Added 2 Sep 2026 per the desk. Nestlé/PAI ice-cream JV, Northallerton; leveraged loans. CONFIRM footprint."),
 
  "goldengoose": dict(name="Golden Goose", ticker="GGOOSE", home="IT", sector="fashion",
    markets=["IT:it", "US:en", "FR:fr"],
    aliases=[("Golden Goose", dict(search=True, require_context=["sneaker", "sneakers", "Deluxe Brand", "Permira", "luxury", "brand", "Venezia", "Venice", "Marchiori", "IPO", "fashion", "scarpe", "moda", "bond", "Blue Pool"]))],
    comps_raw=["Skechers", "Birkenstock", "Dr. Martens", "On Holding"],
-   notes="Added 2 Sep 2026 per Lars. Permira-owned; idiom collision ('the golden goose') — context-guarded."),
+   notes="Added 2 Sep 2026 per the desk. Permira-owned; idiom collision ('the golden goose') — context-guarded."),
 
  "manuchar": dict(name="Manuchar", ticker="MANUCH", home="BE", sector="chemicals_distribution",
    markets=["BE:nl", "BE:fr", "ES:es", "BR:pt"],
    aliases=[("Manuchar", dict(search=True, inflect=True))],
    comps_raw=["Brenntag", "Azelis", "IMCD", "Univar Solutions"],
-   notes="Added 2 Sep 2026 per Lars. Antwerp chemicals distributor, LatAm/Africa/Asia heavy. CONFIRM footprint."),
+   notes="Added 2 Sep 2026 per the desk. Antwerp chemicals distributor, LatAm/Africa/Asia heavy. CONFIRM footprint."),
 
  "skechers": dict(name="Skechers", ticker="SKX", home="US", sector="footwear",
    markets=["US:en"],
    aliases=[("Skechers", dict(search=True, inflect=True))],
    comps_raw=["Golden Goose", "Nike", "Adidas", "Puma", "Crocs", "Deckers"],
-   notes="Added 2 Sep 2026 per Lars (typed 'sketchers'). Taken private by 3G Capital Sep 2025 with $6bn+ LBO debt."),
+   notes="Added 2 Sep 2026 per the desk (typed 'sketchers'). Taken private by 3G Capital Sep 2025 with $6bn+ LBO debt."),
 
 }
 
