@@ -29,5 +29,9 @@ comps: [eurofins, synlab, sonic, labcorp, quest, cerba, inovie, unilabs, quirons
 sources:
   feeds: []
   pages:
-    - {url: "https://invest.biogroup.fr/", name: "Biogroup investor relations", tier: 0, country: FR, lang: fr, require_alias: false}
-    - {url: "https://biogroup.fr/", name: "Biogroup corporate", tier: 0, country: FR, lang: fr, require_alias: true}
+    # The investor site publishes each release as a dated PDF under wp-content/uploads. Without a
+    # link pattern these two watchers scraped the site navigation instead and produced ten rows a
+    # day of "Biogroup Ile-de-France", "Biogroup Loire Ardeche" and the rest of the regional menu.
+    # The corporate site biogroup.fr has no newsroom at all and is dropped for that reason.
+    - {url: "https://invest.biogroup.fr/news/", name: "Biogroup investor news", tier: 0, country: FR, lang: en, require_alias: false, link_pattern: "wp-content/uploads/\\d{4}/\\d{2}/.+"}
+    - {url: "https://invest.biogroup.fr/", name: "Biogroup investor relations", tier: 0, country: FR, lang: en, require_alias: false, link_pattern: "wp-content/uploads/\\d{4}/\\d{2}/.+"}
