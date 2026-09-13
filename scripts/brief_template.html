@@ -103,6 +103,9 @@ h3.grp:first-of-type{margin-top:16px}
   width:2.6em;text-align:right;padding-right:14px}
 .drops td.c{color:var(--muted)}
 .drops td.name{font-weight:500;white-space:nowrap}
+.drops td.g-ok{color:var(--ok);font-family:var(--sans);font-size:12px;white-space:nowrap}
+.drops td.g-flag{color:var(--flag);font-family:var(--sans);font-size:12px;font-weight:600;white-space:nowrap}
+.drops td.g-faint{color:var(--faint);font-family:var(--sans);font-size:12px;white-space:nowrap}
 .scroll{overflow-x:auto}
 
 /* reconciliation */
@@ -215,6 +218,20 @@ all</b>, on {c_ok} successful queries out of {c_jobs} attempted.</p>
   {all_jobs} attempted, <b>{unswept} names with no successful query at all</b> ({unswept_names}),
   {q_starved} starved and {q_noq} with no queries configured. That is the completeness claim, and it is the only
   one this page makes: every name was asked, and the silences below were measured rather than assumed.</p>
+</div>
+
+<h2>Accountability <span>{g_hits} caught · {g_misses} missed · {g_pending} pending of {g_events}</span></h2>
+<p class="method" style="margin-top:14px">Every other number on this page says what the machine did. This one says
+whether it caught what is <b>known</b> to have happened. <code>config/golden.yaml</code> lists real events with
+the day they broke; after every run the store is checked for each. A miss here is the most useful thing this
+system produces: it names a hole in coverage with a real example. <b>{g_new} unexplained misses.</b></p>
+<div class="scroll">
+<table class="drops">
+  <thead><tr><th>Result</th><th>Credit</th><th>Event</th></tr></thead>
+  <tbody>
+{g_rows}
+  </tbody>
+</table>
 </div>
 
 <h2>Reconciliation <span>arithmetic is exact</span></h2>

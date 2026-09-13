@@ -360,7 +360,7 @@ def item_html(r: dict, j: dict, lead: bool) -> str:
             f'{body}</li>')
 
 
-def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float = 3.0) -> str:
+def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float = 3.0, golden: dict | None = None) -> str:
     rows = collect(latest)
     P = partition(rows)
     Q = quiet_block(coverage)
@@ -436,7 +436,25 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
     quietly = " · ".join(f'{e(v["name"])} ({v.get("ok_24h", 0)}q)'
                          for v in Q["quiet"] if v.get("mentions_total"))
 
+    G = golden or {"events": 0, "results": []}
+    g_rows = []
+    for r in G.get("results", []):
+        if r.get("pending"):
+            state, cls = "pending", "faint"
+        elif r.get("hit") and r.get("expect") == "miss":
+            state, cls = f'HIT, hole closed, {r.get("latency_hours")}h', "ok"
+        elif r.get("hit"):
+            state, cls = f'hit in {r.get("latency_hours")}h via {e(r.get("route") or "")}', "ok"
+        elif r.get("expect") == "miss":
+            state, cls = "miss, known hole", "faint"
+        else:
+            state, cls = "MISS", "flag"
+        g_rows.append(f'<tr><td class="g-{cls}">{e(state)}</td><td class="name">{e(r.get("name"))}</td>'
+                      f'<td class="c">{e(r.get("note") or r.get("id"))}</td></tr>')
     fields = dict(
+        g_events=G.get("events", 0), g_hits=G.get("hits", 0), g_misses=G.get("misses", 0),
+        g_new=G.get("new_misses", 0), g_pending=G.get("pending", 0),
+        g_rows="\n".join(g_rows) or '<tr><td colspan="3" class="c">No golden set configured.</td></tr>',
         cut=e(cut), date=e(datetime.now(timezone.utc).strftime("%A %-d %B %Y")),
         tier_a=Q["total"], comps=st.get("runs") and (303 - Q["total"]) or 0,
         stamp=e(stamp[11:16]), run=f'{st.get("runs", 0):,}',
@@ -525,6 +543,8 @@ def main() -> int:
     docs = Path(a.docs)
     latest = json.loads((docs / "latest.json").read_text(encoding="utf-8"))
     coverage = json.loads((docs / "coverage.json").read_text(encoding="utf-8"))
+    gpath = docs / "golden.json"
+    golden = json.loads(gpath.read_text(encoding="utf-8")) if gpath.exists() else {"events": 0, "results": []}
 
     if a.shortlist:
         P = partition(collect(latest))
@@ -564,7 +584,7 @@ def main() -> int:
         sys.exit("scripts/brief_template.html is missing; the layout lives there")
     j = json.loads(Path(a.judgement).read_text(encoding="utf-8")) if a.judgement else {}
     cut = a.cut or datetime.now(timezone.utc).strftime("%H:%M UTC")
-    Path(a.out).write_text(render(latest, coverage, j, cut, a.since_hours), encoding="utf-8")
+    Path(a.out).write_text(render(latest, coverage, j, cut, a.since_hours, golden), encoding="utf-8")
     print(f"wrote {a.out}")
     return 0
 
