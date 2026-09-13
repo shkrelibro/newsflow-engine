@@ -54,6 +54,7 @@ brief says a source is failing.
 | Too much noise for a name | Add domains or title patterns under `noise:` in that name's yaml; they are still stored, just screened. |
 | A story was missed | Find where it was published; add the outlet to `outlets.yaml` (feed) and/or `site_queries`, or add the alias that was used. Commit. That is the whole feedback loop. |
 | Database lost (cache evicted) | The engine re-creates it; the daily git backup `data/newsflow.db` can be restored by copying it back. Page watchers re-seed silently. |
+| Run fails with `REFUSED: the database has N runs but the last published export recorded M` | The state carried between runs came back from an older copy, so the engine would re-publish stories it has already reported. It stopped rather than do that. First check whether a newer copy exists: the workflow's `Use the newer of the cache and the committed backup` step prints the run count of both. If neither is current the state is genuinely gone, so re-run from the Actions tab with **allow_state_reset** ticked; expect one cycle of repeats within the lookback window, and nothing older. |
 
 ## Adding a name
 
