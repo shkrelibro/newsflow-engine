@@ -314,9 +314,18 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
             order.append(label)
         bucket[label].append(r)
     groups = [(label, bucket[label]) for label in order]
-    carried = [r for r in P["A_rows"] if r["id"] not in lead_set and
-               (r["cats"] or r["sources"] > 1 or (j.get("so") or {}).get(str(r["id"])))]
-    comp_carried = [r for r in P["C_rows"] if r["cats"]][:8]
+    # Publication is editorial, never automatic. These two lines used to carry anything with an
+    # engine category or more than one source, and on 13 September that published a village
+    # carnival procession in Colyton as Carnival Corporation M&A, a Lidl vacuum-cleaner promotion
+    # as Dyson M&A, an Adidas dirndl review as litigation, and American college football as Quick.
+    #
+    # Two separate things were wrong. The keyword detector mislabels, so an engine category is not
+    # evidence of relevance. And corroboration is not relevance either: two outlets running the
+    # same sneaker discount is two outlets running a sneaker discount. Nothing reaches the page
+    # now unless the judgement pass explicitly wrote a line about it.
+    said = j.get("so") or {}
+    carried = [r for r in P["A_rows"] if r["id"] not in lead_set and said.get(str(r["id"]))]
+    comp_carried = [r for r in P["C_rows"] if said.get(str(r["id"]))]
     published = len(lead) + len(carried)
     review_dropped = P["A_clean"] - published
 
