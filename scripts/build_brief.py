@@ -120,6 +120,79 @@ def url_year(url: str) -> int | None:
     years = [int(m.group(1)) for m in _URL_YEAR.finditer(path) if 1990 <= int(m.group(1)) <= 2100]
     return min(years) if years else None
 
+
+# ---------------------------------------------------------------------------------------------
+# Deterministic disqualifiers. These run BEFORE the judgement pass sees anything, because a model
+# asked "is this relevant" will find a reason, and on 13 September it found one for a village
+# carnival procession. What a model cannot publish is what it was never shown.
+#
+# High precision on purpose. Every pattern below describes a class that is never a credit event in
+# any language, and each one is anchored so it cannot fire on the vocabulary of a real story: not
+# "deal", which appears in deal concessions, but "Deal bei" and "statt N Euro"; not "restaurant",
+# which is the context guard for Quick, but a restaurant review. Anything ambiguous is left in and
+# handled by judgement, because a false drop is invisible and a false publish is merely ugly.
+DISQUALIFY = [
+    # sport
+    r"\b(?:football|volleyball|basketball|baseball|touchdown|quarterback|playoffs?|Vuelta|"
+    r"peloton|cyclisme|maillot|étape\s+\d|Bundesliga|Serie\s?A|Ligue\s?1|Eredivisie|"
+    r"match\s+(?:report|preview)|takeaways?\s+from|season\s+opener|hockey|O1[68]\b)",
+    r"\b(?:beat|defeats?|loss\s+to|win\s+over|vs\.?)\s+(?:No\.\s?\d+|the\s+\w+s\b)",
+    # price and promotion
+    r"(?:statt|invece\s+di|au\s+lieu\s+de)\s+[\d.,]+\s*(?:Euro|€)",
+    r"\b(?:on\s+sale\s+for|now\s+only|save\s+\d+%|\d+%\s+off|discount\s+code|promo\s+code|"
+    r"coupon|best\s+(?:shoes|deals?)\s+for|Angebot\s+sticht|Schn[aä]ppchen|Rabatt(?:code|aktion)|"
+    r"Deal\s+bei|beste\s+Angebote|sconto\s+del)",
+    r"\b(?:sneakers?|wellies|wellingtons?|rain\s+boots|hiking\s+boots|dirndl)\b",
+    # A price on a consumer item, which is not a credit amount. "für 70 Euro" is a vacuum cleaner;
+    # "für 500 Millionen Euro" is a bond, and the scale word is what keeps them apart.
+    r"(?:f[üu]r|ab|nur)\s+[\d.,]+\s*(?:Euro|€|EUR)\b(?!\s*(?:Mio|Mrd|Millionen|Milliarden))",
+    # Civic and village events. Carnival, Action and Quick are ordinary nouns before they are
+    # credits, and a procession through Colyton reached a published brief as Carnival M&A.
+    r"\b(?:carnival\s+procession|procession|parade|village\s+(?:fete|fair)|town\s+streets|"
+    r"Dorffest|kermesse|f[êe]te\s+du\s+village)\b",
+    # lifestyle, travel, listings
+    r"\b(?:recipe|Rezept|horoscope|Traueranzeige|obituary|Wettervorhersage|"
+    r"river\s+cruise|all-inclusive|Reisetipps?|holiday\s+deals?)\b",
+    r"\b(?:Kursziel|Chartanalyse|Technische\s+Analyse|share\s+price\s+(?:today|forecast)|"
+    r"stock\s+(?:passes|crosses)\s+(?:above|below)|moving\s+average|Trading-Empfehlung)",
+]
+_DISQUALIFY = [re.compile(p, re.IGNORECASE | re.UNICODE) for p in DISQUALIFY]
+
+
+def disqualified(title: str) -> str:
+    """The pattern that rules this headline out, or "" if none does."""
+    for pat in _DISQUALIFY:
+        m = pat.search(title or "")
+        if m:
+            return m.group(0)[:40]
+    return ""
+
+
+# A headline that names money, a percentage, a rating or a credit event is a headline worth a
+# human's attention. This does not drop anything; it tells the judgement pass which rows carry a
+# hard signal and which are being offered on the strength of the name alone, so that publishing a
+# signal-free row is a decision rather than an oversight.
+CREDIT_SIGNAL = re.compile(
+    r"(?:[€$£]\s?[\d.,]+\s*(?:bn|m|mrd|mio|milliard|miliard|millones|milioni|billion|million)?"
+    r"|[\d.,]+\s*(?:milliard|miliard|millones|milioni|Milliarden|Millionen|bn|mrd)"
+    r"|\b\d+(?:[.,]\d+)?\s?%"
+    r"|\b(?:bond|notes|anleihe|obligation|obligaci|obbligazion|obligācij|obligacij"
+    r"|refinanc|refinanz|maturit|covenant|leverage|verschuldung|indebtement|dette|debito|deuda|debt"
+    r"|rating|downgrade|upgrade|herabgestuft|Moody|Fitch|S&P|outlook"
+    r"|restructur|restrukturier|insolven|administration|chapter\s?11|CVA|scheme\s+of\s+arrangement"
+    r"|takeover|take-private|acquisition|acquisiti|übernahme|rachat|adquisici|merger|disposal|divest"
+    r"|guidance|profit\s+warning|Gewinnwarnung|EBITDA|results|Quartalszahlen|résultats|risultati"
+    r"|CEO|CFO|chief\s+executive|chief\s+financial|Vorstandsvorsitz|Finanzvorstand"
+    r"|regulator|antitrust|Kartell|Commission|lawsuit|court|tribunal|Gericht|fine[ds]?\b"
+    r"|strike|Streik|grève|layoffs?|redundanc|Stellenabbau|atleis)\b)",
+    re.IGNORECASE | re.UNICODE)
+
+
+def credit_signal(title: str) -> str:
+    m = CREDIT_SIGNAL.search(title or "")
+    return m.group(0)[:32] if m else ""
+
+
 def junky(domain: str) -> bool:
     return any(j in (domain or "") for j in JUNK_DOMAINS)
 
@@ -182,8 +255,20 @@ def partition(rows: list[dict]) -> dict:
         out[f"{key}_inherited"] = sum(1 for r in pool if r["where"] == "none")
         clean = [r for r in bearing if not junky(r["domain"])]
         out[f"{key}_junk"] = len(bearing) - len(clean)
-        out[f"{key}_clean"] = len(clean)
-        out[f"{key}_rows"] = sorted(clean, key=rank)
+        # Classes that are never a credit event are removed here, before anything is offered for
+        # judgement. The reason is kept on the row so the drop table can name it.
+        kept = []
+        for r in clean:
+            why = disqualified(r["title"])
+            if why:
+                r["disqualified"] = why
+            else:
+                r["signal"] = credit_signal(r["title"])
+                kept.append(r)
+        out[f"{key}_disqualified"] = len(clean) - len(kept)
+        out[f"{key}_dq_rows"] = [r for r in clean if r.get("disqualified")]
+        out[f"{key}_clean"] = len(kept)
+        out[f"{key}_rows"] = sorted(kept, key=rank)
     return out
 
 
@@ -462,10 +547,13 @@ def main() -> int:
             print(f"resolved links; dropped {len(dropped)} re-dated", file=sys.stderr)
         json.dump({"tier_a": [{k: r[k] for k in
                                ("id", "name", "title", "source", "domain", "country", "lang",
-                                "cats", "sources", "seen", "url")} for r in P["A_rows"]],
-                   "comps": [{k: r[k] for k in
-                              ("id", "name", "title", "source", "cats", "sources")}
-                             for r in P["C_rows"] if r["cats"]],
+                                "cats", "sources", "seen", "url", "signal")} for r in P["A_rows"]],
+                   "comps": [{k: r.get(k) for k in
+                              ("id", "name", "title", "source", "cats", "sources", "signal")}
+                             for r in P["C_rows"]],
+                   "disqualified": [{"name": r["name"], "title": r["title"],
+                                     "reason": r["disqualified"]}
+                                    for r in P["A_dq_rows"] + P["C_dq_rows"]],
                    "redated": P.get("redated", []),
                    "counts": {k: v for k, v in P.items()
                               if not k.endswith("_rows") and k != "redated"}},
