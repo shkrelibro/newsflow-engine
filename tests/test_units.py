@@ -719,3 +719,87 @@ def test_real_credit_headlines_survive_the_disqualifier():
     assert bb.credit_signal("Cheplapharm platziert Anleihe über 950 Millionen Euro")
     assert bb.credit_signal("CVC faces shareholder revolt over €10.7bn Recordati take-private")
     assert not bb.credit_signal("CMA CGM lance l’extension de son terminal de Beyrouth")
+
+
+def test_rate_limiter_refuses_to_wait_past_the_deadline():
+    """A host on a long penalty must not carry an in-flight job past the run's budget."""
+    import time
+
+    import pytest
+
+    from newsflow.http import BudgetExceeded, RateLimiter
+
+    rl = RateLimiter(default_seconds=1.0, max_penalty_seconds=60.0)
+    rl.penalise("slow", 60.0)
+    rl.wait("slow")                              # first request: no wait, slot claimed
+    deadline = time.monotonic() + 5.0            # the run ends in 5s; the next slot is 61s away
+    t0 = time.monotonic()
+    with pytest.raises(BudgetExceeded):
+        rl.wait("slow", deadline)
+    assert time.monotonic() - t0 < 0.5           # it refused, it did not sleep
+    # and the refused call did not move the host's next slot
+    assert rl._last["slow"] <= t0 + 0.5
+    # without a deadline the same call would still queue (not executed: it would sleep 60s)
+    # a host with a free slot is unaffected by the deadline
+    rl.wait("fresh", deadline)
+
+
+def test_http_get_stops_retrying_and_caps_retry_after_once_the_budget_is_gone(monkeypatch):
+    """Three refusals used to cost three full waits even after the budget had run out, and a
+    Retry-After of an hour used to be slept in full. Both are what pushed runs past GitHub's
+    20 minute job limit, which cancels the job with no exports and no alert."""
+    import time
+
+    import httpx
+    import pytest
+
+    from newsflow.http import BudgetExceeded, Http, RateLimiter
+
+    calls = {"n": 0}
+
+    def handler(request):
+        calls["n"] += 1
+        return httpx.Response(429, headers={"Retry-After": "3600"})
+
+    h = Http("test-agent", limiter=RateLimiter(default_seconds=0.0, max_penalty_seconds=60.0), retries=2)
+    h._client = httpx.Client(transport=httpx.MockTransport(handler))
+    naps: list[float] = []
+    monkeypatch.setattr(time, "sleep", lambda s: None)                 # the limiter's own spacing
+    monkeypatch.setattr(Http, "_nap", lambda self, s: naps.append(s))  # the between-attempt sleep
+
+    # no deadline: retries happen, but the hour-long hint is capped at the penalty ceiling
+    with pytest.raises(Exception) as excinfo:
+        h.get("https://api.example.test/x")
+    assert not isinstance(excinfo.value, BudgetExceeded)
+    assert calls["n"] == 3 and naps == [60.0, 60.0, 60.0]
+
+    # deadline already passed: the first wait refuses, nothing is sent, nothing is slept
+    calls["n"] = 0
+    naps.clear()
+    h.deadline = time.monotonic() - 1.0
+    with pytest.raises(BudgetExceeded):
+        h.get("https://api.example.test/x")
+    assert calls["n"] == 0 and naps == []
+
+
+def test_run_counts_a_budget_abort_as_skipped_not_as_an_error(cfg, tmp_path):
+    """A job that was in flight when the budget ran out is a skip (it runs next cycle), and
+    must not be reported as a failing source."""
+    from newsflow import pipeline as pl
+    from newsflow.http import BudgetExceeded
+    from newsflow.store import Store
+
+    store = Store(cfg.db_path)
+
+    def aborted():
+        raise BudgetExceeded("run time budget reached while waiting for h")
+
+    def fine():
+        return [], pl.SourceResult("custom", "fine", True, 0, "", 0.0)
+
+    jobs = [pl.JobSpec("a", "custom", aborted), pl.JobSpec("b", "custom", fine)]
+    summary = pl.run_once(cfg, store, jobs=jobs)
+    assert summary.skipped == 1
+    assert summary.errors == 0
+    notes = [r.error for r in summary.source_results]
+    assert "skipped: run time budget reached" in notes
