@@ -10,6 +10,7 @@ from typing import Any
 
 from .config import Config
 from .normalize import is_google_news_link
+from .match import Matcher
 from .store import Store
 
 ROUTE_PRIORITY = {"rss": 0, "page": 1, "googlenews": 2, "bingnews": 3, "gdelt": 4}
@@ -51,15 +52,36 @@ def _primary_sort_key(it: dict[str, Any]):
 
 
 def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) -> dict[str, Any]:
+    """Assemble the candidates pile, re-testing every stored match against the CURRENT config.
+
+    A match is made once, when the item is collected, and then stored. That means a config fix
+    does not reach the published pile until the bad items age out of the window, which is up to
+    24 hours. On 13 September the context guards for Quick, Carnival and the rest merged at
+    lunchtime and the 15:08 brief still carried American college football, a village carnival
+    procession filed as M&A, and an Adidas dirndl review, because those rows were matched in the
+    morning and the export simply re-served them.
+
+    So the guard is applied again here, at export. Collection stays permissive on purpose, the
+    store keeps everything, and a rule change takes effect on the next run instead of the next
+    day. Rows that no longer pass are counted and reported as revalidated rather than deleted.
+    """
     since = now - timedelta(hours=window_hours)
     names_out = []
     all_alerts = []
+    matcher = Matcher.from_config(cfg)
+    revalidated = 0
     for n in cfg.names:
         rows = store.candidates(n.id, since)
         clusters: dict[int, list[dict[str, Any]]] = defaultdict(list)
         screened: list[dict[str, Any]] = []
         for r in rows:
             pub = _item_public(r)
+            if r["status"] != "screened" and not matcher.match(
+                    r["title"] or "", r["summary"] or "", r["lang"] or "", only=[n.id]):
+                revalidated += 1
+                pub["screen_reason"] = "revalidated: no longer matches the current config"
+                screened.append(pub)
+                continue
             if r["status"] == "screened":
                 screened.append(pub)
             else:
@@ -107,6 +129,7 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
     failing = [h for h in health if h["ok_runs"] == 0]
     return {
         "generated_at": now.isoformat(timespec="seconds"),
+        "revalidated_out": revalidated,
         "window_hours": window_hours,
         "names": names_out,
         "alerts": all_alerts,
