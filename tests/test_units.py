@@ -803,3 +803,46 @@ def test_run_counts_a_budget_abort_as_skipped_not_as_an_error(cfg, tmp_path):
     assert summary.errors == 0
     notes = [r.error for r in summary.source_results]
     assert "skipped: run time budget reached" in notes
+
+
+def test_domain_screen_keeps_a_credit_event_that_only_churn_sites_carry():
+    """Branicks, week to 12 September: S&P to SD, bridge notes accepted, bondholders extending
+    to end-2026, and every one of those headlines came from a screened domain, because on a
+    small name in restructuring the churn sites are the coverage. The screen must not decide
+    that; it flags, judgement decides. Share-price chatter from the same sites stays screened,
+    and comps stay screened."""
+    import sys
+    sys.path.insert(0, "scripts")
+    import build_brief as bb
+
+    bb.JUNK_DOMAINS = {"finanztrends.de", "ad-hoc-news.de", "boerse-express.com"}
+
+    def row(i, name, title, domain, cats=(), comp=False):
+        return {"id": i, "nid": name.lower(), "name": name, "comp": comp, "title": title,
+                "source": domain, "domain": domain, "country": "DE", "lang": "de",
+                "url": "https://x/" + str(i), "seen": "2026-09-11T03:19:00+00:00", "published": None,
+                "where": "title", "confidence": 1.0, "cats": list(cats), "sources": 1}
+
+    rows = [
+        row(1, "Branicks", "Branicks Group Aktie: S&P senkt Rating auf SD", "finanztrends.de", ["rating"]),
+        row(2, "Branicks", "Branicks: 6 Millionen Euro Liquidität", "ad-hoc-news.de"),
+        row(3, "Branicks", "Branicks Group Aktie: Anleihe bis Ende 2026 verlängert", "boerse-express.com", ["capital_markets"]),
+        row(4, "TUI Group", "Die TUI-Aktie reagiert nach starken Quartalszahlen und frischer Analystenbewertung", "ad-hoc-news.de"),
+        row(5, "Branicks", "Branicks Group Aktie: 12-Prozent-Sprung auf 0,6220 Euro", "boerse-express.com"),
+        row(6, "Skechers", "Skechers’ Sparkly $80 Sneakers with Memory Foam Are on Sale for $30", "ad-hoc-news.de"),
+        row(7, "Vonovia", "Vonovia Aktie: Anleihe platziert", "finanztrends.de", ["capital_markets"], comp=True),
+        row(8, "Branicks", "Branicks Group: Bridge-Notes-Frist endet", "handelsblatt.com", ["capital_markets"]),
+    ]
+    P = bb.partition(rows)
+    kept = {r["id"]: r for r in P["A_rows"]}
+    assert 1 in kept and kept[1]["redater"] is True          # engine category: through, flagged
+    assert 2 in kept and kept[2]["redater"] is True          # money named, no share chatter: through
+    assert 3 in kept and kept[3]["redater"] is True
+    assert 8 in kept and not kept[8].get("redater")          # clean domain: untouched
+    assert 4 not in kept                                     # share reacted: still screened
+    assert 5 not in kept                                     # price move: still screened
+    assert 6 not in kept                                     # never a credit event
+    assert P["A_redater_kept"] == 3
+    assert P["A_junk"] == 3                                  # rows 4, 5, 6
+    assert P["A_clean"] + P["A_junk"] == P["A_bearing"]      # the reconciliation still balances
+    assert not P["C_rows"] and P["C_junk"] == 1              # comps stay screened
