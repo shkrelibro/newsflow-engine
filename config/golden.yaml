@@ -1,0 +1,79 @@
+# The golden set: real events the engine must have caught. Checked against the store after every
+# run; results go to docs/golden.json and onto the workflow log. A miss is the most useful thing
+# this system can tell you, because it names a hole in coverage with a real example.
+#
+# Maintain it. When you know something happened, add it with the date. Leave a documented miss
+# in place with `expect: miss`; the day it turns into a hit is the day that hole is closed.
+#
+#   id            a short slug
+#   name          the config/names id
+#   date          the day the story broke, UTC
+#   contains      every fragment must appear in one headline, case-insensitive
+#   any_of        alternatively, any one of these fragments (use for multilingual stories)
+#   within_hours  how soon after 00:00Z on `date` it should have been seen (default 24)
+#   expect        hit (default) or miss, for a hole you already know about
+#   note          why it matters
+
+events:
+  # ---- 13 September 2026: the day the editorial layer was rebuilt ----------------------------
+  - id: recordati-cvc-revolt
+    name: rossini
+    date: 2026-09-13
+    contains: ["Recordati"]
+    any_of: ["revolt", "take-private"]
+    within_hours: 8
+    note: FT. Shareholder revolt over the €10.7bn take-private; the day's lead and the keyword net had never flagged it.
+
+  - id: cerba-5bn-standoff
+    name: cerba
+    date: 2026-09-13
+    any_of: ["bras de fer", "5 milliards", "dette"]
+    within_hours: 12
+    note: Les Echos. Biologists at the centre of a standoff over close to €5bn of debt; the sector item of the day.
+
+  - id: hapag-zim-veto
+    name: hapag
+    date: 2026-09-12
+    contains: ["ZIM"]
+    any_of: ["Veto", "Übernahme", "takeover"]
+    within_hours: 24
+    note: Five German outlets. Israeli veto on the ZIM takeover; the only corroborated cluster in the window.
+
+  - id: airbaltic-emergency-cabinet
+    name: airbaltic
+    date: 2026-09-13
+    any_of: ["ārkārtas", "valdības", "emergency cabinet"]
+    within_hours: 12
+    note: TV3.lv. Emergency cabinet session ends without a decision; Latvian, no credit keyword in the headline, so a test of language coverage not lexicon.
+
+  - id: intrum-lithuania-76
+    name: intrum
+    date: 2026-09-12
+    contains: ["76"]
+    any_of: ["atleis", "darbuotoj", "staff", "redundanc"]
+    within_hours: 36
+    note: LRT. 76 redundancies at the Vilnius shared-service centre; Lithuanian.
+
+  - id: sudzucker-beet-harvest
+    name: sudzucker
+    date: 2026-09-13
+    any_of: ["Zuckerrübenernte", "Zuckerrüben", "beet harvest"]
+    within_hours: 12
+    note: Main-Post. Historically poor beet campaign in Südzucker's own plant geography.
+
+  # ---- known holes, kept until they close --------------------------------------------------
+  - id: cheplapharm-950m-notes
+    name: cheplapharm
+    date: 2026-09-01
+    any_of: ["950", "Anleihe", "notes", "6,750", "6.750"]
+    within_hours: 48
+    expect: miss
+    note: €950m 6.750% 2032 notes priced and announced on the company's own press page; this engine has never recorded a single Cheplapharm mention. The newsroom watcher added 13 Sept is the fix being tested.
+
+  # ---- forward tests: known future events, pending until their window closes ----------------
+  - id: biogroup-q2-2026-presentation
+    name: biogroup
+    date: 2026-09-16
+    any_of: ["Q2", "résultats", "results", "semestre", "half-year", "H1"]
+    within_hours: 30
+    note: The investor site lists a Q2 2026 financial presentation for 16 September. First test of the fixed newsroom watcher on a scheduled event. If this misses, the watcher is pointed at the wrong page.
