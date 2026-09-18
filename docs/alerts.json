@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T12:07:27+00:00",
+ "generated_at": "2026-09-18T12:32:53+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -23,7 +23,9 @@
     "alias": "airBaltic",
     "alias_where": "summary",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.dagensps.se/feed"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -657,7 +659,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
+      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
+      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
      ],
      "alert_categories": [
       "restructuring"
@@ -944,7 +947,9 @@
     "alias": "boohoo",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Bianchi Industry\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"boohoo\" OR \"Booking\" OR \"Bosch\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1970,7 +1975,9 @@
      "alias": "Hornbach",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Hornbach\" OR \"KiK\" OR \"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"Motel One\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -2179,6 +2186,104 @@
     "DE"
    ],
    "latest": "2026-09-17T14:20:00+00:00"
+  },
+  {
+   "name_id": "intrum",
+   "name": "Intrum AB",
+   "cluster_id": 42021,
+   "primary": {
+    "id": 59123,
+    "title": "Swedbanks säljer Entercard-lån till Intrum och Brocc Finance",
+    "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE96ZU1MS0Z2aFhOZ1haX29xeFZmT3ZtbHVSd2dOX1RPSjI0RXRvUlBwZjFmREg4bVJZTXlwcWEyeWFPVlNublR3ckF1M1liSlZMRk4tcjFRMDJWM0NqYlV6dXNn",
+    "raw_link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE96ZU1MS0Z2aFhOZ1haX29xeFZmT3ZtbHVSd2dOX1RPSjI0RXRvUlBwZjFmREg4bVJZTXlwcWEyeWFPVlNublR3ckF1M1liSlZMRk4tcjFRMDJWM0NqYlV6dXNn?oc=5",
+    "source": "Finanswatch.se",
+    "domain": "finanswatch.se",
+    "country": "SE",
+    "lang": "sv",
+    "published_at": "2026-09-18T11:59:24+00:00",
+    "first_seen_at": "2026-09-18T12:20:52+00:00",
+    "route": "googlenews",
+    "query": "(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\")",
+    "tier_hint": null,
+    "summary": "Swedbanks säljer Entercard-lån till Intrum och Brocc Finance Finanswatch.se",
+    "alias": "Intrum",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Intrum"
+   ],
+   "languages": [
+    "sv"
+   ],
+   "countries": [
+    "SE"
+   ],
+   "latest": "2026-09-18T11:59:24+00:00"
+  },
+  {
+   "name_id": "intrum",
+   "name": "Intrum AB",
+   "cluster_id": 42013,
+   "primary": {
+    "id": 59113,
+    "title": "Intrum saminvesterar i nordisk NPL-portfölj - Swedbank säljare",
+    "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOYkZFbTU0UUlCT2tyTl93d3V2dVhtdTExdUFRemcteXRnd2swNThDMzdqUDQ2UHZ3R05EMmFERzhJTGVEYXBJU3RSdEMtbVNCNGxfbEFYRTVwVWxLM3FnMUdKLURsM3dJc0N5M0lDRkZ6RGhwOUZZSmtMODAyVTRPWUlLSVlXdXVuOUctX3AwV2QtdHhwYzViTUptNGt4YUxrLWJiUXdfTnBTMlln",
+    "raw_link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOYkZFbTU0UUlCT2tyTl93d3V2dVhtdTExdUFRemcteXRnd2swNThDMzdqUDQ2UHZ3R05EMmFERzhJTGVEYXBJU3RSdEMtbVNCNGxfbEFYRTVwVWxLM3FnMUdKLURsM3dJc0N5M0lDRkZ6RGhwOUZZSmtMODAyVTRPWUlLSVlXdXVuOUctX3AwV2QtdHhwYzViTUptNGt4YUxrLWJiUXdfTnBTMlln?oc=5",
+    "source": "Placera.se",
+    "domain": "placera.se",
+    "country": "SE",
+    "lang": "sv",
+    "published_at": "2026-09-18T11:30:42+00:00",
+    "first_seen_at": "2026-09-18T12:20:52+00:00",
+    "route": "googlenews",
+    "query": "\"Intrum\" site:placera.se",
+    "tier_hint": null,
+    "summary": "Intrum saminvesterar i nordisk NPL-portfölj - Swedbank säljare Placera.se",
+    "alias": "Intrum",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Intrum"
+   ],
+   "languages": [
+    "sv"
+   ],
+   "countries": [
+    "SE"
+   ],
+   "latest": "2026-09-18T11:30:42+00:00"
   },
   {
    "name_id": "leduff",
@@ -2675,7 +2780,9 @@
     "alias": "Next plc",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Nexi\" OR \"Next plc\" OR \"Nike\" OR \"NKD\" OR \"Nordzucker\" OR \"Nuffield Health\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -2703,6 +2810,55 @@
    "latest": "2026-09-18T10:21:15+00:00"
   },
   {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 42000,
+   "primary": {
+    "id": 59099,
+    "title": "Ex-PayPal CEO Harris unveils AI-powered personal finance app",
+    "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPWGlhYzJod3drREIwbmgzUEpoaExjVkNGOWNxOUstTlJpcnJSeTV5MmtlbTh6WHMyU2dZb0VsTjBMMnJwcGxpbFlyLVY4TjRPSWxfQTl2TE01MldpYlVsZEhJaWttMU43YVBzQk5mbVlGaG9vbGhIY1ZoSFNJc01pZEJkSXhpYS1iT29JbkJraktiLVdweHd0YzBJTUZGOWs4aEkyUDVR",
+    "raw_link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPWGlhYzJod3drREIwbmgzUEpoaExjVkNGOWNxOUstTlJpcnJSeTV5MmtlbTh6WHMyU2dZb0VsTjBMMnJwcGxpbFlyLVY4TjRPSWxfQTl2TE01MldpYlVsZEhJaWttMU43YVBzQk5mbVlGaG9vbGhIY1ZoSFNJc01pZEJkSXhpYS1iT29JbkJraktiLVdweHd0YzBJTUZGOWs4aEkyUDVR?oc=5",
+    "source": "Finextra Research",
+    "domain": "finextra.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-18T12:06:26+00:00",
+    "first_seen_at": "2026-09-18T12:20:52+00:00",
+    "route": "googlenews",
+    "query": "(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")",
+    "tier_hint": null,
+    "summary": "Ex-PayPal CEO Harris unveils AI-powered personal finance app Finextra Research",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-18T12:06:26+00:00"
+  },
+  {
    "name_id": "pfizer",
    "name": "Pfizer",
    "cluster_id": 41934,
@@ -2725,7 +2881,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
+     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
+     "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
     ],
     "alert_categories": [
      "management"
@@ -3041,7 +3198,9 @@
     "alias": "Ryanair",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.dagensps.se/feed"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -3132,9 +3291,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 59146,
+     "title": "Ryanair seeks to double traffic in Baltic region after airBaltic bankruptcy",
+     "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOWU85bUZjTEZ6Zzl0SjBGaFlOalZ4RWNCN2Nxbk8zN3k0RHNBdFgyNmQ2b3pucV9zU2RvR1R3TVhMb0xDa01xaEVOb25YX3VuVUd2Mm4wejZsRFBCdko0NjQtY1NyYkppTGpxVDRKSjcxMml3QTM0aUxvYXlQTmZfTTBXclRSUkp1azFqbi1SZDVKb2d2Z3hJSUhwYkVvUDAz",
+     "raw_link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOWU85bUZjTEZ6Zzl0SjBGaFlOalZ4RWNCN2Nxbk8zN3k0RHNBdFgyNmQ2b3pucV9zU2RvR1R3TVhMb0xDa01xaEVOb25YX3VuVUd2Mm4wejZsRFBCdko0NjQtY1NyYkppTGpxVDRKSjcxMml3QTM0aUxvYXlQTmZfTTBXclRSUkp1azFqbi1SZDVKb2d2Z3hJSUhwYkVvUDAz?oc=5",
+     "source": "bilyonaryo.com",
+     "domain": "bilyonaryo.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-09-17T15:39:09+00:00",
+     "first_seen_at": "2026-09-18T12:20:52+00:00",
+     "route": "googlenews",
+     "query": "(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")",
+     "tier_hint": null,
+     "summary": "Ryanair seeks to double traffic in Baltic region after airBaltic bankruptcy bilyonaryo.com",
+     "alias": "Ryanair",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "restructuring"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 1,
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "restructuring"
@@ -3150,7 +3336,7 @@
     "GB",
     "IE"
    ],
-   "latest": "2026-09-17T12:13:03+00:00"
+   "latest": "2026-09-17T15:39:09+00:00"
   },
   {
    "name_id": "sandoz",
@@ -3174,7 +3360,9 @@
     "alias": "Sandoz",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Rosa's Thai\" OR \"Royal Caribbean\" OR \"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -4643,7 +4831,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"TUI\")"
+     "googlenews:(\"TUI\")",
+     "googlenews:(\"TUI\" OR \"Vivion\" OR \"Worldline\")"
     ],
     "alert_categories": [
      "management"
@@ -5661,6 +5850,57 @@
    "latest": "2026-09-17T11:48:48+00:00"
   },
   {
+   "name_id": "vistry",
+   "name": "Vistry Group",
+   "cluster_id": 42002,
+   "primary": {
+    "id": 59101,
+    "title": "RBC keeps 'underperform' rating on Vistry ahead of CEO's strategic review and half-year results.",
+    "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQXzdpaUFDdHBWNEdCUExpaEUwZHhxVUVOWmNoMW91ZUxITnpRN3U4dERkMWg0SVBQclFJaFBVWnVRS05rRTVLUHFXWWFuRGxSNGc2clp5eERidktvVzMyeElxUkRzSTEzRWpuNXhUMWZ6RzhsSHRGbG5IVWp1d0ozakx2UlVUQ3plV1ZHaEkyZjlzU2VWNHIwYmRPaERpckt5blkwTzBB",
+    "raw_link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQXzdpaUFDdHBWNEdCUExpaEUwZHhxVUVOWmNoMW91ZUxITnpRN3U4dERkMWg0SVBQclFJaFBVWnVRS05rRTVLUHFXWWFuRGxSNGc2clp5eERidktvVzMyeElxUkRzSTEzRWpuNXhUMWZ6RzhsSHRGbG5IVWp1d0ozakx2UlVUQ3plV1ZHaEkyZjlzU2VWNHIwYmRPaERpckt5blkwTzBB?oc=5",
+    "source": "Pluang",
+    "domain": "pluang.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-18T11:54:57+00:00",
+    "first_seen_at": "2026-09-18T12:20:52+00:00",
+    "route": "googlenews",
+    "query": "(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
+    "tier_hint": null,
+    "summary": "RBC keeps 'underperform' rating on Vistry ahead of CEO's strategic review and half-year results. Pluang",
+    "alias": "Vistry",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "rating",
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management",
+    "rating"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Vistry"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-18T11:54:57+00:00"
+  },
+  {
    "name_id": "vonovia",
    "name": "Vonovia",
    "cluster_id": 41301,
@@ -5844,6 +6084,55 @@
     "GB"
    ],
    "latest": "2026-09-17T02:46:01+00:00"
+  },
+  {
+   "name_id": "wickes",
+   "name": "Wickes",
+   "cluster_id": 42009,
+   "primary": {
+    "id": 59109,
+    "title": "Deutsche Bank upgrades Wickes to 'hold' as earnings risk eases, raising price target to 210p",
+    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPeUwyTl9GWDhwZmFILW1RNDN2S2pFZ2ZWelRQQzdLM1BKOVVRWUxsaFZxckl5ZTEtOGlqZW1XQ05lMzJaWlZReEtsck41blJJX012cGJVTVV6djhnZzZTUlRXRm4zWGh3VG5vQXFyTzFWT0hvZHdjRXFaN2ZZdGUxZV92UUZsWmMydlFJ",
+    "raw_link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPeUwyTl9GWDhwZmFILW1RNDN2S2pFZ2ZWelRQQzdLM1BKOVVRWUxsaFZxckl5ZTEtOGlqZW1XQ05lMzJaWlZReEtsck41blJJX012cGJVTVV6djhnZzZTUlRXRm4zWGh3VG5vQXFyTzFWT0hvZHdjRXFaN2ZZdGUxZV92UUZsWmMydlFJ?oc=5",
+    "source": "Pluang",
+    "domain": "pluang.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-18T11:41:01+00:00",
+    "first_seen_at": "2026-09-18T12:20:52+00:00",
+    "route": "googlenews",
+    "query": "(\"Wickes\" OR \"Williams Lea\" OR \"Wizz Air\" OR \"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\")",
+    "tier_hint": null,
+    "summary": "Deutsche Bank upgrades Wickes to 'hold' as earnings risk eases, raising price target to 210p Pluang",
+    "alias": "Wickes",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "rating"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "rating"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Wickes"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-18T11:41:01+00:00"
   },
   {
    "name_id": "wickes",
