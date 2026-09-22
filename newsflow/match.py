@@ -12,10 +12,22 @@ from typing import Iterable, Optional
 from .config import Alias, Config, NameConfig
 
 
+# Chinese, Japanese and Korean run words together without spaces, so a CJK alias is nearly always
+# flanked by other CJK characters, and those are word characters to the regex engine. The word
+# boundaries used below for Latin-script aliases can then never be satisfied: until 21 Sep 2026
+# "原料药价格" never matched the stockstar API-price weekly "原料药价格底部企稳，抗生素类价格短期承压",
+# and the Chinese beta-lactam comps (联邦制药, 川宁生物) matched only when punctuation happened to sit on
+# both sides of the name: by 21 Sep TUL had logged four mentions in total against ~245 successful
+# queries a day. CJK aliases and CJK context terms therefore match as plain substrings.
+_CJK = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7af]")
+
+
 def _alias_regex(alias: Alias) -> re.Pattern:
     text = re.escape(alias.text.strip())
     # allow flexible whitespace/hyphen inside multi-word aliases
     text = text.replace(r"\ ", r"[\s\-]+")
+    if _CJK.search(alias.text):
+        return re.compile(text, re.IGNORECASE | re.UNICODE)
     if alias.inflect:
         # Intrum, Intrums, Intrumin, Intrum-Aktie, Intrumille ...
         pat = rf"(?<![\w]){text}(?:[\w'’\-]{{0,7}})?(?![\w])"
@@ -40,6 +52,9 @@ def _context_regex(alias: Alias) -> Optional[re.Pattern]:
     for term in alias.require_context:
         t = re.escape(term.strip())
         t = t.replace(r"\ ", r"[\s\-]+")       # "fast food" also matches "fast-food"
+        if _CJK.search(term):
+            parts.append(t)                     # no word boundaries in CJK text (see _CJK)
+            continue
         # Strict on the left, forgiving on the right: "restaurant" must also satisfy
         # "restaurants" and "store" must satisfy "stores", but nothing may match mid-word,
         # which is what let HIG hide inside Michigan and Nottingham inside Nottinghamshire.
