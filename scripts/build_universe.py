@@ -571,7 +571,7 @@ C: dict[str, tuple] = {
  "weiqida": ("Weiqida", "CN:en", None, {"confirm": True}),
  "cspc": ("CSPC Pharmaceutical", "CN:en", None, {"confirm": True}),
  "lupin": ("Lupin", "IN:en", None, {"ctx": ["pharma", "drug", "generic"]}),
- "lyfius": ("Lyfius", "NL:nl", None, {"confirm": True}),
+ "lyfius": ("Lyfius", "IN:en", None, {}),  # Aurobindo Pen G / 6-APA subsidiary, Kakinada (was NL:nl)
  "aspen": ("Aspen Pharmacare", "ZA:en", None, {}),
  "viatris": ("Viatris", "US:en", None, {}),
  "organon": ("Organon", "US:en", None, {"ctx": ["pharma", "health", "medicine"]}),
@@ -895,7 +895,13 @@ NAME_TO_ID = {
 }
 
 
-HAND_MAINTAINED = {"intrum", "centrient", "tul", "chuanning", "anglikang", "ncpc", "weiqida", "cspc", "aurobindo", "sandoz", "boels", "lowell", "paragon"}
+# 21 Sep 2026: the last 15 ids below were edited by hand after generation (own newsroom sources for
+# biogroup and cheplapharm, extra markets and aliases elsewhere). Regenerating without this guard
+# silently reverted all 15, so they are protected until the tables above are brought back in sync.
+HAND_MAINTAINED = {"intrum", "centrient", "tul", "chuanning", "anglikang", "ncpc", "weiqida", "cspc", "aurobindo", "sandoz", "boels", "lowell", "paragon",
+                   "biogroup", "boots", "carnival", "ceconomy", "cheplapharm", "cmacgm", "enterprise", "hellofresh",
+                   "hse", "iqera", "manuchar", "mobilux", "quick", "skechers", "tuigroup",
+                   "cnam"}  # cnam: hand-made sector entry (French lab regulation), 21 Sep 2026
 
 def yaml_str(s: str) -> str:
     return '"' + s.replace('"', '\\"') + '"'
