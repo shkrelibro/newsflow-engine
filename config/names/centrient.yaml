@@ -1,11 +1,20 @@
 # hand-maintained (zh sector sweep wired 6 Sep 2026 per the desk) — generator skips this file; fold into build_universe.py A-table on next generator sync
+# 21 Sep 2026, input-price watch. Two faults fixed:
+#   1. "6-APA" and "7-ACA" had no context rule, so the search engine's split on the hyphen matched "APA"
+#      (APA Corp rig counts, Advertising Printing Australia). Context rules and exclude_terms added.
+#   2. The zh broker API-price weeklies (e.g. stockstar 13 Sep, pharmcube 14 Sep: "原料药价格底部企稳，抗生素类价格短期承压")
+#      name the price move, not the company, so they failed the name-bearing test and were screened on revalidation.
+#      zh aliases for the price vocabulary added, each guarded by antibiotic context.
+# No site: queries: the engine builds them from the main alias ("Centrient" site:domain), which the
+# price weeklies never contain, and the brief only shortlists headline matches anyway.
+# Run `python -m newsflow check-config` before committing.
 id: centrient
 name: "Centrient Pharmaceuticals"
 kind: name
 ticker: "DSPPHA"
 home_country: "NL"
 sector: pharma
-notes: "Ex DSM Sinochem; antibiotics APIs. Full CN/IN comp set wired 6 Sep 2026 per the desk (TUL, Chuanning, Anglikang, NCPC, Weiqida, CSPC; Aurobindo, Lupin, Dr. Reddy's; anchors Sandoz, ACS Dobfar). zh (CN+HK) sweep + Chinese aliases live from 6 Sep 2026 evening patch; sector-chain keyword searches (6-APA / 7-ACA / Pen G K) run under this name, low-weight."
+notes: "Ex DSM Sinochem; antibiotics APIs. Full CN/IN comp set wired 6 Sep 2026 per the desk (TUL, Chuanning, Anglikang, NCPC, Weiqida, CSPC; Aurobindo, Lupin, Dr. Reddy's; anchors Sandoz, ACS Dobfar). zh (CN+HK) sweep + Chinese aliases live from 6 Sep 2026 evening patch; sector-chain keyword searches (6-APA / 7-ACA / Pen G K) run under this name, low-weight. Input-price watch added 22 Sep 2026: context rules on the chain terms, zh broker API-price weeklies, India MIP."
 markets:
   - {country: NL, lang: nl}
   - {country: IN, lang: en}
@@ -14,8 +23,30 @@ markets:
   - {country: HK, lang: zh}
 aliases:
   - {text: "Centrient", inflect: true, search: true}
-  - {text: "6-APA", search: true, search_every: 2, weight: 0.6}
-  - {text: "7-ACA", search: true, search_every: 2, weight: 0.6}
-  - {text: "青霉素工业盐", search: true, search_every: 2, weight: 0.6}
+  # --- beta-lactam chain terms: low weight, so the company alias always wins when both appear
+  - {text: "6-APA", search: true, search_every: 2, weight: 0.6,
+     require_context: ["penicillin", "amoxicillin", "amoxycillin", "ampicillin", "antibiotic", "beta-lactam", "API", "intermediate", "青霉素", "阿莫西林", "抗生素", "原料药", "中间体"]}
+  - {text: "7-ACA", search: true, search_every: 2, weight: 0.6,
+     require_context: ["cephalosporin", "antibiotic", "API", "intermediate", "头孢", "抗生素", "原料药", "中间体"]}
+  - {text: "7-ADCA", search: true, search_every: 4, weight: 0.6,
+     require_context: ["cephalosporin", "cefalexin", "cephalexin", "antibiotic", "头孢", "抗生素", "原料药", "中间体"]}
+  - {text: "青霉素工业盐", langs: [zh], search: true, search_every: 2, weight: 0.6}
   - {text: "penicillin G potassium", search: true, search_every: 4, weight: 0.6}
+  # --- zh broker API-price weeklies: the headline carries the price vocabulary, not the company
+  - {text: "原料药价格", langs: [zh], search: true, search_every: 2, weight: 0.5,
+     require_context: ["抗生素", "青霉素", "阿莫西林", "头孢", "6-APA", "7-ACA", "中间体"]}
+  - {text: "抗生素", langs: [zh], search: true, search_every: 2, weight: 0.5,
+     require_context: ["原料药", "中间体", "价格", "报价", "涨价", "降价", "企稳", "承压", "出口"]}
+  - {text: "阿莫西林", langs: [zh], search: true, search_every: 2, weight: 0.5,
+     require_context: ["原料药", "价格", "报价", "出口", "涨价", "降价"]}
+  # --- India: minimum import price on Pen G K, amoxycillin trihydrate and 6-APA (DGFT 56/2025-26, 29 Jan 2026, one year)
+  - {text: "minimum import price", langs: [en], search: true, search_every: 4, weight: 0.5,
+     require_context: ["penicillin", "amoxicillin", "amoxycillin", "6-APA"]}
+  - {text: "amoxicillin", langs: [en], search: true, search_every: 4, weight: 0.5,
+     require_context: ["price", "prices", "API", "import", "DGFT", "dumping", "PLI", "China"]}
+  - {text: "amoxycillin", langs: [en], search: true, search_every: 4, weight: 0.5,
+     require_context: ["price", "prices", "API", "import", "DGFT", "dumping", "PLI", "China"]}
+
+exclude_terms: ["APA Corp", "APA Corporation", "Advertising Printing Australia"]
+
 comps: [sandoz, aurobindo, gsk, tul, chuanning, anglikang, ncpc, acsdobfar, weiqida, cspc, teva, viatris, lupin, drreddys, lyfius]

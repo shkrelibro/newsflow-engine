@@ -1,0 +1,67 @@
+# hand-maintained (21 Sep 2026, per the desk). Sector entry, not an issuer: French lab regulation.
+# The CNAM (acting as UNCAM) sets lab tariffs through the NABM and multi-year agreements with the
+# lab unions. Its decisions move every French lab credit at once, but the headlines name the CNAM,
+# the biologists or the nomenclature, never Biogroup or Cerba, so the lab names' own configs could
+# not see them. One entry here, rather than the same terms on three names: the engine files a story
+# under whichever name's search finds it first, so shared terms would scatter one story at random.
+# Read-across for anything carried here: see comps (Biogroup, Cerba, Synlab, Inovie, Eurofins, Unilabs).
+# Main alias is NABM on purpose: the main alias joins the grouped French market query, and a
+# high-volume term such as Cnam there would crowd the other French names out of that query.
+id: cnam
+name: "CNAM (French lab tariffs)"
+kind: name
+home_country: "FR"
+sector: labs
+notes: "Sector entry for French lab regulation: CNAM/UNCAM tariff decisions, NABM changes, the
+  lab unions' multi-year agreement (talks opened 23 Jul 2026, target end Sep to mid Oct 2026),
+  PLFSS measures and the Habert mission follow-up. Read-across to the comps listed below."
+markets:
+  - {country: FR, lang: fr}
+  - {country: GB, lang: en}
+aliases:
+  # nomenclature des actes de biologie medicale: specific enough to need no context
+  - {text: "NABM", langs: [fr], search: true, weight: 0.8}
+  # the regulator: only when the story is about labs (Cnam is also the Conservatoire national des arts et metiers)
+  - {text: "Cnam", langs: [fr], search: true, search_every: 2, weight: 0.8,
+     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie"]}
+  - {text: "Assurance maladie", langs: [fr], search: true, search_every: 2, weight: 0.7,
+     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie"]}
+  - {text: "UNCAM", langs: [fr], search: true, search_every: 4, weight: 0.8,
+     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "laboratoire de biologie", "laboratoires de biologie"]}
+  # the sector: only when the story is about tariffs, talks, budget or strikes
+  - {text: "biologie médicale", langs: [fr], search: true, search_every: 2, weight: 0.7,
+     require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
+  - {text: "biologiste", inflect: true, langs: [fr], search: true, search_every: 2, weight: 0.7,
+     require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
+  - {text: "laboratoires d'analyses", langs: [fr], search: true, search_every: 4, weight: 0.6,
+     require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
+  # same with the typographic apostrophe most French headlines use (match only; one search is enough)
+  - {text: "laboratoires d’analyses", langs: [fr], weight: 0.6,
+     require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
+  # the lab unions and the live policy threads
+  - {text: "SDBIO", langs: [fr], search: true, search_every: 4, weight: 0.8}
+  - {text: "SLBC", langs: [fr], weight: 0.6, require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "NABM"]}
+  - {text: "financiarisation", langs: [fr], search: true, search_every: 4, weight: 0.6,
+     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "laboratoire de biologie", "laboratoires de biologie"]}
+  - {text: "PLFSS", langs: [fr], weight: 0.6,
+     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "laboratoire de biologie", "laboratoires de biologie"]}
+  - {text: "mission Habert", langs: [fr], weight: 0.8}
+  # English wires (Bloomberg, Reuters) describe the same stories without the French terms
+  - {text: "French lab", inflect: true, langs: [en], search: true, search_every: 4, weight: 0.6,
+     require_context: ["tariff", "tariffs", "reimbursement", "subsidy", "subsidies", "health insurer", "CNAM", "cut", "cuts", "bonds", "price", "prices"]}
+  - {text: "French laboratories", langs: [en], weight: 0.6,
+     require_context: ["tariff", "tariffs", "reimbursement", "subsidy", "subsidies", "health insurer", "CNAM", "cut", "cuts", "bonds", "price", "prices"]}
+  - {text: "lab firms", langs: [en], weight: 0.5, require_context: ["France", "French"]}
+  - {text: "lab groups", langs: [en], weight: 0.5, require_context: ["France", "French"]}
+  - {text: "lab operators", langs: [en], weight: 0.5, require_context: ["France", "French"]}
+exclude_terms: ["arts et métiers", "Conservatoire national"]
+comps: [biogroup, cerba, synlab, inovie, eurofins, unilabs]
+
+# Primary sources. Page watchers seed on first fetch (no backfill), then take new links whose text
+# passes the aliases above.
+sources:
+  feeds: []
+  pages:
+    - {url: "https://www.assurance-maladie.ameli.fr/presse", name: "Assurance Maladie press releases", tier: 0, country: FR, lang: fr, link_pattern: "assurance-maladie\\.ameli\\.fr/presse/.+"}
+    - {url: "https://www.ameli.fr/laboratoire-d-analyses-medicales/actualites", name: "ameli.fr news for labs", tier: 0, country: FR, lang: fr, link_pattern: "/laboratoire-d-analyses-medicales/actualites/.+"}
+    - {url: "https://sdbio.eu/category/fil-dinfo/", name: "SDBIO union news", tier: 2, country: FR, lang: fr, link_pattern: "sdbio\\.eu/\\d{4}/\\d{2}/\\d{2}/.+"}
