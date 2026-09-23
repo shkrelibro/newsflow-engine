@@ -165,9 +165,15 @@ jobs:
               ok_cycles=$((ok_cycles + 1))
             fi
 
-            # Hourly compressed backup, so a job killed mid-loop loses at most an hour of state.
+            # Compressed backup, ONCE per job and only in the 00:00 UTC hour, exactly as the
+            # per-run workflow did it. An earlier draft of this file backed up hourly so that a
+            # job killed mid-loop would lose less state. That was wrong at this file size: the
+            # backup is already 51.5MB compressed, and every commit of it adds a permanent blob
+            # to git history, so hourly would have put roughly 1.2GB a day into the repository
+            # forever. Mid-loop protection comes from the cache save below instead, which runs
+            # with if: always() and therefore also fires when the job is cancelled.
             now=$(date -u +%s)
-            if [ "$((now - last_backup))" -ge 3600 ] && [ -f data/newsflow.db ]; then
+            if [ "$(date -u +%H)" = "00" ] && [ "$last_backup" = "0" ] && [ -f data/newsflow.db ]; then
               gzip -6 -c data/newsflow.db > data/newsflow.db.gz
               gz=$(stat -c%s data/newsflow.db.gz)
               if [ "$gz" -gt 95000000 ]; then
@@ -256,6 +262,15 @@ jobs:
           if [ -n "$existing" ]; then
             gh issue close "$existing" --comment "Recovered: loop ${{ github.run_id }} published ${{ steps.engine.outputs.ok_cycles }} cycles."
           fi
+
+# THE DATABASE BACKUP IS AT 51.5MB AND GROWING
+#
+# GitHub warns above 50MB and refuses above 100MB per file. The guard in this file stops at 95MB.
+# Separately, every committed copy stays in git history forever, so the repository grows by the
+# size of the backup on every backup day and never shrinks. Checkout is shallow so runs are not
+# slowed by it, but the storage is cumulative and the ceiling is real. Before it gets there,
+# either prune the store's retention, or stop committing the database at all and rely on the
+# Actions cache plus an occasional manual export. Moving it to Git LFS only relocates the cost.
 
 # THE ACTUAL CURE, WHICH IS NOT A FILE IN THIS REPOSITORY
 #
