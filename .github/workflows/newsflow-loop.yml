@@ -1,0 +1,274 @@
+name: newsflow-loop
+
+# WHY THIS FILE EXISTS
+#
+# Since 26-27 August 2026 GitHub has been dropping and delaying the `schedule` event across many
+# repositories (community discussion 207346). Affected repos report 0 to 2 scheduled runs a day
+# instead of the full cadence. On 23 September this engine managed three runs in ten and three
+# quarter hours against a "*/15 * * * *" cron that should have produced forty-three.
+#
+# Renaming the workflow file, disabling and re-enabling it, and changing the cron expression are
+# all reported in that thread as NOT fixing it. The fault is in event delivery, not in the file.
+#
+# So this workflow does not try to fix the schedule. It reduces how much it depends on it. One
+# job wakes up and then runs the engine every 15 minutes from the inside, for just under six
+# hours. Four successful schedule events a day cover the whole day instead of ninety-six. If
+# GitHub delivers even two of the four, most of the day is still swept.
+#
+# This is a mitigation, not a cure. The cure is an external trigger calling workflow_dispatch;
+# see the note at the foot of this file.
+#
+# TO ADOPT: add this file, and change the existing newsflow.yml to `workflow_dispatch:` only by
+# deleting its `schedule:` block. Do not run both on a schedule; they share a concurrency group,
+# so the second would simply queue behind a six hour job.
+
+on:
+  schedule:
+    # Four starts a day, six hours apart, deliberately off the top of the hour. Busy minutes are
+    # the worst served when GitHub is shedding schedule events.
+    - cron: "23 0,6,12,18 * * *"
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "How long to loop for, in hours (default 5.8, the job limit is 6)"
+        required: false
+        default: "5.8"
+      backfill_days:
+        description: "Widen the window to N days on the FIRST cycle only"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  # Same group as newsflow.yml, so a manual run of the old workflow can never collide with a loop
+  # that is already in flight.
+  group: newsflow-run
+  cancel-in-progress: false
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    # GitHub-hosted jobs are killed at six hours. 350 minutes leaves room for the final cache save.
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Set the committed backup aside
+        run: |
+          mkdir -p data/backup
+          if [ -f data/newsflow.db.gz ]; then
+            cp data/newsflow.db.gz data/backup/newsflow.db.gz
+          fi
+          if [ -f data/newsflow.db ]; then
+            mv data/newsflow.db data/backup/newsflow.db
+          fi
+
+      - name: Restore database from the cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/newsflow.db
+          key: newsflow-db-v2-${{ github.run_id }}
+          restore-keys: newsflow-db-v2-
+
+      - name: Use the newer of the cache and the committed backup
+        run: |
+          python -m newsflow pick-db --target data/newsflow.db \
+            --candidate data/backup/newsflow.db.gz \
+            --candidate data/backup/newsflow.db
+
+      # THE LOOP. Everything the old per-run workflow did between "Run engine" and "Publish the
+      # exports" happens here, once every 15 minutes, until the deadline.
+      #
+      # The database no longer has to survive in the Actions cache between cycles: it just stays
+      # on disk. That removes the whole restore-by-prefix and eviction problem for the duration
+      # of the job. It is still saved to the cache at the end, for the next job to pick up, and
+      # committed compressed once an hour so that a job killed mid-loop loses at most an hour.
+      - name: Sweep every 15 minutes until the deadline
+        id: engine
+        env:
+          NEWSFLOW_WEBHOOK_URL: ${{ secrets.NEWSFLOW_WEBHOOK_URL }}
+          NEWSFLOW_SMTP_PASSWORD: ${{ secrets.NEWSFLOW_SMTP_PASSWORD }}
+        run: |
+          set -u
+          hours="${{ github.event.inputs.hours }}"
+          [ -n "$hours" ] || hours="5.8"
+          deadline=$(python -c "import time,sys; print(int(time.time() + float(sys.argv[1])*3600))" "$hours")
+          backfill="${{ github.event.inputs.backfill_days }}"
+
+          git config user.name "newsflow-bot"
+          git config user.email "newsflow-bot@users.noreply.github.com"
+
+          cycle=0
+          last_backup=0
+          ok_cycles=0
+
+          while [ "$(date -u +%s)" -lt "$deadline" ]; do
+            cycle=$((cycle + 1))
+            started=$(date -u +%s)
+            echo "::group::cycle $cycle at $(date -u +%H:%M:%SZ)"
+
+            # The engine's own failures must not kill the loop: one bad cycle is not an outage,
+            # and exiting here would cost every remaining cycle in the window.
+            if [ "$cycle" = "1" ] && [ -n "$backfill" ]; then
+              python -m newsflow run --all-routes --backfill-days "$backfill" || echo "::warning::cycle $cycle: engine exited non-zero"
+            else
+              python -m newsflow run || echo "::warning::cycle $cycle: engine exited non-zero"
+            fi
+
+            # Did this cycle actually collect anything? Annotate, never abort.
+            python - <<'PY' || true
+          import sqlite3, os
+          db = "data/newsflow.db"
+          if not os.path.exists(db):
+              print("::warning::no database after the cycle"); raise SystemExit(0)
+          c = sqlite3.connect(db); c.row_factory = sqlite3.Row
+          run = c.execute("SELECT * FROM runs ORDER BY id DESC LIMIT 1").fetchone()
+          if run is None:
+              print("::warning::runs table empty"); raise SystemExit(0)
+          fetched = run["items_fetched"] or 0
+          rows = c.execute("SELECT route, SUM(items) items FROM source_results WHERE run_id=? GROUP BY route",
+                           (run["id"],)).fetchall()
+          live = [r["route"] for r in rows if (r["items"] or 0) > 0]
+          print(f"run {run['id']}: fetched={fetched} live_routes={live}")
+          if fetched == 0 and not live:
+              print("::warning::every route returned nothing this cycle. Outage, not a quiet news day.")
+          PY
+
+            python -m newsflow golden || true
+
+            # Publish the exports. Same three-attempt rebase as the per-run workflow, because
+            # files still get uploaded to the repository by hand while a job is in flight.
+            git add docs
+            if git commit -m "newsflow run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" 2>/dev/null; then
+              landed=0
+              for attempt in 1 2 3; do
+                if git pull --rebase --autostash origin "${{ github.ref_name }}" && git push; then
+                  landed=1; break
+                fi
+                echo "publish attempt $attempt did not land; retrying in 20s"
+                git rebase --abort 2>/dev/null || true
+                sleep 20
+              done
+              [ "$landed" = 1 ] && ok_cycles=$((ok_cycles + 1)) || echo "::warning::cycle $cycle: exports did not push"
+            else
+              echo "nothing to commit this cycle"
+              ok_cycles=$((ok_cycles + 1))
+            fi
+
+            # Hourly compressed backup, so a job killed mid-loop loses at most an hour of state.
+            now=$(date -u +%s)
+            if [ "$((now - last_backup))" -ge 3600 ] && [ -f data/newsflow.db ]; then
+              gzip -6 -c data/newsflow.db > data/newsflow.db.gz
+              gz=$(stat -c%s data/newsflow.db.gz)
+              if [ "$gz" -gt 95000000 ]; then
+                echo "::warning::compressed backup $(( gz / 1000000 ))MB, above the 95MB ceiling. Not committing."
+                rm -f data/newsflow.db.gz
+              else
+                git add -f data/newsflow.db.gz
+                git rm -q --cached --ignore-unmatch data/newsflow.db
+                if git commit -m "newsflow database backup $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]" 2>/dev/null; then
+                  for attempt in 1 2 3; do
+                    git pull --rebase --autostash origin "${{ github.ref_name }}" && git push && break
+                    git rebase --abort 2>/dev/null || true
+                    sleep 20
+                  done
+                fi
+              fi
+              last_backup=$now
+            fi
+
+            echo "::endgroup::"
+
+            # Sleep to the next quarter hour, measured from the start of this cycle so that a
+            # slow sweep does not push the whole schedule later and later.
+            elapsed=$(( $(date -u +%s) - started ))
+            rest=$(( 900 - elapsed ))
+            if [ "$rest" -lt 30 ]; then rest=30; fi
+            # Do not start a cycle that cannot finish before the deadline.
+            if [ "$(( $(date -u +%s) + rest ))" -ge "$deadline" ]; then
+              echo "deadline reached after $cycle cycles ($ok_cycles published)"; break
+            fi
+            sleep "$rest"
+          done
+
+          echo "cycles=$cycle" >> "$GITHUB_OUTPUT"
+          echo "ok_cycles=$ok_cycles" >> "$GITHUB_OUTPUT"
+          if [ "$ok_cycles" = "0" ]; then
+            echo "::error::the loop completed without publishing a single cycle"
+            exit 1
+          fi
+
+      - name: Save database
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: data/newsflow.db
+          key: newsflow-db-v2-${{ github.run_id }}
+
+      - name: Alert on failure
+        if: failure() || cancelled()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          gh label create newsflow-failure --color B60205 \
+            --description "The newsflow engine failed a scheduled run" >/dev/null 2>&1
+          url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ "${{ job.status }}" = "cancelled" ]; then
+            what="was cancelled (most likely it hit the six hour job limit)"
+          else
+            what="failed"
+          fi
+          body=$(printf '%s\n' \
+            "The newsflow loop $what at $(date -u +%Y-%m-%dT%H:%MZ)." \
+            "Cycles attempted: ${{ steps.engine.outputs.cycles }}, published: ${{ steps.engine.outputs.ok_cycles }}." \
+            "" \
+            "Run log: $url" \
+            "" \
+            "Until the next scheduled start, nothing is being swept. If GitHub is also dropping" \
+            "schedule events, start it by hand from the Actions tab.")
+          existing=$(gh issue list --label newsflow-failure --state open --limit 1 \
+            --json number --jq '.[0].number' 2>/dev/null)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "newsflow engine failed" --body "$body" --label newsflow-failure
+          fi
+
+      - name: Clear the alert on a good run
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          existing=$(gh issue list --label newsflow-failure --state open --limit 1 \
+            --json number --jq '.[0].number' 2>/dev/null)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Recovered: loop ${{ github.run_id }} published ${{ steps.engine.outputs.ok_cycles }} cycles."
+          fi
+
+# THE ACTUAL CURE, WHICH IS NOT A FILE IN THIS REPOSITORY
+#
+# The only workaround reported as reliably working is an external scheduler calling the GitHub
+# API to dispatch the workflow, because `workflow_dispatch` is delivered normally while
+# `schedule` is not. newsflow.yml already accepts workflow_dispatch, so the repository side is
+# ready; what is missing is something outside GitHub doing the poking:
+#
+#   POST https://api.github.com/repos/shkrelibro/newsflow-engine/actions/workflows/newsflow-loop.yml/dispatches
+#   Authorization: Bearer <fine-grained PAT with Actions: read and write on this repo only>
+#   Accept: application/vnd.github+json
+#   Body: {"ref":"main"}
+#
+# Point any free cron service at that, every six hours, and the loop starts whether or not
+# GitHub delivers its own schedule event. Create the token yourself and paste it only into that
+# service; do not put it in a chat, a scheduled task prompt, or this repository.
