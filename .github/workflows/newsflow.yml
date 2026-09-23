@@ -1,11 +1,6 @@
 name: newsflow
 
 on:
-  schedule:
-    # Every 15 minutes. Free on a PUBLIC repository (unlimited Actions minutes). On a private
-    # repository use hourly ("7 * * * *") with --all-routes to stay inside the free 2,000 minutes
-    # a month (see RUNBOOK.md). GitHub may delay scheduled runs by a few minutes.
-    - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
       backfill_days:
