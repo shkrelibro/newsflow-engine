@@ -37,6 +37,11 @@ on:
         description: "Widen the window to N days on the FIRST cycle only"
         required: false
         default: ""
+      allow_state_reset:
+        description: "Tick ONLY to recover from a REFUSED run: accepts that state went backwards and re-reports the lookback window once"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -119,6 +124,16 @@ jobs:
 
             # The engine's own failures must not kill the loop: one bad cycle is not an outage,
             # and exiting here would cost every remaining cycle in the window.
+            # The state-reset override applies to the FIRST cycle only. It exists to clear a
+            # REFUSED run, where the restored database is behind the last published export and the
+            # engine stops rather than re-report published stories as new. Once cycle 1 has
+            # written a run the database only moves forward on disk, so later cycles must not
+            # carry the override: leaving it on would disarm the guard for six hours.
+            if [ "$cycle" = "1" ]; then
+              export NEWSFLOW_ALLOW_STATE_RESET="${{ github.event.inputs.allow_state_reset == 'true' && '1' || '' }}"
+            else
+              export NEWSFLOW_ALLOW_STATE_RESET=""
+            fi
             if [ "$cycle" = "1" ] && [ -n "$backfill" ]; then
               python -m newsflow run --all-routes --backfill-days "$backfill" || echo "::warning::cycle $cycle: engine exited non-zero"
             else
@@ -262,6 +277,22 @@ jobs:
           if [ -n "$existing" ]; then
             gh issue close "$existing" --comment "Recovered: loop ${{ github.run_id }} published ${{ steps.engine.outputs.ok_cycles }} cycles."
           fi
+
+# WHY THE OLD SCHEDULE MUST COME OFF BEFORE THIS RUNS FOR REAL
+#
+# On 23 September the first loop cycle was REFUSED. The old */15 workflow had run minutes earlier,
+# taken the database to run 1777 and published that, then saved its copy under its own run-id
+# cache key. The loop then restored by key prefix and got an older entry at 1776, one run behind
+# the published export, so the engine stopped rather than re-report published stories as new.
+#
+# That is not a race this file can win. Prefix restore returns any surviving entry, not the newest.
+# The fix is to have exactly one thing writing the cache and the exports: delete the schedule
+# block from newsflow.yml so it is manual only. The loop then saves the cache once per job instead
+# of ninety-six times a day, which is also why the stale-entry problem largely disappears once it
+# is the only writer.
+#
+# If you ever see REFUSED on cycle 1 again, re-dispatch this workflow with allow_state_reset
+# ticked. It applies to cycle 1 only and costs at most one re-report of the lookback window.
 
 # THE DATABASE BACKUP IS AT 51.5MB AND GROWING
 #
