@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-24T12:29:18+00:00",
+ "generated_at": "2026-09-24T12:44:19+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -367,7 +367,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"airBaltic\""
+      "googlenews:\"airBaltic\"",
+      "googlenews:(\"airBaltic\")"
      ],
      "alert_categories": [
       "restructuring"
@@ -1679,7 +1680,9 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
+      "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")",
+      "googlenews:\"Avis Budget\"",
+      "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
      ],
      "alert_categories": [
       "litigation"
@@ -2946,6 +2949,55 @@
   {
    "name_id": "evoca",
    "name": "Evoca Group",
+   "cluster_id": 49519,
+   "primary": {
+    "id": 69478,
+    "title": "Lone Star considers debt restructuring or sale of Italian coffee-machine maker Evoca",
+    "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNR3dBVGdRYVFINUJ2NGU5djVOVExBOGphZ0xqaVlselY2ci02cTlhRFBjaVM3cGdxS3VjbFhtbnd3SHIybGQ0c0ZPSFlPREVpZzh5cEhtQ0JjUW05TWxxYzQ5Mk8zM3hhZ3VVbjRNam1yaUNmTHNRcEwzLVhlbDhreVpFVXZIN0QyZjk4VlBMSUtmZlpiVlRzT01tdEhEUEQ2SkFJVldMQ0pSbDNqaldzRHA3ejhCRk51eTl1aDd3",
+    "raw_link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNR3dBVGdRYVFINUJ2NGU5djVOVExBOGphZ0xqaVlselY2ci02cTlhRFBjaVM3cGdxS3VjbFhtbnd3SHIybGQ0c0ZPSFlPREVpZzh5cEhtQ0JjUW05TWxxYzQ5Mk8zM3hhZ3VVbjRNam1yaUNmTHNRcEwzLVhlbDhreVpFVXZIN0QyZjk4VlBMSUtmZlpiVlRzT01tdEhEUEQ2SkFJVldMQ0pSbDNqaldzRHA3ejhCRk51eTl1aDd3?oc=5",
+    "source": "Private Equity Wire",
+    "domain": "privateequitywire.co.uk",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-09-24T09:29:02+00:00",
+    "first_seen_at": "2026-09-24T12:32:17+00:00",
+    "route": "googlenews",
+    "query": "(\"Co-operative Group\" OR \"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\")",
+    "tier_hint": null,
+    "summary": "Lone Star considers debt restructuring or sale of Italian coffee-machine maker Evoca Private Equity Wire",
+    "alias": "Evoca",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "restructuring"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "restructuring"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Evoca"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-09-24T09:29:02+00:00"
+  },
+  {
+   "name_id": "evoca",
+   "name": "Evoca Group",
    "cluster_id": 49146,
    "primary": {
     "id": 68943,
@@ -3882,7 +3934,9 @@
     "alias": "Loxam",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
