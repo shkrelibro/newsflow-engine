@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-25T04:04:47+00:00",
- "sources": 1081,
- "failing": 228,
+ "generated_at": "2026-09-25T04:19:56+00:00",
+ "sources": 1083,
+ "failing": 175,
  "detail": [
   {
    "route": "bingnews",
@@ -1529,7 +1529,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Azelis%22+OR+%22Balder%22+OR+%22Barratt+Redrow%22+OR+%22Basic-Fit%22+OR+%22Bayer%22+OR+%22Bellway%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
+   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
   },
   {
    "route": "gdelt",
@@ -1590,10 +1590,10 @@
   {
    "route": "gdelt",
    "source": "(\"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\") [all/all]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
+   "items": 24,
+   "last_error": ""
   },
   {
    "route": "gdelt",
@@ -1617,7 +1617,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
+   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Dyson%22+OR+%22easyHotel%22+OR+%22easyJet+holidays%22+OR+%22EG+Group%22+OR+%22Encore+Capital%22+OR+%22Endo+International%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
   },
   {
    "route": "gdelt",
@@ -1678,9 +1678,9 @@
   {
    "route": "gdelt",
    "source": "(\"Intrum\" OR \"iQera\" OR \"Isabel Marant\" OR \"Keepmoat\" OR \"Kiloutou\" OR \"Lowell\") [all/all]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 2,
-   "items": 0,
+   "items": 168,
    "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Intrum%22+OR+%22iQera%22+OR+%22Isabel+Marant%22+OR+%22Keepmoat%22+OR+%22Kiloutou%22+OR+%22Lowell%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
   },
   {
@@ -1694,10 +1694,10 @@
   {
    "route": "gdelt",
    "source": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\") [all/all]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
+   "items": 76,
+   "last_error": ""
   },
   {
    "route": "gdelt",
@@ -1729,7 +1729,7 @@
    "ok_runs": 1,
    "runs": 2,
    "items": 250,
-   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
+   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Mutares%22+OR+%22Paragon+Customer+Communications%22+OR+%22PizzaExpress%22+OR+%22PRA+Group%22+OR+%22PureGym%22+OR+%22Quick%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
   },
   {
    "route": "gdelt",
@@ -1777,7 +1777,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
+   "last_error": "GDELT non-JSON response: The specified phrase is too short."
   },
   {
    "route": "gdelt",
@@ -1821,6 +1821,14 @@
   },
   {
    "route": "gdelt",
+   "source": "(\"Sonnenklar TV\" OR \"Steelcase\" OR \"Stripe\" OR \"SumUp\" OR \"Superdrug\") [all/all]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 160,
+   "last_error": ""
+  },
+  {
+   "route": "gdelt",
    "source": "(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\") [all/all]",
    "ok_runs": 0,
    "runs": 1,
@@ -1833,7 +1841,7 @@
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "HTTP 429 for https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22The+Gym+Group%22+OR+%22Hamborner+REIT%22+OR+%22Haworth%22+OR+%22Hays%22+OR+%22Hertz%22%29&mode=artlist&maxrecords=250&format=json&timespan=24h&sort=datedesc"
+   "last_error": "run time budget reached while waiting for api.gdeltproject.org"
   },
   {
    "route": "gdelt",
@@ -1890,14 +1898,6 @@
    "runs": 1,
    "items": 0,
    "last_error": "GDELT non-JSON response: Parentheses may only be used around OR'd statements."
-  },
-  {
-   "route": "gdelt",
-   "source": "gdelt32 6",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2022,18 +2022,10 @@
   {
    "route": "googlenews",
    "source": "\"Adler Group\" [de-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 1,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 2,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Adler Group\" [de-DE] home",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2118,18 +2110,18 @@
   {
    "route": "googlenews",
    "source": "\"Assurance maladie\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 47,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 95,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Avis Budget\" [en-US]",
-   "ok_runs": 2,
+   "ok_runs": 1,
    "runs": 2,
-   "items": 30,
-   "last_error": ""
+   "items": 15,
+   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -2150,10 +2142,10 @@
   {
    "route": "googlenews",
    "source": "\"B&B Italia\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 3,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 6,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2174,10 +2166,10 @@
   {
    "route": "googlenews",
    "source": "\"B2 Impact\" [nb-NO]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2349,18 +2341,26 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Boots\" [en-GB]",
+   "source": "\"Boels\" site:group.boels.com [nl-NL]",
    "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Boots\" [en-GB]",
+   "ok_runs": 2,
    "runs": 2,
-   "items": 79,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 158,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Branicks\" [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 7,
+   "items": 6,
    "last_error": ""
   },
   {
@@ -2440,7 +2440,7 @@
    "source": "\"Co-operative Group\" [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 12,
+   "items": 13,
    "last_error": ""
   },
   {
@@ -2470,10 +2470,10 @@
   {
    "route": "googlenews",
    "source": "\"Cramo\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2494,10 +2494,10 @@
   {
    "route": "googlenews",
    "source": "\"Cramo\" [nb-NO]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -2510,10 +2510,10 @@
   {
    "route": "googlenews",
    "source": "\"Cramo\" [nl-NL]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2526,10 +2526,10 @@
   {
    "route": "googlenews",
    "source": "\"Cramo\" [sv-SE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2538,22 +2538,6 @@
    "runs": 2,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"DIC Asset\" [de-DE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"DIC Asset\" [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2566,10 +2550,10 @@
   {
    "route": "googlenews",
    "source": "\"Elior\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2582,18 +2566,10 @@
   {
    "route": "googlenews",
    "source": "\"Evoca\" [it-IT]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 12,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 24,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Evoca\" [it-IT] home",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2614,10 +2590,10 @@
   {
    "route": "googlenews",
    "source": "\"Fressnapf\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 1,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 2,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2726,10 +2702,10 @@
   {
    "route": "googlenews",
    "source": "\"Garfunkelux\" [da-DK]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2742,18 +2718,18 @@
   {
    "route": "googlenews",
    "source": "\"Garfunkelux\" [en-GB]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Garfunkelux\" [fi-FI]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2774,10 +2750,10 @@
   {
    "route": "googlenews",
    "source": "\"Golden Goose\" [it-IT]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 2,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 4,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2806,10 +2782,10 @@
   {
    "route": "googlenews",
    "source": "\"Grunenthal\" [en-GB]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 1,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2822,10 +2798,10 @@
   {
    "route": "googlenews",
    "source": "\"Grunenthal\" [es-ES]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2838,10 +2814,10 @@
   {
    "route": "googlenews",
    "source": "\"HSE24\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2856,32 +2832,24 @@
    "source": "\"Hapag-Lloyd\" [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 19,
+   "items": 18,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Heimstaden\" [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 3,
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 6,
    "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "\"Heimstaden\" [sv-SE] home",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
    "source": "\"HelloFresh\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 18,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 36,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -2918,42 +2886,26 @@
   {
    "route": "googlenews",
    "source": "\"Home Shopping Europe\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"House of HR\" [fr-BE]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"House of HR\" [fr-BE] home",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
    "source": "\"House of HR\" [nl-BE]",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"House of HR\" [nl-BE] home",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
   },
   {
    "route": "googlenews",
@@ -2966,16 +2918,200 @@
   {
    "route": "googlenews",
    "source": "\"Intrum Hellas\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Intrum Hellas\" [en-IE]",
    "ok_runs": 2,
    "runs": 2,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [cs-CZ]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [da-DK]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [de-AT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [de-CH]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [de-DE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [el-GR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [en-GB]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [en-IE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [es-ES]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [fi-FI]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [fr-BE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [fr-CH]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [fr-FR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [hu-HU]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [it-IT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [lt-LT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [nb-NO]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [nl-BE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [nl-NL]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [pl-PL]",
+   "ok_runs": 0,
+   "runs": 1,
+   "items": 0,
+   "last_error": "run time budget reached while waiting for news.google.com"
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [pt-PT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [sk-SK]",
+   "ok_runs": 0,
+   "runs": 1,
+   "items": 0,
+   "last_error": "run time budget reached while waiting for news.google.com"
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum Justitia\" [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
    "items": 0,
    "last_error": ""
   },
@@ -3013,35 +3149,11 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:aepd.es [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:afm.nl [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:agcm.it [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:agefi.fr [fr-FR]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -3061,14 +3173,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:bafin.de [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:bancaditalia.it [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3077,10 +3181,26 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:bebeez.it [it-IT]",
+   "source": "\"Intrum\" site:bankingnews.gr [el-GR]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 1,
+   "items": 2,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:bankofgreece.gr [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:beobachter.ch [de-CH]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3117,14 +3237,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:bloomberg.com [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:bportugal.pt [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3137,6 +3249,22 @@
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:breakit.se [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:businessdaily.gr [el-GR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -3173,7 +3301,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:centralbank.ie [sv-SE]",
+   "source": "\"Intrum\" site:ccpc.ie [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3181,10 +3309,10 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:cincodias.elpais.com [es-ES]",
+   "source": "\"Intrum\" site:centralbank.ie [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 2,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3205,14 +3333,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:cnil.fr [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:cnmc.es [sv-SE]",
    "ok_runs": 0,
    "runs": 1,
@@ -3230,6 +3350,22 @@
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:coi.cz [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:corriere.it [it-IT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 1,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:credit-connect.co.uk [en-GB]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3285,14 +3421,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:derstandard.at [de-AT]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:di.se [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3325,11 +3453,27 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:dpa.gr [sv-SE]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:dn.se [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 1,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:dsb.gv.at [sv-SE]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:e15.cz [cs-CZ]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -3341,15 +3485,15 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:eba.europa.eu [sv-SE]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:echo-online.de [de-DE]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:eco.sapo.pt [pt-PT]",
+   "source": "\"Intrum\" site:economie.fgov.be [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3362,14 +3506,6 @@
    "runs": 1,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:ejeprime.com [es-ES]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -3389,6 +3525,22 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:elespanol.com [es-ES]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:elnortedecastilla.es [es-ES]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 2,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:euro2day.gr [el-GR]",
    "ok_runs": 1,
    "runs": 1,
@@ -3397,7 +3549,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:fca.org.uk [sv-SE]",
+   "source": "\"Intrum\" site:faz.net [de-DE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3405,7 +3557,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:finans.dk [da-DK]",
+   "source": "\"Intrum\" site:fca.org.uk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3469,15 +3621,23 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:forbrugerombudsmanden.dk [sv-SE]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:forbrukertilsynet.no [sv-SE]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:fsma.be [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:ft.com [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3493,7 +3653,15 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:fuw.ch [de-CH]",
+   "source": "\"Intrum\" site:garanteprivacy.it [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:globalcapital.com [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3549,15 +3717,23 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:hn.se [sv-SE]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:hnonline.sk [sk-SK]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:hnonline.sk [sk-SK]",
+   "source": "\"Intrum\" site:hs.fi [fi-FI]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:hvg.hu [hu-HU]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3573,7 +3749,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:idnes.cz [cs-CZ]",
+   "source": "\"Intrum\" site:ilsole24ore.com [it-IT]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3585,22 +3761,6 @@
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:imy.se [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:in.gr [el-GR]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 2,
    "last_error": ""
   },
   {
@@ -3621,10 +3781,26 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:intrum.at [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:intrum.be [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:intrum.com [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 1,
    "last_error": ""
   },
   {
@@ -3653,6 +3829,14 @@
   },
   {
    "route": "googlenews",
+   "source": "\"Intrum\" site:intrum.es [sv-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "\"Intrum\" site:intrum.fi [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3669,27 +3853,11 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.gr [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:intrum.hu [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.ie [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -3709,22 +3877,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.nl [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:intrum.no [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:intrum.pl [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -3733,15 +3885,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:irishtimes.com [en-IE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:is.fi [fi-FI]",
+   "source": "\"Intrum\" site:intrum.sk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3757,7 +3901,15 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:kathimerini.gr [el-GR]",
+   "source": "\"Intrum\" site:kauppalehti.fi [fi-FI]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 100,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:kkv.fi [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -3765,10 +3917,18 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:kauppalehti.fi [fi-FI]",
+   "source": "\"Intrum\" site:knf.gov.pl [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 100,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:konsument.at [de-AT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3797,14 +3957,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:lb.lt [sv-SE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:lefigaro.fr [fr-FR]",
    "ok_runs": 0,
    "runs": 1,
@@ -3813,11 +3965,19 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:lrt.lt [lt-LT]",
+   "source": "\"Intrum\" site:leprogres.fr [fr-FR]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
    "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:lesechos.fr [fr-FR]",
+   "ok_runs": 0,
+   "runs": 1,
+   "items": 0,
+   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -3837,14 +3997,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:money.pl [pl-PL]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:naftemporiki.gr [el-GR]",
    "ok_runs": 0,
    "runs": 1,
@@ -3861,18 +4013,18 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:napi.hu [hu-HU]",
-   "ok_runs": 0,
+   "source": "\"Intrum\" site:nbs.sk [sv-SE]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:newmoney.gr [el-GR]",
+   "source": "\"Intrum\" site:nettavisen.no [nb-NO]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 4,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -3898,14 +4050,6 @@
    "runs": 1,
    "items": 0,
    "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:nrc.nl [nl-NL]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -3997,14 +4141,6 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:realtid.se [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Intrum\" site:reorg.com [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
@@ -4018,6 +4154,14 @@
    "runs": 1,
    "items": 0,
    "last_error": "run time budget reached while waiting for news.google.com"
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:rp.pl [pl-PL]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4037,15 +4181,7 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:standaard.be [nl-BE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:sueddeutsche.de [de-DE]",
+   "source": "\"Intrum\" site:sme.sk [sv-SE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -4085,15 +4221,23 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Intrum\" site:theguardian.com [en-GB]",
+   "source": "\"Intrum\" site:thetimes.com [sv-SE]",
    "ok_runs": 0,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "\"Intrum\" site:thisismoney.co.uk [en-GB]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Intrum\" site:tijd.be [nl-BE]",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -4114,14 +4258,6 @@
    "runs": 1,
    "items": 0,
    "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Intrum\" site:uodo.gov.pl [sv-SE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
@@ -4182,10 +4318,10 @@
   {
    "route": "googlenews",
    "source": "\"Isabel Marant\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 2,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 4,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4213,11 +4349,11 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Lowell\" site:globenewswire.com [en-GB]",
-   "ok_runs": 0,
+   "source": "\"Lowell\" site:lowell.com [en-GB]",
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4230,10 +4366,10 @@
   {
    "route": "googlenews",
    "source": "\"Magnum Ice Cream Company\" [nl-NL]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4270,17 +4406,17 @@
   {
    "route": "googlenews",
    "source": "\"Maxeda\" [nl-NL]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"MediaMarkt\" [de-AT]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 24,
+   "items": 35,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -4288,7 +4424,7 @@
    "source": "\"MediaMarkt\" [de-CH]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 48,
+   "items": 47,
    "last_error": ""
   },
   {
@@ -4296,13 +4432,13 @@
    "source": "\"MediaMarkt\" [de-DE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 48,
+   "items": 47,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"MediaMarkt\" [en-GB]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
    "items": 0,
    "last_error": "run time budget reached while waiting for news.google.com"
@@ -4310,10 +4446,10 @@
   {
    "route": "googlenews",
    "source": "\"MediaMarkt\" [es-ES]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 21,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 27,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4334,10 +4470,10 @@
   {
    "route": "googlenews",
    "source": "\"MediaMarkt\" [nl-NL]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 30,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 40,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4358,10 +4494,10 @@
   {
    "route": "googlenews",
    "source": "\"Mein Schiff\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 9,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 18,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4382,17 +4518,17 @@
   {
    "route": "googlenews",
    "source": "\"Mobilux\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Motor Fuel Group\" [en-GB]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 2,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -4406,10 +4542,10 @@
   {
    "route": "googlenews",
    "source": "\"NABM\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4558,50 +4694,58 @@
   {
    "route": "googlenews",
    "source": "\"PRA Group\" [en-US]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Paragon Customer Communications\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "\"Paragon Customer Communications\" site:global.paragon.world [en-GB]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Pizza Express\" [en-GB]",
    "ok_runs": 1,
    "runs": 1,
-   "items": 5,
+   "items": 6,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"PizzaExpress\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 2,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 3,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"PureGym\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 1,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 2,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Quick\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 12,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 24,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4614,18 +4758,18 @@
   {
    "route": "googlenews",
    "source": "\"Qule Pharma\" [en-IN]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Ramirent\" [da-DK]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4654,18 +4798,18 @@
   {
    "route": "googlenews",
    "source": "\"Ramirent\" [fi-FI]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"Ramirent\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4678,10 +4822,10 @@
   {
    "route": "googlenews",
    "source": "\"Ramirent\" [pt-BR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4704,7 +4848,7 @@
    "source": "\"Rekeep\" [it-IT]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 2,
+   "items": 1,
    "last_error": ""
   },
   {
@@ -4726,10 +4870,10 @@
   {
    "route": "googlenews",
    "source": "\"SYNLAB\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4757,51 +4901,11 @@
   },
   {
    "route": "googlenews",
-   "source": "\"Sherwood Financing\" [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Sherwood Financing\" [en-IE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Sherwood Financing\" [it-IT]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Sherwood Financing\" [nl-NL]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "\"Sherwood Financing\" [pt-PT]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
    "source": "\"Skechers\" [en-US]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 9,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 18,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4878,10 +4982,10 @@
   {
    "route": "googlenews",
    "source": "\"TMICC\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -4902,7 +5006,7 @@
   {
    "route": "googlenews",
    "source": "\"TMICC\" [it-IT]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 2,
    "items": 0,
    "last_error": "run time budget reached while waiting for news.google.com"
@@ -4918,17 +5022,17 @@
   {
    "route": "googlenews",
    "source": "\"TUI Cruises\" [de-DE]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 9,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 17,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"TUI\" [de-DE]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 53,
+   "items": 54,
    "last_error": ""
   },
   {
@@ -4942,10 +5046,10 @@
   {
    "route": "googlenews",
    "source": "\"Tereos\" [fr-FR]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 3,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 6,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5006,10 +5110,10 @@
   {
    "route": "googlenews",
    "source": "\"Travelodge\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 1,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 2,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5086,9 +5190,9 @@
   {
    "route": "googlenews",
    "source": "\"Wagamama\" [en-GB]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 2,
-   "items": 0,
+   "items": 1,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -5102,10 +5206,10 @@
   {
    "route": "googlenews",
    "source": "\"airBaltic\" [lv-LV]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 15,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 31,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5326,10 +5430,10 @@
   {
    "route": "googlenews",
    "source": "\"国药现代\" [zh-CN]",
-   "ok_runs": 0,
+   "ok_runs": 1,
    "runs": 1,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5366,10 +5470,10 @@
   {
    "route": "googlenews",
    "source": "\"川宁生物\" [en-GB]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5384,16 +5488,16 @@
    "source": "\"抗生素\" [zh-CN]",
    "ok_runs": 2,
    "runs": 2,
-   "items": 29,
+   "items": 27,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"抗生素\" [zh-HK]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
-   "items": 6,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 12,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5488,24 +5592,24 @@
    "source": "\"阿莫西林\" [zh-CN]",
    "ok_runs": 1,
    "runs": 2,
-   "items": 3,
+   "items": 4,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "\"阿莫西林\" [zh-HK]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "\"青霉素工业盐\" [zh-CN]",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5568,7 +5672,7 @@
    "source": "(\"Adler Group\" OR \"Advanz Pharma\" OR \"Axactor\" OR \"Biogroup\" OR \"Boels\" OR \"Branicks\") [de-DE]",
    "ok_runs": 3,
    "runs": 4,
-   "items": 13,
+   "items": 12,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -5576,7 +5680,7 @@
    "source": "(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 122,
+   "items": 123,
    "last_error": ""
   },
   {
@@ -5589,26 +5693,10 @@
   },
   {
    "route": "googlenews",
-   "source": "(\"Adler Group\" OR \"Branicks\" OR \"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Fressnapf\") site:verbraucherzentrale.de [en-DE]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
-   "source": "(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Co-operative Group\" OR \"Froneri\" OR \"Keepmoat\") site:ico.org.uk [en-GB]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\") [en-IE]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 343,
+   "items": 342,
    "last_error": ""
   },
   {
@@ -5750,10 +5838,10 @@
   {
    "route": "googlenews",
    "source": "(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\") [en-US]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 95,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 128,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5773,14 +5861,6 @@
   },
   {
    "route": "googlenews",
-   "source": "(\"Axactor\" OR \"B2 Impact\") site:finanstilsynet.no [en-NO]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
-  },
-  {
-   "route": "googlenews",
    "source": "(\"Axactor\" OR \"B2 Impact\") site:forbrukertilsynet.no [en-NO]",
    "ok_runs": 1,
    "runs": 1,
@@ -5790,9 +5870,9 @@
   {
    "route": "googlenews",
    "source": "(\"Axactor\" OR \"Biogroup\" OR \"Ceconomy\" OR \"doValue\" OR \"Elior\" OR \"Europcar\") [es-ES]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 2,
+   "items": 3,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -5814,9 +5894,9 @@
   {
    "route": "googlenews",
    "source": "(\"B2 Impact\" OR \"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Kiloutou\") [pl-PL]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 3,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 4,
    "last_error": ""
   },
   {
@@ -5824,7 +5904,7 @@
    "source": "(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\") [en-GB]",
    "ok_runs": 3,
    "runs": 4,
-   "items": 254,
+   "items": 252,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -5838,17 +5918,17 @@
   {
    "route": "googlenews",
    "source": "(\"Biogroup\" OR \"Boels\" OR \"House of HR\" OR \"Intrum\" OR \"Manuchar\" OR \"Maxeda\") [nl-BE]",
-   "ok_runs": 2,
-   "runs": 3,
+   "ok_runs": 3,
+   "runs": 4,
    "items": 0,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "(\"Biogroup\" OR \"Cerba\" OR \"House of HR\" OR \"Intrum\" OR \"Manuchar\" OR \"Maxeda\") [fr-BE]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 2,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 3,
    "last_error": ""
   },
   {
@@ -5862,18 +5942,18 @@
   {
    "route": "googlenews",
    "source": "(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\") [de-AT]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 21,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 29,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Boels\" OR \"Design Holding\" OR \"Heimstaden\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\") [da-DK]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 9,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 12,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5958,10 +6038,10 @@
   {
    "route": "googlenews",
    "source": "(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\") [de-DE]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 12,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 16,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -5974,9 +6054,9 @@
   {
    "route": "googlenews",
    "source": "(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\") [hu-HU]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 4,
+   "items": 6,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6024,7 +6104,7 @@
    "source": "(\"Co-operative Group\" OR \"DEMIRE\" OR \"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 42,
+   "items": 41,
    "last_error": ""
   },
   {
@@ -6086,10 +6166,18 @@
   {
    "route": "googlenews",
    "source": "(\"Europcar\" OR \"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"House of HR\" OR \"Intrum\") [fr-FR]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 5,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 6,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "(\"Europcar\" OR \"iQera\" OR \"Isabel Marant\" OR \"Kiloutou\" OR \"Loxam\" OR \"Mobilux\") site:cnil.fr [en-FR]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6126,9 +6214,9 @@
   {
    "route": "googlenews",
    "source": "(\"Flora Food\" OR \"Design Holding\" OR \"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"Grifols\") [en-GB]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 30,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 40,
    "last_error": ""
   },
   {
@@ -6150,9 +6238,9 @@
   {
    "route": "googlenews",
    "source": "(\"Froneri\" OR \"Grifols\" OR \"Grünenthal\" OR \"Intrum\" OR \"Kiloutou\" OR \"Loxam\") [es-ES]",
-   "ok_runs": 2,
-   "runs": 3,
-   "items": 42,
+   "ok_runs": 3,
+   "runs": 4,
+   "items": 63,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6174,18 +6262,26 @@
   {
    "route": "googlenews",
    "source": "(\"Golden Goose\" OR \"Intrum\" OR \"iQera\" OR \"Kiloutou\" OR \"Merlin Entertainments\" OR \"PRA Group\") [it-IT]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 6,
+   "items": 9,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\") [en-US]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 87,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 116,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "(\"Grifols\") site:cnmc.es [en-ES]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6200,7 +6296,7 @@
    "source": "(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\") [fr-FR]",
    "ok_runs": 3,
    "runs": 4,
-   "items": 53,
+   "items": 52,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6213,18 +6309,10 @@
   },
   {
    "route": "googlenews",
-   "source": "(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\") site:economie.gouv.fr [en-FR]",
-   "ok_runs": 1,
-   "runs": 1,
-   "items": 0,
-   "last_error": ""
-  },
-  {
-   "route": "googlenews",
    "source": "(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\") [en-GB]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 57,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 76,
    "last_error": ""
   },
   {
@@ -6261,19 +6349,27 @@
   },
   {
    "route": "googlenews",
+   "source": "(\"Heimstaden\" OR \"Intrum\" OR \"Samhällsbyggnadsbolaget\") site:konsumentverket.se [en-SE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
    "source": "(\"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\") [de-DE]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 76,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 100,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"HelloFresh\" OR \"House of HR\" OR \"Intrum\" OR \"Maxeda\" OR \"Takko\" OR \"Magnum Ice Cream Company\") [nl-NL]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 3,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 4,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6282,6 +6378,14 @@
    "runs": 2,
    "items": 47,
    "last_error": "run time budget reached while waiting for news.google.com"
+  },
+  {
+   "route": "googlenews",
+   "source": "(\"House of HR\" OR \"Manuchar\") site:fsma.be [en-BE]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6296,15 +6400,15 @@
    "source": "(\"Intrum\" OR \"iQera\" OR \"Isabel Marant\" OR \"Keepmoat\" OR \"Kiloutou\" OR \"Lowell\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 194,
+   "items": 195,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Intrum\") [fr-CH]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 3,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 4,
    "last_error": ""
   },
   {
@@ -6342,26 +6446,26 @@
   {
    "route": "googlenews",
    "source": "(\"Loxam\" OR \"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Mobilux\" OR \"Motor Fuel Group\") [en-GB]",
-   "ok_runs": 2,
-   "runs": 3,
-   "items": 16,
+   "ok_runs": 3,
+   "runs": 4,
+   "items": 24,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "(\"Loxam\" OR \"Manuchar\" OR \"Tereos\") [pt-BR]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 27,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 36,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Loxam\" OR \"Merlin Entertainments\" OR \"PureGym\") [da-DK]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6374,10 +6478,10 @@
   {
    "route": "googlenews",
    "source": "(\"Loxam\" OR \"Samhällsbyggnadsbolaget\") [sv-SE]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6406,9 +6510,9 @@
   {
    "route": "googlenews",
    "source": "(\"Manuchar\" OR \"PRA Group\" OR \"SYNLAB\" OR \"Travelodge\" OR \"TUI\") [es-ES]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 101,
+   "items": 151,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6446,10 +6550,10 @@
   {
    "route": "googlenews",
    "source": "(\"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\" OR \"PureGym\" OR \"Quick\") [en-GB]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6496,7 +6600,7 @@
    "source": "(\"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\") [en-US]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 107,
+   "items": 108,
    "last_error": ""
   },
   {
@@ -6598,17 +6702,17 @@
   {
    "route": "googlenews",
    "source": "(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\") [it-IT]",
-   "ok_runs": 3,
-   "runs": 3,
-   "items": 18,
+   "ok_runs": 4,
+   "runs": 4,
+   "items": 23,
    "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Rekeep\" OR \"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\" OR \"Südzucker\") [en-GB]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 27,
+   "items": 41,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6630,10 +6734,10 @@
   {
    "route": "googlenews",
    "source": "(\"SYNLAB\" OR \"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\") [en-GB]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 33,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 44,
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6702,33 +6806,33 @@
   {
    "route": "googlenews",
    "source": "(\"TUI\" OR \"Versuni\") [nl-NL]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 53,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 71,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"TUI\" OR \"Vivion\" OR \"Worldline\") [de-DE]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 91,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 121,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"TUI\") [de-AT]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 87,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "items": 116,
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"Teva\") [he-IL]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 2,
+   "items": 3,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6760,7 +6864,7 @@
    "source": "(\"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\" OR \"Vivion\") [en-GB]",
    "ok_runs": 2,
    "runs": 4,
-   "items": 65,
+   "items": 64,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
@@ -6824,7 +6928,7 @@
    "source": "(\"Wagamama\" OR \"Worldline\") [en-GB]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 16,
+   "items": 14,
    "last_error": ""
   },
   {
@@ -6854,10 +6958,10 @@
   {
    "route": "googlenews",
    "source": "(\"Worldline\") [fr-FR]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6886,26 +6990,26 @@
   {
    "route": "googlenews",
    "source": "(\"airBaltic\" OR \"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Intrum\" OR \"Lowell\") [fi-FI]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
    "source": "(\"airBaltic\" OR \"Intrum\") [lt-LT]",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 4,
+   "items": 6,
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
    "route": "googlenews",
    "source": "(\"airBaltic\") [et-EE]",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for news.google.com"
+   "last_error": ""
   },
   {
    "route": "googlenews",
@@ -6920,7 +7024,15 @@
    "source": "(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\") [it-IT]",
    "ok_runs": 4,
    "runs": 4,
-   "items": 49,
+   "items": 48,
+   "last_error": ""
+  },
+  {
+   "route": "googlenews",
+   "source": "(\"doValue\" OR \"Evoca\" OR \"Design Holding\" OR \"Golden Goose\" OR \"Rekeep\" OR \"Recordati\") site:consob.it [en-IT]",
+   "ok_runs": 1,
+   "runs": 1,
+   "items": 0,
    "last_error": ""
   },
   {
@@ -6956,78 +7068,6 @@
    "last_error": "run time budget reached while waiting for news.google.com"
   },
   {
-   "route": "googlenews",
-   "source": "group0 1 names [fr-CH]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group0 6 names [fr-BE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group0 6 names [nl-BE]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group0 6 names [pl-PL]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group1 6 names [es-ES]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group3 6 names [it-IT]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group4 6 names [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group5 6 names [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "googlenews",
-   "source": "group7 6 names [en-GB]",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
    "route": "page",
    "source": "Biogroup investor news",
    "ok_runs": 0,
@@ -7045,30 +7085,6 @@
   },
   {
    "route": "page",
-   "source": "Forbes Italia tag",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "page",
-   "source": "HSE press releases (Presseportal)",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "page",
-   "source": "Intrum Norway press",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "skipped: run time budget reached"
-  },
-  {
-   "route": "page",
    "source": "Newmoney tag",
    "ok_runs": 0,
    "runs": 2,
@@ -7078,6 +7094,22 @@
   {
    "route": "page",
    "source": "https://forbes.it/tag/intrum-italy/",
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "page",
+   "source": "https://invest.biogroup.fr/",
+   "ok_runs": 2,
+   "runs": 2,
+   "items": 0,
+   "last_error": ""
+  },
+  {
+   "route": "page",
+   "source": "https://invest.biogroup.fr/news/",
    "ok_runs": 1,
    "runs": 1,
    "items": 0,
@@ -7085,35 +7117,19 @@
   },
   {
    "route": "page",
-   "source": "https://invest.biogroup.fr/",
-   "ok_runs": 1,
-   "runs": 2,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for invest.biogroup.fr"
-  },
-  {
-   "route": "page",
-   "source": "https://invest.biogroup.fr/news/",
-   "ok_runs": 0,
-   "runs": 1,
-   "items": 0,
-   "last_error": "run time budget reached while waiting for invest.biogroup.fr"
-  },
-  {
-   "route": "page",
    "source": "https://mfn.se/all/a/intrum",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for mfn.se"
+   "last_error": ""
   },
   {
    "route": "page",
    "source": "https://sdbio.eu/category/fil-dinfo/",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for sdbio.eu"
+   "last_error": ""
   },
   {
    "route": "page",
@@ -7182,10 +7198,10 @@
   {
    "route": "page",
    "source": "https://www.intrum.dk/kreditstyring-for-virksomheder/om-intrum/newsroom/",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for www.intrum.dk"
+   "last_error": ""
   },
   {
    "route": "page",
@@ -7198,10 +7214,10 @@
   {
    "route": "page",
    "source": "https://www.intrum.fi/tiedotteet/",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for www.intrum.fi"
+   "last_error": ""
   },
   {
    "route": "page",
@@ -7230,10 +7246,10 @@
   {
    "route": "page",
    "source": "https://www.intrum.it/le-nostre-soluzioni-per-le-aziende/about-intrum/newsroom/comunicati-stampa-news/",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 2,
    "items": 0,
-   "last_error": "run time budget reached while waiting for www.intrum.it"
+   "last_error": ""
   },
   {
    "route": "page",
@@ -7246,8 +7262,8 @@
   {
    "route": "page",
    "source": "https://www.intrum.no/bedriftstjenester/om-intrum/presse/",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -7288,7 +7304,7 @@
    "source": "https://www.mononews.gr/tag/intrum-hellas",
    "ok_runs": 2,
    "runs": 2,
-   "items": 0,
+   "items": 2,
    "last_error": ""
   },
   {
@@ -7304,14 +7320,14 @@
    "source": "https://www.ot.gr/tag/intrum-hellas/",
    "ok_runs": 2,
    "runs": 2,
-   "items": 0,
+   "items": 1,
    "last_error": ""
   },
   {
    "route": "page",
    "source": "https://www.presseportal.ch/de/nr/100007850",
-   "ok_runs": 1,
-   "runs": 1,
+   "ok_runs": 2,
+   "runs": 2,
    "items": 0,
    "last_error": ""
   },
@@ -7326,18 +7342,18 @@
   {
    "route": "rss",
    "source": "AD Amersfoort (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "skipped: run time budget reached"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Affaritaliani (IT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 15,
-   "last_error": "run time budget reached while waiting for www.affaritaliani.it"
+   "items": 20,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7350,18 +7366,18 @@
   {
    "route": "rss",
    "source": "Alicante Plaza (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "run time budget reached while waiting for alicanteplaza.es"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "BFM Business (FR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.bfmtv.com"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7414,10 +7430,10 @@
   {
    "route": "rss",
    "source": "Brainsre News (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 30,
-   "last_error": "run time budget reached while waiting for brainsre.news"
+   "items": 40,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7462,10 +7478,10 @@
   {
    "route": "rss",
    "source": "Børsen (DK)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 78,
-   "last_error": "run time budget reached while waiting for borsen.dk"
+   "items": 104,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7478,10 +7494,10 @@
   {
    "route": "rss",
    "source": "Capital.fr (FR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 30,
-   "last_error": "skipped: run time budget reached"
+   "items": 40,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7494,42 +7510,42 @@
   {
    "route": "rss",
    "source": "Cinco Días (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 248,
-   "last_error": "run time budget reached while waiting for feeds.elpais.com"
+   "items": 323,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "City A.M. (GB)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.cityam.com"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Corriere Economia (IT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 393,
-   "last_error": "skipped: run time budget reached"
+   "items": 524,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Credit Connect (GB)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 30,
-   "last_error": "skipped: run time budget reached"
+   "items": 40,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Credit Strategy (GB)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "skipped: run time budget reached"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7550,10 +7566,10 @@
   {
    "route": "rss",
    "source": "Dagens Nyheter Ekonomi (SE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 309,
-   "last_error": "run time budget reached while waiting for www.dn.se"
+   "items": 412,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7614,10 +7630,10 @@
   {
    "route": "rss",
    "source": "Delfi Bizness (LV)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for www.delfi.lv"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7632,56 +7648,56 @@
    "source": "Der Standard Wirtschaft (AT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 628,
+   "items": 629,
    "last_error": ""
   },
   {
    "route": "rss",
    "source": "Die Presse Wirtschaft (AT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 256,
-   "last_error": "skipped: run time budget reached"
+   "items": 337,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Dienas Bizness (LV)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for db.lv"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Dinheiro Vivo (PT)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 13,
+   "items": 8,
    "last_error": ""
   },
   {
    "route": "rss",
    "source": "E15 (CZ)",
-   "ok_runs": 1,
+   "ok_runs": 2,
    "runs": 4,
-   "items": 46,
-   "last_error": "skipped: run time budget reached"
+   "items": 92,
+   "last_error": "run time budget reached while waiting for www.e15.cz"
   },
   {
    "route": "rss",
    "source": "E24 (NO)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 117,
-   "last_error": "skipped: run time budget reached"
+   "items": 156,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "ECO (PT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 66,
-   "last_error": "run time budget reached while waiting for eco.sapo.pt"
+   "items": 88,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7694,9 +7710,9 @@
   {
    "route": "rss",
    "source": "ERR Majandus (EE)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 100,
+   "items": 150,
    "last_error": "run time budget reached while waiting for www.err.ee"
   },
   {
@@ -7710,10 +7726,10 @@
   {
    "route": "rss",
    "source": "EjePrime (ES)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "run time budget reached while waiting for www.ejeprime.com"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7729,7 +7745,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "run time budget reached while waiting for www.eleconomista.es"
+   "last_error": "HTTP 403 for https://www.eleconomista.es/rss/rss-empresas.php"
   },
   {
    "route": "rss",
@@ -7750,26 +7766,26 @@
   {
    "route": "rss",
    "source": "Euro2day (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 600,
-   "last_error": "run time budget reached while waiting for www.euro2day.gr"
+   "items": 800,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Expansión Empresas (ES)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 100,
-   "last_error": "skipped: run time budget reached"
+   "items": 150,
+   "last_error": "run time budget reached while waiting for e00-expansion.uecdn.es"
   },
   {
    "route": "rss",
    "source": "FAZ Wirtschaft (DE)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 106,
-   "last_error": "skipped: run time budget reached"
+   "items": 159,
+   "last_error": "run time budget reached while waiting for www.faz.net"
   },
   {
    "route": "rss",
@@ -7830,9 +7846,9 @@
   {
    "route": "rss",
    "source": "Funds Society (ES)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 2,
+   "items": 3,
    "last_error": "run time budget reached while waiting for www.fundssociety.com"
   },
   {
@@ -7854,18 +7870,18 @@
   {
    "route": "rss",
    "source": "Göteborgs-Posten Ekonomi (SE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 72,
-   "last_error": "run time budget reached while waiting for feeds.acast.com"
+   "items": 96,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "HLN Geld (BE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.hln.be"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7878,9 +7894,9 @@
   {
    "route": "rss",
    "source": "Hallands Nyheter (Varberg) (SE)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 24,
+   "items": 36,
    "last_error": "run time budget reached while waiting for www.hn.se"
   },
   {
@@ -7902,26 +7918,26 @@
   {
    "route": "rss",
    "source": "Helsingin Sanomat Talous (FI)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 196,
-   "last_error": "skipped: run time budget reached"
+   "items": 294,
+   "last_error": "run time budget reached while waiting for www.hs.fi"
   },
   {
    "route": "rss",
    "source": "Het Financieele Dagblad (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 117,
-   "last_error": "skipped: run time budget reached"
+   "items": 157,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Het Nieuwsblad (Gent) (BE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for www.nieuwsblad.be"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7934,9 +7950,9 @@
   {
    "route": "rss",
    "source": "Hospodářské noviny (CZ)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 300,
+   "items": 450,
    "last_error": "run time budget reached while waiting for hn.cz"
   },
   {
@@ -7950,10 +7966,10 @@
   {
    "route": "rss",
    "source": "Il Sole 24 Ore Finanza (IT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 12,
-   "last_error": "skipped: run time budget reached"
+   "items": 16,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7974,10 +7990,10 @@
   {
    "route": "rss",
    "source": "Index Gazdaság (HU)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 144,
-   "last_error": "run time budget reached while waiting for index.hu"
+   "items": 192,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -7990,18 +8006,18 @@
   {
    "route": "rss",
    "source": "Irish Examiner Business (IE)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 18,
-   "last_error": "skipped: run time budget reached"
+   "items": 27,
+   "last_error": "run time budget reached while waiting for www.irishexaminer.com"
   },
   {
    "route": "rss",
    "source": "Irish Independent Business (IE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for www.independent.ie"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8022,9 +8038,9 @@
   {
    "route": "rss",
    "source": "Jornal de Negócios (PT)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 40,
+   "items": 60,
    "last_error": "run time budget reached while waiting for www.jornaldenegocios.pt"
   },
   {
@@ -8049,7 +8065,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (homepage unreachable; 29 candidates tried)"
   },
   {
    "route": "rss",
@@ -8070,10 +8086,10 @@
   {
    "route": "rss",
    "source": "L'Agefi (FR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 750,
-   "last_error": "run time budget reached while waiting for www.agefi.fr"
+   "items": 1000,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8081,15 +8097,15 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (homepage unreachable; 29 candidates tried)"
   },
   {
    "route": "rss",
    "source": "LRT Verslas (LT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "run time budget reached while waiting for www.lrt.lt"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8145,7 +8161,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "HTTP 403 for https://services.lesechos.fr/rss/les-echos-finance-marches.xml"
   },
   {
    "route": "rss",
@@ -8174,41 +8190,41 @@
   {
    "route": "rss",
    "source": "Money.pl (PL)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 30,
-   "last_error": "skipped: run time budget reached"
+   "items": 45,
+   "last_error": "run time budget reached while waiting for www.money.pl"
   },
   {
    "route": "rss",
    "source": "Mononews (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.mononews.gr"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "NRC Economie (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 487,
-   "last_error": "run time budget reached while waiting for www.nrc.nl"
+   "items": 650,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "NU.nl Economie (NL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "skipped: run time budget reached"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "NZZ Wirtschaft (CH)",
    "ok_runs": 3,
    "runs": 4,
-   "items": 236,
+   "items": 235,
    "last_error": "run time budget reached while waiting for www.nzz.ch"
   },
   {
@@ -8238,18 +8254,18 @@
   {
    "route": "rss",
    "source": "Netzwoche (DE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "run time budget reached while waiting for www.netzwoche.ch"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Newmoney (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.newmoney.gr"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8262,10 +8278,10 @@
   {
    "route": "rss",
    "source": "ORF Wirtschaft (AT)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 87,
-   "last_error": "run time budget reached while waiting for rss.orf.at"
+   "items": 116,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8318,18 +8334,18 @@
   {
    "route": "rss",
    "source": "Postimees Majandus (EE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 75,
-   "last_error": "run time budget reached while waiting for majandus.postimees.ee"
+   "items": 100,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Powergame (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 120,
-   "last_error": "run time budget reached while waiting for www.powergame.gr"
+   "items": 160,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8350,33 +8366,33 @@
   {
    "route": "rss",
    "source": "Privata Affärer (SE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 300,
-   "last_error": "run time budget reached while waiting for privataaffarer.se"
+   "items": 400,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Privátbankár (HU)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 144,
-   "last_error": "run time budget reached while waiting for privatbankar.hu"
+   "items": 192,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "Puls Biznesu (PL)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 180,
-   "last_error": "skipped: run time budget reached"
+   "items": 240,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "RTL Nieuws Economie (NL)",
    "ok_runs": 4,
    "runs": 4,
-   "items": 3231,
+   "items": 3227,
    "last_error": ""
   },
   {
@@ -8414,10 +8430,10 @@
   {
    "route": "rss",
    "source": "SME Ekonomika (SK)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 60,
-   "last_error": "skipped: run time budget reached"
+   "items": 80,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8430,10 +8446,10 @@
   {
    "route": "rss",
    "source": "Skift (US)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 30,
-   "last_error": "run time budget reached while waiting for skift.com"
+   "items": 40,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8441,7 +8457,7 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (homepage unreachable; 58 candidates tried)"
   },
   {
    "route": "rss",
@@ -8470,10 +8486,10 @@
   {
    "route": "rss",
    "source": "TVNET (LV)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 72,
-   "last_error": "run time budget reached while waiting for www.tvnet.lv"
+   "items": 96,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8510,10 +8526,10 @@
   {
    "route": "rss",
    "source": "The Economic Times (IN)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 228,
-   "last_error": "run time budget reached while waiting for economictimes.indiatimes.com"
+   "items": 304,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8545,14 +8561,14 @@
    "ok_runs": 0,
    "runs": 4,
    "items": 0,
-   "last_error": "skipped: run time budget reached"
+   "last_error": "no feed url (no feed found; 29 candidates tried)"
   },
   {
    "route": "rss",
    "source": "Trends (BE)",
-   "ok_runs": 2,
+   "ok_runs": 3,
    "runs": 4,
-   "items": 100,
+   "items": 150,
    "last_error": "run time budget reached while waiting for trends.knack.be"
   },
   {
@@ -8574,10 +8590,10 @@
   {
    "route": "rss",
    "source": "Világgazdaság (HU)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for www.vg.hu"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8630,18 +8646,18 @@
   {
    "route": "rss",
    "source": "in.gr Οικονομία (GR)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 150,
-   "last_error": "run time budget reached while waiting for www.in.gr"
+   "items": 200,
+   "last_error": ""
   },
   {
    "route": "rss",
    "source": "manager magazin (DE)",
-   "ok_runs": 3,
+   "ok_runs": 4,
    "runs": 4,
-   "items": 90,
-   "last_error": "run time budget reached while waiting for www.manager-magazin.de"
+   "items": 120,
+   "last_error": ""
   },
   {
    "route": "rss",
@@ -8653,12 +8669,12 @@
   }
  ],
  "stats": {
-  "items": 70952,
-  "candidates": 61069,
-  "screened": 9883,
-  "matches": 71067,
-  "runs": 1883,
-  "clusters": 50430,
+  "items": 70963,
+  "candidates": 61078,
+  "screened": 9885,
+  "matches": 71078,
+  "runs": 1884,
+  "clusters": 50437,
   "pages_tracked": 29,
   "feeds_known": 119
  },
