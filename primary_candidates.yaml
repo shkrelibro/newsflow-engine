@@ -1,0 +1,293 @@
+# NOT loaded by the engine. Sources found in the September 2026 sweep that could not be confirmed
+# as fetchable link lists: JS-rendered shells, login portals, robots/WAF blocks, or pages fetched
+# without any article link visible. scripts/check_primary.py --candidates fetches each one and
+# reports how many links match; a page that shows links moves to primary.yaml by hand.
+
+names:
+  abfoods:   # Associated British Foods
+    - {url: "https://www.abf.co.uk/media/news", kind: "newsroom", reason: "JS-rendered hub; sample link came from search", link_pattern: 'abf\.co\.uk/media/news/\d{4}/.+'}
+  adidas:   # Adidas
+    - {url: "https://www.adidas-group.com/en/investors/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'news\.adidas\.com/[a-z-]+/.+/s/[0-9a-f-]+'}
+  adler:   # Adler Group
+    - {url: "https://www.luxse.com/issuer/AdlerGroup/73527", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  advanz:   # Advanz Pharma
+    - {url: "https://investors.advanzpharma.com/", kind: "investor page", reason: "gated", link_pattern: 'advanzpharma\.com/news/\d{4}/.+'}
+  adyen:   # Adyen
+    - {url: "https://www.adyen.com/press-and-media/newsroom", kind: "newsroom", reason: "JS SPA."}
+    - {url: "https://investors.adyen.com/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  airbaltic:   # airBaltic
+    - {url: "https://dm.epiq11.com/case/airbaltic/info", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  airfranceklm:   # Air France-KLM
+    - {url: "https://www.airfranceklm.com/en/finance/publications/latest-financial-press-releases", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'airfranceklm\.com/en/newsroom/.+'}
+  alten:   # Alten
+    - {url: "https://www.alten.com/fr/investisseurs/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'alten\.com/fr/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  amazon:   # Amazon
+    - {url: "https://ir.aboutamazon.com/news-release/default.aspx", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'press\.aboutamazon\.com/(?:[a-z-]+/)?\d{4}/\d{1,2}/.+'}
+  amrest:   # AmRest
+    - {url: "https://www.amrest.eu/en/investors/communications-regulators", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'amrest\.eu/en/news/.+'}
+  applegreen:   # Applegreen
+    - {url: "https://www.applegreenstores.com/about-us/news-events/", kind: "newsroom", reason: "JS-rendered."}
+  aramark:   # Aramark
+    - {url: "https://aramark.gcs-web.com/news-releases", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'aramark\.com/newsroom/news/\d{4}/[a-z]+/.+|aramark\.gcs-web\.com/news-releases/news-release-details/.+'}
+  asda:   # Asda
+    - {url: "https://corporate.asda.com/press-releases", kind: "newsroom", reason: "JS SPA."}
+  ashtead:   # Ashtead Group
+    - {url: "https://www.ashtead-group.com/investors/regulatory-news/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'ashtead-group\.com/newsroom/news/\d{4}/.+'}
+  aurelius:   # Aurelius Group
+    - {url: "https://www.aurelius-group.com/all-news", kind: "newsroom", reason: "JS-rendered list; sample link came from search", link_pattern: 'aurelius-group\.com/en/[a-z-]+/news/press-releases/.+'}
+  aurobindo:   # Aurobindo Pharma
+    - {url: "https://www.aurobindo.com/media/press-releases", kind: "newsroom", reason: "JS-rendered."}
+    - {url: "https://www.aurobindo.com/investors", kind: "investor page", reason: "not fetched in the comp sweep"}
+  avis:   # Avis Budget Group
+    - {url: "https://ir.avisbudgetgroup.com/financial-information/sec-filings", kind: "investor page", reason: "unverified", link_pattern: 'ir\.avisbudgetgroup\.com/news-releases/news-release-details/.+'}
+  axactor:   # Axactor
+    - {url: "https://newsweb.oslobors.no/", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  azelis:   # Azelis
+    - {url: "https://www.azelis.com/en/news", kind: "newsroom", reason: "Timeouts; hrefs not exposed."}
+  b2impact:   # B2 Impact
+    - {url: "https://live.euronext.com/en/product/equities/NO0010633951-XOSL/company-information", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  barrattredrow:   # Barratt Redrow
+    - {url: "https://www.barrattredrow.co.uk/investors/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'otp\.tools\.investis\.com/clients/uk/barratt2/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  basicfit:   # Basic-Fit
+    - {url: "https://corporate.basic-fit.com/investors/press-releases", kind: "newsroom", reason: "JS-rendered list; document links came from search", link_pattern: 'corporate\.basic-fit\.com/docs/.+'}
+  bayer:   # Bayer
+    - {url: "https://www.bayer.com/en/investors/investor-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'bayer\.com/media/en-us/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  bellway:   # Bellway
+    - {url: "https://www.bellwayplc.co.uk/investor-centre/regulatory-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'bellwayplc\.co\.uk/media-centre/news/.+'}
+  boohoo:   # boohoo
+    - {url: "https://www.debenhamsgroup.com/media-centre", kind: "newsroom", reason: "Renamed Debenhams Group; JS links."}
+    - {url: "https://www.debenhamsgroup.com/investors", kind: "investor page", reason: "not fetched in the comp sweep"}
+  booking:   # Booking Holdings
+    - {url: "https://ir.bookingholdings.com/news/default.aspx", kind: "newsroom", reason: "JS shell."}
+    - {url: "https://ir.bookingholdings.com/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  boots:   # Boots UK
+    - {url: "https://www.boots-uk.com/newsroom/", kind: "newsroom", reason: "article list renders client-side; hrefs seen only via search results", link_pattern: 'boots-uk\.com/newsroom/news-item/.+'}
+  bosch:   # Bosch
+    - {url: "https://www.bosch-presse.de/pressportal/de/en/", kind: "newsroom", reason: "Group press portal, JS-rendered."}
+  branicks:   # Branicks Group
+    - {url: "https://branicks.com/en/ir/overview/", kind: "investor page", reason: "unverified", link_pattern: 'branicks\.com/en/branicks-group-ag-.+'}
+  brenntag:   # Brenntag
+    - {url: "https://corporate.brenntag.com/en/media/news/", kind: "newsroom", reason: "JS-rendered."}
+    - {url: "https://corporate.brenntag.com/en/investor-relations/financial-news/ir-news/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  bricodepot:   # Brico Dépôt
+    - {url: "https://www.kingfisher.com/media/news", kind: "newsroom", reason: "parent Kingfisher page (JS hub); no standalone newsroom", link_pattern: 'kingfisher\.com/media/news/\d{4}/.+'}
+  caimmo:   # CA Immo
+    - {url: "https://www.caimmo.com/en/investor-relations/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'caimmo\.com/en/press-corner/news/news-detail/.+'}
+  campbells:   # Campbell's
+    - {url: "https://investor.thecampbellscompany.com/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'thecampbellscompany\.com/newsroom/press-releases/.+'}
+  carnival:   # Carnival Corporation
+    - {url: "https://www.carnivalcorp.com/news-releases", kind: "newsroom", reason: "Third-party IR API."}
+  castellum:   # Castellum
+    - {url: "https://www.castellum.se/media/pressmeddelanden/", kind: "newsroom", reason: "JS-loaded list."}
+    - {url: "https://www.castellum.se/investerare/finansiella-rapporter/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  centrakor:   # Centrakor
+    - {url: "https://centrakor.b2p.fr/", kind: "newsroom", reason: "Hosted press room."}
+  centrient:   # Centrient Pharmaceuticals
+    - {url: "https://centrient.com/investor-relations", kind: "investor page", reason: "unverified", link_pattern: 'centrient\.com/media/.+'}
+  circlek:   # Circle K
+    - {url: "https://corporate.couche-tard.com/financial-releases", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'corporate\.couche-tard\.com/\d{4}-\d{2}-\d{2}-.+'}
+  cmacgm:   # CMA CGM
+    - {url: "https://www.cmacgm-group.com/en/investors-homepage", kind: "investor page", reason: "gated", link_pattern: 'cma-cgm\.com/news/\d+/.+'}
+  comcast:   # Comcast
+    - {url: "https://corporate.comcast.com/press/releases", kind: "newsroom", reason: "Dynamic list."}
+  compass:   # Compass Group
+    - {url: "https://www.compass-group.com/en/investors/results-and-presentations.html", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'compass-group\.com/en/media/news/\d{4}/.+'}
+  cpiproperty:   # CPI Property Group
+    - {url: "https://cpipg.com/en/media/regulatory-news", kind: "newsroom", reason: "JS-rendered list."}
+    - {url: "https://cpipg.com/en/for-investors/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  cristalunion:   # Cristal Union
+    - {url: "https://www.cristal-union.fr/actualites-communiques-de-presse/", kind: "newsroom", reason: "JS-rendered."}
+  crocs:   # Crocs
+    - {url: "https://investors.crocs.com/news-and-events/press-releases/default.aspx", kind: "newsroom", reason: "RSS confirmed."}
+  cspc:   # CSPC Pharmaceutical
+    - {url: "https://www.cspc.com.hk/en/ir/announcements.php", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'doc\.irasia\.com/listco/hk/cspc/.+\.pdf'}
+  deckers:   # Deckers
+    - {url: "https://ir.deckers.com/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'ir\.deckers\.com/news-events/press-releases/detail/\d+/.+'}
+  delonghi:   # De'Longhi
+    - {url: "https://www.delonghigroup.com/en/investor/press-releases-and-presentations", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'delonghigroup\.com/sites/default/files/.+\.pdf|delonghigroup\.com/en/(?:media|investor)/.+/.+'}
+  drmartens:   # Dr. Martens
+    - {url: "https://www.drmartensplc.com/investors/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'drmartensplc\.com/application/files/.+\.pdf'}
+  drreddys:   # Dr. Reddy's
+    - {url: "https://www.drreddys.com/media", kind: "newsroom", reason: "JS-driven links."}
+  dyson:   # Dyson
+    - {url: "https://www.dyson.com/newsroom", kind: "newsroom", reason: "Mixed content hub.", link_pattern: 'dyson\.com/newsroom/.+'}
+  easyhotel:   # easyHotel
+    - {url: "https://www.easyhotel.com/in-the-press", kind: "newsroom", reason: "Hrefs not extractable."}
+    - {url: "https://www.easyhotel.com/investor-relations", kind: "investor page", reason: "not fetched in the comp sweep"}
+  easyjetholidays:   # easyJet holidays
+    - {url: "https://corporate.easyjet.com/investors/regulatory-news/default.aspx", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'easyjet\.com/en/news/[a-z-]+/story/.+'}
+  eggroup:   # EG Group
+    - {url: "https://www.cumberlandfarms.group/investors/press-releases", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'cumberlandfarms\.group/news/.+'}
+  elior:   # Elior
+    - {url: "https://www.eliorgroup.com/investors/financial-results-and-reports", kind: "investor page", reason: "unverified", link_pattern: 'eliorgroup\.com/media/press-releases/.+'}
+    - {url: "https://live.euronext.com/en/product/equities/FR0011950732-XPAR", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  endo:   # Endo International
+    - {url: "https://www.endo.com/newsroom/press-releases", kind: "newsroom", reason: "JS-driven; merging with Mallinckrodt."}
+  eurofins:   # Eurofins Scientific
+    - {url: "https://www.eurofins.com/media-centre/press-releases/", kind: "newsroom", reason: "JS-rendered list."}
+  europcar:   # Europcar
+    - {url: "https://investors.europcar-group.com/", kind: "investor page", reason: "gated", link_pattern: 'europcar-mobility-group\.com/press-releases/.+'}
+  expedia:   # Expedia
+    - {url: "https://ir.expediagroup.com/news-and-events/media/default.aspx", kind: "newsroom", reason: "JS-rendered."}
+  finnair:   # Finnair
+    - {url: "https://company.finnair.com/en/media-centre/all-releases", kind: "newsroom", reason: "JS-rendered."}
+    - {url: "https://investors.finnair.com/en", kind: "investor page", reason: "not fetched in the comp sweep"}
+  fiserv:   # Fiserv
+    - {url: "https://investors.fiserv.com/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'investors\.fiserv\.com/news-releases/news-release-details/.+'}
+  flora:   # Flora Food Group
+    - {url: "https://www.florafoodgroup.com/stories", kind: "newsroom", reason: "/stories is a JS app; sample links came from search", link_pattern: 'florafoodgroup\.com/stories/press\-and\-media/.+'}
+    - {url: "https://www.florafoodgroup.com/investors", kind: "investor page", reason: "gated", link_pattern: 'florafoodgroup\.com/stories/press\-and\-media/.+'}
+  fressnapf:   # Fressnapf
+    - {url: "https://investorrelations.fressnapf.com/", kind: "investor page", reason: "gated", link_pattern: 'presse\.fressnapf\.de/pressreleases/.+'}
+  gcity:   # G City Europe
+    - {url: "https://g-cityeu.com/press-release/", kind: "newsroom", reason: "Press page fetch timed out; not g-city.com."}
+    - {url: "https://g-cityeu.com/investor-relations/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  gifi:   # Gifi
+    - {url: "https://gifi-pressroom.fr/fr/communiques-de-presse", kind: "newsroom", reason: "Login required."}
+  grifols:   # Grifols
+    - {url: "https://www.cnmv.es/portal/otra-informacion-relevante/resultado-oir?nif=A58389123&lang=en", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  groupeseb:   # Groupe SEB
+    - {url: "https://www.groupeseb.com/en/finance/financial-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'groupeseb\.com/en/news/.+'}
+  hamborner:   # Hamborner REIT
+    - {url: "https://www.hamborner.de/en/news/", kind: "newsroom", reason: "JS-loaded."}
+  hays:   # Hays
+    - {url: "https://www.haysplc.com/investors/regulatory-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'haysplc\.com/media/press-releases/\d{4}/.+'}
+  heimstaden:   # Heimstaden
+    - {url: "https://heimstadenbostad.com/investors/financial-reports/", kind: "investor page", reason: "unverified", link_pattern: 'heimstadenbostad\.com/news/.+'}
+  hertz:   # Hertz
+    - {url: "https://newsroom.hertz.com/", kind: "newsroom", reason: "Hrefs not extractable."}
+    - {url: "https://ir.hertz.com/news/default.aspx", kind: "investor page", reason: "not fetched in the comp sweep"}
+  hikma:   # Hikma Pharmaceuticals
+    - {url: "https://www.hikma.com/investors/recent-results/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'hikma\.com/news/.+'}
+  hornbach:   # Hornbach
+    - {url: "https://www.hornbach-holding.de/investor-relations", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'hornbach-holding\.de/nachrichten/.+'}
+  househr:   # House of HR
+    - {url: "https://houseofhr.com/investors-not-logged", kind: "investor page", reason: "gated", link_pattern: 'houseofhr\.com/news/.+'}
+    - {url: "https://tisegroup.com/market/companies/9457", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  hse:   # HSE (Home Shopping Europe)
+    - {url: "https://corporate.hse.com/investors/", kind: "newsroom", reason: "Investor content behind registration."}
+  ibisbudget:   # ibis budget
+    - {url: "https://press.accor.com/en/?lang=eng", kind: "newsroom", reason: "Accor group pressroom, JS."}
+  intrum:   # Intrum AB
+    - {url: "https://www.intrum.com/press/press-releases/", kind: "newsroom", reason: "intrum.com press page is JS-rendered; MFN watcher already in the name file", link_pattern: 'mfn\.se/a/intrum/.+'}
+    - {url: "https://mfn.se/a/intrum", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  iqera:   # iQera
+    - {url: "https://www.iqera.com/fr/communique-de-presse/", kind: "newsroom", reason: "iqera.it is a different entity; list page JS-rendered; investor area login.", link_pattern: 'iqera\.com/fr/communique\-de\-presse/.+'}
+    - {url: "https://www.iqera.com/fr/espace-investisseur/publications/", kind: "investor page", reason: "gated", link_pattern: 'iqera\.com/fr/communique\-de\-presse/.+'}
+  isabelmarant:   # Isabel Marant
+    - {url: "https://investor-relations.isabelmarant.com/login/", kind: "newsroom", reason: "Only page found is a fully login-gated investor portal (issuer IM Group SAS); no public press-release list exists and no document hrefs are visible pre-login, s"}
+  jet2:   # Jet2
+    - {url: "https://www.jet2plc.com/en/regulatory-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'otp\.tools\.investis\.com/clients/uk/jet2/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  kiloutou:   # Kiloutou
+    - {url: "https://www.kiloutou.com/group/en/investors/login/", kind: "investor page", reason: "gated", link_pattern: 'kiloutou\.com/group/en/press-releases/.+'}
+  kingfisher:   # Kingfisher
+    - {url: "https://www.kingfisher.com/media/news", kind: "newsroom", reason: "JS hub; sample link came from search", link_pattern: 'kingfisher\.com/media/news/\d{4}/.+'}
+  leg:   # LEG Immobilien
+    - {url: "https://ir.leg-se.com/investor-relations", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'ir\.leg-se\.com/nachrichten/.+'}
+  loxam:   # Loxam
+    - {url: "https://loxam.com/en/finance/access-investor-relations/reports-presentations/", kind: "investor page", reason: "unverified", link_pattern: 'loxam\.com/en/[a-z0-9]+(?:-[a-z0-9]+){1,}/'}
+    - {url: "https://www.luxse.com/issuer/LoXaM/68675", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  lupin:   # Lupin
+    - {url: "https://www.lupin.com/investors", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'lupin\.com/media/press-releases/.+'}
+  manuchar:   # Manuchar
+    - {url: "https://www.manuchar.com/worldwide/en/user/login", kind: "investor page", reason: "gated", link_pattern: 'manuchar\.com/worldwide/en/news/.+'}
+  merlin:   # Merlin Entertainments
+    - {url: "https://www.merlinentertainments.biz/investor-relations/information-for-debtholders/", kind: "investor page", reason: "gated", link_pattern: 'merlinentertainments\.biz/media/\d+/.+\.pdf'}
+  mobilux:   # BUT / Mobilux
+    - {url: "https://www.but-financials.com/", kind: "newsroom", reason: "Two candidate IR domains found for issuer Mobilux 2 SAS / Mobilux Finance SAS: but-financials.com (fetch failed: self-signed SSL certificate) and mobiluxgroup-f"}
+  mutares:   # Mutares
+    - {url: "https://ir.mutares.com/en/bond-2024-2029/", kind: "investor page", reason: "gated", link_pattern: 'mutares\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}|ir\.mutares\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+  natuzzi:   # Natuzzi
+    - {url: "https://www.natuzzigroup.com/en-EN/ir/investors.html", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'natuzzigroup\.com/pdf/ir/.+\.pdf'}
+  next:   # Next plc
+    - {url: "https://www.nextplc.co.uk/investors/regulatory-news-and-alerts", kind: "newsroom", reason: "Investis iframe."}
+  octapharma:   # Octapharma
+    - {url: "https://www.octapharma.com/news", kind: "newsroom", reason: "Client-side list.", link_pattern: 'octapharma\.com/news/.+'}
+  organon:   # Organon
+    - {url: "https://www.organon.com/media/press-releases/", kind: "newsroom", reason: "JS-loaded."}
+    - {url: "https://www.organon.com/investor-relations/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  pandora:   # Pandora
+    - {url: "https://www.pandoragroup.com/investor/announcements-and-events", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'pandoragroup\.com/media/press-releases/.+'}
+  paragon:   # Paragon Group (Customer Communications)
+    - {url: "https://global.paragon.world/investor-relations", kind: "investor page", reason: "unverified", link_pattern: 'global\.paragon\.world/news/.+'}
+  parkland:   # Parkland
+    - {url: "https://www.parkland.ca/en/newsroom", kind: "newsroom", reason: "Hrefs not extractable."}
+  paypal:   # PayPal
+    - {url: "https://investor.pypl.com", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'newsroom\.paypal-corp\.com/\d{4}-\d{2}-\d{2}-.+'}
+  petsathome:   # Pets at Home
+    - {url: "https://www.petsathomeplc.com/investors/regulatory-news/", kind: "newsroom", reason: "Euroland widget."}
+  pfizer:   # Pfizer
+    - {url: "https://investors.pfizer.com", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'pfizer\.com/news/press-release/press-release-detail/.+'}
+  pizzaexpress:   # PizzaExpress
+    - {url: "https://investors-portal.pizzaexpress.com/", kind: "investor page", reason: "gated", link_pattern: 'content-cdn\.pizzaexpress\.com/files/.+\.pdf'}
+    - {url: "https://tisegroup.com/market/companies/5198", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  puma:   # Puma
+    - {url: "https://about.puma.com/en/investor-relations/financial-news", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'about\.puma\.com/en/newsroom/[a-z-]+/\d{4}/.+'}
+  quest:   # Quest Diagnostics
+    - {url: "https://ir.questdiagnostics.com/press-releases/default.aspx", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'newsroom\.questdiagnostics\.com/\d{4}-\d{2}-\d{2}-.+'}
+  rekeep:   # Rekeep
+    - {url: "https://www.luxse.com/issuer/Rekeep/70115", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  rossini:   # Rossini (Recordati)
+    - {url: "https://www.recordati.com/en/media/press-releases/", kind: "newsroom", reason: "recordati.com returned 403 on every path (WAF); URLs unverified."}
+    - {url: "https://www.recordati.com/en/investors/", kind: "investor page", reason: "unverified"}
+  ryanair:   # Ryanair
+    - {url: "https://corporate.ryanair.com/news/", kind: "newsroom", reason: "Bot-protected, JS."}
+  sainsburys:   # Sainsbury's
+    - {url: "https://corporate.sainsburys.co.uk/investors/regulatory-news/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'corporate\.sainsburys\.co\.uk/news/press-releases/.+'}
+  sandoz:   # Sandoz
+    - {url: "https://www.sandoz.com/media", kind: "newsroom", reason: "JS-rendered."}
+  signet:   # Signet Jewelers
+    - {url: "https://www.signetjewelers.com/newsroom/default.aspx", kind: "newsroom", reason: "JS-loaded."}
+    - {url: "https://www.signetjewelers.com/investors/financial-news-releases/default.aspx", kind: "investor page", reason: "not fetched in the comp sweep"}
+  skechers:   # Skechers
+    - {url: "https://www.sec.gov/edgar/browse/?CIK=0001065837", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  sonic:   # Sonic Healthcare
+    - {url: "https://investors.sonichealthcare.com/investors/?page=asx-announcements", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'sonichealthcare\.com/about-sonic/news/.+'}
+  stada:   # STADA
+    - {url: "https://www.stada.com/media/press-releases/2026", kind: "newsroom", reason: "press-releases hub is JS-rendered; EQS page carries the regulatory news", link_pattern: 'stada\.com/blog/posts/\d{4}/[a-z]+/.+'}
+  synlab:   # SYNLAB
+    - {url: "https://www.synlab.com/news-updates", kind: "newsroom", reason: "Both synlab.com and synlab.ag block fetch via robots.txt; EQS pages also exist for Synlab Bondco PLC.", link_pattern: 'synlab\.com/news\-updates/read\-article/.+'}
+    - {url: "https://www.synlab.ag/news", kind: "investor page", reason: "unverified", link_pattern: 'synlab\.com/news\-updates/read\-article/.+'}
+  tagimmobilien:   # TAG Immobilien
+    - {url: "https://www.tag-ag.com/en/news/ad-hoc-announcements", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'tag-ag\.com/en/news/(?:press-releases|ad-hoc-announcements)/announcement/.+'}
+  takeda:   # Takeda
+    - {url: "https://www.takeda.com/newsroom/press-releases/", kind: "newsroom", reason: "JS-rendered list."}
+  takko:   # Takko Fashion
+    - {url: "https://company.takko.com/en-gb/company/investor-relations.html", kind: "investor page", reason: "unverified", link_pattern: 'company\.takko\.com/[a-z-]+/newsroom/press-releases/detail/news/.+\.html'}
+  taylorwimpey:   # Taylor Wimpey
+    - {url: "https://www.taylorwimpey.co.uk/corporate/investors/rns-announcements", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'otp\.tools\.investis\.com/clients/uk/taylor_wimpey1/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  tereos:   # Tereos
+    - {url: "https://tisegroup.com/market/securities/TEREOS31", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  tmicc:   # The Magnum Ice Cream Company
+    - {url: "https://live.euronext.com/en/product/equities/NL0015002MS2-XAMS/company-information", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  travelodge:   # Travelodge
+    - {url: "https://tisegroup.com/market/companies/6024", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  tuicruises:   # TUI Cruises
+    - {url: "https://www.meinschiff.com/presse", kind: "newsroom", reason: "tuicruises.com/presse redirects to meinschiff.com/presse, JS-rendered; no bondholder page found."}
+  tuigroup:   # TUI Group
+    - {url: "https://www.tuigroup.com/en/newsroom/news-archive", kind: "newsroom", reason: "newsroom is a JS app returning an empty shell; EQS page carries the news", link_pattern: 'tuigroup\.com/en/newsroom/news/.+'}
+  tul:   # The United Laboratories
+    - {url: "http://ir.tul.com.cn/tc/ir/home.php", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'mp\.weixin\.qq\.com/s/.+|tul\.com\.hk/(?:content|news|detail)/.+'}
+  unilever:   # Unilever
+    - {url: "https://www.unilever.com/investors/regulatory-announcements/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'unilever\.com/news/press-and-media/press-releases/\d{4}/.+'}
+  unitedrentals:   # United Rentals
+    - {url: "https://investors.unitedrentals.com/press-releases/default.aspx", kind: "newsroom", reason: "JS list."}
+  univar:   # Univar Solutions
+    - {url: "https://news.univarsolutions.com/posts", kind: "newsroom", reason: "RSS advertised."}
+  very:   # The Very Group
+    - {url: "https://tisegroup.com/market/companies/6476", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  vivion:   # Vivion Investments
+    - {url: "https://www.vivion.com/", kind: "newsroom", reason: "vivion.lu and ir.vivion.com do not resolve; vivion.com thin; domain to confirm."}
+  vonovia:   # Vonovia
+    - {url: "https://www.vonovia.com/investoren/news-publikationen", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'vonovia\.com/presse/pressemitteilungen/\d{4}/.+'}
+  walgreens:   # Walgreens Boots Alliance
+    - {url: "https://corporate.walgreens.com/news-and-stories/", kind: "newsroom", reason: "JS-rendered."}
+  wickes:   # Wickes
+    - {url: "https://www.wickesplc.co.uk/investors/investors-overview/press-releases/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'wickesplc\.co\.uk/company/news/press-releases/\d{4}/.+'}
+  wizzair:   # Wizz Air
+    - {url: "https://www.wizzair.com/en-gb/information-and-services/about-us/news", kind: "newsroom", reason: "Paginated JS widget."}
+    - {url: "https://ir-wizzair.mz-sites.com/", kind: "investor page", reason: "not fetched in the comp sweep"}
+  worldline:   # Worldline
+    - {url: "https://live.euronext.com/en/product/equities/FR0011981968-XPAR", kind: "venue", reason: "JS-rendered or not verified as a link list"}
+  zim:   # ZIM
+    - {url: "https://investors.zim.com/news/default.aspx", kind: "newsroom", reason: "JS-loaded."}
