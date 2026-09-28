@@ -30,9 +30,9 @@ on:
   workflow_dispatch:
     inputs:
       hours:
-        description: "How long to loop for, in hours (default 5.8, the job limit is 6)"
+        description: "How long to loop for, in hours (default 5.5, the job limit is 6)"
         required: false
-        default: "5.8"
+        default: "5.5"
       backfill_days:
         description: "Widen the window to N days on the FIRST cycle only"
         required: false
@@ -60,6 +60,8 @@ jobs:
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -106,7 +108,7 @@ jobs:
         run: |
           set -u
           hours="${{ github.event.inputs.hours }}"
-          [ -n "$hours" ] || hours="5.8"
+          [ -n "$hours" ] || hours="5.5"
           deadline=$(python -c "import time,sys; print(int(time.time() + float(sys.argv[1])*3600))" "$hours")
           backfill="${{ github.event.inputs.backfill_days }}"
 
