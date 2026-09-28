@@ -21,6 +21,9 @@ engine:
     consecutive_empty: 25     # a route answering ok-but-empty this many times in a row is being
                               # refused upstream, not finding nothing; its remaining jobs are
                               # cancelled so the other routes keep the run's time budget
+    routes: [googlenews, bingnews, gdelt]   # search indexes only. A page watcher with nothing new
+                              # answers ok-and-empty on every visit; with one watcher per name the
+                              # page route would trip on every cycle (it already did on 25 and 28 Sep)
   rate_limits:
     default_seconds: 1.0
     googlenews_seconds: 2.5
@@ -59,6 +62,8 @@ routes:
   pages:
     enabled: true
     every_n_runs: 2
+    backfill_seed_items: 5    # first visit under --backfill-days: keep only the newest N article
+                              # links per page instead of the whole archive (-1 = everything)
 
 export:
   out_dir: docs               # served by GitHub Pages when Pages is set to "main branch / docs"
