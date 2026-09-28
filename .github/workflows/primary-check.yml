@@ -1,0 +1,56 @@
+name: primary-check
+
+# Fetches every page and feed in the primary-source layer once and prints what the watcher would
+# see: links on the page, links the pattern accepts, errors (robots, 403, timeouts). Read-only: no
+# database, no export, no commit. Run it after editing config/sources/primary.yaml, and run it with
+# candidates ticked to test the pages that are NOT loaded yet (primary_candidates.yaml).
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidates:
+        description: "Check primary_candidates.yaml (the unloaded pages) instead of the loaded layer"
+        type: boolean
+        required: false
+        default: false
+      only:
+        description: "Comma-separated name ids to check (blank = all)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Validate the configuration (patterns must compile, every id must have a name file)
+        run: python -m newsflow check-config | tail -n 4
+
+      - name: Fetch every source once
+        run: |
+          flags=""
+          if [ "${{ github.event.inputs.candidates }}" = "true" ]; then flags="$flags --candidates"; fi
+          if [ -n "${{ github.event.inputs.only }}" ]; then flags="$flags --only ${{ github.event.inputs.only }}"; fi
+          python scripts/check_primary.py $flags --workers 4 --json primary-check.json | tee primary-check.txt
+
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: primary-check-${{ github.run_number }}
+          path: |
+            primary-check.txt
+            primary-check.json
+          retention-days: 30
