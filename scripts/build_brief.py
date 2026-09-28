@@ -204,6 +204,11 @@ def junky(domain: str) -> bool:
 STOCK_CHATTER = re.compile(r"\b(?:Aktie|Aktien|Aktienkurs|stock|shares?|Kurs|Analysten?|analysts?|Kursziel)\b", re.IGNORECASE)
 
 
+def own_source(row: dict) -> bool:
+    """A page watcher or name feed at tier 0 is the company's own source (config/sources/primary.yaml)."""
+    return row.get("route") in ("page", "rss") and row.get("tier") == 0
+
+
 def rank(row: dict) -> tuple:
     """Lower sorts first: categorised before not, by category priority, then by corroboration."""
     cats = row["cats"]
@@ -223,6 +228,7 @@ def collect(latest: dict) -> list[dict]:
                 "country": p["country"], "lang": p["lang"], "url": p["url"],
                 "seen": p["first_seen_at"], "published": p.get("published_at"),
                 "where": p.get("alias_where"), "confidence": p.get("confidence"),
+                "route": p.get("route"), "tier": p.get("tier_hint"),
                 "cats": c.get("alert_categories") or [], "sources": c.get("sources") or 1,
             })
     return rows
@@ -256,10 +262,15 @@ def partition(rows: list[dict]) -> dict:
     comps = [r for r in rows if r["comp"]]
     out = {"all": len(rows), "A": len(tierA), "C": len(comps)}
     for key, pool in (("A", tierA), ("C", comps)):
-        bearing = [r for r in pool if r["where"] == "title"]
+        # A row from the company's own newsroom, investor page, regulatory venue or RSS feed
+        # (route page/rss, tier 0, attributed by the watcher rather than by the headline) bears on
+        # the name by construction: "Pricing of EUR 400m senior secured notes" on the issuer's own
+        # site names no alias and is the most bearing row the engine can produce.
+        bearing = [r for r in pool if r["where"] == "title" or own_source(r)]
         out[f"{key}_bearing"] = len(bearing)
-        out[f"{key}_standfirst"] = sum(1 for r in pool if r["where"] == "summary")
-        out[f"{key}_inherited"] = sum(1 for r in pool if r["where"] == "none")
+        out[f"{key}_own_source"] = sum(1 for r in pool if own_source(r) and r["where"] != "title")
+        out[f"{key}_standfirst"] = sum(1 for r in pool if r["where"] == "summary" and not own_source(r))
+        out[f"{key}_inherited"] = sum(1 for r in pool if r["where"] == "none" and not own_source(r))
         # The domain screen exists for re-daters and churn sites. On a small tier-A name in
         # restructuring, those churn sites can be the ONLY coverage there is: in the week to
         # 12 September every Branicks headline that mattered (S&P to SD, bridge notes accepted,
@@ -527,7 +538,7 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
         r_all=P["all"], r_A=P["A"], r_C=P["C"],
         rA_inherit=P["A_inherited"], rA_stand=P["A_standfirst"], rA_bear=P["A_bearing"],
         rA_junk=P["A_junk"], rA_clean=P["A_clean"], rA_drop=review_dropped, rA_pub=published,
-        rA_redater=P.get("A_redater_kept", 0),
+        rA_redater=P.get("A_redater_kept", 0), rA_own=P.get("A_own_source", 0),
         rC_inherit=P["C_inherited"] + P["C_standfirst"], rC_bear=P["C_bearing"],
         rC_junk=P["C_junk"], rC_clean=P["C_clean"], rC_cat=sum(1 for r in P["C_rows"] if r["cats"]),
         rC_pub=len(comp_carried),

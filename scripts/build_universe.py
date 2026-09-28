@@ -901,7 +901,8 @@ NAME_TO_ID = {
 HAND_MAINTAINED = {"intrum", "centrient", "tul", "chuanning", "anglikang", "ncpc", "weiqida", "cspc", "aurobindo", "sandoz", "boels", "lowell", "paragon",
                    "biogroup", "boots", "carnival", "ceconomy", "cheplapharm", "cmacgm", "enterprise", "hellofresh",
                    "hse", "iqera", "manuchar", "mobilux", "quick", "skechers", "tuigroup",
-                   "cnam"}  # cnam: hand-made sector entry (French lab regulation), 21 Sep 2026
+                   "cnam",   # cnam: hand-made sector entry (French lab regulation), 21 Sep 2026
+                   "metlen"}  # metlen: hand-made tier-A entry (Metlen Energy & Metals), 28 Sep 2026
 
 def yaml_str(s: str) -> str:
     return '"' + s.replace('"', '\\"') + '"'
