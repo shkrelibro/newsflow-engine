@@ -1,0 +1,753 @@
+# Primary-source layer: each name's own newsroom, investor page, regulatory venue and RSS feed.
+#
+# Loaded by newsflow/config.py and merged into the name's pages and feeds at load time. It lives
+# here, not in config/names/*.yaml, because scripts/build_universe.py rewrites those files and
+# silently dropped hand-added watchers on 21 September. This file is never touched by the generator.
+#
+# Rules: an entry needs a URL that was fetched and shown to list article links, and a link_pattern
+# derived from real links on that page. Entries without that evidence sit in primary_candidates.yaml
+# (not loaded) until scripts/check_primary.py has seen links on them. tier 0 = the company's own
+# source. require_alias false = every new link on a company-specific page is about the company;
+# the export keeps such rows even when the headline does not name the company.
+#
+# link_pattern is a regex tested with re.search against each link on the page. Single quotes keep
+# backslashes literal. The first visit only seeds (marks every link seen); items start on the second.
+
+version: 1
+names:
+  abfoods:   # Associated British Foods [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/ABF", name: "Associated British Foods RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/associated\-british\-foods\-\-abf/.+'}
+  acsdobfar:   # ACS Dobfar [comp]
+    pages:
+      - {url: "https://www.acsdobfar.it/press-area/", name: "ACS Dobfar newsroom", tier: 0, country: "IT", lang: it, require_alias: false, link_pattern: 'acsdobfar\.it/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+  adecco:   # Adecco [comp]
+    pages:
+      - {url: "https://www.adeccogroup.com/our-group/media/press-releases", name: "Adecco newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'adeccogroup\.com/our-group/media/press-releases/.+'}
+  adidas:   # Adidas [comp]
+    pages:
+      - {url: "https://news.adidas.com/", name: "Adidas newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'news\.adidas\.com/[a-z-]+/.+/s/[0-9a-f-]+'}
+  adler:   # Adler Group [name]
+    pages:
+      - {url: "https://www.adler-group.com/en/investors/publications/news", name: "Adler Group newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'adler-group\.com/.+detail-news\?.*tx_news_pi1'}
+      - {url: "https://www.adler-group.com/en/investors/share-bonds/bonds", name: "Adler Group investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:adler-group\.com/.+detail-news\?.*tx_news_pi1|adler\-group\.com/.+\.pdf)'}
+  advanz:   # Advanz Pharma [name]
+    pages:
+      - {url: "https://www.advanzpharma.com/news/press-releases", name: "Advanz Pharma newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'advanzpharma\.com/news/\d{4}/.+'}
+  airbaltic:   # airBaltic [name]
+    pages:
+      - {url: "https://company.airbaltic.com/en/newsroom", name: "airBaltic newsroom", tier: 0, country: "LV", lang: en, require_alias: false, link_pattern: 'company\.airbaltic\.com/en/newsroom\?press=\d{4}/.+'}
+      - {url: "https://investors.airbaltic.com/en/", name: "airBaltic investor page", tier: 0, country: "LV", lang: en, require_alias: false, link_pattern: '(?:company\.airbaltic\.com/en/newsroom\?press=\d{4}/.+|investors\.airbaltic\.com/.+\.pdf)'}
+  airfranceklm:   # Air France-KLM [comp]
+    pages:
+      - {url: "https://www.airfranceklm.com/en/newsroom/press-release", name: "Air France-KLM newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'airfranceklm\.com/en/newsroom/.+'}
+  alten:   # Alten [comp]
+    pages:
+      - {url: "https://www.alten.com/fr/newsroom/", name: "Alten newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'alten\.com/fr/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  amazon:   # Amazon [comp]
+    pages:
+      - {url: "https://press.aboutamazon.com/press-release-archive", name: "Amazon newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'press\.aboutamazon\.com/(?:[a-z-]+/)?\d{4}/\d{1,2}/.+'}
+  amrest:   # AmRest [comp]
+    pages:
+      - {url: "https://www.amrest.eu/en/for-media/press-releases", name: "AmRest newsroom", tier: 0, country: "PL", lang: en, require_alias: false, link_pattern: 'amrest\.eu/en/news/.+'}
+  aramark:   # Aramark [comp]
+    pages:
+      - {url: "https://www.aramark.com/newsroom/news", name: "Aramark newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'aramark\.com/newsroom/news/\d{4}/[a-z]+/.+|aramark\.gcs-web\.com/news-releases/news-release-details/.+'}
+  arcaplanet:   # Arcaplanet [comp]
+    pages:
+      - {url: "https://arcaplanetgroup.com/category/news/", name: "Arcaplanet newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'arcaplanetgroup\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  arla:   # Arla Foods [comp]
+    pages:
+      - {url: "https://www.arla.com/company/news-and-press/latest-news/", name: "Arla Foods newsroom", tier: 0, country: "DK", lang: en, require_alias: false, link_pattern: 'arla\.com/company/news-and-press/\d{4}/.+'}
+  aroundtown:   # Aroundtown [comp]
+    pages:
+      - {url: "https://www.aroundtown.de/investor-relations/publications/news", name: "Aroundtown newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'aroundtown\.de/newsDetail/\d+'}
+  arrow:   # Arrow Global [name]
+    pages:
+      - {url: "https://www.arrowglobal.net/media/category/news", name: "Arrow Global newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'arrowglobal\.net/media/[a-z0-9]+(?:-[a-z0-9]+){1,}|arrowglobal\.net/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+      - {url: "https://www.arrowglobal.net/debt-funding-information", name: "Arrow Global investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:arrowglobal\.net/media/[a-z0-9]+(?:-[a-z0-9]+){1,}|arrowglobal\.net/wp-content/uploads/\d{4}/\d{2}/.+\.pdf|arrowglobal\.net/.+\.pdf)'}
+  ashtead:   # Ashtead Group [comp]
+    pages:
+      - {url: "https://www.ashtead-group.com/newsroom/news/", name: "Ashtead Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'ashtead-group\.com/newsroom/news/\d{4}/.+'}
+  aspen:   # Aspen Pharmacare [comp]
+    pages:
+      - {url: "https://www.aspenpharma.com/media/press-releases/", name: "Aspen Pharmacare newsroom", tier: 0, country: "ZA", lang: en, require_alias: false, link_pattern: 'aspenpharma\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  avis:   # Avis Budget Group [name]
+    pages:
+      - {url: "https://ir.avisbudgetgroup.com/press-releases", name: "Avis Budget Group newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'ir\.avisbudgetgroup\.com/news-releases/news-release-details/.+'}
+    feeds:
+      - {url: "https://ir.avisbudgetgroup.com/rss/news-releases.xml?items=15", name: "Avis Budget Group RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  axactor:   # Axactor [name]
+    pages:
+      - {url: "https://www.axactor.com/investor-relations/news-and-stock-notices", name: "Axactor newsroom", tier: 0, country: "NO", lang: en, require_alias: false, link_pattern: 'axactor\.com/news/.+'}
+      - {url: "https://www.axactor.com/investor-relations/reports-and-presentations", name: "Axactor investor page", tier: 0, country: "NO", lang: en, require_alias: false, link_pattern: '(?:axactor\.com/news/.+|axactor\.com/.+\.pdf)'}
+  b2impact:   # B2 Impact [name]
+    pages:
+      - {url: "https://www.b2-impact.com/about-us/news/all/", name: "B2 Impact newsroom", tier: 0, country: "NO", lang: en, require_alias: false, link_pattern: 'b2-impact\.com/about-us/news/all/.+'}
+      - {url: "https://www.b2-impact.com/investors/", name: "B2 Impact investor page", tier: 0, country: "NO", lang: en, require_alias: false, link_pattern: '(?:b2-impact\.com/about-us/news/all/.+|b2\-impact\.com/.+\.pdf)'}
+  balder:   # Fastighets AB Balder [comp]
+    pages:
+      - {url: "https://www.balder.se/en/newsroom/press-releases", name: "Fastighets AB Balder newsroom", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'balder\.se/en/about-balder/press/.+'}
+  barrattredrow:   # Barratt Redrow [comp]
+    pages:
+      - {url: "https://otp.tools.investis.com/clients/uk/barratt2/rns/regulatory-news.aspx?culture=en-GB", name: "Barratt Redrow newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'otp\.tools\.investis\.com/clients/uk/barratt2/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  bayer:   # Bayer [comp]
+    pages:
+      - {url: "https://www.bayer.com/media/en-us/", name: "Bayer newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'bayer\.com/media/en-us/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  bellway:   # Bellway [comp]
+    pages:
+      - {url: "https://www.bellwayplc.co.uk/media-centre/news", name: "Bellway newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'bellwayplc\.co\.uk/media-centre/news/.+'}
+      - {url: "https://www.investegate.co.uk/company/BWY", name: "Bellway RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/bellway\-\-bwy/.+'}
+  bertrand:   # Groupe Bertrand [name]
+    pages:
+      - {url: "https://www.groupe-bertrand.com/communiques-de-presse/", name: "Groupe Bertrand newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'groupe-bertrand\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+  bianchivending:   # Bianchi Industry [comp]
+    pages:
+      - {url: "https://www.bianchiindustry.com/en/newsmedia/", name: "Bianchi Industry newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'bianchiindustry\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  birkenstock:   # Birkenstock [comp]
+    pages:
+      - {url: "https://www.birkenstock-holding.com/news-events/", name: "Birkenstock newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'birkenstock-holding\.com/news/.+'}
+  boels:   # Boels Rental [name]
+    pages:
+      - {url: "https://group.boels.com/en/news/", name: "Boels Rental newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'group\.boels\.com/en/(?:finance-en|news)/.+'}
+      - {url: "https://group.boels.com/en/investor-relations/", name: "Boels Rental investor page", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: '(?:group\.boels\.com/en/(?:finance-en|news)/.+|group\.boels\.com/.+\.pdf)'}
+  boohoo:   # boohoo [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/DEBS", name: "boohoo RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/boohoo\-group\-\-debs/.+'}
+  booking:   # Booking Holdings [comp]
+    feeds:
+      - {url: "https://ir.bookingholdings.com/rss/pressrelease.aspx", name: "Booking Holdings press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  branicks:   # Branicks Group [name]
+    pages:
+      - {url: "https://branicks.com/en/ir/disclosures/corporate-news/", name: "Branicks Group newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'branicks\.com/en/branicks-group-ag-.+'}
+  britishsugar:   # British Sugar [comp]
+    pages:
+      - {url: "https://www.britishsugar.co.uk/media/news/latest", name: "British Sugar newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'britishsugar\.co\.uk/media/news/\d{4}-\d{2}-\d{2}-.+'}
+  ca:   # C&A [comp]
+    pages:
+      - {url: "https://www.c-and-a.com/eu/en/corporate/company/newsroom", name: "C&A newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'c-and-a\.com/eu/en/corporate/company/newsroom/.+'}
+  caimmo:   # CA Immo [comp]
+    pages:
+      - {url: "https://www.caimmo.com/en/press-corner/news/press-releases/", name: "CA Immo newsroom", tier: 0, country: "AT", lang: en, require_alias: false, link_pattern: 'caimmo\.com/en/press-corner/news/news-detail/.+'}
+  campbells:   # Campbell's [comp]
+    pages:
+      - {url: "https://www.thecampbellscompany.com/newsroom/press-releases/", name: "Campbell's newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'thecampbellscompany\.com/newsroom/press-releases/.+'}
+  castellum:   # Castellum [comp]
+    pages:
+      - {url: "https://mfn.se/a/castellum", name: "Castellum regulatory feed (MFN)", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'mfn\.se/a/castellum/.+'}
+  ceconomy:   # Ceconomy [name]
+    pages:
+      - {url: "https://www.ceconomy-mms.com/en/investor-relations", name: "Ceconomy newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'ceconomy-mms\.com/en/article/.+'}
+      - {url: "https://www.eqs-news.com/company/ceconomy-ag/news/5b70f0a8-ea7c-11e8-902f-2c44fd856d8c", name: "Ceconomy regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  centrient:   # Centrient Pharmaceuticals [name]
+    pages:
+      - {url: "https://centrient.com/media", name: "Centrient Pharmaceuticals newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'centrient\.com/media/.+'}
+  cerba:   # Cerba HealthCare [name]
+    pages:
+      - {url: "https://invest.cerbahealthcare.com/news", name: "Cerba HealthCare newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'invest\.cerbahealthcare\.com/sites/.+\.pdf'}
+      - {url: "https://invest.cerbahealthcare.com/", name: "Cerba HealthCare investor page", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: '(?:invest\.cerbahealthcare\.com/sites/.+\.pdf|invest\.cerbahealthcare\.com/.+\.pdf)'}
+  cheplapharm:   # Cheplapharm [name]
+    pages:
+      - {url: "https://www.cheplapharm.com/en/investor-relations/", name: "Cheplapharm investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:cheplapharm\.com/en/press-news/news-detail/.+|cheplapharm\.com/.+\.pdf)'}
+  christ:   # CHRIST (jeweller) [comp]
+    pages:
+      - {url: "https://www.christ-corporate.com/newsroom/2/", name: "CHRIST (jeweller) newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'christ-corporate\.com/\d{4}/\d{2}/.+'}
+  circlek:   # Circle K [comp]
+    pages:
+      - {url: "https://corporate.couche-tard.com/press-releases", name: "Circle K newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'corporate\.couche-tard\.com/\d{4}-\d{2}-\d{2}-.+'}
+    feeds:
+      - {url: "https://corporate.couche-tard.com/rss-feeds?rsspage=43", name: "Circle K RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  cmacgm:   # CMA CGM [name]
+    pages:
+      - {url: "https://www.cma-cgm.com/latest-news", name: "CMA CGM newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'cma-cgm\.com/news/\d+/.+'}
+    feeds:
+      - {url: "https://www.cma-cgm.com/news/feed", name: "CMA CGM RSS", tier: 0, country: "FR", lang: en, require_alias: false}
+  cnam:   # CNAM (French lab tariffs) [name]
+    pages:
+      - {url: "https://www.assurance-maladie.ameli.fr/presse/liste-communiques-presse", name: "CNAM (French lab tariffs) newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'assurance-maladie\.ameli\.fr/presse/\d{4}-\d{2}-\d{2}-.+'}
+  compagniedesalpes:   # Compagnie des Alpes [comp]
+    pages:
+      - {url: "https://news.compagniedesalpes.com/?lang=en", name: "Compagnie des Alpes newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'news\.compagniedesalpes\.com/[a-z0-9]+(?:-[a-z0-9]+){1,}/'}
+  compass:   # Compass Group [comp]
+    pages:
+      - {url: "https://www.compass-group.com/en/media/news.html", name: "Compass Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'compass-group\.com/en/media/news/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/CPG", name: "Compass Group RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/compass\-group\-\-cpg/.+'}
+  coop:   # Co-op (Co-operative Group) [name]
+    pages:
+      - {url: "https://www.co-operative.coop/media/news-releases", name: "Co-op (Co-operative Group) newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'co-operative\.coop/media/news-releases/.+'}
+      - {url: "https://www.co-operative.coop/investors/reports", name: "Co-op (Co-operative Group) investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:co-operative\.coop/media/news-releases/.+|co\-operative\.coop/.+\.pdf)'}
+      - {url: "https://www.investegate.co.uk/company/42TF", name: "Co-op RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/.+/\d+'}
+  covis:   # Covis Pharma [comp]
+    pages:
+      - {url: "https://covispharma.com/index.php/news/", name: "Covis Pharma newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'covispharma\.com/index\.php/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  cranems:   # Crane (vending) [comp]
+    pages:
+      - {url: "https://www.cranepi.com/en/resource-center/news", name: "Crane (vending) newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'cranepi\.com/en/resource-center/news/.+'}
+  crocs:   # Crocs [comp]
+    feeds:
+      - {url: "https://investors.crocs.com/rss/pressrelease.aspx", name: "Crocs RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  cslbehring:   # CSL Behring [comp]
+    pages:
+      - {url: "https://newsroom.csl.com/", name: "CSL Behring newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'newsroom\.csl\.com/\d{4}-\d{2}-\d{2}-.+'}
+  cspc:   # CSPC Pharmaceutical [comp]
+    pages:
+      - {url: "https://www.cspc.com.hk/en/news/press.php", name: "CSPC Pharmaceutical newsroom", tier: 0, country: "CN", lang: en, require_alias: false, link_pattern: 'doc\.irasia\.com/listco/hk/cspc/.+\.pdf'}
+  currys:   # Currys [comp]
+    pages:
+      - {url: "https://www.currysplc.com/news-media/press-releases/", name: "Currys newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'currysplc\.com/news-media/press-releases/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/CURY", name: "Currys RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/currys\-\-cury/.+'}
+  danone:   # Danone [comp]
+    pages:
+      - {url: "https://www.danone.com/media.html", name: "Danone newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'danone\.com/newsroom/press-releases/.+'}
+  davidlloyd:   # David Lloyd [comp]
+    pages:
+      - {url: "https://www.davidlloyd.co.uk/press/", name: "David Lloyd newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'davidlloyd\.co\.uk/press/.+'}
+  deckers:   # Deckers [comp]
+    pages:
+      - {url: "https://ir.deckers.com/news-events/press-releases", name: "Deckers newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'ir\.deckers\.com/news-events/press-releases/detail/\d+/.+'}
+  delonghi:   # De'Longhi [comp]
+    pages:
+      - {url: "https://www.delonghigroup.com/en/media/newsroom", name: "De'Longhi newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'delonghigroup\.com/sites/default/files/.+\.pdf|delonghigroup\.com/en/(?:media|investor)/.+/.+'}
+  demire:   # DEMIRE [name]
+    pages:
+      - {url: "https://www.demire.ag/en/corporate-news/", name: "DEMIRE newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'demire\.ag/en/(?:corporate_news_en|ad_hoc_en)/.+'}
+      - {url: "https://www.demire.ag/en/ad-hoc-news/", name: "DEMIRE investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:demire\.ag/en/(?:corporate_news_en|ad_hoc_en)/.+|demire\.ag/.+\.pdf)'}
+  dertouristik:   # DER Touristik [comp]
+    pages:
+      - {url: "https://www.dertour-group.com/presse/", name: "DER Touristik newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'dertour-group\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  disneyparks:   # Disney Parks [comp]
+    pages:
+      - {url: "https://disneyparksblog.com/", name: "Disney Parks newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'disneyparksblog\.com/dlr/.+'}
+    feeds:
+      - {url: "https://disneyparksblog.com/feed/", name: "Disney Parks RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  dominosuk:   # Domino's Pizza Group [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/DOM", name: "Domino's Pizza Group RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/domino\-s\-pizza\-group\-\-dom/.+'}
+  dovalue:   # doValue [name]
+    pages:
+      - {url: "https://dovalue.it/en/communication/press-releases", name: "doValue newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'dovalue\.it/en/(?:node/\d+|communication/press-releases/.+)'}
+      - {url: "https://dovalue.it/en/investor-relations", name: "doValue investor page", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: '(?:dovalue\.it/en/(?:node/\d+|communication/press-releases/.+)|dovalue\.it/.+\.pdf)'}
+  drmartens:   # Dr. Martens [comp]
+    pages:
+      - {url: "https://www.drmartensplc.com/investors/results-centre/", name: "Dr. Martens newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'drmartensplc\.com/application/files/.+\.pdf'}
+      - {url: "https://www.investegate.co.uk/company/DOCS", name: "Dr. Martens RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/dr\-martens\-\-docs/.+'}
+  easyjetholidays:   # easyJet holidays [comp]
+    pages:
+      - {url: "https://www.easyjet.com/en/news/", name: "easyJet holidays newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'easyjet\.com/en/news/[a-z-]+/story/.+'}
+      - {url: "https://www.investegate.co.uk/company/EZJ", name: "easyJet holidays RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/easyjet\-\-ezj/.+'}
+  eggroup:   # EG Group [comp]
+    pages:
+      - {url: "https://www.cumberlandfarms.group/news", name: "EG Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'cumberlandfarms\.group/news/.+'}
+  elior:   # Elior [name]
+    pages:
+      - {url: "https://www.eliorgroup.com/media/press-releases", name: "Elior newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'eliorgroup\.com/media/press-releases/.+'}
+  encore:   # Encore Capital Group [comp]
+    pages:
+      - {url: "https://encorecapital.gcs-web.com/press-releases", name: "Encore Capital Group newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'encorecapital\.gcs-web\.com/news-releases/news-release-details/.+'}
+  enterprise:   # Enterprise Holdings [comp]
+    pages:
+      - {url: "https://www.enterprisemobility.com/en/nav/news-stories.html", name: "Enterprise Holdings newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'enterprisemobility\.com/en/news-stories/news-stories-archive/\d{4}/\d{2}/.+'}
+  equiniti:   # Equiniti [comp]
+    pages:
+      - {url: "https://equiniti.com/us/insights/news-releases/", name: "Equiniti newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'equiniti\.com/[a-z]{2}/insights/news-releases/.+'}
+  europcar:   # Europcar [name]
+    pages:
+      - {url: "https://www.europcar-mobility-group.com/press-releases", name: "Europcar newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'europcar-mobility-group\.com/press-releases/.+'}
+  eversys:   # Eversys [comp]
+    pages:
+      - {url: "https://www.eversys.com/en/news", name: "Eversys newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'eversys\.com/(?:blog|en/news)/.+'}
+  evoca:   # Evoca Group [name]
+    pages:
+      - {url: "https://www.evocagroup.com/en/news-media/press-releases", name: "Evoca Group newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'newebcdn\.evocagroup\.com/sites/corporate/files/press-investors/.+\.pdf'}
+      - {url: "https://www.evocagroup.com/en/investors", name: "Evoca Group investor page", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: '(?:newebcdn\.evocagroup\.com/sites/corporate/files/press-investors/.+\.pdf|evocagroup\.com/.+\.pdf)'}
+  expedia:   # Expedia [comp]
+    feeds:
+      - {url: "https://ir.expediagroup.com/rss/pressrelease.aspx", name: "Expedia press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  fiserv:   # Fiserv [comp]
+    pages:
+      - {url: "https://investors.fiserv.com/news-events/news-releases", name: "Fiserv newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'investors\.fiserv\.com/news-releases/news-release-details/.+'}
+  fisworldpay:   # FIS / Worldpay [comp]
+    pages:
+      - {url: "https://www.worldpay.com/en/press-releases", name: "FIS / Worldpay newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'worldpay\.com/en/press-releases/.+'}
+  fitnessfirst:   # Fitness First [comp]
+    pages:
+      - {url: "https://www.fitnessfirst.de/presse", name: "Fitness First newsroom", tier: 0, country: "GB", lang: de, require_alias: false, link_pattern: 'fitnessfirst\.de/presse/.+'}
+  flos:   # Design Holding (Flos B&B Italia) [name]
+    pages:
+      - {url: "https://www.flosbebitaliagroup.com/clp-press-release.html", name: "Design Holding (Flos B&B Italia) newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'flosbebitaliagroup\.com/on/demandware\.static/.+\.pdf'}
+      - {url: "https://www.flosbebitaliagroup.com/group/investors/", name: "Design Holding (Flos B&B Italia) investor page", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: '(?:flosbebitaliagroup\.com/on/demandware\.static/.+\.pdf|flosbebitaliagroup\.com/.+\.pdf)'}
+  fnacdarty:   # Fnac Darty [comp]
+    pages:
+      - {url: "https://www.fnacdarty.com/en/newsroom/publications/", name: "Fnac Darty newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'fnacdarty\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+  fressnapf:   # Fressnapf [name]
+    pages:
+      - {url: "https://presse.fressnapf.de/latest_news/tag/corporate-meldungen", name: "Fressnapf newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'presse\.fressnapf\.de/pressreleases/.+'}
+      - {url: "https://www.eqs-news.com/de/company/fressnapf-holding-se/news/5c0b26e3-ea7c-11e8-902f-2c44fd856d8c", name: "Fressnapf regulatory news (EQS)", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'eqs-news\.com/(?:de/)?news/[a-z-]+/.+'}
+  froneri:   # Froneri [name]
+    pages:
+      - {url: "https://www.froneri.com/articles/", name: "Froneri newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'froneri\.com/articles/.+'}
+      - {url: "https://www.froneri.com/investors/", name: "Froneri investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:froneri\.com/articles/.+|froneri\.com/.+\.pdf)'}
+  goldengoose:   # Golden Goose [name]
+    pages:
+      - {url: "https://we.goldengoose.com/we-are-golden/media/press-releases/", name: "Golden Goose newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'we\.goldengoose\.com/getattachment/.+\.pdf'}
+  grandcity:   # Grand City Properties [comp]
+    pages:
+      - {url: "https://www.grandcityproperties.com/investor-relations/publications/news-and-ad-hoc", name: "Grand City Properties newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'grandcityproperties\.com/newsDetail/\d+'}
+  greggs:   # Greggs [comp]
+    pages:
+      - {url: "https://corporate.greggs.co.uk/news", name: "Greggs newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'corporate\.greggs\.co\.uk/news/.+'}
+      - {url: "https://www.investegate.co.uk/company/GRG", name: "Greggs RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/greggs\-\-grg/.+'}
+  grifols:   # Grifols [name]
+    pages:
+      - {url: "https://www.grifols.com/en/press-releases", name: "Grifols newsroom", tier: 0, country: "ES", lang: en, require_alias: false, link_pattern: 'grifols\.com/documents/.+\.pdf'}
+      - {url: "https://www.grifols.com/en/investors", name: "Grifols investor page", tier: 0, country: "ES", lang: en, require_alias: false, link_pattern: '(?:grifols\.com/documents/.+\.pdf|grifols\.com/.+\.pdf)'}
+  groupeseb:   # Groupe SEB [comp]
+    pages:
+      - {url: "https://www.groupeseb.com/en/news", name: "Groupe SEB newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'groupeseb\.com/en/news/.+'}
+  grunenthal:   # Grünenthal [name]
+    pages:
+      - {url: "https://www.grunenthal.com/press-room/press-releases", name: "Grünenthal newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'grunenthal\.com/press-room/press-releases/\d{4}/.+'}
+      - {url: "https://www.eqs-news.com/company/gruenenthal-gmbh/news/7208baf8-b6ce-1015-8f07-7a0217257b19", name: "Grunenthal regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  gsk:   # GSK [comp]
+    pages:
+      - {url: "https://www.gsk.com/en-gb/media/", name: "GSK newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'gsk\.com/en\-gb/media/press\-releases/.+'}
+      - {url: "https://www.investegate.co.uk/company/GSK", name: "GSK RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/gsk\-\-gsk/.+'}
+  gymgroup:   # The Gym Group [comp]
+    pages:
+      - {url: "https://www.tggplc.com/news-and-media/press-releases/", name: "The Gym Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'tggplc\.com/news-and-media/press-releases/.+'}
+      - {url: "https://www.investegate.co.uk/company/GYM", name: "The Gym Group RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/the\-gym\-group\-\-gym/.+'}
+  hapag:   # Hapag-Lloyd [name]
+    pages:
+      - {url: "https://www.hapag-lloyd.com/en/company/ir/financial-news/financial-news.html", name: "Hapag-Lloyd newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'hapag-lloyd\.com/en/company/ir/financial-news/financial-news\.iry-\d{4}\.irid-\d+\.html'}
+  haworth:   # Haworth [comp]
+    pages:
+      - {url: "https://www.haworth.com/na/en/about/about-haworth/media-room.html", name: "Haworth newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'haworth\.com/na/en/about/about-haworth/media-room/.+\.html'}
+  hays:   # Hays [comp]
+    pages:
+      - {url: "https://www.haysplc.com/media/press-releases", name: "Hays newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'haysplc\.com/media/press-releases/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/HAS", name: "Hays RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/hays\-\-has/.+'}
+  heimstaden:   # Heimstaden [name]
+    pages:
+      - {url: "https://heimstadenbostad.com/newsroom/", name: "Heimstaden newsroom", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'heimstadenbostad\.com/news/.+'}
+  hellofresh:   # HelloFresh [name]
+    pages:
+      - {url: "https://www.hellofreshgroup.com/en/newsroom/press-releases", name: "HelloFresh newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'ir\.hellofreshgroup\.com/news/.+'}
+      - {url: "https://ir.hellofreshgroup.com/financial-news", name: "HelloFresh investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:ir\.hellofreshgroup\.com/news/.+|ir\.hellofreshgroup\.com/.+\.pdf)'}
+      - {url: "https://www.eqs-news.com/company/hellofresh-se/news/5c1e9f8a-ea7c-11e8-902f-2c44fd856d8c", name: "HelloFresh regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  hertz:   # Hertz [comp]
+    feeds:
+      - {url: "https://ir.hertz.com/rss/pressrelease.aspx", name: "Hertz press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  hhglobal:   # HH Global [comp]
+    pages:
+      - {url: "https://www.hhglobal.com/news", name: "HH Global newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'hhglobal\.com/news/.+'}
+  hikma:   # Hikma Pharmaceuticals [comp]
+    pages:
+      - {url: "https://www.hikma.com/news/", name: "Hikma Pharmaceuticals newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'hikma\.com/news/.+'}
+      - {url: "https://www.investegate.co.uk/company/HIK", name: "Hikma Pharmaceuticals RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/hikma\-pharmaceuticals\-\-hik/.+'}
+  hoist:   # Hoist Finance [comp]
+    pages:
+      - {url: "https://www.hoistfinance.com/media/press-releases/", name: "Hoist Finance newsroom", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'storage\.mfn\.se/.+\.pdf|mfn\.se/a/hoist-finance/.+'}
+      - {url: "https://mfn.se/a/hoist-finance", name: "Hoist Finance regulatory feed (MFN)", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'mfn\.se/a/hoist-finance/.+'}
+  hornbach:   # Hornbach [comp]
+    pages:
+      - {url: "https://www.hornbach-holding.de/medien", name: "Hornbach newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'hornbach-holding\.de/nachrichten/.+'}
+  househr:   # House of HR [name]
+    pages:
+      - {url: "https://houseofhr.com/news/press-releases", name: "House of HR newsroom", tier: 0, country: "BE", lang: en, require_alias: false, link_pattern: 'houseofhr\.com/news/.+'}
+  ingenico:   # Ingenico [comp]
+    pages:
+      - {url: "https://ingenico.com/newsroom", name: "Ingenico newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'ingenico\.com/[a-z-]+/newsroom/press-releases/.+'}
+  inovie:   # Inovie [comp]
+    pages:
+      - {url: "https://inoviegroup.com/publications/", name: "Inovie newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'inoviegroup\.com/\d{4}/\d{2}/\d{2}/.+'}
+  interikea:   # Inter IKEA Group [comp]
+    pages:
+      - {url: "https://www.inter.ikea.com/en/newsroom", name: "Inter IKEA Group newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'inter\.ikea\.com/en/newsroom/.+'}
+  iss:   # ISS A/S [comp]
+    pages:
+      - {url: "https://www.issworld.com/insights/news-and-press/", name: "ISS A/S newsroom", tier: 0, country: "DK", lang: en, require_alias: false, link_pattern: 'issworld\.com/insights/news-and-press/.+'}
+  jet2:   # Jet2 [comp]
+    pages:
+      - {url: "https://otp.tools.investis.com/clients/uk/jet2/rns/regulatory-news.aspx?culture=en-GB", name: "Jet2 newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'otp\.tools\.investis\.com/clients/uk/jet2/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  kedrion:   # Kedrion [comp]
+    pages:
+      - {url: "https://www.kedrion.com/news-archive/", name: "Kedrion newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'kedrion\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  keepmoat:   # Keepmoat [name]
+    pages:
+      - {url: "https://www.keepmoat.com/corporate/investors", name: "Keepmoat newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'brochures\.keepmoat\.com/.+'}
+  kik:   # KiK [comp]
+    pages:
+      - {url: "https://unternehmen.kik.de/unternehmen/presse/newsroom", name: "KiK newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'unternehmen\.kik\.de/unternehmen/presse/newsroom/.+'}
+  kiloutou:   # Kiloutou [name]
+    pages:
+      - {url: "https://www.kiloutou.com/group/en/press/press-releases/", name: "Kiloutou newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'kiloutou\.com/group/en/press-releases/.+'}
+  kingfisher:   # Kingfisher [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/KGF", name: "Kingfisher RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/kingfisher\-\-kgf/.+'}
+  labcorp:   # Labcorp [comp]
+    pages:
+      - {url: "https://www.labcorp.com/newsroom", name: "Labcorp newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'labcorp\.com/education-events/press-releases/.+'}
+  lactalis:   # Lactalis [comp]
+    pages:
+      - {url: "https://www.lactalis.com/fr/articles/communiques-de-presse", name: "Lactalis newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'lactalis\.com/fr/articles/communiques-de-presse/.+'}
+  leg:   # LEG Immobilien [comp]
+    pages:
+      - {url: "https://ir.leg-se.com/presse", name: "LEG Immobilien newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'ir\.leg-se\.com/nachrichten/.+'}
+  leroymerlin:   # Leroy Merlin [comp]
+    pages:
+      - {url: "https://www.adeo.com/espace-presse/", name: "Leroy Merlin newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'adeo\.com/presse/.+'}
+  lowell:   # Lowell (Garfunkelux) [name]
+    pages:
+      - {url: "https://www.lowell.com/news-and-insights", name: "Lowell (Garfunkelux) newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'lowell\.com/hubfs/.+\.pdf'}
+  loxam:   # Loxam [name]
+    pages:
+      - {url: "https://loxam.com/en/news-press-releases/", name: "Loxam newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'loxam\.com/en/[a-z0-9]+(?:-[a-z0-9]+){1,}/'}
+  lufthansa:   # Lufthansa [comp]
+    pages:
+      - {url: "https://newsroom.lufthansagroup.com/en/", name: "Lufthansa newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'newsroom\.lufthansagroup\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+    feeds:
+      - {url: "https://newsroom.lufthansagroup.com/feed/en", name: "Lufthansa RSS", tier: 0, country: "DE", lang: en, require_alias: false}
+  lupin:   # Lupin [comp]
+    pages:
+      - {url: "https://www.lupin.com/media/press-releases/", name: "Lupin newsroom", tier: 0, country: "IN", lang: en, require_alias: false, link_pattern: 'lupin\.com/media/press-releases/.+'}
+  maersk:   # Maersk [comp]
+    pages:
+      - {url: "https://www.maersk.com/news", name: "Maersk newsroom", tier: 0, country: "DK", lang: en, require_alias: false, link_pattern: 'maersk\.com/news/articles/\d{4}/\d{2}/\d{2}/.+'}
+  maisonsdumonde:   # Maisons du Monde [comp]
+    pages:
+      - {url: "https://corporate.maisonsdumonde.com/en/news", name: "Maisons du Monde newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'corporate\.maisonsdumonde\.com/en/news/.+'}
+  maje:   # Maje (SMCP) [comp]
+    pages:
+      - {url: "https://www.smcp.com/en/news", name: "Maje (SMCP) newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'smcp\.com/en/[a-z0-9]+(?:-[a-z0-9]+){1,}/?$'}
+  marleyspoon:   # Marley Spoon [comp]
+    pages:
+      - {url: "https://ir.marleyspoongroup.com/", name: "Marley Spoon newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'ir\.marleyspoongroup\.com/news/.+'}
+  maxeda:   # Maxeda DIY Group [name]
+    pages:
+      - {url: "https://www.maxedadiygroup.com/en/news/archive/", name: "Maxeda DIY Group newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'maxedadiygroup\.com/news/.+'}
+  mcdonaldsfrance:   # McDonald's France [comp]
+    pages:
+      - {url: "https://www.mcdonalds.fr/espace-presse", name: "McDonald's France newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'mcdonalds\.fr/espace-presse/communiques-de-presse/.+'}
+  merlin:   # Merlin Entertainments [name]
+    pages:
+      - {url: "https://www.merlinentertainments.biz/investor-relations/results-reports-and-presentations/", name: "Merlin Entertainments newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'merlinentertainments\.biz/media/\d+/.+\.pdf'}
+  metlen:   # Metlen Energy & Metals [name]
+    pages:
+      - {url: "https://www.metlen.com/media/corporate-news/press-releases-news/", name: "Metlen press releases", tier: 0, country: "GR", lang: en, require_alias: false, link_pattern: 'metlen\.com/news/press-releases/.+'}
+      - {url: "https://www.metlen.com/investor-relations/ase-announcements/", name: "Metlen regulatory announcements", tier: 0, country: "GR", lang: en, require_alias: false, link_pattern: 'metlen\.com/news/trading-announcements/[a-z-]+/.+'}
+  millerknoll:   # MillerKnoll [comp]
+    pages:
+      - {url: "https://news.millerknoll.com/", name: "MillerKnoll newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'news\.millerknoll\.com/\d{4}-\d{2}-\d{2}-.+'}
+  mollie:   # Mollie [comp]
+    pages:
+      - {url: "https://www.mollie.com/news", name: "Mollie newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'mollie\.com/news/.+'}
+  morellato:   # Morellato [comp]
+    pages:
+      - {url: "https://morellatogroup.com/news", name: "Morellato newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'morellatogroup\.com/news/.+'}
+  morrisons:   # Morrisons [comp]
+    pages:
+      - {url: "https://www.morrisons-corporate.com/media-centre/", name: "Morrisons newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'morrisons-corporate\.com/media-centre/corporate-news/.+'}
+  motorfuel:   # Motor Fuel Group [name]
+    pages:
+      - {url: "https://www.motorfuelgroup.com/news/", name: "Motor Fuel Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'motorfuelgroup\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}|motorfuelgroup\.com/app/uploads/\d{4}/\d{2}/.+\.pdf'}
+      - {url: "https://www.motorfuelgroup.com/reports-publications-2/", name: "Motor Fuel Group investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:motorfuelgroup\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}|motorfuelgroup\.com/app/uploads/\d{4}/\d{2}/.+\.pdf|motorfuelgroup\.com/.+\.pdf)'}
+  mrbricolage:   # Mr Bricolage [comp]
+    pages:
+      - {url: "https://mr-bricolage.com/actualites/", name: "Mr Bricolage newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'mr-bricolage\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  msc:   # MSC (Mediterranean Shipping Company) [comp]
+    pages:
+      - {url: "https://www.msc.com/en/newsroom", name: "MSC (Mediterranean Shipping Company) newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'msc\.com/en/newsroom/news/\d{4}/[a-z]+/.+'}
+  msccruises:   # MSC Cruises [comp]
+    pages:
+      - {url: "https://www.mscpressarea.com/en_US", name: "MSC Cruises newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'mscpressarea\.com/press-releases/.+'}
+  mutares:   # Mutares [name]
+    pages:
+      - {url: "https://ir.mutares.com/en/", name: "Mutares newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'mutares\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}|ir\.mutares\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+      - {url: "https://www.eqs-news.com/company/mutares-se-co-kgaa/news/5b959bd4-ea7c-11e8-902f-2c44fd856d8c", name: "Mutares regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  natuzzi:   # Natuzzi [comp]
+    pages:
+      - {url: "https://www.natuzzigroup.com/en-EN/ir/financial-release.html", name: "Natuzzi newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'natuzzigroup\.com/pdf/ir/.+\.pdf'}
+  nbrown:   # N Brown [comp]
+    pages:
+      - {url: "https://www.nbrown.co.uk/media/press-releases/corporate/year-2026.html", name: "N Brown newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'nbrown\.co\.uk/media/press-releases/corporate/year-\d{4}/\d{2}-\d{2}-\d{4}\.html'}
+  ncl:   # Norwegian Cruise Line [comp]
+    pages:
+      - {url: "https://www.nclhltd.com/investors/news-events/press-releases", name: "Norwegian Cruise Line newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'nclhltd\.com/investors/news-events/press-releases/detail/\d+/.+'}
+  nexi:   # Nexi [comp]
+    pages:
+      - {url: "https://www.nexigroup.com/en/media-relations/press-releases/", name: "Nexi newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'nexigroup\.com/content/dam/.+\.pdf'}
+  next:   # Next plc [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/NXT", name: "Next plc RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/next\-\-nxt/.+'}
+  nike:   # Nike [comp]
+    pages:
+      - {url: "https://about.nike.com/en/newsroom", name: "Nike newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'about\.nike\.com/en/newsroom/releases/.+'}
+  nkd:   # NKD [comp]
+    pages:
+      - {url: "https://www.nkdgroup.com/pressemeldungen/", name: "NKD newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'nkdgroup\.com/blog/\d{4}/\d{2}/\d{2}/.+'}
+  nordzucker:   # Nordzucker [comp]
+    pages:
+      - {url: "https://www.nordzucker.com/en/news/", name: "Nordzucker newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'nordzucker\.com/en/news/.+'}
+  nuffield:   # Nuffield Health [comp]
+    pages:
+      - {url: "https://www.nuffieldhealth.com/article/media-centre", name: "Nuffield Health newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'nuffieldhealth\.com/article/.+'}
+  onholding:   # On Holding [comp]
+    pages:
+      - {url: "https://press.on-running.com/", name: "On Holding newsroom", tier: 0, country: "CH", lang: de, require_alias: false, link_pattern: 'press\.on-running\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  opengate:   # OpenGate Capital [comp]
+    pages:
+      - {url: "https://opengatecapital.com/news/", name: "OpenGate Capital newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'opengatecapital\.com/news/.+'}
+  otto:   # Otto Group [comp]
+    pages:
+      - {url: "https://www.ottogroup.com/en/medien/newsroom/", name: "Otto Group newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'ottogroup\.com/en/medien/newsroom/meldungen/.+'}
+  pandora:   # Pandora [comp]
+    pages:
+      - {url: "https://www.pandoragroup.com/media/newsroom/press-releases", name: "Pandora newsroom", tier: 0, country: "DK", lang: en, require_alias: false, link_pattern: 'pandoragroup\.com/media/press-releases/.+'}
+  paragon:   # Paragon Group (Customer Communications) [name]
+    pages:
+      - {url: "https://global.paragon.world/news", name: "Paragon Group (Customer Communications) newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'global\.paragon\.world/news/.+'}
+  paypal:   # PayPal [comp]
+    pages:
+      - {url: "https://newsroom.paypal-corp.com", name: "PayPal newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'newsroom\.paypal-corp\.com/\d{4}-\d{2}-\d{2}-.+'}
+  peachproperty:   # Peach Property Group [comp]
+    pages:
+      - {url: "https://www.peachproperty.com/en/media/news", name: "Peach Property Group newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'peachproperty\.com/(?:de|en)/\d{4}/\d{2}/\d{2}/.+'}
+  pepco:   # Pepco Group [comp]
+    pages:
+      - {url: "https://www.pepcogroup.eu/media-news/", name: "Pepco Group newsroom", tier: 0, country: "PL", lang: en, require_alias: false, link_pattern: 'pepcogroup\.eu/media-news/.+'}
+  persimmon:   # Persimmon [comp]
+    pages:
+      - {url: "https://www.persimmonhomes.com/corporate/media/news/", name: "Persimmon newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'persimmonhomes\.com/corporate/media/news/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/PSN", name: "Persimmon RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/persimmon\-\-psn/.+'}
+  petsathome:   # Pets at Home [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/PETS", name: "Pets at Home RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/pets\-at\-home\-group\-\-pets/.+'}
+  pfizer:   # Pfizer [comp]
+    pages:
+      - {url: "https://www.pfizer.com/newsroom", name: "Pfizer newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'pfizer\.com/news/press-release/press-release-detail/.+'}
+  pizzaexpress:   # PizzaExpress [name]
+    pages:
+      - {url: "https://www.pizzaexpress.com/Investors/Press-Releases", name: "PizzaExpress newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'content-cdn\.pizzaexpress\.com/files/.+\.pdf'}
+  planetfitness:   # Planet Fitness [comp]
+    feeds:
+      - {url: "https://investor.planetfitness.com/rss/pressrelease.aspx", name: "Planet Fitness press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  pra:   # PRA Group [name]
+    pages:
+      - {url: "https://ir.pragroup.com/press-releases", name: "PRA Group newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'ir\.pragroup\.com/\d{4}-\d{2}-\d{2}-.+'}
+    feeds:
+      - {url: "https://ir.pragroup.com/index.php?s=95&rsspage=43", name: "PRA Group RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  premierinn:   # Premier Inn [comp]
+    pages:
+      - {url: "https://www.whitbread.co.uk/media/press-releases", name: "Premier Inn newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'whitbread\.co\.uk/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+      - {url: "https://www.investegate.co.uk/company/WTB", name: "Premier Inn RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/whitbread\-\-wtb/.+'}
+  primark:   # Primark [comp]
+    pages:
+      - {url: "https://corporate.primark.com/en-us/e/news/all-news", name: "Primark newsroom", tier: 0, country: "IE", lang: en, require_alias: false, link_pattern: 'corporate\.primark\.com/[a-z-]+/a/news/.+'}
+  puma:   # Puma [comp]
+    pages:
+      - {url: "https://about.puma.com/en/newsroom", name: "Puma newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'about\.puma\.com/en/newsroom/[a-z-]+/\d{4}/.+'}
+  puregym:   # PureGym [name]
+    pages:
+      - {url: "https://corporate.puregym.com/newsroom/news/default.aspx", name: "PureGym newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'corporate\.puregym\.com/newsroom/news/news-details/.+|q4cdn\.com/171963401/files/.+\.pdf'}
+      - {url: "https://corporate.puregym.com/investor/investor-overview/default.aspx", name: "PureGym investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:corporate\.puregym\.com/newsroom/news/news-details/.+|q4cdn\.com/171963401/files/.+\.pdf|corporate\.puregym\.com/.+\.pdf)'}
+  quadient:   # Quadient [comp]
+    pages:
+      - {url: "https://www.quadient.com/en-us/news", name: "Quadient newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'quadient\.com/en-us/news/.+'}
+  quest:   # Quest Diagnostics [comp]
+    pages:
+      - {url: "https://newsroom.questdiagnostics.com/", name: "Quest Diagnostics newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'newsroom\.questdiagnostics\.com/\d{4}-\d{2}-\d{2}-.+'}
+  quironsalud:   # Helios Spain (Quirónsalud) [comp]
+    pages:
+      - {url: "https://www.quironsalud.com/es/comunicacion/actualidad", name: "Helios Spain (Quirónsalud) newsroom", tier: 0, country: "ES", lang: es, require_alias: false, link_pattern: 'quironsalud\.com/es/comunicacion/actualidad/.+'}
+  qvc:   # QVC [comp]
+    pages:
+      - {url: "https://corporate.qvc.com/newsroom/", name: "QVC newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'corporate\.qvc\.com/newsroom/pressrelease/.+'}
+  raizen:   # Raízen [comp]
+    pages:
+      - {url: "https://www.raizen.com.br/sala-de-imprensa", name: "Raízen newsroom", tier: 0, country: "BR", lang: pt, require_alias: false, link_pattern: 'raizen\.com\.br/sala-de-imprensa/.+'}
+  randstad:   # Randstad [comp]
+    pages:
+      - {url: "https://www.randstad.com/press/", name: "Randstad newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'randstad\.com/press/\d{4}/.+'}
+  rekeep:   # Rekeep [name]
+    pages:
+      - {url: "https://www.rekeep.com/en/investors", name: "Rekeep newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'rekeep\.com/investors/download/\d+'}
+      - {url: "https://www.rekeep.com/en/investors/financial-info/notices-statements", name: "Rekeep investor page", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: '(?:rekeep\.com/investors/download/\d+|rekeep\.com/.+\.pdf)'}
+  rheavendors:   # Rheavendors [comp]
+    pages:
+      - {url: "https://www.rheavendors.com/en/news-and-press/", name: "Rheavendors newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'rheavendors\.com/en/news/.+'}
+  ribera:   # Ribera Salud [comp]
+    pages:
+      - {url: "https://www.riberasalud.com/actualidad/", name: "Ribera Salud newsroom", tier: 0, country: "ES", lang: es, require_alias: false, link_pattern: 'riberasalud\.com/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  roberthalf:   # Robert Half [comp]
+    pages:
+      - {url: "https://press.roberthalf.com/", name: "Robert Half newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'press\.roberthalf\.com/\d{4}-\d{2}-\d{2}-.+'}
+  royalcaribbean:   # Royal Caribbean [comp]
+    pages:
+      - {url: "https://www.royalcaribbeangroup.com/news/", name: "Royal Caribbean newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'royalcaribbeangroup\.com/(?:news/|press-releases/)?[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  sainsburys:   # Sainsbury's [comp]
+    pages:
+      - {url: "https://corporate.sainsburys.co.uk/news/press-releases", name: "Sainsbury's newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'corporate\.sainsburys\.co\.uk/news/press-releases/.+'}
+      - {url: "https://www.investegate.co.uk/company/SBRY", name: "Sainsbury's RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/sainsbury\-j\-\-\-sbry/.+'}
+  sandro:   # Sandro (SMCP) [comp]
+    pages:
+      - {url: "https://www.smcp.com/fr/newsroom/", name: "Sandro (SMCP) newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'smcp\.com/fr/[a-z0-9]+(?:-[a-z0-9]+){1,}/?$'}
+  savencia:   # Savencia [comp]
+    pages:
+      - {url: "https://savencia.com/communiques/", name: "Savencia newsroom", tier: 0, country: "FR", lang: fr, require_alias: false, link_pattern: 'savencia\.com/communique/.+'}
+  sbb:   # SBB (Samhällsbyggnadsbolaget) [name]
+    pages:
+      - {url: "https://www.sbbnorden.se/en/section/investors/press-releases/", name: "SBB (Samhällsbyggnadsbolaget) newsroom", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'sbbnorden\.se/en/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+      - {url: "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden", name: "SBB regulatory feed (MFN)", tier: 0, country: "SE", lang: en, require_alias: false, link_pattern: 'mfn\.se/a/samhallsbyggnadsbolaget-i-norden/.+'}
+  sielaff:   # Sielaff [comp]
+    pages:
+      - {url: "https://sielaff.de/unternehmen/news", name: "Sielaff newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'sielaff\.de/unternehmen/news/details/.+'}
+  signet:   # Signet Jewelers [comp]
+    feeds:
+      - {url: "https://www.signetjewelers.com/rss/pressrelease.aspx", name: "Signet Jewelers press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  sixt:   # Sixt [comp]
+    pages:
+      - {url: "https://about.sixt.com/en/newsroom/", name: "Sixt newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'about\.sixt\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
+  skechers:   # Skechers [name]
+    pages:
+      - {url: "https://about.skechers.com/press-releases", name: "Skechers newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'about\.skechers\.com/press-release/.+'}
+  sodexo:   # Sodexo [comp]
+    pages:
+      - {url: "https://www.sodexo.com/news/newsroom", name: "Sodexo newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'sodexo\.com/news/newsroom/\d{4}/.+'}
+  sonic:   # Sonic Healthcare [comp]
+    pages:
+      - {url: "https://www.sonichealthcare.com/about-sonic/news/", name: "Sonic Healthcare newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'sonichealthcare\.com/about-sonic/news/.+'}
+  ssp:   # SSP Group [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/SSPG", name: "SSP Group RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/ssp\-group\-\-sspg/.+'}
+  stada:   # STADA [name]
+    pages:
+      - {url: "https://www.stada.com/investor-relations/at-a-glance", name: "STADA investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:stada\.com/blog/posts/\d{4}/[a-z]+/.+|stada\.com/.+\.pdf)'}
+      - {url: "https://www.eqs-news.com/company/stada-arzneimittel-ag/news/5b728edc-ea7c-11e8-902f-2c44fd856d8c", name: "STADA regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  steelcase:   # Steelcase [comp]
+    pages:
+      - {url: "https://www.steelcase.com/about/information/media/", name: "Steelcase newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'steelcase\.com/press-releases/.+'}
+  stripe:   # Stripe [comp]
+    pages:
+      - {url: "https://stripe.com/newsroom", name: "Stripe newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'stripe\.com/newsroom/news/.+'}
+  sudzucker:   # Südzucker [name]
+    pages:
+      - {url: "https://www.suedzuckergroup.com/en/node/26", name: "Südzucker newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'suedzuckergroup\.com/(?:index%2Ephp/|index\.php/)?en/press/.+'}
+  sumup:   # SumUp [comp]
+    pages:
+      - {url: "https://www.sumup.com/en-us/press/", name: "SumUp newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'sumup\.com/[a-z-]+/press/.+'}
+  synlab:   # SYNLAB [name]
+    pages:
+      - {url: "https://www.eqs-news.com/company/synlab-ag/news/50deed94-9858-1015-b403-b6ec16257b19", name: "SYNLAB regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  tagimmobilien:   # TAG Immobilien [comp]
+    pages:
+      - {url: "https://www.tag-ag.com/en/news/press-releases", name: "TAG Immobilien newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'tag-ag\.com/en/news/(?:press-releases|ad-hoc-announcements)/announcement/.+'}
+      - {url: "https://www.tag-ag.com/en/news/ad-hoc-announcements", name: "TAG Immobilien ad-hoc announcements", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'tag-ag\.com/en/news/ad-hoc-announcements/announcement/.+'}
+  takko:   # Takko Fashion [name]
+    pages:
+      - {url: "https://company.takko.com/en-gb/newsroom/press-releases.html", name: "Takko Fashion newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'company\.takko\.com/[a-z-]+/newsroom/press-releases/detail/news/.+\.html'}
+  taylorwimpey:   # Taylor Wimpey [comp]
+    pages:
+      - {url: "https://otp.tools.investis.com/clients/uk/taylor_wimpey1/rns/regulatory-news.aspx?culture=en-GB", name: "Taylor Wimpey newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'otp\.tools\.investis\.com/clients/uk/taylor_wimpey1/rns/regulatory-story\.aspx\?cid=\d+&newsid=\d+'}
+  tereos:   # Tereos [name]
+    pages:
+      - {url: "https://tereos.com/en/group/finance/", name: "Tereos newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'tereos\.com/app/uploads/\d{4}/\d{2}/.+\.pdf'}
+      - {url: "https://tereos.com/en/finance/regulated-information", name: "Tereos investor page", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: '(?:tereos\.com/app/uploads/\d{4}/\d{2}/.+\.pdf|tereos\.com/.+\.pdf)'}
+  tesco:   # Tesco [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/TSCO", name: "Tesco RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/tesco\-\-tsco/.+'}
+  teva:   # Teva [name]
+    pages:
+      - {url: "https://ir.tevapharm.com/news-and-events/press-releases/default.aspx", name: "Teva newsroom", tier: 0, country: "IL", lang: en, require_alias: false, link_pattern: 'ir\.tevapharm\.com/news-and-events/press-releases/press-release-details/\d{4}/.+'}
+    feeds:
+      - {url: "https://ir.tevapharm.com/rss/pressrelease.aspx", name: "Teva RSS", tier: 0, country: "IL", lang: en, require_alias: false}
+  thermoplan:   # Thermoplan [comp]
+    pages:
+      - {url: "https://www.thermoplan.ch/de/aktuelles/news-medien", name: "Thermoplan newsroom", tier: 0, country: "CH", lang: de, require_alias: false, link_pattern: 'thermoplan\.ch/de/aktuelles/news-medien/.+'}
+  thom:   # Thom Group [name]
+    pages:
+      - {url: "https://www.thomgroup.com/news/", name: "Thom Group newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'thomgroup\.com/press-release-[a-z0-9-]+|thomgroup\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
+      - {url: "https://www.thomgroup.com/investors/", name: "Thom Group investor page", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: '(?:thomgroup\.com/press-release-[a-z0-9-]+|thomgroup\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf|thomgroup\.com/.+\.pdf)'}
+  thomascook:   # Thomas Cook [comp]
+    pages:
+      - {url: "https://www.thomascook.com/press-enquiries", name: "Thomas Cook newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'thomascook\.com/press-enquiries/.+'}
+  tmicc:   # The Magnum Ice Cream Company [name]
+    pages:
+      - {url: "https://news.magnumicecream.com/", name: "The Magnum Ice Cream Company newsroom", tier: 0, country: "NL", lang: nl, require_alias: false, link_pattern: 'news\.magnumicecream\.com/[a-z0-9]+(?:-[a-z0-9]+){1,}/'}
+      - {url: "https://corporate.magnumicecream.com/en/investors.html", name: "The Magnum Ice Cream Company investor page", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: '(?:news\.magnumicecream\.com/[a-z0-9]+(?:-[a-z0-9]+){1,}/|corporate\.magnumicecream\.com/.+\.pdf)'}
+  travelodge:   # Travelodge [name]
+    pages:
+      - {url: "https://www.travelodge.co.uk/our-business/media/press-releases/", name: "Travelodge newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'travelodge\.co\.uk/our-business/media/press-release/.+'}
+      - {url: "https://www.travelodge.co.uk/investors/home", name: "Travelodge investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:travelodge\.co\.uk/our-business/media/press-release/.+|travelodge\.co\.uk/.+\.pdf)'}
+  triton:   # Triton Partners [comp]
+    pages:
+      - {url: "https://www.triton-partners.com/news/", name: "Triton Partners newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'triton-partners\.com/news/.+'}
+  tuigroup:   # TUI Group [name]
+    pages:
+      - {url: "https://www.tuigroup.com/en/investors/financial-news", name: "TUI Group investor page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: '(?:tuigroup\.com/en/newsroom/news/.+|tuigroup\.com/.+\.pdf)'}
+      - {url: "https://www.eqs-news.com/company/tui-ag/news/5b70a81a-ea7c-11e8-902f-2c44fd856d8c", name: "TUI AG regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+  tul:   # The United Laboratories [comp]
+    pages:
+      - {url: "https://www.tul.com.hk/list/15.html", name: "The United Laboratories newsroom", tier: 0, country: "CN", lang: en, require_alias: false, link_pattern: 'mp\.weixin\.qq\.com/s/.+|tul\.com\.hk/(?:content|news|detail)/.+'}
+  unilever:   # Unilever [comp]
+    pages:
+      - {url: "https://www.unilever.com/news/press-and-media/", name: "Unilever newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'unilever\.com/news/press-and-media/press-releases/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/ULVR", name: "Unilever RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/unilever\-\-ulvr/.+'}
+  unitedrentals:   # United Rentals [comp]
+    feeds:
+      - {url: "https://investors.unitedrentals.com/rss/pressrelease.aspx", name: "United Rentals press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  univar:   # Univar Solutions [comp]
+    feeds:
+      - {url: "https://api.client.notified.com/api/rss/publish/view/53663?type=press", name: "Univar Solutions RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  vendo:   # SandenVendo [comp]
+    pages:
+      - {url: "https://www.sandenvendo.it/it/news/", name: "SandenVendo newsroom", tier: 0, country: "IT", lang: it, require_alias: false, link_pattern: 'sandenvendo\.it/it/news/.+\.html'}
+  versuni:   # Versuni [name]
+    pages:
+      - {url: "https://www.versuni.com/newsroom/", name: "Versuni newsroom", tier: 0, country: "NL", lang: en, require_alias: false, link_pattern: 'versuni\.com/newsroom/.+'}
+  very:   # The Very Group [name]
+    pages:
+      - {url: "https://www.theverygroup.com/media/news/", name: "The Very Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'theverygroup\.com/media/news/\d{4}/.+'}
+      - {url: "https://www.theverygroup.com/investors/", name: "The Very Group investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:theverygroup\.com/media/news/\d{4}/.+|theverygroup\.com/.+\.pdf)'}
+  viatris:   # Viatris [comp]
+    pages:
+      - {url: "https://newsroom.viatris.com/", name: "Viatris newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'newsroom\.viatris\.com/\d{4}-\d{2}-\d{2}-.+'}
+  vistry:   # Vistry Group [comp]
+    pages:
+      - {url: "https://www.vistry.co.uk/media/press-releases", name: "Vistry Group newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'vistry\.co\.uk/media/press-releases/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/VTY", name: "Vistry Group RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/vistry\-group\-\-vty/.+'}
+    feeds:
+      - {url: "https://www.vistry.co.uk/rss/press-releases", name: "Vistry Group RSS", tier: 0, country: "GB", lang: en, require_alias: false}
+  vonovia:   # Vonovia [comp]
+    pages:
+      - {url: "https://www.vonovia.com/presse", name: "Vonovia newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'vonovia\.com/presse/pressemitteilungen/\d{4}/.+'}
+  wagamama:   # Wagamama [name]
+    pages:
+      - {url: "https://www.wagamama.com/investors", name: "Wagamama newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'datocms-assets\.com/177323/.+\.pdf'}
+  watchesofswitzerland:   # Watches of Switzerland [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/WOSG", name: "Watches of Switzerland RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/watches\-of\-switzerland\-group\-\-wosg/.+'}
+  wickes:   # Wickes [comp]
+    pages:
+      - {url: "https://www.wickesplc.co.uk/company/news/press-releases/", name: "Wickes newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'wickesplc\.co\.uk/company/news/press-releases/\d{4}/.+'}
+      - {url: "https://www.investegate.co.uk/company/WIX", name: "Wickes RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/wickes\-group\-\-wix/.+'}
+  williamslea:   # Williams Lea [comp]
+    pages:
+      - {url: "https://www.williamslea.com/news-events/", name: "Williams Lea newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'williamslea\.com/(?:blog|news)/.+'}
+  wizzair:   # Wizz Air [comp]
+    pages:
+      - {url: "https://www.investegate.co.uk/company/WIZZ", name: "Wizz Air RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/wizz\-air\-holdings\-\-wizz/.+'}
+  wmf:   # WMF [comp]
+    pages:
+      - {url: "https://aboutwmf.com/de/news-media/newsroom-uebersicht/", name: "WMF newsroom", tier: 0, country: "DE", lang: de, require_alias: false, link_pattern: 'aboutwmf\.com/de/wmf-press-post/.+'}
+  worldline:   # Worldline [name]
+    pages:
+      - {url: "https://investors.worldline.com/en/home/news-events/financial-press-releases", name: "Worldline newsroom", tier: 0, country: "FR", lang: en, require_alias: false, link_pattern: 'investors\.worldline\.com/en/home/news-events/financial-press-releases/\d{4}/.+'}
+  xerox:   # Xerox [comp]
+    pages:
+      - {url: "https://www.news.xerox.com/news", name: "Xerox newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'news\.xerox\.com/news/.+'}
+  zim:   # ZIM [comp]
+    feeds:
+      - {url: "https://investors.zim.com/rss/pressrelease.aspx", name: "ZIM press-release RSS", tier: 0, country: "IL", lang: en, require_alias: false}
+  zooplus:   # Zooplus [comp]
+    pages:
+      - {url: "https://corporate.zooplus.com/en/press", name: "Zooplus newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'corporate\.zooplus\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
