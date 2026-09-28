@@ -197,7 +197,29 @@ def cmd_check(args) -> int:
         searched = [a.text for a in n.aliases if a.search]
         print(f"- {n.id}: {n.name} [{n.kind}] markets={len(n.markets)} langs={','.join(n.langs)} aliases={len(n.aliases)} searched={searched} pages={len(n.pages)} feeds={len(n.feeds)} site_queries={len(n.site_queries)}")
     print(f"outlets: {len(cfg.outlets)} · tier1 categories: {list(cfg.tier1_terms)} · noise domains: {len(cfg.noise_domains)}")
+    pc = cfg.primary_counts
+    with_pages = sum(1 for n in cfg.names if n.pages)
+    with_feeds = sum(1 for n in cfg.names if n.feeds)
+    print(f"primary layer (sources/primary.yaml): +{pc.get('pages', 0)} pages, +{pc.get('feeds', 0)} feeds, "
+          f"{pc.get('duplicates', 0)} already in a name file · names with a page watcher: {with_pages}/{len(cfg.names)}, "
+          f"with a feed: {with_feeds}/{len(cfg.names)}")
+    if cfg.primary_unknown:
+        print(f"WARNING: sources/primary.yaml names {len(cfg.primary_unknown)} id(s) with no name file (ignored): "
+              + ", ".join(cfg.primary_unknown))
+    bad = [(n.id, p.link_pattern) for n in cfg.names for p in n.pages + n.feeds if p.link_pattern and not _regex_ok(p.link_pattern)]
+    if bad:
+        print("ERROR: link_pattern does not compile: " + "; ".join(f"{nid}: {pat}" for nid, pat in bad))
+        return 1
     return 0
+
+
+def _regex_ok(pattern: str) -> bool:
+    import re
+    try:
+        re.compile(pattern)
+        return True
+    except re.error:
+        return False
 
 
 def cmd_coverage(args) -> int:

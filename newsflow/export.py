@@ -76,7 +76,13 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
         screened: list[dict[str, Any]] = []
         for r in rows:
             pub = _item_public(r)
-            if r["status"] != "screened" and not matcher.match(
+            # A row attributed by its source rather than by its text ("(page)" from a watcher
+            # with require_alias false, "(feed)" from a name's own RSS) has nothing to re-test:
+            # "Pricing of EUR 400m senior secured notes" on the company's own newsroom names no
+            # alias and never will. Re-testing it here screened exactly the rows the primary
+            # layer exists to catch.
+            attributed = pub.get("alias") in ("(page)", "(feed)")
+            if r["status"] != "screened" and not attributed and not matcher.match(
                     r["title"] or "", r["summary"] or "", r["lang"] or "", only=[n.id]):
                 revalidated += 1
                 pub["screen_reason"] = "revalidated: no longer matches the current config"

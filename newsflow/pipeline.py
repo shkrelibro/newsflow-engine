@@ -192,9 +192,10 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name), name_ids=list(f.name_ids)))
         if cfg.route_enabled("pages"):
             pages_every = int(routes.get("pages", {}).get("every_n_runs", 2))
+            seed_items = int(routes.get("pages", {}).get("backfill_seed_items", 5))
             if force or _due(pages_every, run_number):
                 for p in name.pages:
-                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force), name_ids=list(p.name_ids)))
+                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force, seed_items=seed_items), name_ids=list(p.name_ids)))
 
     # ---- grouped Google per market ----
     if cfg.route_enabled("googlenews"):
@@ -281,10 +282,17 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     # land in the time-budget tail, so a skipped source is picked up on the next cycle
     # instead of being starved forever by a fixed construction order.
     random.Random(run_number).shuffle(jobs)
+    # Primary sources first. The shuffle rotates which jobs land in the budget tail, which is right
+    # for a thousand search queries and wrong for a company's own newsroom: in the 28 September
+    # export ten of thirty-nine page watchers read "skipped: run time budget reached". A newsroom
+    # fetch is one request to a host nobody else in the run is talking to, so the whole layer costs
+    # the run about two minutes of worker time; it goes first so the budget can never take it. The
+    # sort is stable, so the rotation still applies within each group.
+    jobs.sort(key=lambda j: 0 if j.route == "page" or (j.route == "rss" and j.name_ids) else 1)
     return jobs
 
 
-def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False) -> tuple[list[RawItem], SourceResult]:
+def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False, seed_items: int = 5) -> tuple[list[RawItem], SourceResult]:
     links, result = fetch_page_links(http, page.url)
     if not result.ok:
         return [], result
@@ -302,6 +310,15 @@ def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False
     items = page_items_from_links(
         [(u, t) for u, t in links if u in new_set], page.url, page.name_ids, page.tier, page.country, page.lang, page.name, page.link_pattern
     )
+    if first_time and backfill and seed_items >= 0 and len(items) > seed_items:
+        # A backfill run visits every watcher for the first time with the flood gate open. One
+        # newsroom lists twenty releases; three hundred of them would put six thousand undated
+        # rows into the pile in a single cycle, all stamped with today's first_seen. Newsrooms
+        # list newest first, so the first few links are the recent history worth having and the
+        # rest is archive. Set routes.pages.backfill_seed_items to -1 to take everything.
+        total = len(items)
+        items = items[:seed_items]
+        result.error = f"seeded with the newest {seed_items} of {total} article links"
     for it in items:
         it.tier_hint = page.tier
     result.items = len(items)
@@ -569,6 +586,14 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     breaker = cfg.engine.get("circuit_breaker", {}) or {}
     breaker_on = bool(breaker.get("enabled", True))
     trip_after = int(breaker.get("consecutive_empty", 25))
+    # The breaker reads "ok but empty" as a refusal, which is right for a search index and wrong
+    # for a page watcher: a newsroom with nothing new since the last visit answers ok and empty
+    # every time, and that is the normal state of most of them. With forty watchers the page
+    # route already tripped in the 25 and 28 September runs ("skipped: page tripped after 25
+    # consecutive empty responses" in health.json); with one per name it would trip every cycle
+    # and cancel the primary sources the layer exists to fetch. So the breaker only watches the
+    # routes listed here, by default the three search indexes.
+    breaker_routes = set(breaker.get("routes", ["googlenews", "bingnews", "gdelt"]) or [])
     empty_streak: dict[str, int] = {}
     tripped: set[str] = set()
 
@@ -589,7 +614,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
             except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
                 items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
             handle(spec, items, res)
-            if breaker_on and spec.route not in tripped:
+            if breaker_on and spec.route in breaker_routes and spec.route not in tripped:
                 if res.ok and res.items == 0:
                     empty_streak[spec.route] = empty_streak.get(spec.route, 0) + 1
                     if empty_streak[spec.route] >= trip_after:
