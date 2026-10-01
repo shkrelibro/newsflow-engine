@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-01T05:36:07+00:00",
+ "generated_at": "2026-10-01T05:51:11+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -410,7 +410,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -459,7 +461,9 @@
     "alias": "Arla Foods",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\" OR \"Arcaplanet\" OR \"Arla Foods\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -2081,6 +2085,55 @@
   {
    "name_id": "hapag",
    "name": "Hapag-Lloyd",
+   "cluster_id": 58384,
+   "primary": {
+    "id": 82458,
+    "title": "Hapag-Lloyd: Επιμένει με 4,2 δισ. δολάρια για την εξαγορά της ΖΙΜ, όμως η διαδικασία «μπλοκαρίστηκε»",
+    "url": "https://mononews.gr/business/shipping/hapag-lloyd-epimenei-me-42-dis-dolaria-gia-tin-exagora-tis-zim-omos-i-diadikasia-blokaristike-kai-zitithike-nea-protasi-apo-thesmiko-dioikitiko-organismo",
+    "raw_link": "https://www.mononews.gr/business/shipping/hapag-lloyd-epimenei-me-42-dis-dolaria-gia-tin-exagora-tis-zim-omos-i-diadikasia-blokaristike-kai-zitithike-nea-protasi-apo-thesmiko-dioikitiko-organismo",
+    "source": "Αποκαλυπτικό ρεπορτάζ, αρθρογραφία και άμεση ενημέρωση, με όλα τα τελευταία νέα και ειδήσεις για την Οικονομία, τις Επιχειρήσεις, το Χρηματιστήριο, το Bitcoin, τις πολιτικές εξελίξεις και τον πολιτισμό",
+    "domain": "mononews.gr",
+    "country": "GR",
+    "lang": "el",
+    "published_at": "2026-10-01T05:45:17+00:00",
+    "first_seen_at": "2026-10-01T05:39:00+00:00",
+    "route": "rss",
+    "query": "https://www.mononews.gr/rss",
+    "tier_hint": 3,
+    "summary": "Ζητήθηκε νέα πρόταση από θεσμικό διοικητικό οργανισμό",
+    "alias": "Hapag-Lloyd",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Hapag-Lloyd"
+   ],
+   "languages": [
+    "el"
+   ],
+   "countries": [
+    "GR"
+   ],
+   "latest": "2026-10-01T05:45:17+00:00"
+  },
+  {
+   "name_id": "hapag",
+   "name": "Hapag-Lloyd",
    "cluster_id": 57736,
    "primary": {
     "id": 81628,
@@ -3566,7 +3619,9 @@
      "alias": "PayPal",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Parkland\" OR \"Parques Reunidos\" OR \"PayPal\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -4569,7 +4624,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\")",
-     "googlenews:(\"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")"
+     "googlenews:(\"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")",
+     "googlenews:\"Teva Pharmaceutical\""
     ],
     "alert_categories": [
      "management"
