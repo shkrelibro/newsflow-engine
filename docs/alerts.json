@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-01T13:48:59+00:00",
+ "generated_at": "2026-10-01T14:03:58+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -123,7 +123,9 @@
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "gdelt:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -173,7 +175,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "gdelt:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
+     "gdelt:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")",
+     "gdelt:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
     ],
     "alert_categories": [
      "restructuring"
@@ -1399,7 +1402,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\")"
+     "googlenews:(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\")",
+     "googlenews:\"CMA CGM\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -1428,7 +1432,10 @@
      "alias": "CMA CGM",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\")",
+      "googlenews:\"CMA CGM\""
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -3947,39 +3954,8 @@
     "screen_reason": "",
     "url_unresolved": false
    },
-   "also": [
-    {
-     "id": 80957,
-     "title": "Moderna Sinks 6% on Citi Downgrade; Merck and Pfizer Stay Flat",
-     "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQaU1wUmpoMW5nSGhRMjR5Z2dGTkpiWnY0bXFLODBrRmVCZTAzUXRUNHhHbHZzdk9VWVBGVndIZGItVkZPU1ZJUU1Pb04xaGtSZmg5UjlxSi1pQ1A0VVFwY0IzcW1jeEU5WUJ0a1hRcHJrbUVWaVBZT2I2SHpDRzAyWmo2UVBkSHFXZy1UNFhUckYtR1h4MUZvQWpvMXRPbkRqZmFRal9jQQ",
-     "raw_link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQaU1wUmpoMW5nSGhRMjR5Z2dGTkpiWnY0bXFLODBrRmVCZTAzUXRUNHhHbHZzdk9VWVBGVndIZGItVkZPU1ZJUU1Pb04xaGtSZmg5UjlxSi1pQ1A0VVFwY0IzcW1jeEU5WUJ0a1hRcHJrbUVWaVBZT2I2SHpDRzAyWmo2UVBkSHFXZy1UNFhUckYtR1h4MUZvQWpvMXRPbkRqZmFRal9jQQ?oc=5",
-     "source": "24/7 Wall St.",
-     "domain": "247wallst.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-09-30T13:42:00+00:00",
-     "first_seen_at": "2026-09-30T14:02:11+00:00",
-     "route": "googlenews",
-     "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
-     "tier_hint": null,
-     "summary": "Moderna Sinks 6% on Citi Downgrade; Merck and Pfizer Stay Flat 24/7 Wall St.",
-     "alias": "Pfizer",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
-      "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
-     ],
-     "alert_categories": [
-      "rating"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "rating"
@@ -3989,11 +3965,9 @@
     "Pfizer"
    ],
    "languages": [
-    "en",
     "english"
    ],
    "countries": [
-    "US",
     "United States"
    ],
    "latest": "2026-09-30T14:30:00+00:00"
@@ -4714,57 +4688,6 @@
     "GB"
    ],
    "latest": "2026-09-30T15:34:00+00:00"
-  },
-  {
-   "name_id": "ryanair",
-   "name": "Ryanair",
-   "cluster_id": 57472,
-   "primary": {
-    "id": 80968,
-    "title": "Ryanair-pomo varoittaa konkursseista – Lentojen hintoihin iso muutos",
-    "url": "https://talouselama.fi/uutiset/a/e1cc1a99-2b04-43a1-88a8-f79bb7113c0e",
-    "raw_link": "https://www.talouselama.fi/uutiset/a/e1cc1a99-2b04-43a1-88a8-f79bb7113c0e?utm_source=rss",
-    "source": "Talouselämä",
-    "domain": "talouselama.fi",
-    "country": "FI",
-    "lang": "fi",
-    "published_at": "2026-09-30T14:00:00+00:00",
-    "first_seen_at": "2026-09-30T14:02:11+00:00",
-    "route": "rss",
-    "query": "https://www.talouselama.fi/rss.xml",
-    "tier_hint": 3,
-    "summary": "Lentopolttoaineen korkea hinta heijastuu lentojen hintoihin, Michael O’Leary arvioi.",
-    "alias": "Ryanair",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "rss:https://www.talouselama.fi/rss.xml"
-    ],
-    "alert_categories": [
-     "restructuring"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "restructuring"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Ryanair"
-   ],
-   "languages": [
-    "fi"
-   ],
-   "countries": [
-    "FI"
-   ],
-   "latest": "2026-09-30T14:00:00+00:00"
   },
   {
    "name_id": "sainsburys",
