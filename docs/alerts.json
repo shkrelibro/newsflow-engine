@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-01T18:32:12+00:00",
+ "generated_at": "2026-10-01T18:47:05+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -515,7 +515,10 @@
     "alias": "Amazon",
     "alias_where": "summary",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Adyen\" OR \"Air France-KLM\" OR \"Alten\" OR \"Alteri Investors\" OR \"Amazon\" OR \"AmRest\")",
+     "googlenews:(\"Amazon\" OR \"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Booking\" OR \"Campbell's\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1970,8 +1973,36 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 84323,
+     "title": "Panmure Liberum upgrades Greggs to ‘buy’ after Q3 update",
+     "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQbktOTEM3OEVUUFNZdTNOdmhiR2FwdHFYbTQ1b0RmTjlfa2lvRUpMX2I3b2lKVUYzS1k3WXlwTk9LaXU2RlZRWkhDdmlBZ29CemVtdC1UOF92eTNXUkNMYW9FWnE1WEZwZTdZcUtRSi1MVWU3RzA2ZXJOOXdLOHg2aFNfd2JuczNCUVZleUo5ZHlUcGNMdDRkSjlib3NCYXktbGRYa1NKQ3pOLW5zcWE3QUYtWm1YMUpkRVBPck5FQlE",
+     "raw_link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQbktOTEM3OEVUUFNZdTNOdmhiR2FwdHFYbTQ1b0RmTjlfa2lvRUpMX2I3b2lKVUYzS1k3WXlwTk9LaXU2RlZRWkhDdmlBZ29CemVtdC1UOF92eTNXUkNMYW9FWnE1WEZwZTdZcUtRSi1MVWU3RzA2ZXJOOXdLOHg2aFNfd2JuczNCUVZleUo5ZHlUcGNMdDRkSjlib3NCYXktbGRYa1NKQ3pOLW5zcWE3QUYtWm1YMUpkRVBPck5FQlE?oc=5",
+     "source": "Sharecast.com",
+     "domain": "sharecast.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-10-01T12:55:44+00:00",
+     "first_seen_at": "2026-10-01T18:34:59+00:00",
+     "route": "googlenews",
+     "query": "(\"G City Europe\" OR \"Gifi\" OR \"Gousto\" OR \"Grand City Properties\" OR \"Greggs\" OR \"Groupe SEB\")",
+     "tier_hint": null,
+     "summary": "Panmure Liberum upgrades Greggs to ‘buy’ after Q3 update Sharecast.com",
+     "alias": "Greggs",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "rating"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "rating"
@@ -1986,7 +2017,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-10-01T12:55:00+00:00"
+   "latest": "2026-10-01T12:55:44+00:00"
   },
   {
    "name_id": "greggs",
@@ -2369,7 +2400,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")"
+     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")",
+     "googlenews:(\"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\" OR \"MillerKnoll\")"
     ],
     "alert_categories": [
      "litigation"
@@ -2419,7 +2451,9 @@
     "alias": "Lactalis",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Kedrion\" OR \"KiK\" OR \"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -3514,57 +3548,6 @@
   {
    "name_id": "pfizer",
    "name": "Pfizer",
-   "cluster_id": 59601,
-   "primary": {
-    "id": 84270,
-    "title": "Florida files lawsuit against Pfizer over COVID-19 vaccine - Reuters",
-    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQd2pfcDNCbVROWWZZOHN1SGw2NFJ6em5KeEliRTRjVUxrZzBiNFJlUkpWRFZhemFqRVFPS2pza0JRcENtSUpPYU10eG9zT0ZWNWNWWmp6N29RTDF5eDgzelppdHk2RjBpQk94eWk5SzF2SFNNVURqdVVXWEluc09FZ3pUUGt6Z1NKY3lKUl9PZ1JuUTjSAZIBQVVfeXFMUDdYV0U1X0VhWEF5UUtJRkpFS0Z6blRvRDE4OUhLb1dra2hVamhVeTEzMG01anJBRnNmdldGcEdTNGhwcVZCaFcyS3NyYVpzdmlHSkh2OU9CbTVvZGNtajlSX2lpOEIxYkZ6WE5mQWhrUVlOMGxxV0pmc1NuckV0Rkt0V0JiQUhvY3FKV3c1bmpJYUE",
-    "raw_link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQd2pfcDNCbVROWWZZOHN1SGw2NFJ6em5KeEliRTRjVUxrZzBiNFJlUkpWRFZhemFqRVFPS2pza0JRcENtSUpPYU10eG9zT0ZWNWNWWmp6N29RTDF5eDgzelppdHk2RjBpQk94eWk5SzF2SFNNVURqdVVXWEluc09FZ3pUUGt6Z1NKY3lKUl9PZ1JuUTjSAZIBQVVfeXFMUDdYV0U1X0VhWEF5UUtJRkpFS0Z6blRvRDE4OUhLb1dra2hVamhVeTEzMG01anJBRnNmdldGcEdTNGhwcVZCaFcyS3NyYVpzdmlHSkh2OU9CbTVvZGNtajlSX2lpOEIxYkZ6WE5mQWhrUVlOMGxxV0pmc1NuckV0Rkt0V0JiQUhvY3FKV3c1bmpJYUE?oc=5",
-    "source": "unn.ua",
-    "domain": "unn.ua",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-10-01T17:56:36+00:00",
-    "first_seen_at": "2026-10-01T18:05:00+00:00",
-    "route": "googlenews",
-    "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
-    "tier_hint": null,
-    "summary": "Florida files lawsuit against Pfizer over COVID-19 vaccine - Reuters unn.ua",
-    "alias": "Pfizer",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Pfizer"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-10-01T17:56:36+00:00"
-  },
-  {
-   "name_id": "pfizer",
-   "name": "Pfizer",
    "cluster_id": 59553,
    "primary": {
     "id": 84195,
@@ -3653,9 +3636,61 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 84332,
+     "title": "Florida sues Pfizer over COVID-19 vaccine claims",
+     "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1NUkpDQjc2T2hhUUhPM3R1WEFrRl9SbWVZdmZGdXhLU20wN1lyZlRJOEkwNkFIWWJaY1lQQkNwNG1PUDF4Y2cwV3ZBaktqVXJ1dEVPNzl0YmM2blkxOG0zak9WMC1MUm9LalJyMEZ2MnlUdkMwVVVjWg",
+     "raw_link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1NUkpDQjc2T2hhUUhPM3R1WEFrRl9SbWVZdmZGdXhLU20wN1lyZlRJOEkwNkFIWWJaY1lQQkNwNG1PUDF4Y2cwV3ZBaktqVXJ1dEVPNzl0YmM2blkxOG0zak9WMC1MUm9LalJyMEZ2MnlUdkMwVVVjWg?oc=5",
+     "source": "news.az",
+     "domain": "news.az",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-10-01T18:00:33+00:00",
+     "first_seen_at": "2026-10-01T18:34:59+00:00",
+     "route": "googlenews",
+     "query": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
+     "tier_hint": null,
+     "summary": "Florida sues Pfizer over COVID-19 vaccine claims news.az",
+     "alias": "Pfizer",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [],
+     "alert_candidate": false,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 84333,
+     "title": "Florida Attorney General sues Pfizer and CEO over COVID-19 vaccine claims",
+     "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOYmtCelo5MGVlVk53UUZGNHJOVHFZLUZZWnhad21kUWJ6THZLWmZSeDlwOF9CUjlFOWJBMGcyVlF1SEZERWZxQTNfN01tQUdIZ29tWUxBZzZyODFNU29rcXItMVRpSElJSmwxNEdfMU1zcW4xOURWeXVrYW03UTNuY0l3LVNDS09WV211TjhXRnRxQzhKS2VDcDY5c0x4dWZXRF9nT05YSQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOYmtCelo5MGVlVk53UUZGNHJOVHFZLUZZWnhad21kUWJ6THZLWmZSeDlwOF9CUjlFOWJBMGcyVlF1SEZERWZxQTNfN01tQUdIZ29tWUxBZzZyODFNU29rcXItMVRpSElJSmwxNEdfMU1zcW4xOURWeXVrYW03UTNuY0l3LVNDS09WV211TjhXRnRxQzhKS2VDcDY5c0x4dWZXRF9nT05YSQ?oc=5",
+     "source": "wtvbam.com",
+     "domain": "wtvbam.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-10-01T18:16:59+00:00",
+     "first_seen_at": "2026-10-01T18:34:59+00:00",
+     "route": "googlenews",
+     "query": "(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")",
+     "tier_hint": null,
+     "summary": "Florida Attorney General sues Pfizer and CEO over COVID-19 vaccine claims wtvbam.com",
+     "alias": "Pfizer",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 3,
+   "sources": 5,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -3671,7 +3706,58 @@
     "GB",
     "US"
    ],
-   "latest": "2026-10-01T17:49:00+00:00"
+   "latest": "2026-10-01T18:16:59+00:00"
+  },
+  {
+   "name_id": "pfizer",
+   "name": "Pfizer",
+   "cluster_id": 59601,
+   "primary": {
+    "id": 84270,
+    "title": "Florida files lawsuit against Pfizer over COVID-19 vaccine - Reuters",
+    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQd2pfcDNCbVROWWZZOHN1SGw2NFJ6em5KeEliRTRjVUxrZzBiNFJlUkpWRFZhemFqRVFPS2pza0JRcENtSUpPYU10eG9zT0ZWNWNWWmp6N29RTDF5eDgzelppdHk2RjBpQk94eWk5SzF2SFNNVURqdVVXWEluc09FZ3pUUGt6Z1NKY3lKUl9PZ1JuUTjSAZIBQVVfeXFMUDdYV0U1X0VhWEF5UUtJRkpFS0Z6blRvRDE4OUhLb1dra2hVamhVeTEzMG01anJBRnNmdldGcEdTNGhwcVZCaFcyS3NyYVpzdmlHSkh2OU9CbTVvZGNtajlSX2lpOEIxYkZ6WE5mQWhrUVlOMGxxV0pmc1NuckV0Rkt0V0JiQUhvY3FKV3c1bmpJYUE",
+    "raw_link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQd2pfcDNCbVROWWZZOHN1SGw2NFJ6em5KeEliRTRjVUxrZzBiNFJlUkpWRFZhemFqRVFPS2pza0JRcENtSUpPYU10eG9zT0ZWNWNWWmp6N29RTDF5eDgzelppdHk2RjBpQk94eWk5SzF2SFNNVURqdVVXWEluc09FZ3pUUGt6Z1NKY3lKUl9PZ1JuUTjSAZIBQVVfeXFMUDdYV0U1X0VhWEF5UUtJRkpFS0Z6blRvRDE4OUhLb1dra2hVamhVeTEzMG01anJBRnNmdldGcEdTNGhwcVZCaFcyS3NyYVpzdmlHSkh2OU9CbTVvZGNtajlSX2lpOEIxYkZ6WE5mQWhrUVlOMGxxV0pmc1NuckV0Rkt0V0JiQUhvY3FKV3c1bmpJYUE?oc=5",
+    "source": "unn.ua",
+    "domain": "unn.ua",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-10-01T17:56:36+00:00",
+    "first_seen_at": "2026-10-01T18:05:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
+    "tier_hint": null,
+    "summary": "Florida files lawsuit against Pfizer over COVID-19 vaccine - Reuters unn.ua",
+    "alias": "Pfizer",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Pets at Home\" OR \"Pfizer\" OR \"Pho (restaurant group)\" OR \"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\")"
+    ],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Pfizer"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-10-01T17:56:36+00:00"
   },
   {
    "name_id": "pfizer",
