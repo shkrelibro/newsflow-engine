@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-02T13:37:02+00:00",
+ "generated_at": "2026-10-02T13:52:08+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -830,7 +830,9 @@
     "confidence": 0.9,
     "also_routes": [
      "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
-     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
+     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"PureGym\" OR \"SYNLAB\")",
+     "googlenews:\"MediaMarkt\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -880,7 +882,9 @@
     "alias": "Ceconomy",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -2049,6 +2053,55 @@
    "latest": "2026-10-02T06:27:34+00:00"
   },
   {
+   "name_id": "dyson",
+   "name": "Dyson",
+   "cluster_id": 60835,
+   "primary": {
+    "id": 86189,
+    "title": "Southern Cross Media Group Director Teresa Dyson Acquires 18,000 Shares at $0.56 Each",
+    "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNdFpRYTVPTnVzMG1VU21IckE5aWh5S21sbHNFcjl3d0JHUXh5NGhVaDNLUkc3ZUNQQzVOWk9GSzREU2dhYi1NeDVwZDM4SDdseThiaXZVRXVoX2I5Z21lcU9hOFF2NVVqOWNfaFpGTEFOWHlvVHg2Vm40N2hGcFk1WVJENVBGdHBzWmtZT1BZSUJsZHRxcGpnQVlhd0UzMHpSNnppNm1tZ0VJNk9kWVFSdWU2NVU0RzlQMkVJY3RJN19wQQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNdFpRYTVPTnVzMG1VU21IckE5aWh5S21sbHNFcjl3d0JHUXh5NGhVaDNLUkc3ZUNQQzVOWk9GSzREU2dhYi1NeDVwZDM4SDdseThiaXZVRXVoX2I5Z21lcU9hOFF2NVVqOWNfaFpGTEFOWHlvVHg2Vm40N2hGcFk1WVJENVBGdHBzWmtZT1BZSUJsZHRxcGpnQVlhd0UzMHpSNnppNm1tZ0VJNk9kWVFSdWU2NVU0RzlQMkVJY3RJN19wQQ?oc=5",
+    "source": "kalkine.com.au",
+    "domain": "kalkine.com.au",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-02T09:43:34+00:00",
+    "first_seen_at": "2026-10-02T13:39:59+00:00",
+    "route": "googlenews",
+    "query": "(\"Dyson\" OR \"easyHotel\" OR \"easyJet holidays\" OR \"EG Group\" OR \"Encore Capital\" OR \"Endo International\")",
+    "tier_hint": null,
+    "summary": "Southern Cross Media Group Director Teresa Dyson Acquires 18,000 Shares at $0.56 Each kalkine.com.au",
+    "alias": "Dyson",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Dyson"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-02T09:43:34+00:00"
+  },
+  {
    "name_id": "eggroup",
    "name": "EG Group",
    "cluster_id": 60163,
@@ -2646,7 +2699,9 @@
     "alias": "Greggs",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"G City Europe\" OR \"Gifi\" OR \"Gousto\" OR \"Grand City Properties\" OR \"Greggs\" OR \"Groupe SEB\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -3491,7 +3546,9 @@
     "alias": "Nike",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Norwegian Cruise Line\" OR \"Nike\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\" OR \"PayPal\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -4915,7 +4972,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")"
+     "googlenews:(\"Pfizer\" OR \"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\")",
+     "googlenews:(\"Puma\" OR \"Quadient\" OR \"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\")"
     ],
     "alert_categories": [
      "rating"
