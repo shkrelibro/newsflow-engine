@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-03T16:03:24+00:00",
+ "generated_at": "2026-10-03T16:18:22+00:00",
  "alerts": [
   {
    "name_id": "aurobindo",
@@ -613,7 +613,10 @@
     "alias": "Comcast",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Circle K\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\" OR \"Conforama\" OR \"COSCO\")",
+     "googlenews:(\"Carnival\" OR \"Circle K\" OR \"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -773,6 +776,55 @@
     "GB"
    ],
    "latest": "2026-10-02T15:23:17+00:00"
+  },
+  {
+   "name_id": "coop",
+   "name": "Co-op (Co-operative Group)",
+   "cluster_id": 60442,
+   "primary": {
+    "id": 88159,
+    "title": "Co-op appoints Alex Dower as retail managing director",
+    "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOYjBJeTVES3ByUmJQZG9oVjlBMUw3a053R1FjYkdMS2hVMW9femcycjVfRWEyd1RjbVNKR0Z3RVgwRXdtZjg5c18wQkwzNmthYVhwRC1zdXZ6elRTcDJydm5GeUZOcENBN0tZUk9oM3pLTFBlOHR5X1dwRi1sdDhLWXktMU80a00waHVnUGhuZTRzRUpNR1FIVm5uVXNscDRLWThSNmVLaWdSdw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOYjBJeTVES3ByUmJQZG9oVjlBMUw3a053R1FjYkdMS2hVMW9femcycjVfRWEyd1RjbVNKR0Z3RVgwRXdtZjg5c18wQkwzNmthYVhwRC1zdXZ6elRTcDJydm5GeUZOcENBN0tZUk9oM3pLTFBlOHR5X1dwRi1sdDhLWXktMU80a00waHVnUGhuZTRzRUpNR1FIVm5uVXNscDRLWThSNmVLaWdSdw?oc=5",
+    "source": "Retail Bulletin",
+    "domain": "theretailbulletin.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-03T14:42:47+00:00",
+    "first_seen_at": "2026-10-03T16:06:23+00:00",
+    "route": "googlenews",
+    "query": "\"Co-op Group\"",
+    "tier_hint": null,
+    "summary": "Co-op appoints Alex Dower as retail managing director Retail Bulletin",
+    "alias": "Co-op",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "Co-op"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-03T14:42:47+00:00"
   },
   {
    "name_id": "coop",
@@ -1243,57 +1295,6 @@
     "DE"
    ],
    "latest": "2026-10-02T05:09:43+00:00"
-  },
-  {
-   "name_id": "maersk",
-   "name": "Maersk",
-   "cluster_id": 61105,
-   "primary": {
-    "id": 86607,
-    "title": "Maersk restructures Europe-West Africa service network",
-    "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUldrSnB2Zkt2bVpvMGNsZC1pOGl0SjZldUVSTXBUQVN5djZidnJlekpNOGcyYXk1QWQ3STVhaHVCaWVRMFI5dDF2RUFZbVQ4VzVhVnVMVm13ZnVMWWZEXzJFbEpSb0paN0p0XzE0aEVXRE1wTGljX2I3Qng1LVAwdE9WUGNRUGszS3R6cg",
-    "raw_link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUldrSnB2Zkt2bVpvMGNsZC1pOGl0SjZldUVSTXBUQVN5djZidnJlekpNOGcyYXk1QWQ3STVhaHVCaWVRMFI5dDF2RUFZbVQ4VzVhVnVMVm13ZnVMWWZEXzJFbEpSb0paN0p0XzE0aEVXRE1wTGljX2I3Qng1LVAwdE9WUGNRUGszS3R6cg?oc=5",
-    "source": "Container News",
-    "domain": "container-news.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-01T20:59:32+00:00",
-    "first_seen_at": "2026-10-02T16:09:59+00:00",
-    "route": "googlenews",
-    "query": "(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")",
-    "tier_hint": null,
-    "summary": "Maersk restructures Europe-West Africa service network Container News",
-    "alias": "Maersk",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"LEG Immobilien\" OR \"Leroy Merlin\" OR \"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\")"
-    ],
-    "alert_categories": [
-     "restructuring"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "restructuring"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Maersk"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-01T20:59:32+00:00"
   },
   {
    "name_id": "mutares",
@@ -2585,58 +2586,6 @@
     "GB"
    ],
    "latest": "2026-10-02T19:21:27+00:00"
-  },
-  {
-   "name_id": "walgreens",
-   "name": "Walgreens Boots Alliance",
-   "cluster_id": 61117,
-   "primary": {
-    "id": 86625,
-    "title": "Walgreens Whistleblower Who Received $25M Must Take Bid for More Settlement Money to State Courts",
-    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPRmZuVUtpTlgyclZQRllxTGNBcEJXTUF5eVJGbWU1RHRHdEl1M3lyMTQ1U0dKeEl4M0x6UWdpVVQzN3VlbmpMbzFJa0RtblZUUUNydnpYMzNOcjBLTFBIeFRhdnlzMXNCd3psMVBJOUhVQUxCbFJXMGJhbU1xMC1UTDRCb09VN3BJZmJrNkM0ZWM1bDZsdEpnVGNqS1FzQQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPRmZuVUtpTlgyclZQRllxTGNBcEJXTUF5eVJGbWU1RHRHdEl1M3lyMTQ1U0dKeEl4M0x6UWdpVVQzN3VlbmpMbzFJa0RtblZUUUNydnpYMzNOcjBLTFBIeFRhdnlzMXNCd3psMVBJOUhVQUxCbFJXMGJhbU1xMC1UTDRCb09VN3BJZmJrNkM0ZWM1bDZsdEpnVGNqS1FzQQ?oc=5",
-    "source": "Law Commentary",
-    "domain": "lawcommentary.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-02T16:04:41+00:00",
-    "first_seen_at": "2026-10-02T16:09:59+00:00",
-    "route": "googlenews",
-    "query": "(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")",
-    "tier_hint": null,
-    "summary": "Walgreens Whistleblower Who Received $25M Must Take Bid for More Settlement Money to State Courts Law Commentary",
-    "alias": "Walgreens",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Univar\" OR \"Viatris\" OR \"Walgreens\" OR \"Xerox\")",
-     "googlenews:(\"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\" OR \"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Walgreens"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-02T16:04:41+00:00"
   }
  ]
 }
