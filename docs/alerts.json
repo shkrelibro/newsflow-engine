@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-05T11:11:57+00:00",
+ "generated_at": "2026-10-05T11:26:59+00:00",
  "alerts": [
   {
    "name_id": "amazon",
@@ -548,16 +548,18 @@
     "domain": "mononews.gr",
     "country": "GR",
     "lang": "el",
-    "published_at": null,
+    "published_at": "2026-10-05T10:36:46+00:00",
     "first_seen_at": "2026-10-05T10:44:56+00:00",
     "route": "page",
     "query": "https://www.mononews.gr/tag/intrum-hellas",
     "tier_hint": 3,
-    "summary": "",
+    "summary": "Άνοδος στους οίνους ΠΟΠ, πτώση σε ΠΓΕ και ποικιλιακούς",
     "alias": "(page)",
     "alias_where": "none",
     "confidence": 0.8,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.mononews.gr/rss"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -582,7 +584,7 @@
    "countries": [
     "GR"
    ],
-   "latest": "2026-10-05T10:44:56+00:00"
+   "latest": "2026-10-05T10:36:46+00:00"
   },
   {
    "name_id": "jet2",
@@ -830,7 +832,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"doValue\" OR \"Intrum\" OR \"Metlen\")"
+      "googlenews:(\"doValue\" OR \"Intrum\" OR \"Metlen\")",
+      "googlenews:\"Metlen\""
      ],
      "alert_categories": [],
      "alert_candidate": false,
@@ -886,7 +889,10 @@
      "alias": "Metlen",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Metlen\"",
+      "googlenews:(\"doValue\" OR \"Intrum\" OR \"Metlen\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -1826,7 +1832,9 @@
     "confidence": 0.7,
     "also_routes": [
      "googlenews:(\"SYNLAB\" OR \"Takko\" OR \"Teva\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"TUI Cruises\")",
-     "googlenews:(\"Fressnapf\" OR \"Froneri\" OR \"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\")"
+     "googlenews:(\"Fressnapf\" OR \"Froneri\" OR \"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\")",
+     "googlenews:(\"TUI\" OR \"Vivion\" OR \"Worldline\")",
+     "googlenews:\"Hapag-Lloyd\""
     ],
     "alert_categories": [
      "m_and_a"
