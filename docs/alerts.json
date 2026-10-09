@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-09T14:50:33+00:00",
+ "generated_at": "2026-10-09T15:05:32+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -23,7 +23,9 @@
     "alias": "Adidas",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"1-2-3.tv\" OR \"Associated British Foods\" OR \"ACS Dobfar\" OR \"Action\" OR \"Adecco\" OR \"Adidas\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -546,39 +548,35 @@
    "latest": "2026-10-08T17:08:25+00:00"
   },
   {
-   "name_id": "boots",
-   "name": "Boots UK",
-   "cluster_id": 69122,
+   "name_id": "ceconomy",
+   "name": "Ceconomy",
+   "cluster_id": 70739,
    "primary": {
-    "id": 98058,
-    "title": "Boots acquisition: health and beauty | IGD Retail Analysis",
-    "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9VMmJ0VDkyci0tNlRyNEFPQlVwWHdXakR3dlpYQk5DMUp2QjFsdlEwc2ptTV9EeDNlcVlWcHJGSE1NeXExVDgwLXBIS3pCRTdMNXl4blN2a1JWTzZ2ZWlKS0FwNkFnekJ1SmR1TEQ1dmt1SXBHNWZ0QlFn",
-    "raw_link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9VMmJ0VDkyci0tNlRyNEFPQlVwWHdXakR3dlpYQk5DMUp2QjFsdlEwc2ptTV9EeDNlcVlWcHJGSE1NeXExVDgwLXBIS3pCRTdMNXl4blN2a1JWTzZ2ZWlKS0FwNkFnekJ1SmR1TEQ1dmt1SXBHNWZ0QlFn?oc=5",
-    "source": "IGD (Institute of Grocery Distribution)",
-    "domain": "igd.com",
-    "country": "IE",
-    "lang": "en",
-    "published_at": "2026-10-08T14:55:11+00:00",
-    "first_seen_at": "2026-10-08T14:57:01+00:00",
-    "route": "googlenews",
-    "query": "(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
-    "tier_hint": null,
-    "summary": "Boots acquisition: health and beauty | IGD Retail Analysis IGD (Institute of Grocery Distribution)",
-    "alias": "Boots",
+    "id": 100435,
+    "title": "Wien billigt Übernahme von Mediamarkt-Mutter durch JD.com",
+    "url": "https://orf.at/stories/3444611",
+    "raw_link": "https://orf.at/stories/3444611/",
+    "source": "news.ORF.at",
+    "domain": "orf.at",
+    "country": "AT",
+    "lang": "de",
+    "published_at": "2026-10-09T14:52:15+00:00",
+    "first_seen_at": "2026-10-09T14:53:31+00:00",
+    "route": "rss",
+    "query": "https://rss.orf.at/news.xml",
+    "tier_hint": 3,
+    "summary": "",
+    "alias": "MediaMarkt",
     "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
-     "googlenews:\"Boots\"",
-     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
-    ],
+    "confidence": 0.9,
+    "also_routes": [],
     "alert_categories": [
      "m_and_a"
     ],
     "alert_candidate": true,
     "status": "candidate",
     "screen_reason": "",
-    "url_unresolved": true
+    "url_unresolved": false
    },
    "also": [],
    "sources": 1,
@@ -586,17 +584,98 @@
    "alert_categories": [
     "m_and_a"
    ],
-   "max_confidence": 1.0,
+   "max_confidence": 0.9,
    "aliases": [
-    "Boots"
+    "MediaMarkt"
    ],
    "languages": [
-    "en"
+    "de"
    ],
    "countries": [
-    "IE"
+    "AT"
    ],
-   "latest": "2026-10-08T14:55:11+00:00"
+   "latest": "2026-10-09T14:52:15+00:00"
+  },
+  {
+   "name_id": "ceconomy",
+   "name": "Ceconomy",
+   "cluster_id": 70712,
+   "primary": {
+    "id": 100449,
+    "title": "Grünes Licht für Übernahme der Mediamarkt-Mutter durch JD.com",
+    "url": "https://kurier.at/wirtschaft/mediamarkt-uebernahme-jdcom-zu/403197029",
+    "raw_link": "https://kurier.at/wirtschaft/mediamarkt-uebernahme-jdcom-zu/403197029",
+    "source": "kurier.at",
+    "domain": "kurier.at",
+    "country": "AT",
+    "lang": "de",
+    "published_at": "2026-10-09T14:42:26+00:00",
+    "first_seen_at": "2026-10-09T14:53:31+00:00",
+    "route": "rss",
+    "query": "https://kurier.at/xml/rss",
+    "tier_hint": 3,
+    "summary": "Der Konzern aus China übernimmt die Mediamarkt-Mutter Ceconomy. Die EU prüft die geplante Übernahme noch.",
+    "alias": "MediaMarkt",
+    "alias_where": "title",
+    "confidence": 0.9,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [
+    {
+     "id": 100393,
+     "title": "Übernahme durch JD.com - Mediamarkt-Kauf: Grünes Licht vom Ministerium",
+     "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE4wWVVmWTlTQS1vOXpyRUZpQ3BiYzZNYk40Nkx0TzBFaXFiemlrYUZ6WGRER1NnR3lKOS1vZEo1N0d5QQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE4wWVVmWTlTQS1vOXpyRUZpQ3BiYzZNYk40Nkx0TzBFaXFiemlrYUZ6WGRER1NnR3lKOS1vZEo1N0d5QQ?oc=5",
+     "source": "Kronen Zeitung",
+     "domain": "krone.at",
+     "country": "AT",
+     "lang": "de",
+     "published_at": "2026-10-09T14:33:00+00:00",
+     "first_seen_at": "2026-10-09T14:38:31+00:00",
+     "route": "googlenews",
+     "query": "(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
+     "tier_hint": null,
+     "summary": "Übernahme durch JD.com - Mediamarkt-Kauf: Grünes Licht vom Ministerium Kronen Zeitung",
+     "alias": "MediaMarkt",
+     "alias_where": "title",
+     "confidence": 0.9,
+     "also_routes": [
+      "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
+      "googlenews:\"MediaMarkt\"",
+      "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
+     ],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 0.9,
+   "aliases": [
+    "MediaMarkt"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "AT"
+   ],
+   "latest": "2026-10-09T14:42:26+00:00"
   },
   {
    "name_id": "ceconomy",
@@ -620,7 +699,9 @@
     "alias": "MediaMarkt",
     "alias_where": "title",
     "confidence": 0.9,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.derstandard.at/rss"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -678,7 +759,11 @@
      "alias": "MediaMarkt",
      "alias_where": "title",
      "confidence": 0.9,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
+      "googlenews:\"MediaMarkt\"",
+      "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -705,58 +790,6 @@
     "CH"
    ],
    "latest": "2026-10-09T14:37:31+00:00"
-  },
-  {
-   "name_id": "ceconomy",
-   "name": "Ceconomy",
-   "cluster_id": 70712,
-   "primary": {
-    "id": 100393,
-    "title": "Übernahme durch JD.com - Mediamarkt-Kauf: Grünes Licht vom Ministerium",
-    "url": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE4wWVVmWTlTQS1vOXpyRUZpQ3BiYzZNYk40Nkx0TzBFaXFiemlrYUZ6WGRER1NnR3lKOS1vZEo1N0d5QQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMiQkFVX3lxTE4wWVVmWTlTQS1vOXpyRUZpQ3BiYzZNYk40Nkx0TzBFaXFiemlrYUZ6WGRER1NnR3lKOS1vZEo1N0d5QQ?oc=5",
-    "source": "Kronen Zeitung",
-    "domain": "krone.at",
-    "country": "AT",
-    "lang": "de",
-    "published_at": "2026-10-09T14:33:00+00:00",
-    "first_seen_at": "2026-10-09T14:38:31+00:00",
-    "route": "googlenews",
-    "query": "(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
-    "tier_hint": null,
-    "summary": "Übernahme durch JD.com - Mediamarkt-Kauf: Grünes Licht vom Ministerium Kronen Zeitung",
-    "alias": "MediaMarkt",
-    "alias_where": "title",
-    "confidence": 0.9,
-    "also_routes": [
-     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
-     "googlenews:\"MediaMarkt\""
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 0.9,
-   "aliases": [
-    "MediaMarkt"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "AT"
-   ],
-   "latest": "2026-10-09T14:33:00+00:00"
   },
   {
    "name_id": "circlek",
@@ -1050,16 +1083,16 @@
    "name": "doValue",
    "cluster_id": 69120,
    "primary": {
-    "id": 98056,
+    "id": 98684,
     "title": "doValue, il cda approva il piano triennale: stime per il 2026 al ribasso, al via buyback",
-    "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOZ1Z5cW1IZnVvYkJsdFREQl9NQWZfN09rZkFKelktSXZCanl6blhOTVpCZlNVLXVLZEEzNDdfM3doVGF6cEJzNEtQRnhZMXJtOVVrTXV2ZmstT05pMkc5Ymtmb0FqZjFMYUlLaTlUemxWTmpNTlNVTkRLVjE1YUFaV2YyMldQMDVYWUlUUTlSOFJqZnloUFNYSl9WTEFlRi1Uc1E",
-    "raw_link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOZ1Z5cW1IZnVvYkJsdFREQl9NQWZfN09rZkFKelktSXZCanl6blhOTVpCZlNVLXVLZEEzNDdfM3doVGF6cEJzNEtQRnhZMXJtOVVrTXV2ZmstT05pMkc5Ymtmb0FqZjFMYUlLaTlUemxWTmpNTlNVTkRLVjE1YUFaV2YyMldQMDVYWUlUUTlSOFJqZnloUFNYSl9WTEFlRi1Uc1E?oc=5",
+    "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZ9IBpwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZ9IBpwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZw?oc=5",
     "source": "la Repubblica",
     "domain": "repubblica.it",
     "country": "IT",
     "lang": "it",
     "published_at": "2026-10-08T14:57:51+00:00",
-    "first_seen_at": "2026-10-08T14:57:01+00:00",
+    "first_seen_at": "2026-10-08T23:28:46+00:00",
     "route": "googlenews",
     "query": "(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")",
     "tier_hint": null,
@@ -1079,38 +1112,7 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 98684,
-     "title": "doValue, il cda approva il piano triennale: stime per il 2026 al ribasso, al via buyback",
-     "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZ9IBpwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZw",
-     "raw_link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZ9IBpwFBVV95cUxPdXo3N0VOcV9vemRqV3Q0U2lmSnpIYjg4bnR2dkU2X2VRZDg0dkZzVXRRQXpWNUV0aUZJSGlIeHNReGs3WDhuSzA1Q3M4bVZ0UUdLWlE0MlVsQ3NGSWhtTEFFWjFvSWd6ckpNNGszSnJoSlh5cXUxTUplWlJLWFhXR0ZRTTZScTJTQTZ3dWFOaWFUWFo1RklPUFAzcmdmQV95VnpyMjFfZw?oc=5",
-     "source": "la Repubblica",
-     "domain": "repubblica.it",
-     "country": "IT",
-     "lang": "it",
-     "published_at": "2026-10-08T14:57:51+00:00",
-     "first_seen_at": "2026-10-08T23:28:46+00:00",
-     "route": "googlenews",
-     "query": "(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")",
-     "tier_hint": null,
-     "summary": "doValue, il cda approva il piano triennale: stime per il 2026 al ribasso, al via buyback la Repubblica",
-     "alias": "doValue",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")",
-      "googlenews:\"doValue\""
-     ],
-     "alert_categories": [
-      "capital_markets"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
+   "also": [],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -1261,6 +1263,57 @@
     "LU"
    ],
    "latest": "2026-10-09T09:50:07+00:00"
+  },
+  {
+   "name_id": "expedia",
+   "name": "Expedia",
+   "cluster_id": 70736,
+   "primary": {
+    "id": 100430,
+    "title": "Expedia accused of inflating hotel prices in antitrust class action",
+    "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOcW0yVWJieURMN1B2NXhnOEZJaDBZWW91MHRkLVJVdFFDTV9vNjFlSUs5X2QzZ0RROGtWVWgwNS0tSWRnSHFFSzJDTFh3QkhRZ21ObXI2a05pRGNhUE5STWkzbUI1aUw3YTB4ZVVsYk8zTXpnejY4WGZFaDVIbE1MR3IzQ3BxbUtURDYwaG9WZFFoMkgzYkhCcVRZcS1uQmY1U1laT096dTA0MzFESDcyTmx5QVQxeElyeVdZZmc3bzZiV0RvaUIyTA",
+    "raw_link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOcW0yVWJieURMN1B2NXhnOEZJaDBZWW91MHRkLVJVdFFDTV9vNjFlSUs5X2QzZ0RROGtWVWgwNS0tSWRnSHFFSzJDTFh3QkhRZ21ObXI2a05pRGNhUE5STWkzbUI1aUw3YTB4ZVVsYk8zTXpnejY4WGZFaDVIbE1MR3IzQ3BxbUtURDYwaG9WZFFoMkgzYkhCcVRZcS1uQmY1U1laT096dTA0MzFESDcyTmx5QVQxeElyeVdZZmc3bzZiV0RvaUIyTA?oc=5",
+    "source": "Top Class Actions",
+    "domain": "topclassactions.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-10-09T13:17:07+00:00",
+    "first_seen_at": "2026-10-09T14:53:31+00:00",
+    "route": "googlenews",
+    "query": "(\"Deckers\" OR \"Disney Parks\" OR \"Encore Capital\" OR \"Endo International\" OR \"Enterprise\" OR \"Expedia\")",
+    "tier_hint": null,
+    "summary": "Expedia accused of inflating hotel prices in antitrust class action Top Class Actions",
+    "alias": "Expedia",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Enterprise\" OR \"Equiniti\" OR \"Eurofins Scientific\" OR \"Eversys\" OR \"Expedia\" OR \"Finnair\")"
+    ],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Expedia"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-10-09T13:17:07+00:00"
   },
   {
    "name_id": "expedia",
@@ -1654,7 +1707,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 100420,
+     "title": "Ευ. Μυτιληναίος: Η Κομισιόν οδηγεί τα εργοστάσια δευτερογενούς παραγωγής αλουμινίου στην απελπισία",
+     "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQa0dOak5aQVVKbThFNUNTRHNFTnVNY3BIaWlKZnQ5eWhPTXdwQmJqLTRqUXlnenZUWlRwc3huVGZsN3lLYTlqZnJjOFplR0RnOVEyNG5lNURZTkFkSVhWaDRma3hwY1JTbW1McENIZTRmcnZlcDlYYm1lbXEzZ0MyLXJJb3ItYUdDVEVzbFhSdFdvN212WHpFRnYxZ3I2dHdiOUJFWjNFbzMyTlVCSDVhY09kU2t1SFVNVDBBOXRiYjltaC1OcWVwbVN4SkdEZkRUMnFjMUI1bjVvaTJaZmt5d2ZHRFfSAeQBQVVfeXFMUGtHTmpOWkFVSm04RTVDU0RzRU51TWNwSGlpSmZ0OXloT013cEJiai00alF5Z3p2VFpUcHN4blRmbDd5S2E5amZyYzhaZUdEZzlRMjRuZTVEWU5BZElYVmg0Zmt4cGNSU21tTHBDSGU0ZnJ2ZXA5WGJtZW1xM2dDMi1ySW9yLWFHQ1RFc2xYUnRXbzdtdlh6RUZ2MWdyNnR3YjlCRVozRW8zMk5VQkg1YWNPZFNrdUhVTVQwQTl0YmI5bWgtTnFlcG1TeEpHRGZEVDJxYzFCNW41b2kyWmZreXdmR0RX",
+     "raw_link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQa0dOak5aQVVKbThFNUNTRHNFTnVNY3BIaWlKZnQ5eWhPTXdwQmJqLTRqUXlnenZUWlRwc3huVGZsN3lLYTlqZnJjOFplR0RnOVEyNG5lNURZTkFkSVhWaDRma3hwY1JTbW1McENIZTRmcnZlcDlYYm1lbXEzZ0MyLXJJb3ItYUdDVEVzbFhSdFdvN212WHpFRnYxZ3I2dHdiOUJFWjNFbzMyTlVCSDVhY09kU2t1SFVNVDBBOXRiYjltaC1OcWVwbVN4SkdEZkRUMnFjMUI1bjVvaTJaZmt5d2ZHRFfSAeQBQVVfeXFMUGtHTmpOWkFVSm04RTVDU0RzRU51TWNwSGlpSmZ0OXloT013cEJiai00alF5Z3p2VFpUcHN4blRmbDd5S2E5amZyYzhaZUdEZzlRMjRuZTVEWU5BZElYVmg0Zmt4cGNSU21tTHBDSGU0ZnJ2ZXA5WGJtZW1xM2dDMi1ySW9yLWFHQ1RFc2xYUnRXbzdtdlh6RUZ2MWdyNnR3YjlCRVozRW8zMk5VQkg1YWNPZFNrdUhVTVQwQTl0YmI5bWgtTnFlcG1TeEpHRGZEVDJxYzFCNW41b2kyWmZreXdmR0RX?oc=5",
+     "source": "Capital.gr",
+     "domain": "capital.gr",
+     "country": "GR",
+     "lang": "el",
+     "published_at": "2026-10-09T13:38:00+00:00",
+     "first_seen_at": "2026-10-09T14:53:31+00:00",
+     "route": "googlenews",
+     "query": "(\"doValue\" OR \"Intrum\" OR \"Metlen\")",
+     "tier_hint": null,
+     "summary": "Ευ. Μυτιληναίος: Η Κομισιόν οδηγεί τα εργοστάσια δευτερογενούς παραγωγής αλουμινίου στην απελπισία Capital.gr",
+     "alias": "Μυτιληναίος",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "litigation"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -3558,7 +3639,10 @@
     "alias": "Tesco",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Swarovski\" OR \"TAG Immobilien\" OR \"Takeda\" OR \"Taylor Wimpey\" OR \"Tesco\" OR \"Teya\")",
+     "googlenews:(\"Morellato\" OR \"Morrisons\" OR \"Motel One\" OR \"Mr Bricolage\" OR \"Mediterranean Shipping Company\" OR \"MSC Cruises\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
