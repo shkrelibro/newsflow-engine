@@ -37,6 +37,10 @@ on:
         description: "Widen the window to N days on the FIRST cycle only"
         required: false
         default: ""
+      backfill_minutes:
+        description: "Time budget for that first backfill cycle, in minutes (default 55; a 3-day backfill needs about 45 for Google alone)"
+        required: false
+        default: "55"
       allow_state_reset:
         description: "Tick ONLY to recover from a REFUSED run: accepts that state went backwards and re-reports the lookback window once"
         type: boolean
@@ -111,6 +115,19 @@ jobs:
           [ -n "$hours" ] || hours="5.5"
           deadline=$(python -c "import time,sys; print(int(time.time() + float(sys.argv[1])*3600))" "$hours")
           backfill="${{ github.event.inputs.backfill_days }}"
+          bmin="${{ github.event.inputs.backfill_minutes }}"
+          [ -n "$bmin" ] || bmin="55"
+          # Monday catch-up. The scheduled job that starts in the small hours of Monday (00:23 UTC,
+          # 01:23 London) re-asks every query with a 3-day window in its first cycle, so the first
+          # Monday brief reads a complete weekend: whatever the weekend cycles skipped on budget or
+          # lost to an outage is collected before the 05:45 London cut. Every other job, weekdays
+          # included, keeps the 13-minute cycle. Starts after 06:00 UTC (a dropped or badly delayed
+          # schedule event) do not catch up; run the workflow by hand with backfill_days 3 instead.
+          if [ -z "$backfill" ] && [ "${{ github.event_name }}" = "schedule" ] \
+             && [ "$(date -u +%u)" = "1" ] && [ "$(date -u +%H)" -lt 6 ]; then
+            backfill=3
+            echo "::notice::Monday catch-up: cycle 1 re-sweeps the last 3 days with a ${bmin}-minute budget"
+          fi
 
           git config user.name "newsflow-bot"
           git config user.email "newsflow-bot@users.noreply.github.com"
@@ -137,7 +154,9 @@ jobs:
               export NEWSFLOW_ALLOW_STATE_RESET=""
             fi
             if [ "$cycle" = "1" ] && [ -n "$backfill" ]; then
-              python -m newsflow run --all-routes --backfill-days "$backfill" || echo "::warning::cycle $cycle: engine exited non-zero"
+              # A backfill re-asks every query with an N-day window (about 1,350 Google queries for
+              # 3 days, 45 minutes at the 2 s spacing), so it gets its own budget; later cycles keep 13.
+              python -m newsflow run --all-routes --backfill-days "$backfill" --budget-minutes "$bmin" || echo "::warning::cycle $cycle: engine exited non-zero"
             else
               python -m newsflow run || echo "::warning::cycle $cycle: engine exited non-zero"
             fi
