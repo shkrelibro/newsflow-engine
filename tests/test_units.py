@@ -177,18 +177,34 @@ def test_site_queries_are_staggered(cfg, tmp_path):
     cfg.routes["pages"] = {"enabled": False}
     n = cfg.name("intrum")
     every = int(cfg.routes["googlenews"]["site_every_n_runs"])
+    from newsflow.pipeline import _main_alias
+    main = _main_alias(n)
+    home_labels = {f'"{main}" [{m.lang}-{m.country}]' for m in n.markets if m.country == n.home_country}
+    assert home_labels
     per_run = []
     site_total = 0
     for r in range(1, every + 1):
         jobs = build_jobs(cfg, http, store, run_number=r)
         labels = [j.label for j in jobs]
-        site_total += sum(1 for l in labels if "site:" in l and "reg " not in l)
-        # every run sweeps every market at least once via the grouped queries
-        assert sum(1 for l in labels if l.startswith("group")) >= len(n.markets)
+        # labels now equal the fetch's own source string: a per-name site query is '"Intrum"
+        # site:dom [sv-SE]', a regulator sweep is a grouped '("A" OR "B") site:dom [en-SE]'
+        site_total += sum(1 for l in labels if "site:" in l and not l.startswith("("))
+        # v2: every run carries the home-market solo query (grouped tier-A queries are a safety net
+        # on their own cadence now), and see below for the other markets
+        assert any(l in home_labels for l in labels)
         per_run.append(len(jobs))
     total_site_queries = sum(len(x.site_queries) for x in cfg.names)
     assert site_total == total_site_queries           # one full cycle covers every site query exactly once (all names)
     assert max(per_run) - min(per_run) < len(n.site_queries)  # no burst run
+    # v2: every market of a tier-A name gets its own solo query at least once every
+    # foreign_every_n_runs runs
+    fe = int(cfg.routes["googlenews"].get("foreign_every_n_runs", 3))
+    swept = set()
+    for r in range(1, fe + 1):
+        for j in build_jobs(cfg, http, store, run_number=r):
+            if j.route == "googlenews" and j.name_ids == [n.id] and j.label.startswith(f'"{main}" ['):
+                swept.add(j.label.rsplit("[", 1)[1].split("]")[0])
+    assert {f"{m.lang}-{m.country}" for m in n.markets} <= swept
     forced = build_jobs(cfg, http, store, run_number=1, all_routes=True)
     assert sum(1 for j in forced if "site:" in j.label) >= len(n.site_queries) // every
     http.close(); store.close()
@@ -840,9 +856,100 @@ def test_domain_screen_keeps_a_credit_event_that_only_churn_sites_carry():
     assert 3 in kept and kept[3]["redater"] is True
     assert 8 in kept and not kept[8].get("redater")          # clean domain: untouched
     assert 4 not in kept                                     # share reacted: still screened
-    assert 5 not in kept                                     # price move: still screened
+    # 5 Oct 2026: a double-digit move is a signal, either way. The only trace of Branicks falling
+    # 20% to EUR 0.366 eight days before its bondholder vote was a churn-site headline.
+    assert 5 in kept and kept[5]["redater"] is True
     assert 6 not in kept                                     # never a credit event
-    assert P["A_redater_kept"] == 3
-    assert P["A_junk"] == 3                                  # rows 4, 5, 6
-    assert P["A_clean"] + P["A_junk"] == P["A_bearing"]      # the reconciliation still balances
+    assert P["A_redater_kept"] == 4
+    assert P["A_junk"] == 2                                  # rows 4 and 6: chatter and a listing, both on churn domains
+    assert P["A_disqualified"] == 0
+    assert P["A_clean"] + P["A_junk"] + P["A_disqualified"] == P["A_bearing"]   # still balances
     assert not P["C_rows"] and P["C_junk"] == 1              # comps stay screened
+
+
+# ---------------------------------------------------------------- 4 Oct: budget-tail and saturation fixes
+def test_heavy_names_are_grouped_among_themselves(cfg, tmp_path):
+    """Google News caps a query at 100 items. A group carrying Nike or Amazon fills the cap every
+    run and truncates the other names out of the result, so heavy names are chunked separately."""
+    from newsflow.pipeline import build_jobs, _main_alias
+    from newsflow.store import Store
+    from newsflow.http import Http
+    cfg.engine["db_path"] = str(tmp_path / "heavy.db")
+    store = Store(cfg.db_path)
+    http = Http("test")
+    for r in ("bingnews", "gdelt", "rss", "pages"):
+        cfg.routes[r] = {"enabled": False}
+    heavy = [n.id for n in cfg.names if n.kind == "comp"][:2]
+    cfg.routes["googlenews"]["heavy_names"] = heavy
+    heavy_alias = {f'"{_main_alias(cfg.name(i))}"' for i in heavy}
+    light_alias = {f'"{_main_alias(n)}"' for n in cfg.names if n.id not in heavy}
+    jobs = build_jobs(cfg, http, store, run_number=1, all_routes=True)
+    groups = [j.label for j in jobs if j.route == "googlenews" and j.label.startswith("(") and "site:" not in j.label]
+    assert groups
+    for label in groups:
+        q = label.rsplit(" [", 1)[0]
+        parts = {p.strip() for p in q.strip("()").split(" OR ")}
+        assert not (parts & heavy_alias and parts & light_alias), label
+    assert any(parts & heavy_alias for parts in [{p.strip() for p in l.rsplit(" [", 1)[0].strip("()").split(" OR ")} for l in groups])
+    # labels now equal the fetch's source string, so a skipped and a completed run share a health row
+    assert not any(l.startswith(("group", "comps", "bing", "gdelt", "reg ")) or l.endswith(" home") for l in (j.label for j in jobs))
+    http.close(); store.close()
+
+
+def test_sources_starved_lists_jobs_with_no_completed_run(cfg, tmp_path):
+    from datetime import datetime, timedelta, timezone
+    from newsflow.models import SourceResult
+    from newsflow.store import Store
+    cfg.engine["db_path"] = str(tmp_path / "starved.db")
+    store = Store(cfg.db_path)
+    now = datetime(2026, 10, 4, 12, 0, tzinfo=timezone.utc)
+    r1 = store.start_run(now - timedelta(hours=3))
+    store.add_source_results(r1, [
+        SourceResult("googlenews", '"Elior" [fr-FR]', True, 2, "", 1.0, ["elior"]),
+        SourceResult("rss", "Berlingske Business (DK)", False, 0, "skipped: run time budget reached", 0.0, []),
+        SourceResult("page", "https://corporate.puregym.com/newsroom/news/default.aspx", False, 0, "HTTP 403", 0.5, ["puregym"]),
+    ])
+    r2 = store.start_run(now - timedelta(hours=1))
+    store.add_source_results(r2, [
+        SourceResult("googlenews", '"Elior" [fr-FR]', False, 0, "skipped: run time budget reached", 0.0, ["elior"]),
+        SourceResult("rss", "Berlingske Business (DK)", False, 0, "no feed url (no feed found; 29 candidates tried)", 0.0, []),
+        SourceResult("page", "https://corporate.puregym.com/newsroom/news/default.aspx", False, 0, "HTTP 403", 0.5, ["puregym"]),
+    ])
+    starved = store.sources_starved(now - timedelta(hours=24))
+    keys = {(s["route"], s["source"]) for s in starved}
+    assert ("googlenews", '"Elior" [fr-FR]') not in keys          # completed once: a skip is not starvation
+    assert ("rss", "Berlingske Business (DK)") in keys
+    assert ("page", "https://corporate.puregym.com/newsroom/news/default.aspx") in keys
+    assert all(s["runs"] == 2 for s in starved)
+    store.close()
+
+
+def test_watchers_zero_yield_lists_ok_sources_with_no_items(cfg, tmp_path):
+    from datetime import datetime, timedelta, timezone
+    from newsflow.models import SourceResult
+    from newsflow.store import Store
+    cfg.engine["db_path"] = str(tmp_path / "zero_yield.db")
+    store = Store(cfg.db_path)
+    now = datetime(2026, 10, 5, 6, 0, tzinfo=timezone.utc)
+    r1 = store.start_run(now - timedelta(days=2))
+    store.add_source_results(r1, [
+        SourceResult("page", "https://ir.mutares.com/en/", True, 0, "", 0.4, ["mutares"]),
+        SourceResult("page", "https://branicks.com/en/ir/disclosures/corporate-news/", True, 3, "", 0.6, ["branicks"]),
+        SourceResult("rss", "Berlingske Business (DK)", False, 0, "no feed url", 0.0, []),
+        SourceResult("googlenews", '"Elior" [fr-FR]', True, 0, "", 1.0, ["elior"]),
+    ])
+    r2 = store.start_run(now - timedelta(hours=1))
+    store.add_source_results(r2, [
+        SourceResult("page", "https://ir.mutares.com/en/", True, 0, "", 0.4, ["mutares"]),
+        SourceResult("page", "https://branicks.com/en/ir/disclosures/corporate-news/", True, 0, "", 0.6, ["branicks"]),
+        SourceResult("rss", "Berlingske Business (DK)", False, 0, "no feed url", 0.0, []),
+    ])
+    zy = store.watchers_zero_yield(now - timedelta(days=7))
+    keys = {(z["route"], z["source"]) for z in zy}
+    assert ("page", "https://ir.mutares.com/en/") in keys                                   # answered twice, never an item
+    assert ("page", "https://branicks.com/en/ir/disclosures/corporate-news/") not in keys   # yielded once in the window
+    assert ("rss", "Berlingske Business (DK)") not in keys                                   # never completed: that is starvation, listed elsewhere
+    assert ("googlenews", '"Elior" [fr-FR]') not in keys                                     # search queries are not watchers
+    assert all(z["ok_runs"] >= 1 for z in zy)
+    store.close()
+
