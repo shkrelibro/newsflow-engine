@@ -337,11 +337,43 @@ def test_focus_table_prints_key_outlet_status():
     F = [{"id": "intrum", "name": "Intrum", "known": True, "pub": 0, "lead": 0, "comp_pub": 0, "rows": 0, "new": 0,
           "comp_new": 0, "ok_24h": 900, "skipped_24h": 0, "last": None,
           "outlets": [{"domain": "di.se", "answering": True, "last_hit": "2026-10-10T06:35:28+00:00"},
-                      {"domain": "finanswatch.se", "answering": False, "last_hit": None}]}]
+                      {"domain": "finanswatch.se", "answering": False, "site_jobs": 3, "last_hit": None},
+                      {"domain": "realtid.se", "answering": False, "site_jobs": 0, "feed_jobs": 0, "last_hit": None}]}]
     html = bb.focus_rows_html(F)
-    assert "key outlets 1 of 2 answering (dark: finanswatch.se)" in html and "last in di.se 10 Oct" in html
+    assert "key outlets 1 of 3 answering (dark: finanswatch.se; not yet searched: realtid.se)" in html
+    assert "last in di.se 10 Oct" in html
 
 
 def test_every_focus_credit_has_key_outlets_and_executive_or_context(cfg):
     thin = [nid for nid in cfg.focus if len(cfg.name(nid).key_outlets) < 3]
     assert not thin, thin
+
+
+def test_carry_forward_reoffers_rows_older_than_the_previous_window(tmp_path):
+    """Monday's first cut reaches back to Friday; the Sunday cut it continues covered 24 hours only,
+    so Saturday's rows were never judged and must be offered, not held."""
+    import json, subprocess, sys
+    bb = _brief()
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    latest = _latest()
+    latest["generated_at"] = "2026-10-12T04:30:00+00:00"
+    def cand(cid, title, seen):
+        return {"cluster_id": cid, "sources": 1, "alert_categories": [], "primary": {
+            "id": cid, "title": title, "url": "u", "source": "handelsblatt.com", "domain": "handelsblatt.com",
+            "country": "DE", "lang": "de", "published_at": None, "first_seen_at": seen, "route": "rss",
+            "tier_hint": 3, "alias_where": "title", "screen_reason": "", "alias": "Branicks"}}
+    latest["names"][1]["candidates"] = [cand(1, "Branicks Anleihe Samstag", "2026-10-10T10:00:00+00:00"),
+                                        cand(2, "Branicks Anleihe Sonntag", "2026-10-11T12:00:00+00:00"),
+                                        cand(3, "Branicks Anleihe Montag", "2026-10-12T04:00:00+00:00")]
+    (docs / "latest.json").write_text(json.dumps(latest), encoding="utf-8")
+    (docs / "coverage.json").write_text(json.dumps({"names": {}}), encoding="utf-8")
+    prev = tmp_path / "prev.json"
+    prev.write_text(json.dumps({"cut_at": "2026-10-11T16:00+00:00", "export_at": "2026-10-11T15:52:00+00:00",
+                                "window_hours": 24, "lead": [], "so": {}}), encoding="utf-8")
+    out = subprocess.run([sys.executable, str(REPO / "scripts" / "build_brief.py"), "--docs", str(docs),
+                          "--noise", str(REPO / "config" / "noise.yaml"), "--focus", "", "--prev", str(prev),
+                          "--since", "2026-10-09T14:45:00+00:00", "--shortlist"],
+                         capture_output=True, text=True, check=True).stdout
+    ids = {r["id"] for r in json.loads(out)["tier_a"]}
+    assert ids == {1, 3}          # Saturday (outside the Sunday window) and Monday (new); Sunday was judged
