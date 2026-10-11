@@ -1077,11 +1077,15 @@ def health_block(latest: dict) -> dict:
     sh = latest.get("source_health", {}) or {}
     detail = sh.get("detail") or []
     dead = [x for x in detail if (x.get("ok_runs") or 0) == 0]
-    buckets = {"budget": 0, "tripped": 0, "rate_limited": 0, "http": 0, "no_feed": 0, "other": 0}
+    buckets = {"budget": 0, "tripped": 0, "rate_limited": 0, "http": 0, "no_feed": 0, "other": 0, "deferred": 0, "refused": 0}
     for x in dead:
         e = (x.get("last_error") or "").lower()
         if "time budget" in e:
             buckets["budget"] += 1
+        elif "googlenews rotation" in e:
+            buckets["deferred"] += 1          # held by the Google cap (11 Oct): routine
+        elif "refused upstream" in e or "cooling down" in e:
+            buckets["refused"] += 1           # Google turned us away
         elif "tripped" in e:
             buckets["tripped"] += 1
         elif "429" in e:
@@ -1093,7 +1097,16 @@ def health_block(latest: dict) -> dict:
         else:
             buckets["other"] += 1
     total = sh.get("sources") or len(detail)
-    return {"total": total, "dead": len(dead), "answering": total - len(dead), **buckets}
+    gq = sh.get("google_quota") or {}
+    if gq.get("cooling") and gq.get("cooldown_until"):
+        google = f"Google News is refusing the engine; cooling down until {str(gq['cooldown_until'])[11:16]}Z, cap {gq.get('cap')} a run; Bing carries the focus credits meanwhile."
+    elif buckets["refused"]:
+        google = f"Google refused {buckets['refused']} queries in this window; the route tripped and cooled down."
+    elif gq.get("cap"):
+        google = f"Google cap {gq['cap']} queries a run; {buckets['deferred']} deferred by the rotation, which is routine."
+    else:
+        google = ""
+    return {"total": total, "dead": len(dead), "answering": total - len(dead), "google": google, **buckets}
 
 
 # ----------------------------------------------------------------------------- rendering
@@ -1253,7 +1266,7 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
         candidates=P["all"], carried_n=published + echo_pub,
         answering=f'{H["answering"]:,}', sources=f'{H["total"]:,}',
         feeds=st.get("feeds_known", 0),
-        dead=H["dead"], budget=H["budget"], tripped=H["tripped"],
+        dead=H["dead"], budget=H["budget"], tripped=H["tripped"], refused=H["refused"], deferred=H["deferred"], google=H["google"],
         rate=H["rate_limited"], http=H["http"], nofeed=H["no_feed"],
         lead_items="\n".join(
             f'<h3 class="grp">{e(label)}</h3>' + "\n".join(item_html(r, j, True) for r in rs)
