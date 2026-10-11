@@ -1,0 +1,168 @@
+# Executives per name id, merged into each name's aliases at load time (newsflow/config.py,
+# _merge_people). Added 11 October 2026 after the engine missed that a Welt am Sonntag interview
+# with Vonovia's chief executive had broken: its echoes ran under his name ("Mucic stoppt Neubau in
+# Berlin"), not the company's.
+#
+# Rules: names are the CURRENT CEO / CFO as confirmed from a 2025-26 source or the company's own
+# management page on 11 October 2026 (source noted per line). Full names only for text; a surname is
+# added as a separate match-only alias ONLY where it is distinctive enough that a headline carrying
+# it is about this person (no Franchi, Ebel, Samson, Wood). search: true runs a Google News query for
+# the name in the home language every 4th run; CFOs are match-only. Update this file when an
+# executive changes; a stale name costs recall, a wrong one costs precision.
+names:
+  vonovia:      # vonovia.com management board, Q1 2026 release
+    people:
+      - {text: "Luka Mucic", search: true, search_every: 4, langs: [de]}
+      - {text: "Mucic", search: false}
+      - {text: "Philip Grosse", search: false}
+  synlab:       # synlab.com, 2 Apr 2025
+    people:
+      - {text: "Mathieu Floreani", search: true, search_every: 4, langs: [fr, de]}
+      - {text: "Floreani", search: false}
+  biogroup:     # cms.law, 9 Jun 2026
+    people:
+      - {text: "Frédéric Dauche", search: true, search_every: 4, langs: [fr]}
+  cerba:        # cerbahealthcare.com leadership page
+    people:
+      - {text: "Julien Samson", search: true, search_every: 4, langs: [fr]}
+      - {text: "Nathalie Lomon", search: false}
+  intrum:       # Intrum Q2 release 28 Aug 2026; placera.se 27 Aug 2025
+    people:
+      - {text: "Johan Åkerblom", search: true, search_every: 4, langs: [sv]}
+      - {text: "Åkerblom", search: false}
+      - {text: "Masih Yazdi", search: false}
+  airbaltic:    # baltictimes.com 10 Apr 2026; investors.airbaltic.com
+    people:
+      - {text: "Erno Hildén", search: true, search_every: 4, langs: [lv]}
+      - {text: "Erno Hilden", search: false}
+      - {text: "Vitolds Jakovlevs", search: false}
+  branicks:     # placera.se 28 Jul 2025; boerse-global.de 2 Aug 2026 (CEO and CFO combined)
+    people:
+      - {text: "Sonja Wärntges", search: true, search_every: 4, langs: [de]}
+      - {text: "Wärntges", search: false}
+  heimstaden:   # heimstadenbostad.com leadership page; Bostad Q2 21 Jul 2026
+    people:
+      - {text: "Helge Krogsbøl", search: true, search_every: 4, langs: [sv, nb]}
+      - {text: "Krogsbøl", search: false}
+      - {text: "Christian Fladeland", search: false}
+  sudzucker:    # suedzuckergroup.com executive board page
+    people:
+      - {text: "Niels Pörksen", search: true, search_every: 4, langs: [de]}
+      - {text: "Pörksen", search: false}
+      - {text: "Stephan Meeder", search: false}
+  tereos:       # tereos.com FY25/26 results release 28 May 2026
+    people:
+      - {text: "Olivier Leducq", search: true, search_every: 4, langs: [fr]}
+  metlen:       # metlen.com board page; protothema.gr Nov 2025 (both from 1 Jan 2026)
+    people:
+      - {text: "Christos Gavalas", search: true, search_every: 4, langs: [el, en]}
+      - {text: "Evangelos Mytilineos", search: false}
+  centrient:    # centrient.com leadership page; CEO release 11 Mar 2026
+    people:
+      - {text: "Faye Freeman", search: false}
+      - {text: "Ronald Merckx", search: false}
+  dovalue:      # dovalue.it top management page
+    people:
+      - {text: "Manuela Franchi", search: true, search_every: 4, langs: [it]}
+      - {text: "Davide Soffietti", search: false}
+  rossini:      # globalbankingandfinance.com 28 Jul 2026; mfn.se 23 Oct 2025
+    people:
+      - {text: "Rob Koremans", search: true, search_every: 4, langs: [it, en]}
+      - {text: "Koremans", search: false}
+  boots:        # kamcity.com 2 Sep 2026
+    people:
+      - {text: "Alex Baldock", search: true, search_every: 4, langs: [en]}
+  wagamama:     # restaurantonline.co.uk 22 May 2025 (TRG)
+    people:
+      - {text: "Andy Hornby", search: true, search_every: 4, langs: [en]}
+  puregym:      # Q2 2026 call transcript, 27 Aug 2026
+    people:
+      - {text: "Alex Wood", search: false, require_context: [PureGym, gym, gyms]}
+  maxeda:       # maxedadiygroup.com management page
+    people:
+      - {text: "Berend van Wel", search: true, search_every: 4, langs: [nl]}
+  vivion:       # vivion.eu 2 Jan 2026
+    people:
+      - {text: "Sascha Hettrich", search: true, search_every: 4, langs: [de, en]}
+      - {text: "Lefteris Kassianos", search: false}
+  adler:        # Q3 2025 call transcript, 27 Nov 2025
+    people:
+      - {text: "Karl Reinitzhuber", search: true, search_every: 4, langs: [de]}
+      - {text: "Reinitzhuber", search: false}
+  tuigroup:     # traveldailynews.com 1 Apr 2026
+    people:
+      - {text: "Sebastian Ebel", search: true, search_every: 4, langs: [de]}
+      - {text: "Mathias Kiep", search: false}
+  worldline:    # worldline.com executive committee page
+    people:
+      - {text: "Pierre-Antoine Vacheron", search: true, search_every: 4, langs: [fr]}
+      - {text: "Vacheron", search: false, require_context: [Worldline]}
+  cheplapharm:  # deutsche-boerse.com 18 May 2026
+    people:
+      - {text: "Sebastian Braun", search: false, require_context: [Cheplapharm]}
+      - {text: "Martin Krämer", search: false, require_context: [Cheplapharm]}
+  hellofresh:   # roic.ai Q1 2026 call, 6 May 2026
+    people:
+      - {text: "Dominik Richter", search: false, require_context: [HelloFresh]}
+  elior:        # eliorgroup.com executive committee page
+    people:
+      - {text: "Daniel Derichebourg", search: false, require_context: [Elior]}
+  travelodge:   # travelodge.co.uk 20 Aug 2026 (interim CEO, also CFO)
+    people:
+      - {text: "Ray Reidy", search: false}
+  lowell:       # lowell.com 31 Aug 2026
+    people:
+      - {text: "Colin Storrar", search: false}
+  mutares:      # ir.mutares.com, 17 Mar 2026
+    people:
+      - {text: "Robin Laik", search: true, search_every: 4, langs: [de]}
+  hapag:        # container-news.com 13 Aug 2026; hapag-lloyd.com
+    people:
+      - {text: "Rolf Habben Jansen", search: false}
+  cmacgm:       # ajot.com 28 Jul 2026; tradingsat.com 14 Nov 2025
+    people:
+      - {text: "Rodolphe Saadé", search: false}
+      - {text: "Rodolphe Saade", search: false}
+  sbb:          # inderes.se 10 Aug 2026
+    people:
+      - {text: "Andreas Morfiadakis", search: false}
+  ceconomy:     # ceconomy-mms.com board page
+    people:
+      - {text: "Remko Rijnders", search: false}
+  grifols:      # Form 6-K Jul 2026
+    people:
+      - {text: "Nacho Abia", search: false}
+  europcar:     # europcar-mobility-group.com 16 Apr 2025
+    people:
+      - {text: "Sebastian Birkel", search: false}
+  evoca:        # evocagroup.com 5 Feb 2026
+    people:
+      - {text: "Norman Rafael", search: false}
+  stada:        # stada.com management page
+    people:
+      - {text: "Peter Goldschmidt", search: false, require_context: [Stada, STADA]}
+  kiloutou:     # kiloutou.com governance page 2026
+    people:
+      - {text: "Olivier Colleau", search: false}
+  demire:       # demire.ag boards page
+    people:
+      - {text: "Dirk Rüffel", search: false}
+  mpt:          # Q1 2026 earnings call transcript, 30 Apr 2026 (medicalpropertiestrust q4cdn)
+    people:
+      - {text: "Edward Aldag", search: true, search_every: 4, langs: [en]}
+      - {text: "Ed Aldag", search: false}
+      - {text: "Steven Hamner", search: false}
+  nexi:         # Börsen-Zeitung, 8 Apr 2026: Bernardo Mingrone (previously CFO) succeeds Paolo Bertoluzzo as CEO
+    people:
+      - {text: "Bernardo Mingrone", search: true, search_every: 4, langs: [it]}
+      - {text: "Mingrone", search: false}
+  isabelmarant: # FashionUnited, 26 May 2026: Catherine Jacquet appointed chief executive
+    people:
+      - {text: "Catherine Jacquet", search: false, require_context: ["Isabel Marant", "Marant"]}
+  paragon:      # Large Format Review, 14 Feb 2020 (Sean Shine CEO, Patrick Crean executive chairman); still listed as an insider
+    people:
+      - {text: "Sean Shine", search: false, require_context: ["Paragon"]}
+      - {text: "Patrick Crean", search: false, require_context: ["Paragon"]}
+  arrow:        # founder and group CEO (SuperReturn speaker listing); Enrico Sanna named CEO Platforms in March 2025
+    people:
+      - {text: "Zach Lewy", search: false, require_context: ["Arrow"]}

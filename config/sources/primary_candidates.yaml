@@ -10,6 +10,9 @@ names:
     - {url: "https://www.adidas-group.com/en/investors/", kind: "investor page", reason: "not fetched in the comp sweep", link_pattern: 'news\.adidas\.com/[a-z-]+/.+/s/[0-9a-f-]+'}
   adler:   # Adler Group
     - {url: "https://www.luxse.com/issuer/AdlerGroup/73527", kind: "venue", reason: "list renders client-side (LuxSE, Euronext, TISE, Epiq, EDGAR, CNMV)"}
+  sector_property_credit:   # Property credit (sector), 6 Oct 2026
+    - {url: "https://greenstreetnews.com/europe/", kind: "trade listing", reason: "Green Street News (React News): the feed answers 403 and the Europe listing fetched without visible article links; articles are at greenstreetnews.com/article/<slug>/ per Google. Reached meanwhile through site: queries in overlay.yaml.", link_pattern: 'greenstreetnews\.com/article/.+'}
+    - {url: "https://www.iz.de/news/feed/", kind: "feed", reason: "Immobilien Zeitung RSS, confirmed live 6 Oct, but licensed for private use only (iz.de/service/rss); not read until the publisher agrees. Reached meanwhile through site: queries in overlay.yaml."}
   advanz:   # Advanz Pharma
     - {url: "https://investors.advanzpharma.com/", kind: "investor page", reason: "gated", link_pattern: 'advanzpharma\.com/news/\d{4}/.+'}
   adyen:   # Adyen

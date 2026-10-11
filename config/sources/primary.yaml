@@ -119,7 +119,8 @@ names:
       - {url: "https://ir.bookingholdings.com/rss/pressrelease.aspx", name: "Booking Holdings press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
   branicks:   # Branicks Group [name]
     pages:
-      - {url: "https://branicks.com/en/ir/disclosures/corporate-news/", name: "Branicks Group newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'branicks\.com/en/branicks-group-ag-.+'}
+      - {url: "https://branicks.com/en/ir/disclosures/corporate-news/", name: "Branicks Group newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'branicks\.com/en/(?:branicks-group-ag-|invitation-).+'}   # 4 Oct: the old pattern required a branicks-group-ag- slug and missed the 28 Aug 'Invitation to ... submit offers' release
+      - {url: "https://www.branicks.com/en/investor-relations/bondholder-vote-october-2026/", name: "Branicks bondholder vote page", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'branicks\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}   # 4 Oct: the 2 Oct invitation to vote was published here only, never in the corporate-news list
   britishsugar:   # British Sugar [comp]
     pages:
       - {url: "https://www.britishsugar.co.uk/media/news/latest", name: "British Sugar newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'britishsugar\.co\.uk/media/news/\d{4}-\d{2}-\d{2}-.+'}
@@ -176,7 +177,8 @@ names:
     pages:
       - {url: "https://www.co-operative.coop/media/news-releases", name: "Co-op (Co-operative Group) newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'co-operative\.coop/media/news-releases/.+'}
       - {url: "https://www.co-operative.coop/investors/reports", name: "Co-op (Co-operative Group) investor page", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:co-operative\.coop/media/news-releases/.+|co\-operative\.coop/.+\.pdf)'}
-      - {url: "https://www.investegate.co.uk/company/42TF", name: "Co-op RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/.+/\d+'}
+      - {url: "https://www.investegate.co.uk/company/42TF", name: "Co-op RNS (Investegate)", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'investegate\.co\.uk/announcement/rns/co-operative-group-limited--42tf/.+/\d+'}   # 4 Oct: pattern pinned to the issuer slug; the old '.+/\d+' carried every other issuer's RNS on the page
+      - {url: "https://www.gov.uk/cma-cases/co-operative-group-slash-southern-co-operative-merger-inquiry", name: "CMA case page: Co-op / Southern Co-op", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: '(?:assets\.publishing\.service\.gov\.uk/media/[a-f0-9]+/(?!_?Derogation).+\.pdf|gov\.uk/government/news/.+)'}   # 5 Oct: the 15 Sep phase 1 decision and the 29 Sep remedies notice reached the store six days late via Google News; this reads the regulator's page directly, derogation letters excluded
   covis:   # Covis Pharma [comp]
     pages:
       - {url: "https://covispharma.com/index.php/news/", name: "Covis Pharma newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'covispharma\.com/index\.php/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
@@ -319,6 +321,9 @@ names:
   hapag:   # Hapag-Lloyd [name]
     pages:
       - {url: "https://www.hapag-lloyd.com/en/company/ir/financial-news/financial-news.html", name: "Hapag-Lloyd newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'hapag-lloyd\.com/en/company/ir/financial-news/financial-news\.iry-\d{4}\.irid-\d+\.html'}
+      # 5 Oct 2026: the IR page has answered HTTP 403 to the watcher since at least 4 Oct; the EQS company page
+      # lists the same corporate and ad-hoc releases (fetched 5 Oct, nine items from 29 Jun to 9 Sep).
+      - {url: "https://www.eqs-news.com/company/hapag-lloyd-ag/news/5bd2d0b8-ea7c-11e8-902f-2c44fd856d8c", name: "Hapag-Lloyd regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
   haworth:   # Haworth [comp]
     pages:
       - {url: "https://www.haworth.com/na/en/about/about-haworth/media-room.html", name: "Haworth newsroom", tier: 0, country: "US", lang: en, require_alias: false, link_pattern: 'haworth\.com/na/en/about/about-haworth/media-room/.+\.html'}
@@ -464,6 +469,10 @@ names:
     pages:
       - {url: "https://ir.mutares.com/en/", name: "Mutares newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'mutares\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}|ir\.mutares\.com/wp-content/uploads/\d{4}/\d{2}/.+\.pdf'}
       - {url: "https://www.eqs-news.com/company/mutares-se-co-kgaa/news/5b959bd4-ea7c-11e8-902f-2c44fd856d8c", name: "Mutares regulatory news (EQS)", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'eqs-news\.com/news/[a-z-]+/.+'}
+      # 5 Oct 2026: the ir.mutares.com watcher answered 92 of 92 times over the weekend and returned nothing; the
+      # releases live on the group site's news list (fetched 5 Oct: Lapeyre offer 5 Oct, buyback result 1 Oct,
+      # Synthomer completion 30 Sep, Steinmüller signing 29 Sep).
+      - {url: "https://mutares.com/en/news/", name: "Mutares news", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'mutares\.com/en/mutares-[a-z0-9]+(?:-[a-z0-9]+)+/?$'}
   natuzzi:   # Natuzzi [comp]
     pages:
       - {url: "https://www.natuzzigroup.com/en-EN/ir/financial-release.html", name: "Natuzzi newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'natuzzigroup\.com/pdf/ir/.+\.pdf'}
@@ -604,6 +613,19 @@ names:
   signet:   # Signet Jewelers [comp]
     feeds:
       - {url: "https://www.signetjewelers.com/rss/pressrelease.aspx", name: "Signet Jewelers press-release RSS", tier: 0, country: "US", lang: en, require_alias: false}
+  sector_property_credit:   # Property credit, Nordic and German (sector) [comp]
+    pages:
+      # 6 Oct 2026, per the desk. Thomas Daily's free morning-news archive lists the day's German property
+      # stories (about 15 of the roughly 50 the premium service carries); asset sales across office, resi and
+      # hotels break here. names: [] means every new link is matched against every name's aliases, the way an
+      # outlet feed is, rather than filed under this entry. Fetched 6 Oct: five items of 5 Oct with slugs
+      # under /td-morning-news/<id>-<slug>/.
+      - {url: "https://www.thomas-daily.de/service/td-morning-news/", name: "Thomas Daily morning news", tier: 4, country: "DE", lang: de, names: [], require_alias: true, link_pattern: 'thomas-daily\.de/td-morning-news/\d+-.+'}
+      # Value Marktdaten (the former empirica-systeme team, Hypoport group): the quarterly residential market
+      # data update, the most authoritative German resi series per the desk. Q2-2026 came 13 Jul, Q3-2025 on
+      # 7 Oct 2025, so Q3-2026 is due in October. Every post is market level, hence require_alias false and
+      # filed here. Fetched 6 Oct: six posts, dated paths under the site root.
+      - {url: "https://www.value-marktdaten.de/aktuelles/", name: "Value Marktdaten news", tier: 2, country: "DE", lang: de, require_alias: false, link_pattern: 'value-marktdaten\.de/\d{4}/\d{2}/\d{2}/.+'}
   sixt:   # Sixt [comp]
     pages:
       - {url: "https://about.sixt.com/en/newsroom/", name: "Sixt newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'about\.sixt\.com/en/[a-z0-9]+(?:-[a-z0-9]+){2,}'}
@@ -720,6 +742,11 @@ names:
   vonovia:   # Vonovia [comp]
     pages:
       - {url: "https://www.vonovia.com/presse", name: "Vonovia newsroom", tier: 0, country: "DE", lang: en, require_alias: false, link_pattern: 'vonovia\.com/presse/pressemitteilungen/\d{4}/.+'}
+  vivion:   # Vivion Investments [name]
+    pages:
+      # 5 Oct 2026: the name had no own source and no mention in 24 hours; the S&P outlook change to negative of
+      # 22 Sep sits on this list. Fetched 5 Oct: six items from 12 Jun to 22 Sep, slugs under the site root.
+      - {url: "https://vivion.eu/news/", name: "Vivion news", tier: 0, country: "LU", lang: en, require_alias: false, link_pattern: 'vivion\.eu/(?!news/?$|contact|about|portfolio|team|careers|privacy|imprint|cookie)[a-z0-9]+(?:-[a-z0-9]+)+/?$'}
   wagamama:   # Wagamama [name]
     pages:
       - {url: "https://www.wagamama.com/investors", name: "Wagamama newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'datocms-assets\.com/177323/.+\.pdf'}
