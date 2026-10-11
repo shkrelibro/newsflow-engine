@@ -973,6 +973,7 @@ def focus_status(P: dict, latest: dict, coverage: dict, published: list[dict], l
             "rows": len(rs), "new": sum(1 for r in rs if r.get("new")),
             "comp_new": sum(1 for c in comps for r in rows_by.get(c, []) if r.get("new")),
             "ok_24h": cv.get("ok_24h"), "skipped_24h": cv.get("skipped_24h"), "last": cv.get("last_mention"),
+            "outlets": cv.get("outlets") or [],
         })
     return out
 
@@ -1000,6 +1001,19 @@ def focus_rows_html(F: list[dict]) -> str:
         t = _parse_ts(f.get("last"))
         if t:
             eng += f"; last mention {t:%a %H:%M}Z"
+        ko = f.get("outlets") or []
+        if ko:
+            dark = [o["domain"] for o in ko if not o.get("answering")]
+            eng += f"; key outlets {len(ko) - len(dark)} of {len(ko)} answering"
+            if dark:
+                eng += " (dark: " + ", ".join(dark[:4]) + ("" if len(dark) <= 4 else ", ...") + ")"
+                flag = flag or len(dark) * 2 > len(ko)
+            hits = [(o["last_hit"], o["domain"]) for o in ko if o.get("last_hit")]
+            if hits:
+                ts, dom = max(hits)
+                tt = _parse_ts(ts)
+                if tt:
+                    eng += f"; last in {dom} {tt:%d %b}"
         out.append(f'<tr><td class="name">{e(f["name"])}</td><td class="c">{e(page)}</td>'
                    f'<td class="c{" g-flag" if flag else ""}">{e(eng)}</td></tr>')
     return "\n".join(out) or '<tr><td colspan="3" class="c">No focus list configured (config/focus.yaml).</td></tr>'
