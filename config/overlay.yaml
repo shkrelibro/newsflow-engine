@@ -18,16 +18,19 @@
 # Added 5 October 2026.
 names:
   branicks:
+    key_outlets: [handelsblatt.com, faz.net, boersen-zeitung.de, iz.de, thomas-daily.de]
     # The 17-19 October bondholder vote on the 35.3% principal cut, with the shareholder meeting
     # on the Sanierungskonzept before it. On 5 October the 20% fall to EUR 0.366 was visible only
     # on churn domains and the screen removed every trace of it.
     watch: true
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]   # German real estate trade press, 6 Oct
   airbaltic:
+    key_outlets: [lsm.lv, db.lv, delfi.lv, nra.lv, jauns.lv, ch-aviation.com, aviation24.be]
     # Chapter 11 since 14 September with the state as controlling shareholder; the collective
     # redundancy procedure started 5 October; a new government deciding what to do with it.
     watch: true
   cheplapharm:
+    key_outlets: [handelsblatt.com, faz.net, apotheke-adhoc.de, deutsche-apotheker-zeitung.de, fiercepharma.com, ostsee-zeitung.de]
     # The EUR 1.28bn term loan refinancing launched 5 October, with up to EUR 400m of other senior
     # secured debt towards the Project Latour consideration; pricing and ratings to follow.
     watch: true
@@ -39,6 +42,7 @@ names:
       - {text: "Respighi", langs: [it, en], weight: 0.6,
          require_context: ["Recordati", "CVC", "OPA", "offerta", "tender", "takeover", "adesioni", "BidCo"]}
   heimstaden:
+    key_outlets: [di.se, affarsvarlden.se, realtid.se, fastighetsvarlden.se, dn.se, iz.de, tagesspiegel.de]
     # The founder's name carries the Bostad story in the Nordic press as often as the company's.
     aliases:
       - {text: "Ivar Tollefsen", weight: 0.8, require_context: ["Heimstaden", "Fredensborg", "Bostad", "Alecta"]}
@@ -68,6 +72,7 @@ names:
   tmicc:
     site_queries: [corporate.magnumicecream.com]
   cmacgm:
+    key_outlets: [lesechos.fr, lloydslist.com, theloadstar.com, splash247.com, joc.com, tradewindsnews.com, container-news.com]
     site_queries: [cma-cgm.com]
 
   # German real estate, 6 Oct 2026, per the desk: Thomas Daily and Immobilien Zeitung break the asset
@@ -77,6 +82,7 @@ names:
   # Immobilien Zeitung's RSS is licensed for private use only and Green Street News answers 403 to
   # a feed request, so both are reached through Google's index with site: queries, headline level.
   adler:
+    key_outlets: [handelsblatt.com, boersen-zeitung.de, iz.de, thomas-daily.de, tagesspiegel.de]
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com, tagesspiegel.de]
     notes: "The wallstreet-online board on the old ADO Properties thread (wallstreet-online.de/diskussion/1220823-1/ado-properties-berlin-pure-play-immobilien, 8,600 posts, newest first) carries retail chatter on smaller asset sales before the press does; the engine cannot read forum posts, so it is a hand read."
   aroundtown:
@@ -84,26 +90,68 @@ names:
   demire:
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
   vivion:
+    key_outlets: [handelsblatt.com, boersen-zeitung.de, iz.de, thomas-daily.de]
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
   grandcity:
     site_queries: [iz.de, greenstreetnews.com]
   vonovia:
     site_queries: [greenstreetnews.com]
 
-  # 11 Oct 2026 (evening): French focus credits in the business and agri press. The Tereos chief
-  # executive's interview (L'Usine Nouvelle) never reached the engine, and Les Echos is paywalled with
-  # one finance feed only, so Google's index is the second channel, every twelfth run, 7-day window.
+  # ---- 11 Oct 2026 (evening): key outlets for the focus credits ------------------------------------
+  # The titles that must reach each credit: its home-market business press and its sector's trade
+  # press. Each gets a Google site: query every twelfth run (7-day window, so paywalled titles that
+  # Google indexes are reached even when no feed exists), and coverage.json reports per outlet whether
+  # a channel to it answered in the last 24 hours and when it last carried the name. The brief's focus
+  # table prints that, so silence from Dagens industri on Intrum is measured, not assumed.
+  intrum:
+    key_outlets: [di.se, affarsvarlden.se, realtid.se, finanswatch.se, svd.se, placera.se, finansavisen.no]
+  arrow:
+    key_outlets: [ft.com, thetimes.com, creditstrategy.co.uk, credit-connect.co.uk, ilsole24ore.com]
+  wagamama:
+    key_outlets: [ft.com, thetimes.com, telegraph.co.uk, bighospitality.co.uk, thecaterer.com]
   tereos:
-    site_queries: [usinenouvelle.com, lesechos.fr, terre-net.fr, reussir.fr, lebetteravier.fr, action-agricole-picarde.com]
-  biogroup:
-    site_queries: [usinenouvelle.com, lesechos.fr, biologiste365.fr]
-  cerba:
-    site_queries: [usinenouvelle.com, lesechos.fr, biologiste365.fr]
-  synlab:
-    site_queries: [usinenouvelle.com, lesechos.fr, biologiste365.fr]
-  elior:
-    site_queries: [usinenouvelle.com, lesechos.fr]
-  worldline:
-    site_queries: [usinenouvelle.com, lesechos.fr]
+    key_outlets: [usinenouvelle.com, lesechos.fr, terre-net.fr, reussir.fr, lebetteravier.fr, action-agricole-picarde.com]
+  metlen:
+    key_outlets: [naftemporiki.gr, capital.gr, kathimerini.gr, euro2day.gr, newmoney.gr]
+  maxeda:
+    key_outlets: [fd.nl, tijd.be, retailtrends.nl, retaildetail.nl]
+  tuigroup:
+    key_outlets: [handelsblatt.com, faz.net, fvw.de, touristik-aktuell.de, reisevor9.de, travelweekly.co.uk]
   isabelmarant:
-    site_queries: [lesechos.fr, fashionnetwork.com]
+    key_outlets: [lesechos.fr, fashionnetwork.com, fashionunited.fr, wwd.com, businessoffashion.com]
+  biogroup:
+    key_outlets: [lesechos.fr, usinenouvelle.com, biologiste365.fr, lequotidiendumedecin.fr]
+  cerba:
+    key_outlets: [lesechos.fr, usinenouvelle.com, biologiste365.fr, lequotidiendumedecin.fr]
+  synlab:
+    key_outlets: [lesechos.fr, biologiste365.fr, handelsblatt.com, aerztezeitung.de]
+  centrient:
+    key_outlets: [fd.nl, fiercepharma.com, in-pharmatechnologist.com, pharmaceutical-technology.com, economictimes.indiatimes.com]
+  elior:
+    key_outlets: [lesechos.fr, usinenouvelle.com, neorestauration.com]
+  travelodge:
+    key_outlets: [ft.com, thetimes.com, thecaterer.com, propertyweek.com]
+  paragon:
+    key_outlets: [printweek.com, decisionmarketing.co.uk, ft.com]
+  mpt:
+    key_outlets: [bloomberg.com, reuters.com, globest.com, thetimes.com]
+  worldline:
+    key_outlets: [lesechos.fr, latribune.fr, tijd.be, lecho.be, finextra.com]
+  nexi:
+    key_outlets: [ilsole24ore.com, milanofinanza.it, finextra.com]
+  takko:
+    key_outlets: [textilwirtschaft.de, fashionunited.de, fashionnetwork.com, handelsblatt.com, faz.net]
+  avis:
+    key_outlets: [reuters.com, bloomberg.com, wsj.com, autorentalnews.com, cnbc.com]
+  bertrand:
+    key_outlets: [lesechos.fr, lefigaro.fr, lsa-conso.fr, neorestauration.com, snacking.fr, lhotellerie-restauration.fr]
+  mobilux:
+    key_outlets: [lesechos.fr, lsa-conso.fr, lefigaro.fr, bfmtv.com, capital.fr]
+  dovalue:
+    key_outlets: [ilsole24ore.com, milanofinanza.it, bebeez.it, naftemporiki.gr, capital.gr]
+  evoca:
+    key_outlets: [bebeez.it, ilsole24ore.com, milanofinanza.it, bloomberg.com]
+  hellofresh:
+    key_outlets: [handelsblatt.com, faz.net, manager-magazin.de, wiwo.de, lebensmittelzeitung.net, businessinsider.de]
+  hse:
+    key_outlets: [handelsblatt.com, faz.net, horizont.net, wuv.de, textilwirtschaft.de]

@@ -46,7 +46,7 @@ routes:
     enabled: true
     when: "1d"                # window for alias queries
     site_when: "7d"           # window for site-restricted outlet queries
-    site_every_n_runs: 12     # 4 Oct: 6 -> 12. Per-name site: queries spread over 12 runs (each outlet every 3 hours); they use a 7-day window, so nothing is lost
+    site_every_n_runs: 16     # 4 Oct: 6 -> 12; 11 Oct: 12 -> 16 for the key-outlet queries. Each site: query every 4 hours; they use a 7-day window, so nothing is lost
     cold_start_when: "30d"    # window used for site: queries during the first two cycles (history for the golden set)
     group_size: 6             # names per grouped (OR) market query (comps, and the tier-A safety net)
     # v2 cadences. Every alias query looks back a full day ("when" above), so how often a query runs
@@ -54,9 +54,9 @@ routes:
     # page that fills up. Focus credits (config/focus.yaml) get the short cadences.
     home_every_n_runs: 2      # tier-A solo query in the home market: every 30 minutes (focus credits: every run)
     foreign_every_n_runs: 6   # tier-A solo query in every other market: every 90 minutes (was grouped only until v2)
-    focus_every_n_runs: 2     # focus credits: every market every 30 minutes
+    focus_every_n_runs: 3     # focus credits: home market every run, every other market every 45 minutes (32 credits, 11 Oct)
     focus_alias_every_n_runs: 4    # focus credits' executives and secondary aliases: at least hourly
-    focus_comp_every_n_runs: 4     # comps of focus credits: their own home-market query hourly, not only grouped
+    focus_comp_every_n_runs: 6     # comps of focus credits: their own home-market query every 90 minutes, not only grouped
     alias_min_every_n_runs: 2      # other names' secondary aliases: at most every 30 minutes
     tier_a_group_every_n_runs: 4   # v2: grouped tier-A queries are now a safety net behind the solos
     comp_every_n_runs: 3      # 4 Oct: 2 -> 3. Comp market groups every 3rd run; the 1-day query window still sees everything
