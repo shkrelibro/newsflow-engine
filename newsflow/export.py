@@ -126,20 +126,37 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
                 "markets": [f"{m.country}:{m.lang}" for m in n.markets],
                 "candidates": cluster_list,
                 "candidate_count": len(cluster_list),
+                "kept_from_screen": sum(1 for c in cluster_list if str(c["primary"].get("screen_reason") or "").startswith("kept:")),
+                "watch": n.watch,
+                "focus": n.focus,          # "name", "comp" (of a focus credit) or "" (config/focus.yaml)
+                "comps": list(n.comps),
                 "mentions_in_window": len(rows),
                 "unresolved_urls": sum(1 for c in cluster_list if c["primary"]["url_unresolved"]),
                 "screened": {"count": len(screened), "by_reason": dict(reasons), "items": screened[:25]},
+                # v2: churn echoes get their own uncapped-ish list, newest first, so a busy name
+                # cannot push the only trace of an event out of the 25 screened items above
+                "churn": sorted((x for x in screened if str(x.get("screen_reason") or "").startswith("churn")),
+                                key=lambda x: x.get("first_seen_at") or "", reverse=True)[:40],
             }
         )
     health = store.source_health(int(cfg.export.get("health_runs", 4)))
     failing = [h for h in health if h["ok_runs"] == 0]
+    # Job-level starvation over a full day. source_health looks at the last few runs, where a
+    # budget skip is routine; a source with no completed run in 24 hours is a hole, whatever the
+    # name-level coverage says, and it belongs on the page and in the watchdog's view.
+    starved = store.sources_starved(now - timedelta(hours=24))
+    # Watchers and feeds that answer but never yield: a week of 200s with zero items is a dead
+    # link pattern or a script-rendered page, not a quiet issuer. Mutares' two watchers ran 92
+    # times over the first weekend of October without one item while the issuer put out three
+    # releases; the OK count alone cannot show that.
+    zero_yield = store.watchers_zero_yield(now - timedelta(days=7))
     return {
         "generated_at": now.isoformat(timespec="seconds"),
         "revalidated_out": revalidated,
         "window_hours": window_hours,
         "names": names_out,
         "alerts": all_alerts,
-        "source_health": {"sources": len(health), "failing": len(failing), "detail": health},
+        "source_health": {"sources": len(health), "failing": len(failing), "starved_24h": len(starved), "starved_24h_detail": starved, "zero_yield_7d": len(zero_yield), "zero_yield_7d_detail": zero_yield, "detail": health},
         "stats": store.stats(),
         "engine": "newsflow-engine",
     }
@@ -215,6 +232,26 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
     }
 
 
+_COMPACT_KEYS = ("id", "title", "url", "source", "domain", "country", "lang", "published_at",
+                 "first_seen_at", "route", "tier_hint", "alias_where", "screen_reason")
+
+
+def compact_window(data: dict[str, Any]) -> dict[str, Any]:
+    """The 72-hour pile in the shape scripts/build_brief.py reads, minus everything heavy."""
+    def slim(it: dict[str, Any]) -> dict[str, Any]:
+        return {k: it.get(k) for k in _COMPACT_KEYS}
+    names = []
+    for n in data["names"]:
+        names.append({
+            "id": n["id"], "name": n["name"], "kind": n["kind"],
+            "candidates": [{"cluster_id": c["cluster_id"], "primary": slim(c["primary"]),
+                            "sources": c["sources"], "alert_categories": c["alert_categories"]}
+                           for c in n["candidates"]],
+            "churn": [slim(x) for x in n.get("churn", [])],
+        })
+    return {"generated_at": data["generated_at"], "window_hours": data["window_hours"], "names": names}
+
+
 def write_exports(cfg: Config, store: Store, now: datetime | None = None) -> Path:
     now = now or datetime.now(timezone.utc)
     out = cfg.out_dir
@@ -237,6 +274,14 @@ def write_exports(cfg: Config, store: Store, now: datetime | None = None) -> Pat
     (out / "golden.json").write_text(json.dumps(golden, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "coverage.json").write_text(json.dumps(coverage, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "health.json").write_text(json.dumps({"generated_at": data["generated_at"], **data["source_health"], "stats": data["stats"], "coverage": {"summary": coverage["summary"], "flags": coverage["flags"]}}, ensure_ascii=False, indent=1), encoding="utf-8")
+    if cfg.export.get("window72", False):
+        # v2: a compact 72-hour pile for the Monday cut and for any cut that needs more than a day.
+        # Primary fields only (no summaries, no also-list), so it stays a fraction of latest.json.
+        try:
+            wide = build_export(cfg, store, now, 72.0)
+            (out / "window72.json").write_text(json.dumps(compact_window(wide), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        except Exception as exc:  # noqa: BLE001 - never let the wide window block the main exports
+            (out / "window72.json").write_text(json.dumps({"generated_at": data["generated_at"], "error": str(exc)[:200]}), encoding="utf-8")
     (out / "index.html").write_text(render_index(data), encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
     keep_days = int(cfg.export.get("keep_days", 90))

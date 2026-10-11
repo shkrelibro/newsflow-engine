@@ -393,6 +393,42 @@ class Store:
         ).fetchall()
         return {r["nid"]: {"total": r["total"], "recent": r["recent"], "latest": r["latest"]} for r in rows}
 
+    def sources_starved(self, since: datetime) -> list[dict[str, Any]]:
+        """Sources attempted since `since` that never once completed: the jobs the run budget,
+        a tripped route, a dead feed or a blocked newsroom has kept dark for the whole window.
+        This is the job-level complement of coverage's name-level STARVED flag: a name can be
+        swept in every language through the grouped queries while its own newsroom, its home
+        solo query or a national outlet feed never runs at all."""
+        rows = self.conn.execute(
+            """SELECT sr.route, sr.source, COUNT(*) AS runs, SUM(sr.items) AS items,
+                      MAX(sr.error) AS last_error
+               FROM source_results sr JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ?
+               GROUP BY sr.route, sr.source
+               HAVING SUM(sr.ok) = 0
+               ORDER BY sr.route, sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def watchers_zero_yield(self, since: datetime) -> list[dict[str, Any]]:
+        """Newsroom watchers and outlet feeds that completed at least once since `since` and
+        never returned a single item. A 200 with nothing matched is how a watcher dies quietly:
+        the page moved, went script-rendered, or the link pattern no longer fits, and the health
+        table keeps counting it as OK. Over a week that list is the watchers to re-point. A
+        newsroom that genuinely published nothing in the window appears too, which is cheap to
+        tell apart by opening it."""
+        rows = self.conn.execute(
+            """SELECT sr.route, sr.source, SUM(sr.ok) AS ok_runs, COUNT(*) AS runs
+               FROM source_results sr JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ? AND sr.route IN ('page', 'rss')
+               GROUP BY sr.route, sr.source
+               HAVING SUM(sr.ok) > 0 AND SUM(sr.items) = 0
+               ORDER BY sr.route, sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
     def source_health(self, last_runs: int = 4) -> list[dict[str, Any]]:
         rows = self.conn.execute(
             """SELECT sr.route, sr.source,

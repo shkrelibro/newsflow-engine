@@ -10,6 +10,7 @@ import json
 import re
 import time
 from datetime import datetime, timezone
+from html import unescape as html_unescape
 from html.parser import HTMLParser
 from typing import Iterable, Optional
 from urllib.parse import quote_plus, urljoin, urlsplit
@@ -473,6 +474,69 @@ def fetch_page_links(http: Http, page_url: str) -> tuple[list[tuple[str, str]], 
         return links, SourceResult("page", page_url, True, len(links), "", time.monotonic() - t0)
     except Exception as exc:  # noqa: BLE001
         return [], SourceResult("page", page_url, False, 0, str(exc)[:300], time.monotonic() - t0)
+
+
+# ----------------------------------------------------------------------
+# Page watchers take the link text as the headline, and on some newsrooms the link text is a
+# button. Cheplapharm's 5 October release, the largest refinancing on the page that day, was
+# stored as "Read more chevron_right"; British Sugar's beet-contract notice as "Read more". A
+# headline like that cannot be matched by the golden set, cannot be judged without opening the
+# page, and reads as a broken row in the brief. So a new link whose text is generic is fetched
+# once and its og:title, h1 or <title> used instead, a handful of fetches per watcher per run.
+# ----------------------------------------------------------------------
+GENERIC_LINK_TEXT = re.compile(
+    r"^\s*(?:read\s+more|more|mehr(?:\s+erfahren|\s+lesen)?|weiterlesen|zum\s+artikel|zur\s+meldung|details?"
+    r"|lire\s+la\s+suite|en\s+savoir\s+plus|lire|leer\s+m[áa]s|leggi(?:\s+tutto|\s+di\s+pi[uù])?"
+    r"|l[äa]s\s+mer|les\s+mer|l[æa]s\s+mere|lue\s+lis[äa][äa]|czytaj\s+wi[ęe]cej|tov[áa]bb|meer\s+lezen|lees\s+meer"
+    r"|download|pdf|herunterladen|open|view|link|here|click\s+here|learn\s+more|find\s+out\s+more|full\s+(?:story|article|release)"
+    r"|chevron_right|arrow_forward|→|»|>)\s*(?:chevron_right|arrow_forward|→|»|>)?\s*$",
+    re.IGNORECASE)
+_OG_TITLE = re.compile(r"<meta[^>]+property=[\"']og:title[\"'][^>]+content=[\"']([^\"']+)[\"']", re.IGNORECASE)
+_OG_TITLE_REV = re.compile(r"<meta[^>]+content=[\"']([^\"']+)[\"'][^>]+property=[\"']og:title[\"']", re.IGNORECASE)
+_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.IGNORECASE | re.DOTALL)
+_TITLE_TAG = re.compile(r"<title[^>]*>(.*?)</title>", re.IGNORECASE | re.DOTALL)
+
+
+def generic_link_text(text: str) -> bool:
+    t = (text or "").strip()
+    return len(t) < 12 or GENERIC_LINK_TEXT.match(t) is not None or "chevron_right" in t.lower()
+
+
+def title_from_article(html: str) -> str:
+    """The article's own headline: og:title, then the first h1, then <title> without the site suffix."""
+    for pat in (_OG_TITLE, _OG_TITLE_REV, _H1, _TITLE_TAG):
+        m = pat.search(html or "")
+        if not m:
+            continue
+        t = html_unescape(re.sub(r"<[^>]+>", " ", m.group(1)))
+        t = re.sub(r"\s+", " ", t).strip()
+        if pat is _TITLE_TAG:
+            head = re.split(r"\s+[|\u2013\u2014-]\s+", t)[0].strip()
+            if len(head) >= 12:
+                t = head
+        if len(t) >= 12 and not generic_link_text(t):
+            return t[:300]
+    return ""
+
+
+def enrich_generic_titles(http: Http, items: list[RawItem], limit: int = 5) -> int:
+    """Replace button-text headlines with the article's own, fetching at most `limit` pages."""
+    fetched = 0
+    for it in items:
+        if fetched >= limit:
+            break
+        if not generic_link_text(it.title) or it.link.lower().split("?")[0].endswith(".pdf"):
+            continue
+        try:
+            html = http.get_text(it.link, is_page=True)
+        except Exception:  # noqa: BLE001 - a failed enrichment keeps the link text
+            fetched += 1
+            continue
+        fetched += 1
+        title = title_from_article(html)
+        if title:
+            it.title = title
+    return fetched
 
 
 def page_items_from_links(

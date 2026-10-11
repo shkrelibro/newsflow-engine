@@ -85,6 +85,7 @@ class Matcher:
     tier1: dict[str, re.Pattern]
     global_noise_domains: list[str]
     global_noise_titles: list[re.Pattern]
+    global_demote_domains: list[str] = field(default_factory=list)
     by_id: dict[str, CompiledName] = field(default_factory=dict)
     prefilter: re.Pattern | None = None
 
@@ -116,6 +117,7 @@ class Matcher:
             tier1=tier1,
             global_noise_domains=[d.lower() for d in cfg.noise_domains],
             global_noise_titles=[re.compile(p, re.IGNORECASE) for p in cfg.noise_title_patterns],
+            global_demote_domains=[d.lower() for d in getattr(cfg, "noise_demote", [])],
         )
 
     # ------------------------------------------------------------------
@@ -183,6 +185,14 @@ class Matcher:
         for pat in titles:
             if pat.search(title or ""):
                 return f"noise_title:{pat.pattern}"
+        # v2: churn sites (ad-hoc-news, boerse-express, finanztrends and the like) re-date and
+        # rewrite real news. Their rows stay out of the candidate pile, but under their own reason,
+        # so the brief can use them as echoes: on 10 October 2026 they were the engine's only trace
+        # of the Vonovia interview's Berlin construction stop and of the failed Branicks vote. Title
+        # patterns run first, so a churn-site Kursziel page stays noise and never becomes an echo.
+        for nd in self.global_demote_domains:
+            if d == nd or d.endswith("." + nd):
+                return f"churn:{nd}"
         return ""
 
     # ------------------------------------------------------------------

@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import random
+import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
@@ -15,15 +16,18 @@ from .config import Config, NameConfig, Outlet, PageSource
 from .dedupe import similar, title_key
 from .http import BudgetExceeded, Http, RateLimiter
 from .match import Matcher
+from .signal import hard_signal
 from .models import Item, RawItem, SourceResult
 from .normalize import canonical_url, domain_of, is_google_news_link, url_year
 from .routes import (
+    bing_market,
     discover_feed,
     fetch_bing_news,
     fetch_feed,
     fetch_gdelt,
     fetch_google_news,
     fetch_page_links,
+    enrich_generic_titles,
     page_items_from_links,
 )
 from .store import Store
@@ -41,6 +45,8 @@ class JobSpec:
     route: str
     fn: Job
     name_ids: list[str] = field(default_factory=list)   # names this job sweeps (coverage ledger)
+    prio: int = 5        # queue order inside a run: 0 runs first. The budget tail is then the least
+                         # valuable work rather than a random third of the queue (v2, 11 Oct 2026)
 
 
 @dataclass
@@ -53,6 +59,7 @@ class RunSummary:
     new_items: int = 0
     candidates: int = 0
     screened: int = 0
+    kept_from_screen: int = 0     # tier-A rows a noise domain would have screened, kept flagged
     stale: int = 0
     unrelated: int = 0
     alerts: int = 0
@@ -105,6 +112,9 @@ def cold_start(cfg: Config, run_number: int) -> bool:
     return run_number <= 2 * site_every
 
 
+_CJK_RE = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7af]")
+
+
 def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False) -> list[JobSpec]:
     jobs: list[JobSpec] = []
     routes = cfg.routes
@@ -128,6 +138,12 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     group_size = max(2, int(g.get("group_size", 6)))
     home_every = max(1, int(g.get("home_every_n_runs", 2)))
     comp_every = max(1, int(g.get("comp_every_n_runs", 2)))
+    foreign_every = max(1, int(g.get("foreign_every_n_runs", 3)))      # tier-A non-home solo queries
+    tier_a_group_every = max(1, int(g.get("tier_a_group_every_n_runs", 1)))  # grouped tier-A safety net
+    focus_every = max(1, int(g.get("focus_every_n_runs", 2)))          # focus credits: every market, every Nth run
+    focus_comp_every = max(1, int(g.get("focus_comp_every_n_runs", 4)))  # comps of focus credits: solo home query
+    focus_alias_every = max(1, int(g.get("focus_alias_every_n_runs", 4)))  # focus credits' secondary aliases, at most every Nth run
+    alias_min_every = max(1, int(g.get("alias_min_every_n_runs", 1)))  # other names' secondary aliases, at most this often
     bing_every = int(routes.get("bingnews", {}).get("every_n_runs", 2))
     bing_comp_every = int(routes.get("bingnews", {}).get("comp_every_n_runs", 4))
     gdelt_every = int(routes.get("gdelt", {}).get("every_n_runs", 1))
@@ -146,6 +162,22 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     def _or_query(entries) -> str:
         return "(" + " OR ".join(f'"{alias}"' for _, alias in entries) + ")"
 
+    # Google News returns at most 100 items per query. A group that carries a name with hundreds
+    # of headlines a day (Nike, Amazon, Booking) fills the cap on every run and the other five
+    # names in the group are truncated out of the result. Names listed under
+    # routes.googlenews.heavy_names are therefore chunked among themselves, so a saturated group
+    # only ever truncates other heavy names, and the light names keep a full result each.
+    heavy_ids = {str(x) for x in (g.get("heavy_names", []) or [])}
+
+    def _grouped_chunks(entries, size):
+        light = [e for e in entries if e[0] not in heavy_ids]
+        heavy = [e for e in entries if e[0] in heavy_ids]
+        ci = 0
+        for part in (light, heavy):
+            for i in range(0, len(part), size):
+                yield ci, part[i:i + size]
+                ci += 1
+
     for name in cfg.names:
         ids = [name.id]
         markets = name.markets
@@ -158,23 +190,55 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             bucket.setdefault((m.lang, m.country), []).append((name.id, main))
 
         if cfg.route_enabled("googlenews"):
-            # solo home-market query for tier-A names (full fallback recall)
-            if name.kind != "comp" and (force or _due(home_every, run_number, 0)):
-                for m in markets:
-                    if m.country == name.home_country:
+            # Solo queries for tier-A names. Until v2 only the home market had one, and every other
+            # market rode on a grouped OR query shared with five other names. Google News returns a
+            # capped page per query, so a quiet name in a busy group was crowded out: SYNLAB's French
+            # market shared one query with Südzucker, Tereos and Quick in the week its Nouvelle-
+            # Aquitaine sites were evacuated, and the engine never saw the coverage. Every tier-A
+            # market now gets its own query: home every run, the others on a rotation.
+            # Focus credits (config/focus.yaml) are searched in every market every focus_every runs,
+            # whatever their kind; their comps get a solo query in their home market, because a comp
+            # otherwise rides only on grouped OR queries, where a busy neighbour crowds it out of
+            # Google's capped result page (Vonovia shared its German query with five other names).
+            if name.kind != "comp" or name.focus == "name":
+                for mi, m in enumerate(markets):
+                    home = (m.country == name.home_country) or len(markets) == 1
+                    if name.focus == "name":
+                        due = force or home or _due(focus_every, run_number, sum(name.id.encode()) + mi)
+                    else:
+                        due = force or (_due(home_every, run_number, sum(name.id.encode())) if home else _due(foreign_every, run_number, sum(name.id.encode()) + mi))
+                    if due:
                         q = f'"{main}"'
-                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}] home", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids)))
-            # secondary search aliases keep their per-alias solo behaviour
+                        # label equals the fetch's own source string, so a skipped run and a
+                        # completed run of the same query land in one health row
+                        jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids), prio=1 if (home or name.focus) else 2))
+            elif name.focus == "comp":
+                m = next((mk for mk in markets if mk.country == name.home_country), markets[0] if markets else None)
+                if m is not None and (force or _due(focus_comp_every, run_number, sum(name.id.encode()))):
+                    q = f'"{main}"'
+                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids), prio=2))
+            # secondary search aliases keep their per-alias solo behaviour, but v2 queries each one
+            # once per LANGUAGE, not once per country: "6-APA" went out in nl-NL and zh-HK, and
+            # "Garfunkelux Holdco" in nb-NO, 116 queries a run, mostly duplicates of each other.
+            # An alias written in Chinese, Japanese or Korean script only runs in those markets.
             for alias in name.aliases:
                 if not alias.search or alias.text == main:
                     continue
-                if not (force or _due(alias.search_every, run_number, sum(alias.text.encode()) )):
+                every = min(alias.search_every, focus_alias_every) if name.focus == "name" else max(alias.search_every, alias_min_every)
+                if not (force or _due(every, run_number, sum(alias.text.encode()))):
                     continue
-                for m in markets:
+                cjk = bool(_CJK_RE.search(alias.text))
+                seen_langs: set[str] = set()
+                for m in sorted(markets, key=lambda mk: mk.country != name.home_country):
                     if not alias.applies_to(m.lang):
                         continue
+                    if cjk and m.lang.split("-")[0] not in ("zh", "ja", "ko"):
+                        continue
+                    if m.lang in seen_langs:
+                        continue
+                    seen_langs.add(m.lang)
                     q = f'"{alias.text}"'
-                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids)))
+                    jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids), prio=2))
             # per-name site queries (only names that define them, e.g. Intrum), staggered
             site_every = max(1, int(g.get("site_every_n_runs", 4)))
             if name.site_queries:
@@ -185,31 +249,39 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     q = f'"{main}" site:{dom}'
-                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids)))
+                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids), prio=3))
         # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
             for f in name.feeds:
-                jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name), name_ids=list(f.name_ids)))
+                jobs.append(JobSpec(f.name, "rss", lambda f=f: fetch_feed(http, f.url, f.name_ids, f.tier, f.country, f.lang, f.name), name_ids=list(f.name_ids), prio=0))
         if cfg.route_enabled("pages"):
             pages_every = int(routes.get("pages", {}).get("every_n_runs", 2))
             seed_items = int(routes.get("pages", {}).get("backfill_seed_items", 5))
             if force or _due(pages_every, run_number):
                 for p in name.pages:
-                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force, seed_items=seed_items), name_ids=list(p.name_ids)))
+                    jobs.append(JobSpec(p.name, "page", lambda p=p: _page_job(http, store, p, backfill=force, seed_items=seed_items), name_ids=list(p.name_ids), prio=0))
 
     # ---- grouped Google per market ----
     if cfg.route_enabled("googlenews"):
-        for (lang, country), entries in sorted(by_market_a.items()):
-            for ci, chunk in _chunks(entries, group_size):
+        # Grouped tier-A queries are now a safety net behind the solo queries above, so they run on
+        # their own cadence and after them in the queue.
+        # v2: each market's groups take their own phase, so the grouped load is spread evenly over
+        # the cycle instead of landing on one run (that run reached 404 Google queries against a
+        # capacity of about 390). Every group still runs once per cadence.
+        for mi, ((lang, country), entries) in enumerate(sorted(by_market_a.items())):
+            if not (force or _due(tier_a_group_every, run_number, 2 + mi)):
+                continue
+            for ci, chunk in _grouped_chunks(entries, group_size):
                 q = _or_query(chunk)
                 nids = [nid for nid, _ in chunk]
-                jobs.append(JobSpec(f"group{ci} {len(chunk)} names [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids))
-        if force or _due(comp_every, run_number, 1):
-            for (lang, country), entries in sorted(by_market_c.items()):
-                for ci, chunk in _chunks(entries, group_size):
-                    q = _or_query(chunk)
-                    nids = [nid for nid, _ in chunk]
-                    jobs.append(JobSpec(f"comps{ci} {len(chunk)} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids))
+                jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids, prio=4))
+        for mi, ((lang, country), entries) in enumerate(sorted(by_market_c.items())):
+            if not (force or _due(comp_every, run_number, 1 + mi)):
+                continue
+            for ci, chunk in _grouped_chunks(entries, group_size):
+                q = _or_query(chunk)
+                nids = [nid for nid, _ in chunk]
+                jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, nids=nids: fetch_google_news(http, q, lang, country, nids, when_google), name_ids=nids, prio=4))
         # regulator sweep: home-country authority domains x the names based there, staggered
         reg_every = max(1, int(g.get("regulator_every_n_runs", 12)))
         reg_jobs = []
@@ -223,18 +295,30 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             q = _or_query(chunk) + f" site:{dom}"
             nids = [nid for nid, _ in chunk]
             lang = "en"
-            jobs.append(JobSpec(f"reg {dom} [{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site), name_ids=nids))
+            jobs.append(JobSpec(f"{q} [en-{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site), name_ids=nids, prio=5))
 
     # ---- grouped Bing per market ----
     if cfg.route_enabled("bingnews"):
-        for tier_map, every, phase in ((by_market_a, bing_every, 1), (by_market_c, bing_comp_every, 3)):
+        # v2: Bing as a narrow lane, not a second sweep. Over the month to 10 October it touched 341
+        # clusters against Google's 40,000, but what only Bing found on tier-A names was mostly
+        # Latvian and Baltic Russian-language press on airBaltic (nra.lv, jauns.lv, rus.tvnet.lv,
+        # rus.postimees.ee), among it the EUR 140m first financing tranche on 29 September. So it can
+        # be limited to a set of countries and to tier A; it runs in its own lane and costs Google nothing.
+        bing_cfg = routes.get("bingnews", {}) or {}
+        bing_countries = {str(c).upper() for c in (bing_cfg.get("countries") or [])}
+        bing_maps = [(by_market_a, bing_every, 1)]
+        if not bing_cfg.get("tier_a_only", False):
+            bing_maps.append((by_market_c, bing_comp_every, 3))
+        for tier_map, every, phase in bing_maps:
             if not (force or _due(every, run_number, phase)):
                 continue
             for (lang, country), entries in sorted(tier_map.items()):
-                for ci, chunk in _chunks(entries, group_size):
+                if bing_countries and country.upper() not in bing_countries:
+                    continue
+                for ci, chunk in _grouped_chunks(entries, group_size):
                     q = " OR ".join(f'"{alias}"' for _, alias in chunk)
                     nids = [nid for nid, _ in chunk]
-                    jobs.append(JobSpec(f"bing{ci} {len(chunk)} [{lang}-{country}]", "bingnews", lambda q=q, lang=lang, country=country, nids=nids: fetch_bing_news(http, q, lang, country, nids), name_ids=nids))
+                    jobs.append(JobSpec(f"{q} [{bing_market(lang, country)}]", "bingnews", lambda q=q, lang=lang, country=country, nids=nids: fetch_bing_news(http, q, lang, country, nids), name_ids=nids, prio=3))
 
     # ---- grouped GDELT (global, all languages) ----
     if cfg.route_enabled("gdelt"):
@@ -251,7 +335,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     continue
                 q = "(" + " OR ".join(f'"{alias}"' for _, alias in phrases) + ")"
                 nids = [nid for nid, _ in chunk]
-                jobs.append(JobSpec(f"gdelt{ci} {len(chunk)}", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span), name_ids=nids))
+                jobs.append(JobSpec(f"{q} [all/all]", "gdelt", lambda q=q, nids=nids: fetch_gdelt(http, q, nids, gdelt_span), name_ids=nids, prio=6))
 
     # --- shared outlet feeds (fetched once, matched against every name). Feed discovery is capped
     #     per run and retried at most daily per outlet, so the first runs are not swamped by it.
@@ -276,7 +360,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 if not known and not tried_recently and discover_budget > 0:
                     discover = True
                     discover_budget -= 1
-            jobs.append(JobSpec(f"{o.name} ({o.country})", "rss", lambda o=o, discover=discover: _outlet_job(http, store, o, discover=discover)))
+            jobs.append(JobSpec(f"{o.name} ({o.country})", "rss", lambda o=o, discover=discover: _outlet_job(http, store, o, discover=discover), prio=1))
 
     # Deterministic per-run shuffle: interleaves routes within a run and rotates which jobs
     # land in the time-budget tail, so a skipped source is picked up on the next cycle
@@ -288,7 +372,10 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     # fetch is one request to a host nobody else in the run is talking to, so the whole layer costs
     # the run about two minutes of worker time; it goes first so the budget can never take it. The
     # sort is stable, so the rotation still applies within each group.
-    jobs.sort(key=lambda j: 0 if j.route == "page" or (j.route == "rss" and j.name_ids) else 1)
+    # v2: the whole queue is ordered by value, not only the primary sources. Own sources first, then
+    # shared outlet feeds and tier-A home queries, then the other tier-A markets and people, then
+    # site queries and Bing, then comps and grouped tier A, then regulators and GDELT.
+    jobs.sort(key=lambda j: j.prio)
     return jobs
 
 
@@ -321,6 +408,8 @@ def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False
         result.error = f"seeded with the newest {seed_items} of {total} article links"
     for it in items:
         it.tier_hint = page.tier
+    if items and http is not None:
+        enrich_generic_titles(http, items)
     result.items = len(items)
     return items, result
 
@@ -370,6 +459,8 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
     # comps never get the fallback: they are read-across names swept in groups; an
     # unverifiable 0.4 comp candidate is noise by construction.
     comp_ids = {n.id for n in cfg.names if n.kind == "comp"}
+    watched = {n.id for n in cfg.names if n.watch}
+    watch_or_tier_a = {n.id for n in cfg.names if n.kind != "comp"} | watched
 
     for raw in raw_items:
         summary.fetched += 1
@@ -447,6 +538,27 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
         primary = _primary_name(matches)
         reason = matcher.screen(domain, canon, raw.title, primary)
         status = "screened" if reason else "candidate"
+        # The domain screen is for re-daters and churn sites, and on a small tier-A name in
+        # restructuring those sites can be the only coverage there is. On 5 October the only trace
+        # of Branicks falling 20 per cent eight days before its bondholder vote, with the
+        # Sanierungskonzept meeting and the 9 October vote beside it, was three screened headlines,
+        # and a screened item never reaches the export. So a tier-A row from a screened domain is
+        # kept when its headline carries an engine category or a hard signal (newsflow.signal), or
+        # when the name is on watch; it arrives as a candidate whose screen_reason says "kept:" so
+        # the brief flags it as a re-dater domain with its date unverified, for judgement to weigh.
+        # Comps stay screened: read-across from a churn site is not worth the noise. Title-pattern
+        # screens (Kursziel, Chartanalyse) are never overridden; they describe junk, not sources.
+        kept_why = ""
+        # v2: churn sites are screened as "churn:<domain>" (config/noise.yaml demote_domains); the keep
+        # rule applies to them exactly as to noise domains, and what it does not keep is exported as an echo.
+        if reason.startswith(("noise_domain:", "churn:")) and primary in watch_or_tier_a and not matcher.screen("", "", raw.title, primary):
+            cats_in_title, _ = matcher.tier1_categories(raw.title, "")
+            kept_why = ", ".join(cats_in_title) or hard_signal(raw.title)
+            if not kept_why and primary in watched:
+                kept_why = "watch"
+            if kept_why:
+                status = "candidate"
+                reason = f"kept:{reason}:{kept_why}"
         item = Item(
             id=None, canonical_url=canon, raw_link=raw.link, title=raw.title.strip(), summary=raw.summary.strip(),
             source_name=raw.source_name, source_domain=domain, published_at=raw.published_at, first_seen_at=now,
@@ -460,12 +572,14 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
             summary.screened += 1
         else:
             summary.candidates += 1
+            if kept_why:
+                summary.kept_from_screen += 1
         for m in matches:
             store.add_match(item_id, m.name_id, m.alias, m.where, float(m.confidence))
 
         cats, alert = matcher.tier1_categories(raw.title, raw.summary)
-        if status == "screened":
-            alert = False
+        if status == "screened" or kept_why:
+            alert = False          # a churn site never raises an alert, kept or not
         store.set_alert(item_id, cats, alert)
         if alert:
             summary.alerts += 1
@@ -597,8 +711,24 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     empty_streak: dict[str, int] = {}
     tripped: set[str] = set()
 
-    ex = ThreadPoolExecutor(max_workers=workers)
-    futures = {ex.submit(spec.fn): spec for spec in specs}
+    # v2: one executor per lane. Until 11 Oct 2026 every job shared max_workers threads and a worker
+    # slept inside Http.wait() while holding its slot, so four workers queued behind Google News'
+    # 2.5 second spacing and the page watchers and outlet feeds on idle hosts waited with them: 69 of
+    # 184 feeds read "skipped: run time budget reached" on 11 October. Search hosts now get their own
+    # small lanes (their throughput is set by the per-host spacing, not by threads) and everything
+    # else runs on the main pool.
+    lane_cfg = cfg.engine.get("lanes", {}) or {}
+    lane_of = {r: r for r in ("googlenews", "bingnews", "gdelt")}
+    executors: dict[str, ThreadPoolExecutor] = {}
+
+    def _executor(route: str) -> ThreadPoolExecutor:
+        lane = lane_of.get(route, "main")
+        if lane not in executors:
+            n = workers if lane == "main" else max(1, int(lane_cfg.get(lane, 1)))
+            executors[lane] = ThreadPoolExecutor(max_workers=n, thread_name_prefix=f"nf-{lane}")
+        return executors[lane]
+
+    futures = {_executor(spec.route).submit(spec.fn): spec for spec in specs}
     pending = set(futures)
     stopped = False
     try:
@@ -641,7 +771,8 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
                 stopped = True
                 break
     finally:
-        ex.shutdown(wait=True, cancel_futures=True)
+        for ex in executors.values():
+            ex.shutdown(wait=True, cancel_futures=True)
     if stopped:
         for fut in pending:
             spec = futures[fut]

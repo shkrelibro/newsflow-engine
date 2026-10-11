@@ -43,7 +43,8 @@ def cmd_run(args) -> int:
         sent = push_alerts(cfg, store)
         print(json.dumps({
             "run_id": summary.run_id, "jobs": summary.jobs, "fetched": summary.fetched, "new": summary.new_items,
-            "candidates": summary.candidates, "screened": summary.screened, "stale": summary.stale,
+            "candidates": summary.candidates, "screened": summary.screened,
+            "kept_from_screen": summary.kept_from_screen, "stale": summary.stale,
             "unrelated": summary.unrelated, "alert_candidates": summary.alerts, "source_errors": summary.errors,
             "alerts_sent": sent, "out_dir": str(cfg.out_dir),
         }, indent=1))
@@ -197,6 +198,11 @@ def cmd_check(args) -> int:
         searched = [a.text for a in n.aliases if a.search]
         print(f"- {n.id}: {n.name} [{n.kind}] markets={len(n.markets)} langs={','.join(n.langs)} aliases={len(n.aliases)} searched={searched} pages={len(n.pages)} feeds={len(n.feeds)} site_queries={len(n.site_queries)}")
     print(f"outlets: {len(cfg.outlets)} · tier1 categories: {list(cfg.tier1_terms)} · noise domains: {len(cfg.noise_domains)}")
+    fc = sum(1 for n in cfg.names if n.focus == "comp")
+    print(f"focus list: {len(cfg.focus)} credits, {fc} comps" + (f"; UNKNOWN ids: {cfg.focus_unknown}" if cfg.focus_unknown else ""))
+    print(f"people overlay: {cfg.people_counts.get('people', 0)} executive aliases"
+          + (f", {cfg.people_counts['unknown']} unknown id(s)" if cfg.people_counts.get('unknown') else ""))
+    print(f"churn (demoted) domains: {len(cfg.noise_demote)}")
     pc = cfg.primary_counts
     with_pages = sum(1 for n in cfg.names if n.pages)
     with_feeds = sum(1 for n in cfg.names if n.feeds)
@@ -206,6 +212,15 @@ def cmd_check(args) -> int:
     if cfg.primary_unknown:
         print(f"WARNING: sources/primary.yaml names {len(cfg.primary_unknown)} id(s) with no name file (ignored): "
               + ", ".join(cfg.primary_unknown))
+    oc = cfg.overlay_counts
+    watched = [n.id for n in cfg.names if n.watch]
+    print(f"overlay (overlay.yaml): {oc.get('watch', 0)} watched ({', '.join(watched) or 'none'}), "
+          f"+{oc.get('aliases', 0)} aliases, {oc.get('widened', 0)} widened to more languages, "
+          f"+{oc.get('exclude_terms', 0)} exclude terms, +{oc.get('site_queries', 0)} site queries, "
+          f"{oc.get('duplicates', 0)} already in a name file")
+    if cfg.overlay_unknown:
+        print(f"WARNING: overlay.yaml names {len(cfg.overlay_unknown)} id(s) with no name file (ignored): "
+              + ", ".join(cfg.overlay_unknown))
     bad = [(n.id, p.link_pattern) for n in cfg.names for p in n.pages + n.feeds if p.link_pattern and not _regex_ok(p.link_pattern)]
     if bad:
         print("ERROR: link_pattern does not compile: " + "; ".join(f"{nid}: {pat}" for nid, pat in bad))
