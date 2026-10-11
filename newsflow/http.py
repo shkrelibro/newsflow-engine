@@ -26,6 +26,18 @@ class FetchError(Exception):
     pass
 
 
+class UpstreamRefused(FetchError):
+    """The host is refusing us (HTTP 429 or 5xx) and has done so on consecutive requests.
+
+    Raised without waiting or retrying once a host's refusal streak reaches `fail_fast_after`,
+    so a blocked upstream costs the run seconds, not the whole budget. On 11 October 2026 Google
+    News answered 503 to every query from about 15:30Z; each job then sat through three attempts
+    against a host whose spacing had widened to 60 seconds, four jobs a cycle finished and the
+    other 870 read "run time budget reached while waiting for news.google.com". The route needs
+    to learn in three requests that it is blocked, then stop asking for the rest of the cycle.
+    """
+
+
 class BudgetExceeded(FetchError):
     """The run's time budget passed while this request was still queueing for its host.
 
@@ -140,6 +152,11 @@ class Http:
         self.honour_robots_for_pages = honour_robots_for_pages
         # time.monotonic() value set by the run; once passed, no request waits or retries again
         self.deadline: Optional[float] = None
+        # consecutive 429/5xx answers per host; a clean answer resets it. At fail_fast_after the
+        # host is treated as blocked: no wait, no retry, UpstreamRefused at once.
+        self.fail_fast_after = 3
+        self._refused: dict[str, int] = {}
+        self._refused_lock = threading.Lock()
         self._robots: dict[str, Optional[urllib.robotparser.RobotFileParser]] = {}
         self._client = httpx.Client(
             headers={"User-Agent": user_agent, "Accept-Language": "*"},
@@ -154,10 +171,25 @@ class Http:
         time.sleep(seconds)
 
     # ------------------------------------------------------------------
+    def refused_streak(self, host: str) -> int:
+        with self._refused_lock:
+            return self._refused.get(host, 0)
+
+    def _note_refusal(self, host: str) -> int:
+        with self._refused_lock:
+            self._refused[host] = self._refused.get(host, 0) + 1
+            return self._refused[host]
+
+    def _note_answer(self, host: str) -> None:
+        with self._refused_lock:
+            self._refused.pop(host, None)
+
     def get(self, url: str, *, is_page: bool = False, accept: str = "") -> httpx.Response:
         host = urlsplit(url).netloc
         if is_page and self.honour_robots_for_pages and not self.allowed_by_robots(url):
             raise FetchError(f"robots.txt disallows {url}")
+        if self.refused_streak(host) >= self.fail_fast_after:
+            raise UpstreamRefused(f"refused upstream: {host} answered 429/5xx {self.refused_streak(host)} times in a row")
         headers = {"Accept": accept} if accept else {}
         last_exc: Optional[Exception] = None
         for attempt in range(self.retries + 1):
@@ -170,6 +202,8 @@ class Http:
                     hinted = retry_after_seconds(resp)
                     penalty = self.limiter.penalise(host, hinted)
                     last_exc = FetchError(f"HTTP {resp.status_code} for {url}")
+                    if self._note_refusal(host) >= self.fail_fast_after:
+                        raise UpstreamRefused(f"HTTP {resp.status_code} for {url} (refused upstream, {self.fail_fast_after} in a row)")
                     # A Retry-After is honoured up to the same cap as the penalty. An upstream that
                     # asks for an hour gets the next cycle, not a worker asleep for an hour.
                     if hinted is not None:
@@ -181,6 +215,7 @@ class Http:
                 if resp.status_code >= 400:
                     raise FetchError(f"HTTP {resp.status_code} for {url}")
                 self.limiter.relax(host)
+                self._note_answer(host)
                 return resp
             except (httpx.HTTPError, OSError) as exc:
                 last_exc = exc

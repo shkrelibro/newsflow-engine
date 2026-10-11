@@ -286,7 +286,11 @@ def cmd_jobs(args) -> int:
     http = make_http(cfg)
     try:
         jobs = build_jobs(cfg, http, store, run_number=int(args.run_number), all_routes=args.all_routes)
-        print(f"{len(jobs)} jobs would run on run #{args.run_number}{' with --all-routes' if args.all_routes else ''}")
+        sent = [j for j in jobs if not j.skip and not j.fallback]
+        held = sum(1 for j in jobs if j.skip)
+        reserve = sum(1 for j in jobs if j.fallback)
+        print(f"{len(sent)} jobs would run on run #{args.run_number}{' with --all-routes' if args.all_routes else ''}; "
+              f"{held} Google queries held by the cap for a later cycle; {reserve} Bing queries in reserve")
         return 0
     finally:
         http.close()

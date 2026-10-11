@@ -149,6 +149,12 @@ CREATE TABLE IF NOT EXISTS clusters (
   name_id TEXT NOT NULL,
   created_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS state (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL DEFAULT '',
+  updated_at TEXT NOT NULL
+);
 """
 
 
@@ -207,6 +213,37 @@ class Store:
     def last_run_started(self) -> Optional[datetime]:
         row = self.conn.execute("SELECT started_at FROM runs WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1").fetchone()
         return _parse(row["started_at"]) if row else None
+
+    # ---- engine state (survives between cycles: the database lives on disk for the whole job
+    #      and in the Actions cache between jobs) ---------------------------------------------
+    def get_state(self, key: str, default: str = "") -> str:
+        row = self.conn.execute("SELECT value FROM state WHERE key=?", (key,)).fetchone()
+        return str(row["value"]) if row else default
+
+    def set_state(self, key: str, value: str, now: datetime) -> None:
+        self.conn.execute(
+            "INSERT INTO state(key, value, updated_at) VALUES (?,?,?) "
+            "ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=excluded.updated_at",
+            (key, str(value), _iso(now)),
+        )
+        self.conn.commit()
+
+    def clear_state(self, key: str) -> None:
+        self.conn.execute("DELETE FROM state WHERE key=?", (key,))
+        self.conn.commit()
+
+    def last_attempt_runs(self, route: str) -> dict[str, int]:
+        """The last run that actually sent each query of a route (skips do not count).
+
+        Feeds the rotation of a capped route: the queries that have waited longest go first, so
+        a cap can never starve a query the way a fixed queue order would.
+        """
+        rows = self.conn.execute(
+            "SELECT source, MAX(run_id) AS last FROM source_results "
+            "WHERE route=? AND error NOT LIKE 'skipped:%' GROUP BY source",
+            (route,),
+        ).fetchall()
+        return {str(r["source"]): int(r["last"]) for r in rows}
 
     def run_count(self) -> int:
         return int(self.conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])

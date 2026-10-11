@@ -158,10 +158,23 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
         "window_hours": window_hours,
         "names": names_out,
         "alerts": all_alerts,
-        "source_health": {"sources": len(health), "failing": len(failing), "starved_24h": len(starved), "starved_24h_detail": starved, "zero_yield_7d": len(zero_yield), "zero_yield_7d_detail": zero_yield, "detail": health},
+        "source_health": {"sources": len(health), "failing": len(failing), "starved_24h": len(starved), "starved_24h_detail": starved, "zero_yield_7d": len(zero_yield), "zero_yield_7d_detail": zero_yield, "detail": health,
+                          "google_quota": _google_quota_state(cfg, store, now)},
         "stats": store.stats(),
         "engine": "newsflow-engine",
     }
+
+
+def _google_quota_state(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
+    """11 Oct: the Google quota as the brief and the watchdog need it: cap, cool-down, last refusal."""
+    try:
+        from .pipeline import google_state
+        st = google_state(cfg, store, now)
+    except Exception as exc:  # noqa: BLE001 - never let the quota view block the exports
+        return {"error": str(exc)[:120]}
+    until = st.get("cooldown_until")
+    return {"cap": st.get("cap"), "cooling": bool(st.get("cooling")), "cooldown_until": until.isoformat(timespec="seconds") if until else None,
+            "trips": st.get("trips"), "last_refusal": st.get("last_refusal"), "backfill": st.get("backfill") or None}
 
 
 def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
@@ -174,7 +187,7 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
       NO_QUERIES - no job swept this name in the last 24h (misconfiguration or engine gap)
     """
     since24 = now - timedelta(hours=24)
-    per: dict[str, dict[str, int]] = {n.id: {"jobs": 0, "ok": 0, "failed": 0, "skipped": 0} for n in cfg.names}
+    per: dict[str, dict[str, int]] = {n.id: {"jobs": 0, "ok": 0, "failed": 0, "skipped": 0, "deferred": 0, "refused": 0} for n in cfg.names}
     for row in store.coverage_jobs(since24):
         ok, err = bool(row["ok"]), row["error"] or ""
         for nid in row["names"].split(","):
@@ -184,6 +197,10 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
             c["jobs"] += 1
             if ok:
                 c["ok"] += 1
+            elif err.startswith("skipped: googlenews rotation"):
+                c["deferred"] += 1            # held by the Google cap: routine, not a fault
+            elif "refused upstream" in err or "cooling down" in err:
+                c["refused"] += 1             # Google turned us away
             elif err.startswith("skipped"):
                 c["skipped"] += 1
             else:
@@ -246,6 +263,7 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
         names_out[n.id] = {
             "name": n.name, "kind": n.kind, "state": state,
             "jobs_24h": c["jobs"], "ok_24h": c["ok"], "failed_24h": c["failed"], "skipped_24h": c["skipped"],
+            "deferred_24h": c["deferred"], "refused_24h": c["refused"],
             "mentions_7d": int(m["recent"] or 0), "mentions_total": int(m["total"] or 0),
             "last_mention": latest, "days_silent": days_silent,
             "outlets": _outlets(n),

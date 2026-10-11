@@ -7,14 +7,14 @@ import os
 import random
 import re
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait as wait_futures
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from typing import Callable, Optional
 
 from .config import Config, NameConfig, Outlet, PageSource
 from .dedupe import similar, title_key
-from .http import BudgetExceeded, Http, RateLimiter
+from .http import BudgetExceeded, Http, RateLimiter, UpstreamRefused
 from .match import Matcher
 from .signal import hard_signal
 from .models import Item, RawItem, SourceResult
@@ -47,6 +47,156 @@ class JobSpec:
     name_ids: list[str] = field(default_factory=list)   # names this job sweeps (coverage ledger)
     prio: int = 5        # queue order inside a run: 0 runs first. The budget tail is then the least
                          # valuable work rather than a random third of the queue (v2, 11 Oct 2026)
+    skip: str = ""       # non-empty: not run this cycle, recorded with this reason (the Google
+                         # rotation cap, or a cool-down after Google refused us)
+    fallback: bool = False   # a Bing query held in reserve, submitted only while Google is down
+
+
+_REFUSED_RE = re.compile(r"refused upstream|\bHTTP (?:429|5\d\d)\b")
+
+
+def is_refusal(error: str) -> bool:
+    """A source result that means the host turned us away, not that nothing was found."""
+    return bool(error) and bool(_REFUSED_RE.search(error))
+
+
+# ----------------------------------------------------------------------
+# Google News quota. 11 October 2026: the v2 cadences raised the engine's Google traffic from
+# about 800 to about 1,200 queries an hour (2.0 s spacing, dedicated lane, no idle time), and
+# Google News started answering 503 within 40 minutes of v2 going live, then again 80 minutes
+# into a fresh runner, then 30 minutes into the backfill runner. Nothing before v2 that day had
+# drawn a single 503. Three rules now bound the route:
+#   1. a cap on queries per cycle, rotated by staleness so no query is starved, focus credits
+#      and their key outlets first, every query still inside its one-day window;
+#   2. on refusal (three 429/5xx in a row) the route trips for the cycle and cools down for a
+#      growing interval, probed with one query per cycle; the cap steps down and recovers slowly;
+#   3. while Google is down, Bing carries the focus credits and the tier-A home markets.
+# ----------------------------------------------------------------------
+GOOGLE_HOST = "news.google.com"
+STATE_CAP = "googlenews.cap"
+STATE_COOLDOWN = "googlenews.cooldown_until"
+STATE_TRIPS = "googlenews.trips"
+STATE_LAST_REFUSAL = "googlenews.last_refusal"
+STATE_BACKFILL = "googlenews.backfill"            # json: {"days", "since_run", "expires"}
+
+
+def google_quota(cfg: Config) -> dict:
+    g = cfg.routes.get("googlenews", {}) or {}
+    q = g.get("quota", {}) or {}
+    return {
+        "cap": int(q.get("max_per_run", 0) or 0),                  # 0 disables the cap
+        "floor": int(q.get("floor", 80)),
+        "ceiling": int(q.get("ceiling", 200)),
+        "step_down": float(q.get("step_down", 0.75)),
+        "recover_step": int(q.get("recover_step", 5)),
+        "trip_after": int(q.get("refused_trip_after", 3)),
+        "cooldown_min": int(q.get("cooldown_minutes", 30)),
+        "cooldown_max": int(q.get("cooldown_max_minutes", 180)),
+        "backfill_hours": float(q.get("backfill_window_hours", 4)),
+    }
+
+
+def google_state(cfg: Config, store: Store, now: datetime) -> dict:
+    """The persisted quota state: current cap, cool-down, consecutive trips, backfill window."""
+    q = google_quota(cfg)
+    cap_default = q["cap"]
+    try:
+        cap = int(store.get_state(STATE_CAP) or cap_default)
+    except ValueError:
+        cap = cap_default
+    if cap_default:
+        cap = max(q["floor"], min(q["ceiling"], cap or cap_default))
+    until = _parse_iso(store.get_state(STATE_COOLDOWN))
+    try:
+        trips = int(store.get_state(STATE_TRIPS) or 0)
+    except ValueError:
+        trips = 0
+    backfill = {}
+    raw = store.get_state(STATE_BACKFILL)
+    if raw:
+        try:
+            backfill = json.loads(raw)
+        except ValueError:
+            backfill = {}
+        exp = _parse_iso(str(backfill.get("expires") or ""))
+        if not exp or exp <= now:
+            backfill = {}
+    return {"cap": cap if cap_default else 0, "cooldown_until": until, "cooling": bool(until and until > now),
+            "trips": trips, "last_refusal": store.get_state(STATE_LAST_REFUSAL) or None, "backfill": backfill}
+
+
+def _parse_iso(s: str) -> Optional[datetime]:
+    if not s:
+        return None
+    try:
+        t = datetime.fromisoformat(s)
+    except ValueError:
+        return None
+    return t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+
+
+def google_refused(cfg: Config, store: Store, now: datetime, state: dict, why: str) -> datetime:
+    """Google turned us away: start or extend the cool-down, step the cap down. Returns the
+    time the next probe may be sent."""
+    q = google_quota(cfg)
+    trips = int(state.get("trips") or 0) + 1
+    minutes = min(q["cooldown_max"], q["cooldown_min"] * (2 ** (trips - 1)))
+    until = now + timedelta(minutes=minutes)
+    store.set_state(STATE_TRIPS, str(trips), now)
+    store.set_state(STATE_COOLDOWN, until.isoformat(timespec="seconds"), now)
+    store.set_state(STATE_LAST_REFUSAL, f"{now.isoformat(timespec='seconds')} {why[:120]}", now)
+    if q["cap"]:
+        new_cap = max(q["floor"], int(state.get("cap", q["cap"]) * q["step_down"]))
+        store.set_state(STATE_CAP, str(new_cap), now)
+        state["cap"] = new_cap
+    state.update(trips=trips, cooldown_until=until, cooling=True)
+    log.warning("googlenews refused us (%s): cooling down %d min until %sZ, cap now %s", why[:80], minutes, until.strftime("%H:%M"), state.get("cap") or "off")
+    return until
+
+
+def google_answered(cfg: Config, store: Store, now: datetime, state: dict) -> None:
+    """A clean cycle on Google: clear the cool-down and let the cap recover a step."""
+    q = google_quota(cfg)
+    if state.get("cooling") or state.get("cooldown_until"):
+        store.clear_state(STATE_COOLDOWN)
+    if int(state.get("trips") or 0):
+        store.set_state(STATE_TRIPS, "0", now)
+    if q["cap"] and state.get("cap", q["cap"]) < q["ceiling"]:
+        new_cap = min(q["ceiling"], int(state.get("cap", q["cap"])) + q["recover_step"])
+        store.set_state(STATE_CAP, str(new_cap), now)
+        state["cap"] = new_cap
+    state.update(trips=0, cooldown_until=None, cooling=False)
+
+
+def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[str], comp_ids: set[str], reason: str) -> int:
+    """Keep the `cap` most valuable Google jobs this cycle and mark the rest skipped.
+
+    Order: focus credits' own queries (solo, alias, key-outlet site:), then the focus comps' solo
+    queries, then everything else; inside each tier by how long the query has waited (never-sent
+    first), with the queue's value order as the tie-break. Every query looks back a day, so a
+    deferred query loses latency, not stories, and the staleness order guarantees it is sent the
+    next time it is due and the queue has room. Returns the number deferred.
+    """
+    if cap <= 0:
+        return 0
+    google = [j for j in jobs if j.route == "googlenews" and not j.skip]
+    if len(google) <= cap:
+        return 0
+    last = store.last_attempt_runs("googlenews")
+    order = {id(j): i for i, j in enumerate(google)}      # the queue's own value order
+
+    def tier(j: JobSpec) -> int:
+        ids = set(j.name_ids)
+        if len(ids) == 1 and ids <= focus_ids:
+            return 0
+        if len(ids) == 1 and ids <= comp_ids:
+            return 1
+        return 2
+
+    ranked = sorted(google, key=lambda j: (tier(j), last.get(j.label, -1), j.prio, order[id(j)]))
+    for j in ranked[cap:]:
+        j.skip = reason
+    return len(google) - cap
 
 
 @dataclass
@@ -67,6 +217,7 @@ class RunSummary:
     errors: int = 0
     skipped: int = 0
     tripped: int = 0
+    deferred: int = 0             # Google queries held back by the rotation cap or a cool-down
     tripped_routes: list[str] = field(default_factory=list)
 
 
@@ -115,16 +266,31 @@ def cold_start(cfg: Config, run_number: int) -> bool:
 _CJK_RE = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7af]")
 
 
-def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False) -> list[JobSpec]:
+def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_days: Optional[int] = None, all_routes: bool = False, now: Optional[datetime] = None) -> list[JobSpec]:
     jobs: list[JobSpec] = []
     routes = cfg.routes
+    now = now or datetime.now(timezone.utc)
     cold = cold_start(cfg, run_number)
     cold_window = str(routes.get("googlenews", {}).get("cold_start_when", "30d"))
-    when_google = f"{backfill_days}d" if backfill_days else str(routes.get("googlenews", {}).get("when", "1d"))
+    # A backfill is cumulative, not one long cycle. `--backfill-days N` opens a window during which
+    # every Google query carries an N-day lookback; the per-cycle cap and the staleness rotation
+    # then work through the whole queue over the following cycles, focus credits first, and the
+    # window closes when every query has been sent once or after backfill_window_hours. One
+    # 55-minute cycle at full speed (the first design) drew Google's 503 inside half an hour.
+    gstate = google_state(cfg, store, now)
+    if backfill_days:
+        bf = {"days": int(backfill_days), "since_run": int(run_number),
+              "expires": (now + timedelta(hours=google_quota(cfg)["backfill_hours"])).isoformat(timespec="seconds")}
+        store.set_state(STATE_BACKFILL, json.dumps(bf), now)
+        gstate["backfill"] = bf
+    bf_days = int((gstate.get("backfill") or {}).get("days") or 0)
+    when_google = f"{bf_days}d" if bf_days else str(routes.get("googlenews", {}).get("when", "1d"))
     when_site = f"{backfill_days}d" if backfill_days else (cold_window if cold else str(routes.get("googlenews", {}).get("site_when", "7d")))
     gdelt_span = f"{backfill_days}d" if backfill_days else str(routes.get("gdelt", {}).get("timespan", "24h"))
     outlet_by_domain = {domain_of(o.homepage): o for o in cfg.outlets}
-    force = backfill_days is not None or all_routes   # run every cadenced route regardless of its every_n_runs
+    # run every cadenced route regardless of its every_n_runs: a manual run, or any cycle inside an
+    # open backfill window, so the rotation can work through the whole queue with the wide lookback
+    force = backfill_days is not None or all_routes or bool(bf_days)
 
     # ------------------------------------------------------------------
     # Search routes are GROUPED so fetch load scales with markets, not names:
@@ -142,7 +308,8 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     tier_a_group_every = max(1, int(g.get("tier_a_group_every_n_runs", 1)))  # grouped tier-A safety net
     focus_every = max(1, int(g.get("focus_every_n_runs", 2)))          # focus credits: every market, every Nth run
     focus_comp_every = max(1, int(g.get("focus_comp_every_n_runs", 4)))  # comps of focus credits: solo home query
-    focus_alias_every = max(1, int(g.get("focus_alias_every_n_runs", 4)))  # focus credits' secondary aliases, at most every Nth run
+    focus_alias_every = max(1, int(g.get("focus_alias_every_n_runs", 4)))  # focus credits' secondary aliases, at least every Nth run
+    focus_alias_min_every = max(1, int(g.get("focus_alias_min_every_n_runs", 1)))  # ... and at most this often (11 Oct)
     alias_min_every = max(1, int(g.get("alias_min_every_n_runs", 1)))  # other names' secondary aliases, at most this often
     bing_every = int(routes.get("bingnews", {}).get("every_n_runs", 2))
     bing_comp_every = int(routes.get("bingnews", {}).get("comp_every_n_runs", 4))
@@ -224,13 +391,24 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             for alias in name.aliases:
                 if not alias.search or alias.text == main:
                     continue
-                every = min(alias.search_every, focus_alias_every) if name.focus == "name" else max(alias.search_every, alias_min_every)
+                # a focus credit's aliases run at least every focus_alias_every runs and, since the
+                # Google quota (11 Oct), at most every focus_alias_min_every: Intrum's five aliases
+                # in a dozen languages were 10 queries a cycle on their own
+                every = max(min(alias.search_every, focus_alias_every), focus_alias_min_every) if name.focus == "name" else max(alias.search_every, alias_min_every)
                 if not (force or _due(every, run_number, sum(alias.text.encode()))):
                     continue
                 cjk = bool(_CJK_RE.search(alias.text))
                 seen_langs: set[str] = set()
+                # 11 Oct: an alias with no language of its own (a chief executive, a former name)
+                # runs in the home language and in English, not in every language the name has
+                # markets in. "Intrum Justitia" in fifteen languages every four runs was nearly four
+                # Google queries a cycle for one alias; the main query already covers those markets.
+                home_lang = next((mk.lang for mk in markets if mk.country == name.home_country), markets[0].lang if markets else "en")
+                open_alias = "all" in alias.langs or not alias.langs
                 for m in sorted(markets, key=lambda mk: mk.country != name.home_country):
                     if not alias.applies_to(m.lang):
+                        continue
+                    if open_alias and not cjk and m.lang.split("-")[0] not in (home_lang.split("-")[0], "en"):
                         continue
                     if cjk and m.lang.split("-")[0] not in ("zh", "ja", "ko"):
                         continue
@@ -239,12 +417,23 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     seen_langs.add(m.lang)
                     q = f'"{alias.text}"'
                     jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids), prio=2))
-            # per-name site queries (only names that define them, e.g. Intrum), staggered
+            # per-name site queries (only names that define them, e.g. Intrum), staggered. The key
+            # outlets (overlay.yaml) keep the site_every cadence; a name's own long list of domains
+            # (Intrum: 225 outlets and regulators in 23 countries, 14 queries a cycle, a fifth of
+            # the whole Google budget) rotates at most site_max_per_name_per_run a cycle. They use a
+            # seven-day window, so a domain visited every 28 hours still misses nothing.
             site_every = max(1, int(g.get("site_every_n_runs", 4)))
+            site_name_cap = max(1, int(g.get("site_max_per_name_per_run", 2)))
             if name.site_queries:
-                for i, dom in enumerate(name.site_queries):
-                    if not force and i % site_every != run_number % site_every:
-                        continue
+                key = [d for d in name.site_queries if d in name.key_outlets]
+                rest = [d for d in name.site_queries if d not in name.key_outlets]
+                due_doms = [d for i, d in enumerate(key) if force or i % site_every == run_number % site_every]
+                if rest:
+                    if force or len(rest) <= site_name_cap * site_every:
+                        due_doms += [d for i, d in enumerate(rest) if force or i % site_every == run_number % site_every]
+                    else:
+                        due_doms += [rest[(run_number * site_name_cap + k) % len(rest)] for k in range(site_name_cap)]
+                for dom in due_doms:
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
@@ -296,6 +485,30 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             nids = [nid for nid, _ in chunk]
             lang = "en"
             jobs.append(JobSpec(f"{q} [en-{cc}]", "googlenews", lambda q=q, cc=cc, nids=nids: fetch_google_news(http, q, "en", cc, nids, when_site), name_ids=nids, prio=5))
+
+    # ---- Bing: the focus credits' home market on a slow cadence, and a reserve for Google ----
+    if cfg.route_enabled("bingnews"):
+        bing_cfg0 = routes.get("bingnews", {}) or {}
+        bing_focus_every = int(bing_cfg0.get("focus_every_n_runs", 0) or 0)
+        bing_fallback = bool(bing_cfg0.get("fallback", True))
+        for name in cfg.names:
+            markets = name.markets
+            if not markets:
+                continue
+            main = _main_alias(name)
+            home = next((m for m in markets if m.country == name.home_country), markets[0])
+            q = f'"{main}"'
+            if name.focus == "name" and bing_focus_every and (force or _due(bing_focus_every, run_number, sum(name.id.encode()))):
+                jobs.append(JobSpec(f"{q} [{bing_market(home.lang, home.country)}]", "bingnews", lambda q=q, m=home, ids=[name.id]: fetch_bing_news(http, q, m.lang, m.country, ids), name_ids=[name.id], prio=3))
+            if not bing_fallback:
+                continue
+            # Reserve queries: a focus credit in every market, any other tier-A name at home. They
+            # are submitted only when Google is refusing us, so they cost Bing nothing otherwise.
+            if name.focus == "name":
+                for m in sorted(markets, key=lambda mk: mk.country != name.home_country):
+                    jobs.append(JobSpec(f"{q} [{bing_market(m.lang, m.country)}]", "bingnews", lambda q=q, m=m, ids=[name.id]: fetch_bing_news(http, q, m.lang, m.country, ids), name_ids=[name.id], prio=1, fallback=True))
+            elif name.kind != "comp":
+                jobs.append(JobSpec(f"{q} [{bing_market(home.lang, home.country)}]", "bingnews", lambda q=q, m=home, ids=[name.id]: fetch_bing_news(http, q, m.lang, m.country, ids), name_ids=[name.id], prio=2, fallback=True))
 
     # ---- grouped Bing per market ----
     if cfg.route_enabled("bingnews"):
@@ -376,6 +589,26 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     # shared outlet feeds and tier-A home queries, then the other tier-A markets and people, then
     # site queries and Bing, then comps and grouped tier A, then regulators and GDELT.
     jobs.sort(key=lambda j: j.prio)
+    # The Google cap (see google_quota). Deferred queries are recorded as skipped with the reason,
+    # so coverage.json can tell a rotation from a budget skip and a refusal. Reserve Bing jobs
+    # are not part of the queue until Google is down.
+    cap = int(gstate.get("cap") or 0)
+    if cap and cfg.route_enabled("googlenews"):
+        focus_ids = {n.id for n in cfg.names if n.focus == "name"}
+        comp_ids = {n.id for n in cfg.names if n.focus == "comp"}
+        deferred = rotate_google(jobs, cap, store, focus_ids, comp_ids, f"skipped: googlenews rotation (cap {cap} a run)")
+        if deferred:
+            log.info("googlenews cap %d: %d queries deferred to later cycles by staleness", cap, deferred)
+        bf = gstate.get("backfill") or {}
+        if bf and not deferred:
+            # every query fitted this cycle, so the backfill window has nothing left to do
+            store.clear_state(STATE_BACKFILL)
+        elif bf:
+            last = store.last_attempt_runs("googlenews")
+            since = int(bf.get("since_run") or 0)
+            left = [j for j in jobs if j.route == "googlenews" and j.skip and last.get(j.label, -1) < since]
+            if not left:
+                store.clear_state(STATE_BACKFILL)
     return jobs
 
 
@@ -673,7 +906,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     else:
         lookback = float(cfg.engine.get("lookback_hours", 72))
 
-    specs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days, all_routes)
+    specs = jobs if jobs is not None else build_jobs(cfg, http, store, run_number, backfill_days, all_routes, now=now)
     specs = [j if isinstance(j, JobSpec) else JobSpec(f"job-{i}", "custom", j) for i, j in enumerate(specs)]
     summary.jobs = len(specs)
     workers = max(1, int(cfg.engine.get("max_workers", 4)))
@@ -700,6 +933,7 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     breaker = cfg.engine.get("circuit_breaker", {}) or {}
     breaker_on = bool(breaker.get("enabled", True))
     trip_after = int(breaker.get("consecutive_empty", 25))
+    trip_after_by_route = {str(k): int(v) for k, v in (breaker.get("consecutive_empty_by_route", {}) or {}).items()}
     # The breaker reads "ok but empty" as a refusal, which is right for a search index and wrong
     # for a page watcher: a newsroom with nothing new since the last visit answers ok and empty
     # every time, and that is the normal state of most of them. With forty watchers the page
@@ -710,16 +944,17 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
     breaker_routes = set(breaker.get("routes", ["googlenews", "bingnews", "gdelt"]) or [])
     empty_streak: dict[str, int] = {}
     tripped: set[str] = set()
-
-    # v2: one executor per lane. Until 11 Oct 2026 every job shared max_workers threads and a worker
-    # slept inside Http.wait() while holding its slot, so four workers queued behind Google News'
-    # 2.5 second spacing and the page watchers and outlet feeds on idle hosts waited with them: 69 of
-    # 184 feeds read "skipped: run time budget reached" on 11 October. Search hosts now get their own
-    # small lanes (their throughput is set by the per-host spacing, not by threads) and everything
-    # else runs on the main pool.
-    lane_cfg = cfg.engine.get("lanes", {}) or {}
-    lane_of = {r: r for r in ("googlenews", "bingnews", "gdelt")}
-    executors: dict[str, ThreadPoolExecutor] = {}
+    # 11 Oct 2026: a second breaker for the other way of being refused, an HTTP 429/5xx. Google
+    # News answered 503 for hours and the empty-breaker never fired, because a 503 is an error,
+    # not an empty page. Three refusals in a row trip the route, start the cool-down and bring in
+    # the Bing reserve. The threshold is shared with Http.fail_fast_after, so the third refusal
+    # is also the last request the run sends to that host.
+    quota = google_quota(cfg)
+    gstate = google_state(cfg, store, now)
+    http.fail_fast_after = max(1, quota["trip_after"])
+    refused_streak: dict[str, int] = {}
+    google_clean = False            # a Google answer this cycle: the route is open again
+    fallback_submitted = False
 
     def _executor(route: str) -> ThreadPoolExecutor:
         lane = lane_of.get(route, "main")
@@ -728,45 +963,151 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
             executors[lane] = ThreadPoolExecutor(max_workers=n, thread_name_prefix=f"nf-{lane}")
         return executors[lane]
 
-    futures = {_executor(spec.route).submit(spec.fn): spec for spec in specs}
-    pending = set(futures)
+    lane_cfg = cfg.engine.get("lanes", {}) or {}
+    lane_of = {r: r for r in ("googlenews", "bingnews", "gdelt")}
+    executors: dict[str, ThreadPoolExecutor] = {}
+    futures: dict = {}
+    pending: set = set()
+    submit_order: dict = {}         # completion batches are handled in submission order, so the
+                                    # empty-streak and refusal counters read like the queue, not a set
+
+    def _submit(sp: JobSpec):
+        fut = _executor(sp.route).submit(sp.fn)
+        futures[fut] = sp
+        submit_order[fut] = len(submit_order)
+        pending.add(fut)
+        return fut
+
+    def _skip_all_google(reason: str) -> int:
+        n = 0
+        for sp in specs:
+            if sp.route == "googlenews" and not sp.skip and not sp.fallback:
+                sp.skip = reason
+                n += 1
+        return n
+
+    def _submit_fallback(why: str) -> None:
+        nonlocal fallback_submitted
+        if fallback_submitted:
+            return
+        fallback_submitted = True
+        reserve = [sp for sp in specs if sp.fallback and sp.route not in tripped]
+        for sp in reserve:
+            _submit(sp)
+        if reserve:
+            log.warning("googlenews is down (%s): %d reserve Bing queries submitted for the focus credits and tier-A home markets", why[:60], len(reserve))
+
+    def _trip_google(why: str) -> None:
+        """Google refused us: cancel its queued jobs, persist the cool-down, bring in the reserve."""
+        if "googlenews" in tripped:
+            return
+        tripped.add("googlenews")
+        until = google_refused(cfg, store, now, gstate, why)
+        reason = f"skipped: googlenews refused upstream ({why[:40]}), cooling down until {until.strftime('%H:%M')}Z"
+        for pf in list(pending):
+            ps = futures[pf]
+            if ps.route == "googlenews" and pf.cancel():
+                pending.discard(pf)
+                results.append(SourceResult(ps.route, ps.label, False, 0, reason, 0.0, list(ps.name_ids)))
+                summary.tripped += 1
+        _submit_fallback(why)
+
+    # Cool-down probe. While Google is cooling down the cycle sends one query, the most valuable
+    # one in the queue, before anything else. An answer reopens the route for the cycle; a
+    # refusal extends the cool-down (doubling, capped) and the cycle runs on feeds, pages and the
+    # Bing reserve instead. Google sees one request per cycle from a blocked runner, not a
+    # hundred, which is also what makes the block lift.
+    google_specs = [sp for sp in specs if sp.route == "googlenews" and not sp.skip and not sp.fallback]
+    if gstate.get("cooling") and google_specs:
+        probe = google_specs[0]
+        log.warning("googlenews cooling down until %sZ (trip %d): probing with %s", gstate["cooldown_until"].strftime("%H:%M"), gstate.get("trips", 0), probe.label[:60])
+        try:
+            p_items, p_res = probe.fn()
+        except Exception as exc:  # noqa: BLE001
+            p_items, p_res = [], SourceResult(probe.route, probe.label, False, 0, str(exc)[:300], 0.0)
+        probe.skip = "probe"            # never submitted again below
+        handle(probe, p_items, p_res)
+        if p_res.ok:
+            google_clean = True
+            store.clear_state(STATE_COOLDOWN)
+            gstate.update(cooling=False, cooldown_until=None)
+            log.warning("googlenews answered the probe: route open again, cap %s", gstate.get("cap") or "off")
+        else:
+            until = google_refused(cfg, store, now, gstate, p_res.error or "probe failed")
+            n = _skip_all_google(f"skipped: googlenews cooling down until {until.strftime('%H:%M')}Z (refused upstream)")
+            tripped.add("googlenews")
+            log.warning("googlenews still refusing (%s): %d queries skipped this cycle", (p_res.error or "")[:60], n)
+
+    # Submit. Skipped jobs (rotation, cool-down) are recorded, not run; reserve jobs wait.
+    for sp in specs:
+        if sp.skip == "probe":
+            continue
+        if sp.skip:
+            results.append(SourceResult(sp.route, sp.label, False, 0, sp.skip, 0.0, list(sp.name_ids)))
+            summary.deferred += 1
+            continue
+        if sp.fallback:
+            continue
+        _submit(sp)
+    if "googlenews" in tripped:
+        _submit_fallback("cooling down")
+
     stopped = False
     try:
-        for fut in as_completed(futures):
-            spec = futures[fut]
-            pending.discard(fut)
-            try:
-                items, res = fut.result()
-            except BudgetExceeded:
-                # not a failure of the source: it was in flight when the budget ran out
-                items, res = [], SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0)
-                summary.skipped += 1
-            except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
-                items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
-            handle(spec, items, res)
-            if breaker_on and spec.route in breaker_routes and spec.route not in tripped:
-                if res.ok and res.items == 0:
-                    empty_streak[spec.route] = empty_streak.get(spec.route, 0) + 1
-                    if empty_streak[spec.route] >= trip_after:
-                        tripped.add(spec.route)
-                        log.warning(
-                            "route %s tripped after %d consecutive empty responses: cancelling its "
-                            "remaining jobs so the rest of the run keeps its budget",
-                            spec.route, empty_streak[spec.route],
-                        )
-                elif res.items:
-                    empty_streak[spec.route] = 0
-            if tripped:
-                for pf in list(pending):
-                    ps = futures[pf]
-                    if ps.route in tripped and pf.cancel():
-                        pending.discard(pf)
-                        results.append(SourceResult(
-                            ps.route, ps.label, False, 0,
-                            f"skipped: {ps.route} tripped after {trip_after} consecutive empty responses",
-                            0.0, list(ps.name_ids),
-                        ))
-                        summary.tripped += 1
+        while pending:
+            done, _ = wait_futures(pending, return_when=FIRST_COMPLETED)
+            for fut in sorted(done, key=lambda f: submit_order.get(f, 0)):
+                spec = futures[fut]
+                pending.discard(fut)
+                try:
+                    items, res = fut.result()
+                except BudgetExceeded:
+                    # not a failure of the source: it was in flight when the budget ran out
+                    items, res = [], SourceResult(spec.route, spec.label, False, 0, "skipped: run time budget reached", 0.0)
+                    summary.skipped += 1
+                except UpstreamRefused as exc:
+                    items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
+                except Exception as exc:  # noqa: BLE001 - a job that raises becomes a failed source
+                    items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
+                handle(spec, items, res)
+                if spec.route in SEARCH_ROUTES and spec.route not in tripped:
+                    if res.ok:
+                        refused_streak[spec.route] = 0
+                        if spec.route == "googlenews":
+                            google_clean = True
+                    elif is_refusal(res.error):
+                        refused_streak[spec.route] = refused_streak.get(spec.route, 0) + 1
+                        if refused_streak[spec.route] >= quota["trip_after"]:
+                            if spec.route == "googlenews":
+                                _trip_google(res.error)
+                            else:
+                                tripped.add(spec.route)
+                                log.warning("route %s tripped after %d refusals in a row", spec.route, refused_streak[spec.route])
+                if breaker_on and spec.route in breaker_routes and spec.route not in tripped:
+                    if res.ok and res.items == 0:
+                        empty_streak[spec.route] = empty_streak.get(spec.route, 0) + 1
+                        if empty_streak[spec.route] >= trip_after_by_route.get(spec.route, trip_after):
+                            tripped.add(spec.route)
+                            log.warning(
+                                "route %s tripped after %d consecutive empty responses: cancelling its "
+                                "remaining jobs so the rest of the run keeps its budget",
+                                spec.route, empty_streak[spec.route],
+                            )
+                    elif res.items:
+                        empty_streak[spec.route] = 0
+                if tripped:
+                    for pf in list(pending):
+                        ps = futures[pf]
+                        if ps.route in tripped and pf.cancel():
+                            pending.discard(pf)
+                            results.append(SourceResult(
+                                ps.route, ps.label, False, 0,
+                                f"skipped: {ps.route} tripped after {trip_after_by_route.get(ps.route, trip_after)} consecutive empty responses"
+                                if ps.route != "googlenews" or not gstate.get("cooling") else
+                                f"skipped: googlenews refused upstream, cooling down until {gstate['cooldown_until'].strftime('%H:%M')}Z",
+                                0.0, list(ps.name_ids),
+                            ))
+                            summary.tripped += 1
             if time.monotonic() > deadline and pending:
                 stopped = True
                 break
@@ -789,13 +1130,17 @@ def run_once(cfg: Config, store: Store, http: Optional[Http] = None, *, backfill
                     items, res = [], SourceResult(spec.route, spec.label, False, 0, str(exc)[:300], 0.0)
                 handle(spec, items, res)
         log.warning("time budget of %.0f min reached: %d jobs skipped (they run on the next cycle)", budget, summary.skipped)
+    # A cycle on which Google answered and never refused: the cool-down (if any) is over and the
+    # cap takes a step back towards its ceiling.
+    if google_clean and "googlenews" not in tripped and (gstate.get("trips") or gstate.get("cooldown_until") or (quota["cap"] and gstate.get("cap", 0) < quota["ceiling"])):
+        google_answered(cfg, store, now, gstate)
 
     summary.source_results = results
     summary.tripped_routes = sorted(tripped)
-    summary.errors = sum(1 for r in results if not r.ok) - summary.skipped - summary.tripped
+    summary.errors = sum(1 for r in results if not r.ok and not r.error.startswith("skipped"))
     store.add_source_results(run_id, results)
     summary.finished_at = datetime.now(timezone.utc)
-    notes = f"errors={summary.errors} skipped={summary.skipped} stale={summary.stale} unrelated={summary.unrelated}"
+    notes = f"errors={summary.errors} skipped={summary.skipped} deferred={summary.deferred} stale={summary.stale} unrelated={summary.unrelated}"
     if summary.tripped:
         notes += f" tripped={summary.tripped} routes={','.join(summary.tripped_routes)}"
     store.finish_run(run_id, summary.finished_at, summary.fetched, summary.new_items, notes=notes)
