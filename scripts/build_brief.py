@@ -585,8 +585,14 @@ def grade_rows(P: dict) -> None:
     for r in P["C_rows"]:
         score, why = review_score(r)
         r["score"], r["why"] = score, why
-        # a comp of a focus credit is put in front of judgement at a lower bar
-        r["review"] = score >= (2 if r.get("focus") else 3)
+        # A comp of a focus credit gets one more point, but only when the headline carries something
+        # that happened (a category, a hard signal, an event word, an interview, echoes): a trade
+        # title writing about a comp's new routes is not by itself worth a review.
+        if r.get("focus") and (r["cats"] or hard_signal(r["title"]) or STRONG_CUE.search(r["title"])
+                               or INTERVIEW_CUE.search(r["title"]) or r.get("echo_n")):
+            score += 1
+            r["score"] = score
+        r["review"] = score >= 3
         if r.get("focus") == "comp":
             r["why"] = r["why"] + ["comp of " + ", ".join(FOCUS_OF.get(r["nid"], []))]
     for r in P["A_rows"]:
@@ -625,12 +631,15 @@ def _parse_ts(v) -> "datetime | None":
 
 
 def mark_new(rows: list[dict], since: "datetime | None") -> int:
+    """New = first seen since the previous cut, unless the outlet dates it well before that: a feed
+    added today delivers its whole back catalogue as first seen today, and none of it is news."""
     if since is None:
         return 0
     n = 0
     for r in rows:
         t = _parse_ts(r.get("seen"))
-        r["new"] = bool(t and t >= since)
+        pub = _parse_ts(r.get("published"))
+        r["new"] = bool(t and t >= since and not (pub and pub < since - timedelta(hours=36)))
         n += r["new"]
     return n
 
@@ -1003,11 +1012,20 @@ def focus_rows_html(F: list[dict]) -> str:
             eng += f"; last mention {t:%a %H:%M}Z"
         ko = f.get("outlets") or []
         if ko:
-            dark = [o["domain"] for o in ko if not o.get("answering")]
-            eng += f"; key outlets {len(ko) - len(dark)} of {len(ko)} answering"
+            # dark: a channel was tried and nothing answered; pending: not searched yet (the site:
+            # queries rotate over four hours, so a newly added outlet is pending until its turn)
+            dark = [o["domain"] for o in ko if not o.get("answering") and (o.get("site_jobs") or o.get("feed_jobs"))]
+            pending = [o["domain"] for o in ko if not o.get("answering") and not (o.get("site_jobs") or o.get("feed_jobs"))]
+            answering = len(ko) - len(dark) - len(pending)
+            eng += f"; key outlets {answering} of {len(ko)} answering"
+            notes = []
             if dark:
-                eng += " (dark: " + ", ".join(dark[:4]) + ("" if len(dark) <= 4 else ", ...") + ")"
-                flag = flag or len(dark) * 2 > len(ko)
+                notes.append("dark: " + ", ".join(dark[:4]) + ("" if len(dark) <= 4 else ", ..."))
+            if pending:
+                notes.append("not yet searched: " + ", ".join(pending[:4]) + ("" if len(pending) <= 4 else ", ..."))
+            if notes:
+                eng += " (" + "; ".join(notes) + ")"
+            flag = flag or len(dark) * 2 > len(ko)
             hits = [(o["last_hit"], o["domain"]) for o in ko if o.get("last_hit")]
             if hits:
                 ts, dom = max(hits)
@@ -1298,7 +1316,7 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
     # export_at, not cut_at, is what the next cut measures "new" from: a row the engine first saw
     # after this export was never in front of this cut's judgement, whenever this cut ran.
     state = {"cut_at": now.isoformat(timespec="minutes"), "export_at": stamp,
-             "since": since.isoformat(timespec="minutes") if since else None,
+             "since": since.isoformat(timespec="minutes") if since else None, "window_hours": window_h,
              "lead": [str(r["id"]) for r in lead]}
     for k in ("so", "translate", "tags"):
         state[k] = {str(i): v for i, v in (j.get(k) or {}).items() if str(i) in pub_ids}
@@ -1480,6 +1498,10 @@ def main() -> int:
             # Judge only what is new since the last cut, plus what it carried. A row the last cut saw
             # and did not publish was a decision; it is not re-offered (the QA pass audits drops).
             prev_so = {str(k): v for k, v in (prev.get("so") or {}).items()}
+            # Only rows inside the previous cut's own window were in front of it. A row older than
+            # that window (the Monday cut reaching back over a weekend the Sunday cut never covered)
+            # was never judged, so it is offered like a new one.
+            prev_start = prev_at - timedelta(hours=float(prev.get("window_hours") or 24))
             prev_lead = {str(x) for x in prev.get("lead") or []}
             for key in ("A_rows", "C_rows", "A_echo_rows", "C_echo_rows"):
                 keep = []
@@ -1490,7 +1512,7 @@ def main() -> int:
                         r["prev"] = "lead" if rid in prev_lead else "carried"
                         r["prev_so"] = prev_so[rid]
                         keep.append(r)
-                    elif r.get("echo") or (t and t >= prev_at):
+                    elif r.get("echo") or t is None or t >= prev_at or t < prev_start:
                         keep.append(r)
                     else:
                         held_n += 1
