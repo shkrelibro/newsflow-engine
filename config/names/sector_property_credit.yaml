@@ -1,0 +1,63 @@
+# hand-maintained (5 Oct 2026). Sector entry, not an issuer: Nordic and German property credit.
+# SBB, Heimstaden, Branicks, Adler, Vivion, Demire and Aroundtown are read through the lenders'
+# behaviour (a bank taking over a Malmö property, provisions at the Pfandbrief banks), the Swedish
+# property bond market, and the Berlin expropriation vote, and those stories name the lender, the
+# city or the market, not the issuer: "Banken tar över Areims miljardfastighet i Malmö" (DI, 5 Oct)
+# was filed under Balder because Balder sat in the standfirst. One entry here, so one story files
+# once and the read-across is explicit.
+# Listed in scripts/build_universe.py HAND_MAINTAINED so a regeneration keeps this file.
+id: sector_property_credit
+name: "Property credit, Nordic and German (sector)"
+kind: comp
+home_country: "SE"
+sector: real_estate
+notes: "Sector entry: Swedish property bonds and refinancing, lenders enforcing on property,
+  Pfandbrief bank provisions, the Berlin Vergesellschaftung vote, Nordic property distress.
+  Context guards keep the estate-agent and house-price stories out."
+markets:
+  - {country: SE, lang: sv}
+  - {country: DE, lang: de}
+  - {country: GB, lang: en}
+  - {country: "NO", lang: nb}
+aliases:
+  # English first: the main alias joins the grouped comp query in every market
+  - {text: "property lender", inflect: true, langs: [en], search: true, search_every: 6, weight: 0.8,
+     require_context: ["Nordic", "Swedish", "Sweden", "German", "Germany", "Berlin", "Stockholm", "Danish", "Norwegian", "loan", "loans", "provision", "provisions", "default", "defaults", "bond", "bonds", "refinanc", "refinancing", "enforce", "enforcement"]}
+  - {text: "real estate loans", langs: [en], weight: 0.7,
+     require_context: ["Nordic", "Swedish", "Sweden", "German", "Germany", "Berlin", "bank", "banks", "provision", "provisions", "default", "defaults", "non-performing", "write-down", "writedown"]}
+  - {text: "Swedish property", inflect: true, langs: [en], weight: 0.7,
+     require_context: ["bond", "bonds", "debt", "refinanc", "refinancing", "loan", "loans", "default", "crisis", "distress", "distressed", "lender", "lenders", "rating", "downgrade"]}
+  # Swedish: the bond market and the lenders. fastighetsbolag is guarded because every listing is one.
+  - {text: "fastighetsobligation", inflect: true, langs: [sv], search: true, search_every: 4, weight: 0.9}
+  - {text: "fastighetslån", inflect: true, langs: [sv], search: true, search_every: 6, weight: 0.8}
+  - {text: "fastighetskris", inflect: true, langs: [sv], search: true, search_every: 6, weight: 0.8}
+  - {text: "fastighetsbolag", inflect: true, langs: [sv], weight: 0.6,
+     require_context: ["obligation", "obligationer", "obligationerna", "refinansiering", "refinansierar", "konkurs", "rekonstruktion", "lån", "lånen", "banken", "bankerna", "pant", "panten", "tar över", "ränta", "räntan", "räntor", "skuld", "skulder", "kreditbetyg", "nyemission", "nödlidande", "ackord"]}
+  - {text: "tar över", langs: [sv], weight: 0.7,
+     require_context: ["fastighet", "fastigheter", "fastigheten", "fastigheterna", "pant", "panten", "banken", "bankerna", "långivare", "långivaren", "lån", "lånen"]}
+  - {text: "panthavare", inflect: true, langs: [sv], weight: 0.8}
+  - {text: "pantsatt", inflect: true, langs: [sv], weight: 0.7, require_context: ["fastighet", "fastigheter", "fastigheten", "aktier", "banken", "lån"]}
+  - {text: "nödlidande", langs: [sv], weight: 0.7, require_context: ["fastighet", "fastigheter", "lån", "lånen", "krediter", "banken", "bankerna"]}
+  - {text: "obligationsmarknaden", langs: [sv], weight: 0.6, require_context: ["fastighet", "fastigheter", "fastighetsbolag", "fastighetsbolagen", "fastighetssektorn"]}
+  # Norwegian and Danish
+  - {text: "eiendomslån", inflect: true, langs: [nb], weight: 0.8}
+  - {text: "eiendomsobligasjon", inflect: true, langs: [nb], weight: 0.9}
+  - {text: "ejendomsobligation", inflect: true, langs: [da], weight: 0.9}
+  - {text: "ejendomslån", inflect: true, langs: [da], weight: 0.7, require_context: ["bank", "banken", "tab", "nedskrivning", "nedskrivninger", "konkurs", "misligholdt"]}
+  # German: the lenders and the Berlin vote
+  - {text: "Immobilienfinanzier", inflect: true, langs: [de], search: true, search_every: 6, weight: 0.8,
+     require_context: ["Kredit", "Kredite", "Anleihe", "Anleihen", "Refinanzierung", "Pfandbrief", "Bank", "Banken", "Ausfall", "Ausfälle", "notleidend", "Risikovorsorge", "Verlust", "Verluste", "Abschreibung", "Abschreibungen"]}
+  - {text: "Pfandbriefbank", inflect: true, langs: [de], weight: 0.7,
+     require_context: ["Immobilien", "Kredit", "Kredite", "Verlust", "Verluste", "Risikovorsorge", "Abschreibung", "Abschreibungen", "notleidend", "Gewerbeimmobilien"]}
+  - {text: "Aareal", langs: [de, en], weight: 0.7,
+     require_context: ["Immobilien", "Kredit", "Kredite", "loan", "loans", "property", "Risikovorsorge", "provision", "provisions", "Verlust", "Verluste", "non-performing", "notleidend"]}
+  - {text: "notleidende Immobilienkredite", langs: [de], weight: 0.9}
+  - {text: "Gewerbeimmobilienkredite", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Enteignung", inflect: true, langs: [de], search: true, search_every: 6, weight: 0.8,
+     require_context: ["Wohnung", "Wohnungen", "Wohnungsunternehmen", "Wohnungskonzern", "Wohnungskonzerne", "Berlin", "Berliner", "Vonovia", "Immobilien", "Vergesellschaftung", "Volksentscheid", "Deutsche Wohnen", "Heimstaden", "Mieter"]}
+  - {text: "Vergesellschaftung", inflect: true, langs: [de], weight: 0.8,
+     require_context: ["Wohnung", "Wohnungen", "Wohnungsunternehmen", "Wohnungskonzern", "Wohnungskonzerne", "Berlin", "Berliner", "Vonovia", "Immobilien", "Volksentscheid", "Deutsche Wohnen", "Heimstaden"]}
+  - {text: "Volksentscheid", langs: [de], weight: 0.6,
+     require_context: ["Wohnung", "Wohnungen", "Enteignung", "Vergesellschaftung", "Vonovia", "Deutsche Wohnen", "Heimstaden", "Immobilien", "Wohnungskonzerne"]}
+exclude_terms: ["Immobilienmakler", "mäklare", "bostadsrätt", "villapriser", "house prices", "mortgage rates", "Bauzinsen"]
+comps: [sbb, heimstaden, branicks, adler, vivion, demire, aroundtown, balder, castellum, vonovia]

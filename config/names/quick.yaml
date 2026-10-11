@@ -8,7 +8,10 @@ sector: restaurants
 notes: "Added 2 Sep 2026 per the desk. French Quick network owned by HIG Capital since Aug 2021 (107 restaurants); Burger King France sits under Groupe Bertrand; Quick Belgium/Lux is QSRP (separate). Generic word — context-guarded."
 markets:
   - {country: FR, lang: fr}
-  - {country: GB, lang: en}
+  # 4 Oct: en-GB removed. "Quick" is a generic English word; inside the en-GB tier-A group it
+  # filled Google's 100-item cap on every run and truncated Rekeep, Recordati, SBB, Skechers and
+  # STADA out of the result. English coverage of Quick France is negligible. If build_universe.py
+  # is rerun, drop the GB market in its table too.
 aliases:
   - {text: "Quick", search: true, require_context: ["restaurant", "burger", "fast-food", "fast food", "franchise", "HIG Capital", "H.I.G.", "enseigne", "Quick France", "restauration rapide", "Bertrand"]}
 comps: [bertrand, mcdonaldsfrance, amrest]

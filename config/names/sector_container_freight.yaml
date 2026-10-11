@@ -1,0 +1,47 @@
+# hand-maintained (5 Oct 2026). Sector entry, not an issuer: container freight rates and the
+# chokepoints. Hapag-Lloyd, CMA CGM, Maersk, MSC, COSCO and ZIM are priced off the Drewry and SCFI
+# indices, the general rate increases the lines announce, and whether Suez, the Red Sea and Hormuz
+# are open. Those stories name the index or the strait, not the carrier. One entry here rather
+# than the same terms on six names, so one story files once.
+# Listed in scripts/build_universe.py HAND_MAINTAINED so a regeneration keeps this file.
+id: sector_container_freight
+name: "Container freight (sector)"
+kind: comp
+home_country: "GB"
+sector: shipping
+notes: "Sector entry: Drewry WCI and SCFI prints, GRIs and surcharges, blank sailings, Suez and
+  Red Sea routing, the Strait of Hormuz, port strikes. Context guards keep the geopolitics out
+  unless the headline is about ships."
+markets:
+  - {country: GB, lang: en}
+  - {country: DE, lang: de}
+aliases:
+  - {text: "freight rates", langs: [en], search: true, search_every: 3, weight: 0.8,
+     require_context: ["container", "containers", "shipping", "ocean", "Drewry", "SCFI", "Asia", "transpacific", "transatlantic", "Europe", "box", "carriers", "liner", "TEU", "FEU"]}
+  - {text: "container rates", langs: [en], weight: 0.8}
+  - {text: "Drewry", langs: [en], search: true, search_every: 6, weight: 0.8}
+  - {text: "World Container Index", langs: [en], weight: 0.9}
+  - {text: "SCFI", langs: [en, de], weight: 0.8}
+  - {text: "Shanghai Containerized Freight Index", langs: [en], weight: 0.9}
+  - {text: "Freightos", langs: [en], weight: 0.7}
+  - {text: "general rate increase", inflect: true, langs: [en], search: true, search_every: 8, weight: 0.8}
+  - {text: "peak season surcharge", inflect: true, langs: [en], weight: 0.8}
+  - {text: "blank sailings", langs: [en], weight: 0.8}
+  - {text: "Suez Canal", langs: [en], search: true, search_every: 8, weight: 0.7,
+     require_context: ["container", "containers", "shipping", "transit", "transits", "vessel", "vessels", "carriers", "liner", "Maersk", "MSC", "Houthi", "reroute", "rerouting", "return", "Red Sea"]}
+  - {text: "Red Sea", langs: [en], weight: 0.6,
+     require_context: ["container", "containers", "shipping", "vessel", "vessels", "carriers", "liner", "Maersk", "MSC", "Houthi", "reroute", "rerouting", "transit", "transits", "Suez", "freight"]}
+  - {text: "Strait of Hormuz", langs: [en], search: true, search_every: 6, weight: 0.7,
+     require_context: ["shipping", "tanker", "tankers", "vessel", "vessels", "transit", "transits", "container", "containers", "war risk", "insurance", "freight", "carriers", "closed", "closure", "reopen", "reopening"]}
+  - {text: "Hormuz", langs: [en, de], weight: 0.6,
+     require_context: ["shipping", "tanker", "tankers", "vessel", "vessels", "transit", "transits", "container", "containers", "war risk", "insurance", "freight", "carriers", "closed", "closure", "reopen", "reopening", "Schifffahrt", "Tanker", "Reederei", "Reedereien", "gesperrt", "Durchfahrt"]}
+  # German
+  - {text: "Frachtraten", langs: [de], search: true, search_every: 6, weight: 0.8,
+     require_context: ["Container", "Reederei", "Reedereien", "Schifffahrt", "Asien", "Linienreederei", "Hapag", "Maersk", "Seefracht"]}
+  - {text: "Containerschifffahrt", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Seefracht", inflect: true, langs: [de], weight: 0.6,
+     require_context: ["Raten", "Preise", "Container", "Reederei", "Reedereien", "Asien", "Suez", "Hormus"]}
+  - {text: "Hormus", langs: [de], weight: 0.6,
+     require_context: ["Schifffahrt", "Tanker", "Reederei", "Reedereien", "gesperrt", "Durchfahrt", "Container", "Schiffe", "Straße von Hormus"]}
+exclude_terms: ["freight train", "rail freight", "air freight rates", "trucking rates"]
+comps: [hapag, cmacgm, maersk, msc, cosco, zim]

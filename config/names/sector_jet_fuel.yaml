@@ -1,0 +1,45 @@
+# hand-maintained (5 Oct 2026). Sector entry, not an issuer: jet fuel and kerosene. Lufthansa,
+# airBaltic, Wizz Air, Finnair, Air France-KLM and TUI are priced off the kerosene crack and the
+# surcharges they can pass through, and with Hormuz shut the fuel line is the one moving fastest.
+# The stories name the fuel, the refinery or the surcharge, not the airline, so an airline's own
+# aliases cannot see them. One entry here rather than the same terms on six names.
+# Listed in scripts/build_universe.py HAND_MAINTAINED so a regeneration keeps this file.
+id: sector_jet_fuel
+name: "Jet fuel and kerosene (sector)"
+kind: comp
+home_country: "GB"
+sector: airlines
+notes: "Sector entry: jet fuel and kerosene prices and supply, the jet crack, fuel surcharges,
+  SAF mandates and their cost, refinery outages that hit distillates. Context guards keep
+  heating-oil and car-fuel stories out."
+markets:
+  - {country: GB, lang: en}
+  - {country: DE, lang: de}
+  - {country: FR, lang: fr}
+aliases:
+  - {text: "jet fuel", langs: [en], search: true, search_every: 3, weight: 0.8,
+     require_context: ["price", "prices", "cost", "costs", "supply", "supplies", "shortage", "surcharge", "surcharges", "airline", "airlines", "carrier", "carriers", "hedge", "hedging", "hedged", "refiner", "refiners", "refinery", "crack", "Hormuz", "Brent", "demand", "stocks", "inventories", "Europe", "European"]}
+  - {text: "kerosene", langs: [en], weight: 0.7,
+     require_context: ["jet", "aviation", "airline", "airlines", "price", "prices", "cost", "costs", "supply", "shortage", "surcharge", "refinery", "crack", "Hormuz", "Europe"]}
+  - {text: "jet crack", langs: [en], weight: 0.9}
+  - {text: "fuel surcharge", inflect: true, langs: [en], search: true, search_every: 8, weight: 0.8,
+     require_context: ["airline", "airlines", "flight", "flights", "carrier", "carriers", "ticket", "tickets", "air", "aviation", "passengers", "fares"]}
+  - {text: "sustainable aviation fuel", langs: [en], weight: 0.7,
+     require_context: ["mandate", "mandates", "cost", "costs", "price", "prices", "airline", "airlines", "ReFuelEU", "levy", "surcharge", "shortage", "supply"]}
+  - {text: "SAF mandate", inflect: true, langs: [en], weight: 0.8}
+  # German: Kerosin inflects to Kerosinpreis, Kerosinpreise, Kerosinzuschlag (Zuschlag is 8 letters, listed separately)
+  - {text: "Kerosin", inflect: true, langs: [de], search: true, search_every: 4, weight: 0.8,
+     require_context: ["Preis", "Preise", "teuer", "teurer", "Kosten", "Airline", "Airlines", "Fluggesellschaft", "Fluggesellschaften", "Lufthansa", "Luftfahrt", "Zuschlag", "Versorgung", "Knappheit", "Raffinerie", "Hormus", "Ticketpreise", "Flugpreise"]}
+  - {text: "Kerosinzuschlag", inflect: true, langs: [de], weight: 0.9}
+  - {text: "Treibstoffzuschlag", inflect: true, langs: [de], weight: 0.8,
+     require_context: ["Flug", "Flüge", "Airline", "Fluggesellschaft", "Lufthansa", "Ticket", "Tickets", "Passagiere"]}
+  - {text: "Kerosinsteuer", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Luftverkehrsteuer", inflect: true, langs: [de], weight: 0.7}
+  # French
+  - {text: "kérosène", langs: [fr], search: true, search_every: 6, weight: 0.8,
+     require_context: ["prix", "coût", "coûts", "compagnie", "compagnies", "aérien", "aérienne", "aériennes", "surcharge", "taxe", "pénurie", "approvisionnement", "raffinerie", "Ormuz", "billets"]}
+  - {text: "carburant aérien", langs: [fr], weight: 0.8}
+  - {text: "surcharge carburant", langs: [fr], weight: 0.8}
+  - {text: "taxe sur le kérosène", langs: [fr], weight: 0.9}
+exclude_terms: ["heating oil", "Heizöl", "fioul", "petrol prices", "Benzinpreis", "diesel prices"]
+comps: [lufthansa, airbaltic, wizzair, finnair, airfranceklm, tuigroup, ryanair]

@@ -1,0 +1,46 @@
+# hand-maintained (5 Oct 2026). Sector entry, not an issuer: antibiotic and generic API supply.
+# ACS Dobfar, Centrient, Aurobindo, Sandoz and the Chinese beta-lactam comps trade on the price and
+# availability of amoxicillin, penicillin intermediates and the generic antibiotics that use them;
+# the headlines say "antibiotic shortage" or "Lieferengpass" and name a regulator or a molecule,
+# not a producer. One entry rather than the same terms on six names.
+# Listed in scripts/build_universe.py HAND_MAINTAINED so a regeneration keeps this file.
+id: sector_antibiotics
+name: "Antibiotics supply (sector)"
+kind: comp
+home_country: "GB"
+sector: pharma
+notes: "Sector entry: antibiotic shortages and supply, penicillin and 6-APA/7-ACA intermediates,
+  generic antibiotic pricing and tenders, EU Critical Medicines Act, Indian and Chinese API
+  capacity. Read-across to the beta-lactam and generics names listed under comps."
+markets:
+  - {country: GB, lang: en}
+  - {country: DE, lang: de}
+  - {country: FR, lang: fr}
+aliases:
+  - {text: "antibiotic shortage", inflect: true, langs: [en], search: true, search_every: 4, weight: 0.9}
+  - {text: "antibiotics shortage", inflect: true, langs: [en], weight: 0.9}
+  - {text: "antibiotic supply", langs: [en], weight: 0.8}
+  - {text: "antibiotics supply", langs: [en], weight: 0.8}
+  - {text: "amoxicillin", langs: [en, de, fr, it], search: true, search_every: 8, weight: 0.7,
+     require_context: ["shortage", "shortages", "supply", "price", "prices", "producer", "production", "plant", "Engpass", "Lieferengpass", "Mangel", "pénurie", "carenza", "API", "tender"]}
+  - {text: "penicillin", inflect: true, langs: [en, de], weight: 0.7,
+     require_context: ["shortage", "shortages", "supply", "price", "prices", "producer", "production", "plant", "Engpass", "Lieferengpass", "Mangel", "Produktion", "Werk", "6-APA", "API", "intermediate"]}
+  - {text: "Critical Medicines Act", langs: [en], search: true, search_every: 8, weight: 0.8}
+  - {text: "generic antibiotics", langs: [en], weight: 0.8}
+  - {text: "beta-lactam", inflect: true, langs: [en], weight: 0.7}
+  # German
+  - {text: "Antibiotika", langs: [de], search: true, search_every: 4, weight: 0.8,
+     require_context: ["Engpass", "Engpässe", "Lieferengpass", "Lieferengpässe", "Mangel", "knapp", "Versorgung", "Produktion", "Hersteller", "Preis", "Preise", "Festbetrag", "Rabattvertrag", "Rabattverträge", "Lieferung", "Lieferungen"]}
+  - {text: "Lieferengpass", inflect: true, langs: [de], weight: 0.7,
+     require_context: ["Antibiotika", "Antibiotikum", "Penicillin", "Amoxicillin", "Medikament", "Medikamente", "Arzneimittel", "Generika"]}
+  - {text: "Generikahersteller", inflect: true, langs: [de], weight: 0.7}
+  # French and Italian
+  - {text: "pénurie d'antibiotiques", langs: [fr], search: true, search_every: 8, weight: 0.9}
+  - {text: "pénurie d’antibiotiques", langs: [fr], weight: 0.9}
+  - {text: "antibiotiques", langs: [fr], weight: 0.6,
+     require_context: ["pénurie", "pénuries", "rupture", "ruptures", "approvisionnement", "production", "prix", "fabricant", "fabricants", "ANSM"]}
+  - {text: "carenza di antibiotici", langs: [it], search: true, search_every: 8, weight: 0.9}
+  - {text: "antibiotici", langs: [it], weight: 0.6,
+     require_context: ["carenza", "carenze", "fornitura", "forniture", "produzione", "prezzo", "prezzi", "AIFA", "stabilimento"]}
+exclude_terms: ["antibiotic resistance study", "Antibiotikaresistenz-Studie"]
+comps: [acsdobfar, centrient, aurobindo, sandoz, anglikang, chuanning, ncpc, weiqida, cspc, tul]

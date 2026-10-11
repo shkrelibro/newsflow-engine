@@ -1,0 +1,21 @@
+# hand-maintained (scripts/build_universe.py HAND_MAINTAINED): added 11 October 2026 for the focus list.
+# Executives and European tenants per the Q1 2026 earnings call transcript (30 April 2026).
+id: mpt
+name: "Medical Properties Trust"
+kind: name
+ticker: "MPW"
+home_country: "US"
+sector: real_estate
+notes: "Hospital REIT; euro and sterling HY bonds. European tenants: MEDIAN (DE), Swiss Medical Network (CH), Circle Health and Priory (UK)."
+markets:
+  - {country: US, lang: en}
+  - {country: GB, lang: en}
+  - {country: DE, lang: de}
+  - {country: CH, lang: de}
+aliases:
+  - {text: "Medical Properties Trust", search: true}
+  - {text: "MPT Operating Partnership", search: false}
+  - {text: "MPT", weight: 0.6, require_context: ["Medical Properties", "REIT", "hospital", "hospitals", "Aldag", "Prospect", "Steward", "Priory", "Circle Health", "MEDIAN", "Swiss Medical"]}
+  - {text: "MPW", weight: 0.6, require_context: ["Medical Properties", "REIT", "hospital", "NYSE"]}
+exclude_terms: ["MPT Muay Thai", "MPT Group"]
+comps: [welltower, ventas, omegahealthcare, aedifica, cofinimmo, median, circlehealth, priory, swissmedicalnetwork]

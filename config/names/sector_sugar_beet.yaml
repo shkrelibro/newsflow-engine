@@ -1,0 +1,54 @@
+# hand-maintained (5 Oct 2026). Sector entry, not an issuer: the European sugar beet crop and price.
+# Südzucker, Tereos, Nordzucker, Cristal Union and British Sugar live or die by the beet campaign,
+# the EU white sugar price and the disease and weather news of the harvest, and that news names
+# the crop, never the company: "Face au rhizopus, la course contre la montre" (Le Betteravier, 5 Oct)
+# reached the store through a Tereos query and was screened at export because no alias was in the
+# text. One entry here rather than the same terms on five names, so one story files once.
+# Listed in scripts/build_universe.py HAND_MAINTAINED so a regeneration keeps this file.
+# Read-across for anything carried here: see comps.
+id: sector_sugar_beet
+name: "Sugar beet (sector)"
+kind: comp
+home_country: "DE"
+sector: sugar
+notes: "Sector entry: beet campaign, yields, disease (rhizopus, cercospora, virus jaunisse), EU and
+  world sugar prices, beet contracts. The campaign runs September to January; contracts for the
+  next crop are announced from October."
+markets:
+  - {country: DE, lang: de}
+  - {country: FR, lang: fr}
+  - {country: GB, lang: en}
+aliases:
+  # English first: the main alias joins the grouped comp query in every market
+  - {text: "sugar beet", inflect: true, langs: [en], search: true, weight: 0.8}
+  - {text: "beet campaign", langs: [en], weight: 0.8}
+  - {text: "beet harvest", langs: [en], weight: 0.8}
+  - {text: "beet price", inflect: true, langs: [en], weight: 0.8}
+  - {text: "sugar price", inflect: true, langs: [en], search: true, search_every: 6, weight: 0.6,
+     require_context: ["EU", "Europe", "European", "white sugar", "beet", "tonne", "tonnes", "ICE", "refined", "quota", "Brazil", "India"]}
+  # German: Zuckerrübe inflects to Zuckerrüben and Zuckerrübenernte; the campaign and price words are separate
+  - {text: "Zuckerrübe", inflect: true, langs: [de], search: true, search_every: 4, weight: 0.8}
+  - {text: "Rübenkampagne", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Zuckerrübenkampagne", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Rübenpreis", inflect: true, langs: [de], weight: 0.8}
+  - {text: "Zuckerpreis", inflect: true, langs: [de], search: true, search_every: 8, weight: 0.7}
+  - {text: "Zuckermarkt", inflect: true, langs: [de], weight: 0.6}
+  - {text: "Zuckerfabrik", inflect: true, langs: [de], weight: 0.6,
+     require_context: ["Schließung", "schließt", "Kampagne", "Rüben", "Südzucker", "Nordzucker", "Pfeifer", "Langen", "Zuckerrüben"]}
+  # French: betterave inflects to betteraves; betteravier is the grower and the trade title
+  - {text: "betterave", inflect: true, langs: [fr], search: true, search_every: 4, weight: 0.8,
+     require_context: ["sucre", "sucrière", "sucrier", "sucriers", "sucrerie", "sucreries", "campagne", "rendement", "rendements", "rhizopus", "jaunisse", "planteurs", "CGB", "Tereos", "Cristal Union", "Saint Louis"]}
+  - {text: "betteravier", inflect: true, langs: [fr], weight: 0.8}
+  - {text: "prix du sucre", langs: [fr], search: true, search_every: 8, weight: 0.7}
+  - {text: "sucrerie", inflect: true, langs: [fr], weight: 0.6,
+     require_context: ["fermeture", "ferme", "campagne", "betterave", "betteraves", "Tereos", "Cristal Union", "Saint Louis"]}
+  - {text: "rhizopus", langs: [fr, en, de], search: true, search_every: 8, weight: 0.8}
+  - {text: "cercospora", langs: [fr, en, de], weight: 0.7}
+  - {text: "jaunisse", langs: [fr], weight: 0.7, require_context: ["betterave", "betteraves", "sucre"]}
+  # Polish: burak inflects to buraków; cukrownia and cukrowni through the stem
+  - {text: "buraków cukrowych", langs: [pl], search: true, search_every: 6, weight: 0.8}
+  - {text: "burak cukrowy", langs: [pl], weight: 0.8}
+  - {text: "cukrown", inflect: true, langs: [pl], weight: 0.6, require_context: ["buraki", "buraków", "kampania", "cukru", "cukier", "Südzucker", "Pfeifer", "Nordzucker", "KSC"]}
+  - {text: "cena cukru", langs: [pl], weight: 0.7}
+exclude_terms: ["Zuckerwatte", "Zuckerguss", "sugar daddy", "blood sugar", "Blutzucker", "glycémie", "Rote Bete", "beetroot", "Rezept", "recette", "recipe"]
+comps: [sudzucker, tereos, nordzucker, cristalunion, britishsugar, abfoods, raizen]
