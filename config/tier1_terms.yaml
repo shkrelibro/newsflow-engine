@@ -33,6 +33,11 @@ categories:
     - "återköp|buy-?back"
     - "capital raise|equity raise|kapitalanskaffning"
     - "obligacj|kötvény|dluhopis|joukkovelkakirja|obligasjon|obrigações"
+    # 5 Oct 2026: the vocabulary of a bond in trouble was missing while the vocabulary of a bond
+    # being sold was not. "bondholders" never matched \bbonds?\b, and nothing fired on a coupon.
+    - "bondholder\\w*|noteholder\\w*|Anleihegläubiger\\w*|obligataires?|obbligazionist\\w*|obligationsinnehavare|obligasjonseier\\w*"
+    - "\\bKupon\\w*|coupon\\s+(?:payment|deferral|miss|default)|Zinszahlung\\w*|\\bFälligkeit\\w*|\\bmaturit(?:y|ies)\\b"
+    - "Kapitalerhöhung|capital\\s+increase|aumento\\s+de\\s+capital|aumento\\s+di\\s+capitale|augmentation\\s+de\\s+capital|emisja\\s+obligacji"
   restructuring:
     - "\\bdefault"
     - "restructur\\w*|reestructur\\w*|ristrutturazione del debito|restrukturyzac\\w*|Restrukturierung"
@@ -47,6 +52,11 @@ categories:
     - "χρεοκοπ|αναδιάρθρωσ|πτώχευσ"
     - "redressement judiciaire|sauvegarde"
     - "waiver|covenant"
+    # 5 Oct 2026: "Hauptversammlung berät Sanierungskonzept" and "Aktionäre stimmen über
+    # Sanierungsplan ab" carried no category. Sanierung is the German word for the whole process.
+    - "Sanierung\\w*|Restrukturierungsplan|StaRUG|Schutzschirm\\w*|Insolvenzantrag|Insolvenzverfahren"
+    - "Moratorium|Stundung|Umschuldung|Zahlungsaufschub|Zahlungsausfall|selective\\s+default|\\bauf\\s+SD\\b"
+    - "\\bkreditor\\w*|velkoj\\w*|wierzyciel\\w*|hitelező\\w*|věřitel\\w*|\\bcréancier\\w*|\\bcreditori\\b|acreedor\\w*"
   m_and_a:
     - "\\bacqui(?:re|res|red|sition)"
     - "förvärv\\w*"
@@ -96,3 +106,16 @@ categories:
     - "\\bcourt\\b|domstol|tribunal|Gericht|tribunale|δικαστήρι|bíróság"
     # "hartes Urteil" is readers judging a dirndl; a court verdict names the court or the party
     - "\\bverdict\\b|Gerichtsurteil|\\bUrteil\\s+(?:des|vom|im|gegen|zu)\\b|sentencia\\s+(?:judicial|del\\s+tribunal|contra)|sentenza\\s+(?:del|della|contro)"
+  # 5 Oct 2026: two classes the lexicon never flagged. airBaltic's collective redundancy reached
+  # the brief only through judgement, and a 20 per cent fall in Branicks eight days before its
+  # bondholder vote was screened as share chatter. Workforce events are cost and cash on an
+  # issuer; a double-digit equity move on a high-yield name is the cushion under the bonds moving.
+  workforce:
+    - "collective\\s+redundanc\\w*|redundanc(?:y|ies)\\b|\\blayoffs?\\b|job\\s+cuts|jobs?\\s+(?:to\\s+go|at\\s+risk|cut|lost|axed)|(?:slash|slashes|cut|cuts|cutting|axe|axes|axing|shed|sheds|shedding)\\s+(?:\\w+\\s+){0,3}?jobs\\b|Stellenabbau|Stellenstreichung\\w*|Entlassung\\w*|Kurzarbeit"
+    - "licenciement\\w*|plan\\s+social|\\bPSE\\b|despidos?\\b|\\bERE\\b|licenziament\\w*|esuber\\w*|ontslag\\w*|uppsägning\\w*|varsl\\w*|irtisanom\\w*|afskedig\\w*|zwolnieni\\w*|koondami\\w*|atleidim\\w*|atleis\\w*|darbinieku\\s+skaita"
+    - "plant\\s+closure|Werksschließung|fermeture\\s+(?:de\\s+l')?usine|cierre\\s+de\\s+(?:la\\s+)?planta|chiusura\\s+dello\\s+stabilimento"
+    - "\\bstrikes?\\b|\\bStreik\\w*|\\bgrève\\w*|\\bhuelga\\w*|\\bsciopero\\w*|\\bstrejk\\w*|\\bstreik\\w*|\\blakko\\w*|\\bstaking\\w*|\\bstreiks\\b|\\bapergía|απεργ\\w*|\\bstrajk\\w*|\\bsztrájk\\w*|\\bstávk\\w*|streiks"
+  price_move:
+    # identical to BIG_MOVE in newsflow/signal.py: a double-digit percentage next to a movement verb or noun, or the vocabulary of a collapse
+    - "(?:\\b(?:stürzt|stuerzt|fällt|faellt|bricht\\s+ein|verliert|rutscht|sackt|sinkt|knickt|steigt|springt|klettert|legt\\s+zu|zieht\\s+an|schießt|halbiert|verdoppelt|plunge[sd]?|plummet(?:s|ed)?|tumble[sd]?|slump(?:s|ed)?|slide[sd]?|sink(?:s|ing)?|sank|drop(?:s|ped)?|fall(?:s|ing)?|fell|lose[sd]?|lost|shed[s]?|crash(?:es|ed)?|collapse[sd]?|dive[sd]?|jump(?:s|ed)?|soar(?:s|ed)?|surge[sd]?|rall(?:y|ies|ied)|spike[sd]?|climb(?:s|ed)?|gain(?:s|ed)?|rise[sd]?|rose|halve[sd]?|double[sd]?|rasar|störtdyker|stiger|faller|sjunker|kollapsar|halveras|chute|s'effondre|bondit|grimpe|crolla|balza|se\\s+desploma|sube|cae)\\b[^.;:]{0,25}?(?<![\\d.,])\\b(?:[1-9]\\d|\\d{3})(?:[.,]\\d+)?[\\s-]?(?:%|Prozent|percent|per\\s?cent|procent|prosent|pour\\s?cent|por\\s?ciento)|(?<![\\d.,])\\b(?:[1-9]\\d|\\d{3})(?:[.,]\\d+)?[\\s-]?(?:%|Prozent|percent|per\\s?cent|procent|prosent|pour\\s?cent|por\\s?ciento)[\\s-]*(?:Sprung|Absturz|Einbruch|Kurssturz|Kursrutsch|Kursgewinn|Kursverlust|Minus|Plus|plunge|drop|fall|jump|slump|rally|crash|gain|loss|surge|slide|decline|rise|tumble|dive)\\b|\\b(?:minus|plus|down|up)\\s+(?<![\\d.,])\\b(?:[1-9]\\d|\\d{3})(?:[.,]\\d+)?[\\s-]?(?:%|Prozent|percent|per\\s?cent|procent|prosent|pour\\s?cent|por\\s?ciento))"
+    - "\\b(?:abgestürzt|Absturz|Kurssturz|Kurseinbruch|Kursrutsch|eingebrochen|halbiert|plummet(?:s|ed)?|collapse[sd]?|crash(?:es|ed)?|halve[sd]?|störtdyker|kollapsar|halveras|s'effondre|se\\s+desploma)\\b"

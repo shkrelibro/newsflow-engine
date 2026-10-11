@@ -1,0 +1,37 @@
+# The desk's focus list: the 15 to 25 credits that matter this week. Lars sets it; it changes weekly.
+#
+# A focus name is searched in every one of its markets every second run (30 minutes), its executives
+# and secondary aliases too. (Watching, which keeps every churn-site row, stays in overlay.yaml for
+# names under live stress.) The comps in
+# its name file (config/names/<id>.yaml, "comps:") get their own solo home-market query every fourth
+# run instead of riding only on grouped OR queries. The brief opens with a focus table, one line per
+# focus credit on every cut (what is on the page, what is new, or measured silence), reviews every
+# focus row, and flags focus comps for review at a lower bar.
+#
+# Format: one name id per line under "names:" (the file stem in config/names). Ids not found are
+# reported by `python -m newsflow check-config` and on the brief. Keep the flat "  - id" shape: the
+# brief reads this file without a YAML library.
+week_of: 2026-10-12
+names:
+  - wagamama
+  - tereos
+  - metlen
+  - intrum
+  - arrow
+  - maxeda
+  - tuigroup
+  - isabelmarant
+  - biogroup
+  - cerba
+  - synlab
+  - centrient
+  - elior
+  - travelodge
+  - branicks
+  - adler
+  - heimstaden
+  - vivion
+  - paragon          # PCC Global plc (Paragon Customer Communications)
+  - mpt              # Medical Properties Trust
+  - worldline
+  - nexi

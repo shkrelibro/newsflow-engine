@@ -1,0 +1,146 @@
+{
+ "_note": "Desk lint rules for scripts/build_brief.py --lint. Each rule is a regex run over every so, translate and tags text in j.json; 'names' limits it to rows filed under those name ids. severity 'error' blocks the publish, anything else is a warning the cut must fix or justify. The employer, email and dash checks are built in. Add a rule when a cut gets a fact wrong twice; delete it when the fact stops mattering.",
+ "rules": [
+  {
+   "id": "sainsburys-morrisons",
+   "pattern": "Morrisons.{0,120}(talks|merger|combination)|(talks|merger).{0,120}Morrisons",
+   "message": "Sainsbury's and Morrisons talks ran November to February and ended; only fresh speculation (e.g. the Tesco chief's comment at the 8 October interims) is new, and say it is speculation."
+  },
+  {
+   "id": "airbaltic-225m",
+   "names": [
+    "airbaltic"
+   ],
+   "pattern": "225\\s?(m\\b|million|mn)",
+   "message": "The EUR 225m interim financing and business plan approval are August news. The bridge actually agreed is EUR 257m of super senior bonds (Polus Capital, Klirmark) at 25 per cent, due 26 February 2027."
+  },
+  {
+   "id": "airbaltic-knab-ceo",
+   "names": [
+    "airbaltic"
+   ],
+   "pattern": "(chief executive|CEO|Hild[eé]n).{0,100}(KNAB|suspect|corruption|brib|spare.parts)|(KNAB|suspect|spare.parts).{0,100}(chief executive|CEO|Hild[eé]n)",
+   "message": "The KNAB spare-parts case (USD 370,000 sale, EUR 55,360 markup, sent to prosecutors 30 September) names a manager, not the chief executive."
+  },
+  {
+   "id": "ceconomy-fsr",
+   "names": [
+    "ceconomy"
+   ],
+   "pattern": "merger control|antitrust|cartel office|Bundeskartellamt|competition review",
+   "message": "Ceconomy's pending approval is the EU foreign subsidies review (deadline 4 November), not merger control; the German cartel office cleared it in September 2025."
+  },
+  {
+   "id": "tereos-568",
+   "names": [
+    "tereos"
+   ],
+   "pattern": "568",
+   "message": "Tereos' BRL 568m is 2025/26 crop-year cane renewal, not a new commitment."
+  },
+  {
+   "id": "zim-price",
+   "pattern": "ZIM.{0,80}(raise|cut|lower|higher|new price|revised price)",
+   "message": "The ZIM price is unchanged at USD 35 a share, about USD 4.2bn; Israel asked for a revised structure, not a revised price."
+  },
+  {
+   "id": "tui-ireland",
+   "pattern": "TUI.{0,80}(Ireland|Irish|teacher)|(Ireland|Irish|teacher).{0,80}TUI",
+   "message": "TUI in an Irish industrial-relations headline is usually the Teachers' Union of Ireland."
+  },
+  {
+   "id": "boots-sycamore-debt",
+   "pattern": "Sycamore.{0,100}(debt|loan|financ|leverag)",
+   "message": "That Sycamore placed debt against Boots in the Walgreens carve-out is unverified; keep it out."
+  },
+  {
+   "id": "boots-no-agreement",
+   "pattern": "no (signed )?agreement|not (yet )?signed|unsigned",
+   "names": [
+    "boots"
+   ],
+   "severity": "error",
+   "message": "Boots is a signed agreement (Wittington Investments release, 7 October: USD 8.9bn including assumed debt, about GBP 6.7bn, close Q1 2027)."
+  },
+  {
+   "id": "ncl-32pct",
+   "pattern": "Norwegian.{0,80}32",
+   "message": "The Norwegian Cruise Line 32 per cent fall stands on Pluang alone and is unverified."
+  },
+  {
+   "id": "red-sea-trend-at",
+   "pattern": "Rote[sn]? Meer|Red Sea.{0,60}(return|resum|wagen)",
+   "message": "The trend.at 'Maersk und Hapag-Lloyd wagen sich ins Rote Meer' row is the 10 August Gemini resumption, re-dated."
+  },
+  {
+   "id": "worldline-q3",
+   "names": [
+    "worldline"
+   ],
+   "pattern": "(Q3|third.quarter).{0,60}(revenue|sales|print|results|reported|came in)",
+   "message": "Worldline's Q3 revenue is due 27 October 18:00 CET; do not describe it as published before then."
+  },
+  {
+   "id": "intrum-slide",
+   "names": [
+    "intrum"
+   ],
+   "pattern": "(fell|fall|slid|slide|drop|down|lost).{0,40}\\d+(\\.\\d+)?\\s?(per cent|%)|\\d+(\\.\\d+)?\\s?(per cent|%).{0,40}(fall|slide|drop)",
+   "message": "The Intrum share slide has had no size, cause or company release in anything readable; never state a percentage or a reason unless this export's row states it."
+  },
+  {
+   "id": "branicks-terms",
+   "names": [
+    "branicks"
+   ],
+   "pattern": "7\\.5 per cent 2030|15 per cent 2038|60\\.4 per cent|option to March 2027",
+   "message": "These Branicks instrument terms were never verified; keep them out."
+  },
+  {
+   "id": "europcar-coinvestor",
+   "pattern": "Europcar.{0,100}(co-invest|buyout)",
+   "message": "A Europcar co-investor buyout was invented by an earlier cut; nothing supports it."
+  },
+  {
+   "id": "cma-debt-funded",
+   "names": [
+    "cmacgm"
+   ],
+   "pattern": "debt.funded|bridge loan|acquisition financing",
+   "message": "An earlier cut invented a debt-funded CMA CGM deal; the FedEx Supply Chain acquisition closed 1 October at USD 1.4bn EV with no stated financing."
+  },
+  {
+   "id": "sandals-rcl",
+   "pattern": "Sandals",
+   "message": "Royal Caribbean's 50 per cent of Sandals (about USD 3bn cash) was announced 23 September; not new unless something moved."
+  },
+  {
+   "id": "lufthansa-strike-580",
+   "pattern": "580",
+   "names": [
+    "lufthansa"
+   ],
+   "message": "The 580 Frankfurt cancellations are the 10 April cabin-crew strike, re-dated."
+  },
+  {
+   "id": "sudzucker-hapag-redated",
+   "pattern": "(S[üu]dzucker.{0,80}(outlook|revenue).{0,40}rais)|(Hapag.{0,80}guidance.{0,40}rais)",
+   "message": "The Südzucker revenue outlook raise is the 28 September ad hoc and the Hapag-Lloyd guidance raise the 29 September ad hoc; churn sites re-date both."
+  },
+  {
+   "id": "kulbergs-title",
+   "pattern": "Kulbergs.{0,40}(prime minister|premier)",
+   "message": "Outlets differ on Kulbergs (prime minister vs prime minister candidate); say they differ rather than picking one."
+  },
+  {
+   "id": "auchan-russia",
+   "pattern": "(Auchan|Leroy Merlin).{0,120}suspen",
+   "message": "Auchan and Leroy Merlin were placed under temporary administration by the 17 September decree: a seizure, not a suspension."
+  },
+  {
+   "id": "hours-since",
+   "pattern": "\\b\\d+\\s+hours\\s+(after|since)\\b",
+   "message": "Hours since a release are only stateable when the release timestamp is known; strike the claim otherwise."
+  }
+ ]
+}

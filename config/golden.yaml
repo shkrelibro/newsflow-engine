@@ -76,7 +76,39 @@ events:
     date: 2026-09-16
     any_of: ["Q2", "résultats", "results", "semestre", "half-year", "H1"]
     within_hours: 30
-    note: The investor site lists a Q2 2026 financial presentation for 16 September. First test of the fixed newsroom watcher on a scheduled event. If this misses, the watcher is pointed at the wrong page.
+    expect: miss
+    note: The investor site announced a Q2 2026 presentation for 16 September. Checked 4 Oct; the watcher is on the right page, but the financials sit behind invest.biogroup.fr/restricted-access/ (login), and the public pages carry the event only as text, never as a link. A gated bondholder portal is a hole no watcher closes; the fix is a login-capable fetch or the IR mailing list.
+
+  # ---- 4 October: the week's real events, as regression tests for the search layer ----------
+  - id: cheplapharm-sanofi-partnership
+    name: cheplapharm
+    date: 2026-09-14
+    contains: ["Sanofi"]
+    any_of: ["Cheplapharm", "CHEPLAPHARM"]
+    within_hours: 6
+    note: Sanofi release 14 Sep 13:00 CEST, 20 mature medicines and three plants for a 26.4% stake. Caught via Google News at 13:19Z; the Cheplapharm newsroom watchers returned nothing.
+
+  - id: tui-booking-update-sep26
+    name: tuigroup
+    date: 2026-09-22
+    any_of: ["Buchungsupdate", "trading update", "guidance", "Prognose", "EBIT"]
+    within_hours: 4
+    note: EQS booking update 22 Sep 08:00 CEST, EBIT narrowed to EUR 1.2-1.3bn, winter -7%. Caught via Google News at 07:37Z; the tuigroup.com and EQS page watchers returned nothing.
+
+  - id: heimstaden-alecta-split
+    name: heimstaden
+    date: 2026-09-29
+    any_of: ["Alecta", "Tollefsen"]
+    within_hours: 4
+    note: Realtid, DI and EFN 29 Sep 12:35-14:20Z, Alecta to exit Bostad against ~50,000 flats worth SEK 110bn. Caught through the EFN and DI feeds at 13:09Z.
+
+  - id: branicks-second-vote-invitation
+    name: branicks
+    date: 2026-10-02
+    any_of: ["Invitation to Vote", "Aufforderung zur Stimmabgabe", "bondholder vote", "17 October", "17. Oktober"]
+    within_hours: 24
+    expect: miss
+    note: The invitation to the 17-19 Oct vote (35.3% principal cut, 7.5% 2030 secured, 15% PIK 2038, 10% new money 2029) is dated 2 Oct and was published only on the bond page, not in the corporate-news list the watcher swept, with no EQS release. First trace in the store was a consumer-protection site on Saturday 3 Oct at 19:49Z, about 40 hours later, and it did not carry any of the phrases above. The bond page watcher added 4 Oct is the fix; the results notice after the vote is its test.
 
   # Added 13 September after the question "why is there nothing on Branicks, Wagamama...":
   # both were in the store within hours. Branicks never reached a brief because every headline
@@ -97,3 +129,131 @@ events:
     any_of: ["returns to growth", "results", "trading update", "quarter"]
     within_hours: 24
     note: MCA Insight. The quarterly update, caught the morning it ran and never briefed because the brief did not exist yet.
+
+  # ---- 5 October 2026: the day's failure modes, each with the mechanism that should now catch it ----
+  # Screened items count as hits here (the machine saw them); whether they became candidates is in
+  # the exported status. The point of each entry is the latency and the route.
+  - id: cheplapharm-tlb-refinancing-2026-10-05
+    name: cheplapharm
+    date: 2026-10-05
+    any_of: ["term loan", "refinanc", "Latour", "lender", "Read more"]
+    within_hours: 12
+    note: Issuer release, Greifswald 5 Oct, EUR 1.28bn term loan refinancing with up to EUR 400m of other senior secured debt for the Project Latour consideration. Caught by the cheplapharm.com watcher and nowhere else all day, stored under the link text "Read more chevron_right"; page watchers now fetch the article headline for button-text links.
+
+  - id: airbaltic-collective-redundancy-2026-10-05
+    name: airbaltic
+    date: 2026-10-05
+    any_of: ["kolektīv", "atlaišan", "atlaist", "darbinieku", "redundanc", "hundreds of jobs", "atleidim", "koondami"]
+    within_hours: 6
+    note: LSM 11:54Z, 500-700 staff, collective redundancy procedure; twenty outlets in eight countries by the evening. Caught through LSM; the new workforce category now flags it.
+
+  - id: recordati-acceptances-2026-10-05
+    name: rossini
+    date: 2026-10-05
+    contains: ["Recordati"]
+    any_of: ["adesioni", "49,79", "49.79", "acceptances"]
+    within_hours: 12
+    note: Teleborsa's daily count of Respighi BidCo's offer at 49.79%, ten days before the 15 Oct close. Caught; Respighi BidCo is now an alias so the Consob filings are seen under the name.
+
+  - id: hapag-zim-resubmission-2026-10-05
+    name: hapag
+    date: 2026-10-05
+    contains: ["ZIM"]
+    any_of: ["reset", "new review", "resubmi", "erneut", "stoppt"]
+    within_hours: 12
+    note: FreightWaves 13:00Z, Israel requires a new review of the ZIM takeover; USD 35 unchanged, 16 vessels against 11. Caught through FreightWaves.
+
+  - id: hellofresh-activist-dealings-2026-10-05
+    name: hellofresh
+    date: 2026-10-05
+    any_of: ["Directors' Dealings", "Directors’ Dealings", "Active Ownership", "Eigengeschäfte"]
+    within_hours: 24
+    note: Two EQS directors' dealings notices at 22:04 and 22:07 CEST, Active Ownership adding at EUR 4.40 (options) and EUR 2.34 (Xetra). Caught by the EQS company-page watcher eight minutes after filing.
+
+  - id: branicks-20pct-fall-2026-10-05
+    name: branicks
+    date: 2026-10-05
+    any_of: ["20 Prozent", "stürzt", "Sanierungskonzept", "Sanierungsplan", "Restructuring Vote"]
+    within_hours: 24
+    note: Börse Express 20:03Z, the share down 20% to EUR 0.366 eight days before the bondholder vote, with the Sanierungskonzept meeting and the 9 Oct vote from boerse-global and Finanztrends beside it. All three were screened as churn domains and nothing reached the export; tier-A rows with an engine category or a hard signal are now kept from the screen, flagged, and Branicks is on watch.
+
+  - id: sbb-sveafastigheter-klarabo-2026-10-05
+    name: sbb
+    date: 2026-10-05
+    any_of: ["KlaraBo", "Sveafastigheter"]
+    within_hours: 12
+    note: Realtid 11:41Z, Sveafastigheter and KlaraBo merge into the exchange's new residential major. Caught, then held by the brief because the alias sat in the standfirst; tier-A standfirst rows are now offered flagged.
+
+  - id: heimstaden-berlin-expropriation-2026-10-05
+    name: heimstaden
+    date: 2026-10-05
+    any_of: ["Berlin", "pensionspengar", "80 miljarder", "Pensionssparer"]
+    within_hours: 8
+    note: Sveriges Radio 05:07Z, DI 06:06Z, Realtid 07:52Z, the Berlin expropriation proposal against Heimstaden's Swedish pension money. Caught through the Swedish feeds; the DI and Realtid rows were standfirst-only and held.
+
+  - id: tereos-rhizopus-2026-10-05
+    name: tereos
+    date: 2026-10-05
+    any_of: ["rhizopus"]
+    within_hours: 24
+    note: Le Betteravier français 13:15Z, rhizopus rot in the beet crop, a race against time. Reached the store through a Tereos query and was screened at export because no alias was in the text; the sugar beet sector entry now carries the crop vocabulary.
+
+  - id: mutares-lapeyre-offer-2026-10-05
+    name: mutares
+    date: 2026-10-05
+    any_of: ["Lapeyre"]
+    within_hours: 6
+    note: EQS 07:30 CEST, irrevocable offer for the controlling stake in Lapeyre; pehub 06:47Z. Caught by the EQS watcher and the wires.
+
+  - id: basicfit-first-nordic-bond-2026-10-05
+    name: basicfit
+    date: 2026-10-05
+    any_of: ["Noordse obligatie", "Nordic bond", "obligatie"]
+    within_hours: 12
+    note: Comp. EUR 180m four-year Nordic bond at E+325 to refinance the Clever Fit facility; the pricing read for PureGym. Caught through the Dutch financial press at 16:46Z.
+
+  - id: morrisons-sainsbury-talks-2026-10-05
+    name: morrisons
+    date: 2026-10-05
+    contains: ["Sainsbury"]
+    within_hours: 6
+    note: Comp. FT first, City AM 13:25Z, Sky "not active currently". Caught through the UK feeds.
+
+  - id: britishsugar-beet-contract-2026-10-05
+    name: britishsugar
+    date: 2026-10-05
+    any_of: ["2027-28", "2027/28", "beet contract", "lower price"]
+    within_hours: 12
+    note: Comp. Farmers Weekly 18:51Z, NFU and British Sugar settle on a lower price for the 2027-28 crop; the own-page watcher stored the same notice as "Read more".
+
+  - id: grunenthal-stivarga-2026-09-22
+    name: grunenthal
+    date: 2026-09-22
+    any_of: ["Stivarga", "regorafenib", "Bayer"]
+    within_hours: 24
+    note: Bayer sells Stivarga to Grünenthal, 22 Sep. Caught the day it ran; recorded here because the question "did we miss it" was asked on 5 Oct, when the only trace in the window was an AD HOC NEWS re-date.
+
+  - id: vivion-sp-outlook-negative-2026-09-22
+    name: vivion
+    date: 2026-09-22
+    any_of: ["outlook", "Negative", "S&P", "BB"]
+    within_hours: 24
+    expect: miss
+    note: S&P revised Vivion's outlook to negative with the BB affirmed on 22 Sep, published on vivion.eu. The 22 Sep export had no Vivion candidate and the name had no own source; the only mention in the window was a French regional crime story. The vivion.eu news watcher added 5 Oct is the fix; the next rating action is its test.
+
+  # Added 11 October after two weekend misses. Both are collection tests for engine v2:
+  # Synlab's Gironde fire story ran in trade press (Biologiste365) with the company only in the
+  # standfirst; the Vonovia CEO interview ran in Welt (paywalled) and was echoed only by churn sites.
+  - id: synlab-gironde-fire-2026-10-09
+    name: synlab
+    date: 2026-10-09
+    any_of: ["épreuve du feu", "incendie", "incendies", "Gironde", "feux de forêt"]
+    within_hours: 72
+    expect: miss
+    note: Biologiste365, "L'épreuve du feu". Wildfire closures of Synlab sites around Bordeaux and Mérignac. Missed because trade press was not a source and the French solo query was starved. Fixed by the Biologiste365 feed, the per-market solo query and standfirst admission for trade outlets.
+  - id: vonovia-welt-interview-2026-10-10
+    name: vonovia
+    date: 2026-10-10
+    any_of: ["rote Berlin", "wahren Pläne", "stoppt Neubau", "Neubau in Berlin", "Neubau-Stopp"]
+    within_hours: 72
+    note: Welt, CEO interview on Berlin and new-build plans. The engine stored it (Welt headline 16:01Z, and "Vonovia stoppt Neubau in Berlin" at 22:09Z); the brief never reviewed it because the comp filter wanted a category or a credit word. A hit here proves collection only; the comp review flag (source grade, executive, churn echoes) is what puts it in front of judgement.

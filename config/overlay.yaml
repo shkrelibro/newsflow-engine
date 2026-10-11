@@ -1,0 +1,91 @@
+# Hand-kept additions to the generated name files, merged at load time (newsflow/config.py,
+# _merge_overlay). The files under names/ are rewritten by scripts/build_universe.py, so an alias
+# or a flag written into one of them by hand lives until the next regeneration. This file is never
+# touched by the generator. Keyed by name id; an id with no name file is reported by check-config.
+#
+#   watch: true        a name under live stress. The domain screen keeps every row it would
+#                      otherwise remove from a churn domain, flagged "kept:", and the brief offers
+#                      them for judgement whatever the headline carries. Take it off again when the
+#                      event has passed, or the churn sites will fill the name's review pile.
+#   aliases: [...]     same shape as in a name file; an alias whose text the name already has is
+#                      skipped, so this and a later regeneration cannot double up.
+#   exclude_terms: []  appended to the name's list.
+#   site_queries: []   corporate or trade domains for "<name>" site:domain Google queries, every
+#                      twelfth run; the fallback for newsrooms that block the watcher, and the way
+#                      to read a trade title whose feed is restricted or absent.
+#   notes: ""          appended to the name's notes (sources to open by hand, for instance).
+#
+# Added 5 October 2026.
+names:
+  branicks:
+    # The 17-19 October bondholder vote on the 35.3% principal cut, with the shareholder meeting
+    # on the Sanierungskonzept before it. On 5 October the 20% fall to EUR 0.366 was visible only
+    # on churn domains and the screen removed every trace of it.
+    watch: true
+    site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]   # German real estate trade press, 6 Oct
+  airbaltic:
+    # Chapter 11 since 14 September with the state as controlling shareholder; the collective
+    # redundancy procedure started 5 October; a new government deciding what to do with it.
+    watch: true
+  cheplapharm:
+    # The EUR 1.28bn term loan refinancing launched 5 October, with up to EUR 400m of other senior
+    # secured debt towards the Project Latour consideration; pricing and ratings to follow.
+    watch: true
+  rossini:
+    # The offeror in the Recordati take-private is Respighi BidCo (CVC and GBL). Teleborsa's daily
+    # acceptance count and the Consob filings name the vehicle, not the holdco.
+    aliases:
+      - {text: "Respighi BidCo", search: true, search_every: 2, weight: 1.0}
+      - {text: "Respighi", langs: [it, en], weight: 0.6,
+         require_context: ["Recordati", "CVC", "OPA", "offerta", "tender", "takeover", "adesioni", "BidCo"]}
+  heimstaden:
+    # The founder's name carries the Bostad story in the Nordic press as often as the company's.
+    aliases:
+      - {text: "Ivar Tollefsen", weight: 0.8, require_context: ["Heimstaden", "Fredensborg", "Bostad", "Alecta"]}
+      - {text: "Tollefsen", langs: [sv, nb, da, en], weight: 0.6, require_context: ["Heimstaden", "Fredensborg", "Bostad"]}
+    site_queries: [iz.de, greenstreetnews.com, tagesspiegel.de]   # the Berlin portfolio in the German property press, 6 Oct
+  sbb:
+    # Sveafastigheter is already an alias, Swedish only; the Realtid story on its merger with
+    # KlaraBo named it in the standfirst, which the brief now offers. Listing it here widens the
+    # existing alias to English, Norwegian and Danish for the wires and the Nordic property press.
+    aliases:
+      - {text: "Sveafastigheter", langs: [en, nb, da], weight: 0.6}
+  lowell:
+    # The bond issuer's full name as the TISE notices and the wires write it.
+    aliases:
+      - {text: "Garfunkelux Holdco 3", weight: 1.0}
+  hapag:
+    # Without the hyphen in English and German headlines; the matcher already allows a space or a
+    # hyphen inside a multi-word alias, so one spelling covers "Hapag Lloyd" and "Hapag-Lloyd".
+    aliases:
+      - {text: "Hapag Lloyd", inflect: true, weight: 0.9}
+  # Newsrooms that answer HTTP 403 to the watcher (health.json, 5 Oct): Google still indexes them,
+  # so a site: query on the corporate domain is the fallback channel, every twelfth run.
+  puregym:
+    site_queries: [corporate.puregym.com]
+  keepmoat:
+    site_queries: [keepmoat.com]
+  tmicc:
+    site_queries: [corporate.magnumicecream.com]
+  cmacgm:
+    site_queries: [cma-cgm.com]
+
+  # German real estate, 6 Oct 2026, per the desk: Thomas Daily and Immobilien Zeitung break the asset
+  # sales, Green Street News (React News) the pan-European deals, Tagesspiegel the Berlin stories on
+  # Adler that the national press skips. Thomas Daily's morning-news archive is watched directly
+  # (sources/primary.yaml under sector_property_credit) and Tagesspiegel's feeds are read as outlets;
+  # Immobilien Zeitung's RSS is licensed for private use only and Green Street News answers 403 to
+  # a feed request, so both are reached through Google's index with site: queries, headline level.
+  adler:
+    site_queries: [iz.de, thomas-daily.de, greenstreetnews.com, tagesspiegel.de]
+    notes: "The wallstreet-online board on the old ADO Properties thread (wallstreet-online.de/diskussion/1220823-1/ado-properties-berlin-pure-play-immobilien, 8,600 posts, newest first) carries retail chatter on smaller asset sales before the press does; the engine cannot read forum posts, so it is a hand read."
+  aroundtown:
+    site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
+  demire:
+    site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
+  vivion:
+    site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
+  grandcity:
+    site_queries: [iz.de, greenstreetnews.com]
+  vonovia:
+    site_queries: [greenstreetnews.com]
