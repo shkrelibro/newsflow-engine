@@ -168,6 +168,12 @@ def google_answered(cfg: Config, store: Store, now: datetime, state: dict) -> No
     state.update(trips=0, cooldown_until=None, cooling=False)
 
 
+# Inside the open rotation a query's wait is weighted by its value: a tier-A name's own query (prio 1)
+# comes round about twice as often as a grouped comp query (prio 4), so a rating action on any
+# coverage name is picked up within the hour or two, not the half day a flat rotation could leave.
+ROTATION_WEIGHT = {0: 1.0, 1: 1.0, 2: 1.4, 3: 1.8, 4: 2.2, 5: 2.6, 6: 3.0}
+
+
 def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[str], comp_ids: set[str], reason: str) -> int:
     """Keep the `cap` most valuable Google jobs this cycle and mark the rest skipped.
 
@@ -193,7 +199,15 @@ def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[st
             return 1
         return 2
 
-    ranked = sorted(google, key=lambda j: (tier(j), last.get(j.label, -1), j.prio, order[id(j)]))
+    now_run = max(last.values(), default=0) + 1
+
+    def waited(j: JobSpec) -> float:
+        # never sent: waited for ever; otherwise cycles since last sent, divided by the value weight
+        sent = last.get(j.label)
+        age = float(now_run * 10) if sent is None else float(now_run - sent)
+        return -age / ROTATION_WEIGHT.get(j.prio, 3.0)
+
+    ranked = sorted(google, key=lambda j: (tier(j), waited(j), j.prio, order[id(j)]))
     for j in ranked[cap:]:
         j.skip = reason
     return len(google) - cap
