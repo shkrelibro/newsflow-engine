@@ -193,9 +193,18 @@ def test_site_queries_are_staggered(cfg, tmp_path):
         # on their own cadence now), and see below for the other markets
         assert any(l in home_labels for l in labels)
         per_run.append(len(jobs))
-    total_site_queries = sum(len(x.site_queries) for x in cfg.names)
-    assert site_total == total_site_queries           # one full cycle covers every site query exactly once (all names)
-    assert max(per_run) - min(per_run) < len(n.site_queries)  # no burst run
+    # one full cycle covers every key outlet and every short site list exactly once (all names).
+    # Since 11 Oct a name's own long list (Intrum: 225 domains) rotates at most
+    # site_max_per_name_per_run a cycle, so it takes several cycles of site_every runs; its share
+    # of one cycle is site_max_per_name_per_run * every.
+    cap = int(cfg.routes["googlenews"].get("site_max_per_name_per_run", 2))
+    expected = 0
+    for x in cfg.names:
+        key = [d for d in x.site_queries if d in x.key_outlets]
+        rest = [d for d in x.site_queries if d not in x.key_outlets]
+        expected += len(key) + (len(rest) if len(rest) <= cap * every else cap * every)
+    assert site_total == expected, (site_total, expected)
+    assert max(per_run) - min(per_run) < max(len(n.site_queries), 40)  # no burst run
     # v2: every market of a tier-A name gets its own solo query at least once every
     # foreign_every_n_runs runs
     fe = int(cfg.routes["googlenews"].get("foreign_every_n_runs", 3))
@@ -783,11 +792,19 @@ def test_http_get_stops_retrying_and_caps_retry_after_once_the_budget_is_gone(mo
     monkeypatch.setattr(time, "sleep", lambda s: None)                 # the limiter's own spacing
     monkeypatch.setattr(Http, "_nap", lambda self, s: naps.append(s))  # the between-attempt sleep
 
-    # no deadline: retries happen, but the hour-long hint is capped at the penalty ceiling
-    with pytest.raises(Exception) as excinfo:
+    # no deadline: retries happen, but the hour-long hint is capped at the penalty ceiling. Since
+    # 11 Oct the third refusal in a row is the last request sent to the host: it raises
+    # UpstreamRefused at once instead of napping a third time (Google News answered 503 for hours
+    # that day and every job sat through three waits against a host on a 60-second penalty).
+    from newsflow.http import UpstreamRefused
+    with pytest.raises(UpstreamRefused):
         h.get("https://api.example.test/x")
-    assert not isinstance(excinfo.value, BudgetExceeded)
-    assert calls["n"] == 3 and naps == [60.0, 60.0, 60.0]
+    assert calls["n"] == 3 and naps == [60.0, 60.0]
+    # and the next call against that host does not even wait: the host is marked refused
+    with pytest.raises(UpstreamRefused):
+        h.get("https://api.example.test/y")
+    assert calls["n"] == 3
+    h._refused.clear()
 
     # deadline already passed: the first wait refuses, nothing is sent, nothing is slept
     calls["n"] = 0

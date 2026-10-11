@@ -54,15 +54,19 @@ def test_every_tier_a_market_gets_a_solo_query_and_the_load_fits(cfg, tmp_path):
     syn = cfg.name("synlab")
     main = _main_alias(syn)
     fe = int(cfg.routes["googlenews"]["foreign_every_n_runs"])
-    swept, per_run = set(), []
+    swept, per_run, built = set(), [], []
     for r in range(1, 25):
         jobs = [j for j in build_jobs(cfg, http, store, run_number=r) if j.route == "googlenews"]
-        per_run.append(len(jobs))
+        built.append(len(jobs))
+        sent = [j for j in jobs if not j.skip]                         # the rotation cap holds the rest back
+        per_run.append(len(sent))
         if r <= fe:
-            swept |= {j.label.rsplit("[", 1)[1].rstrip("]") for j in jobs if j.label.startswith(f'"{main}" [')}
-    assert {f"{m.lang}-{m.country}" for m in syn.markets} <= swept       # FR included, every hour
+            swept |= {j.label.rsplit("[", 1)[1].rstrip("]") for j in sent if j.label.startswith(f'"{main}" [')}
+    assert {f"{m.lang}-{m.country}" for m in syn.markets} <= swept       # FR included, every hour; a focus credit is never deferred
     cap = float(cfg.engine["max_run_minutes"]) * 60 / float(cfg.engine["rate_limits"]["googlenews_seconds"])
     assert max(per_run) <= 0.9 * cap, (max(per_run), cap)                # headroom on the busiest run
+    quota = int(cfg.routes["googlenews"]["quota"]["max_per_run"])
+    assert max(per_run) <= quota and max(built) > quota                 # the cap is what binds, not the budget
     http.close(); store.close()
 
 
@@ -243,11 +247,18 @@ def test_bing_is_a_narrow_baltic_lane_for_tier_a(cfg, tmp_path):
     from newsflow.store import Store
     cfg.engine["db_path"] = str(tmp_path / "b.db")
     store, http = Store(cfg.db_path), Http("test")
-    jobs = [j for j in build_jobs(cfg, http, store, run_number=1) if j.route == "bingnews"]
+    allb = [j for j in build_jobs(cfg, http, store, run_number=1) if j.route == "bingnews"]
+    jobs = [j for j in allb if not j.fallback and " OR " in j.label]      # the grouped Baltic lane
     assert jobs and len(jobs) <= 6
     assert all(j.label.rsplit("[", 1)[1].rstrip("]").split("-")[-1].upper() in {"LV", "LT", "EE"} for j in jobs)
     assert any("airbaltic" in j.name_ids for j in jobs)
     assert not any(cfg.name(n).kind == "comp" for j in jobs for n in j.name_ids)
+    # 11 Oct: plus the focus credits' home market on a slow cadence, and a reserve held back for
+    # the cycles on which Google refuses us (see test_google_quota_11oct.py)
+    solos = [j for j in allb if not j.fallback and " OR " not in j.label]
+    assert solos and all(cfg.name(j.name_ids[0]).focus == "name" for j in solos)
+    reserve = [j for j in allb if j.fallback]
+    assert len(reserve) >= len(cfg.focus) * 2
     http.close(); store.close()
 
 
