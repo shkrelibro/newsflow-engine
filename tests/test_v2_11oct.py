@@ -313,6 +313,35 @@ def test_lint_warns_when_a_line_names_no_instrument():
 def test_focus_file_parses_without_a_yaml_library():
     bb = _brief()
     ids = bb.load_focus(REPO / "config" / "focus.yaml")
-    assert 15 <= len(ids) <= 30 and "mpt" in ids and "paragon" in ids
+    assert 15 <= len(ids) <= 40 and "mpt" in ids and "paragon" in ids and "cheplapharm" in ids
     cfg = load_config()
     assert set(ids) == set(cfg.focus)
+
+
+# ------------------------------------------------------------------ key outlets
+def test_key_outlets_become_site_queries_and_are_reported(cfg, tmp_path):
+    from newsflow.export import build_coverage
+    from newsflow.store import Store
+    intrum = cfg.name("intrum")
+    assert "di.se" in intrum.key_outlets and "di.se" in intrum.site_queries
+    assert "textilwirtschaft.de" in cfg.name("takko").key_outlets
+    store = Store(cfg.db_path)
+    cov = build_coverage(cfg, store, datetime(2026, 10, 11, 12, 0, tzinfo=timezone.utc))
+    ko = {o["domain"]: o for o in cov["names"]["intrum"]["outlets"]}
+    assert set(intrum.key_outlets) == set(ko) and ko["di.se"]["answering"] is False   # empty store: nothing answered
+    store.close()
+
+
+def test_focus_table_prints_key_outlet_status():
+    bb = _brief()
+    F = [{"id": "intrum", "name": "Intrum", "known": True, "pub": 0, "lead": 0, "comp_pub": 0, "rows": 0, "new": 0,
+          "comp_new": 0, "ok_24h": 900, "skipped_24h": 0, "last": None,
+          "outlets": [{"domain": "di.se", "answering": True, "last_hit": "2026-10-10T06:35:28+00:00"},
+                      {"domain": "finanswatch.se", "answering": False, "last_hit": None}]}]
+    html = bb.focus_rows_html(F)
+    assert "key outlets 1 of 2 answering (dark: finanswatch.se)" in html and "last in di.se 10 Oct" in html
+
+
+def test_every_focus_credit_has_key_outlets_and_executive_or_context(cfg):
+    thin = [nid for nid in cfg.focus if len(cfg.name(nid).key_outlets) < 3]
+    assert not thin, thin
