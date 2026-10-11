@@ -902,7 +902,15 @@ HAND_MAINTAINED = {"intrum", "centrient", "tul", "chuanning", "anglikang", "ncpc
                    "biogroup", "boots", "carnival", "ceconomy", "cheplapharm", "cmacgm", "enterprise", "hellofresh",
                    "hse", "iqera", "manuchar", "mobilux", "quick", "skechers", "tuigroup",
                    "cnam",   # cnam: hand-made sector entry (French lab regulation), 21 Sep 2026
-                   "metlen"}  # metlen: hand-made tier-A entry (Metlen Energy & Metals), 28 Sep 2026
+                   "metlen",  # metlen: hand-made tier-A entry (Metlen Energy & Metals), 28 Sep 2026
+                   # 5 Oct 2026: hand-made sector entries (kind comp). Each carries the vocabulary of a
+                   # sector that names no issuer: the beet campaign, antibiotic shortages, freight-rate
+                   # indices and chokepoints, jet fuel, and the lenders behind Nordic and German property.
+                   "sector_sugar_beet", "sector_antibiotics", "sector_container_freight",
+                   # 11 Oct 2026: Medical Properties Trust (focus list) and its comps and European tenants
+                   "mpt", "welltower", "ventas", "omegahealthcare", "aedifica", "cofinimmo", "median", "circlehealth",
+                   "priory", "swissmedicalnetwork", "nexi",
+                   "sector_jet_fuel", "sector_property_credit"}
 
 def yaml_str(s: str) -> str:
     return '"' + s.replace('"', '\\"') + '"'

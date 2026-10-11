@@ -68,6 +68,8 @@ h2 span{font-family:var(--mono);font-weight:400;letter-spacing:0;color:var(--fai
 .tag{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
   padding:2px 6px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap}
 .tag.cat{border-color:var(--accent);color:var(--accent)}
+.tag.new{border-color:var(--accent);background:var(--accent);color:var(--paper)}
+.tag.echo{border-style:dashed}
 .tag.warn{border-color:var(--flag);color:var(--flag)}
 h3.grp{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   font-weight:600;color:var(--accent);margin:26px 0 0;padding:0}
@@ -105,6 +107,8 @@ h3.grp:first-of-type{margin-top:16px}
 .drops td.name{font-weight:500;white-space:nowrap}
 .drops td.g-ok{color:var(--ok);font-family:var(--sans);font-size:12px;white-space:nowrap}
 .drops td.g-flag{color:var(--flag);font-family:var(--sans);font-size:12px;font-weight:600;white-space:nowrap}
+.drops.focus td{white-space:normal}
+.drops.focus td.name{white-space:nowrap}
 .drops td.g-faint{color:var(--faint);font-family:var(--sans);font-size:12px;white-space:nowrap}
 .scroll{overflow-x:auto}
 
@@ -142,7 +146,7 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
   <div class="mastline">
     <span><b>{date}</b></span>
     <span><b>{cut}</b> cut</span>
-    <span>24-hour window</span>
+    <span>{win_h}-hour window</span>
     <span>{tier_a} tier-A names</span>
   </div>
 </header>
@@ -151,11 +155,11 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
   <div class="row">
     <div class="cell"><dt>Engine stamp</dt><dd>{stamp}<small>Z</small></dd></div>
     <div class="cell"><dt>Run</dt><dd>{run}</dd></div>
-    <div class="cell"><dt>New in {since_h}h</dt><dd>{fresh}</dd></div>
+    <div class="cell"><dt>{new_label}</dt><dd>{fresh}</dd></div>
     <div class="cell"><dt>Export age</dt><dd>{age_min}<small> min</small></dd></div>
   </div>
   <div class="row">
-    <div class="cell"><dt>Candidates, 24h</dt><dd>{candidates}</dd></div>
+    <div class="cell"><dt>Candidates, {win_h}h</dt><dd>{candidates}</dd></div>
     <div class="cell"><dt>Carried below</dt><dd>{carried_n}</dd></div>
     <div class="cell"><dt>Sources answering</dt><dd>{answering}<small> / {sources}</small></dd></div>
     <div class="cell"><dt>Feeds resolved</dt><dd>{feeds}<small> / 167</small></dd></div>
@@ -168,9 +172,19 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);
 
 {stale_note}
 
-<p class="lede">The engine returned <b>{candidates}</b> candidate clusters in the last 24 hours, of which
-<b>{fresh}</b> entered in the last {since_h}. <em>{carried_n} are carried below.</em> The reconciliation at the
+<p class="lede">The engine returned <b>{candidates}</b> candidate clusters in the last {win_h} hours, of which
+<b>{fresh}</b> entered {new_phrase}, tagged new. <em>{carried_n} are carried below.</em> The reconciliation at the
 foot names exactly what consumed the rest. Nothing is deleted; everything not published is held and searchable.</p>
+
+<h2>Focus list <span>{focus_n} credits, week of {focus_week}</span></h2>
+<div class="scroll">
+<table class="drops focus">
+  <thead><tr><th>Credit</th><th>On the page</th><th>Engine, last 24 hours</th></tr></thead>
+  <tbody>
+{focus_rows}
+  </tbody>
+</table>
+</div>
 
 <h2>The lead <span>tier A</span></h2>
 {lead_items}
@@ -180,7 +194,7 @@ foot names exactly what consumed the rest. Nothing is deleted; everything not pu
 {carried_items}
 </ul>
 
-<h2>Comp read-through <span>{comp_cat} categorised, {comp_pub} carried</span></h2>
+<h2>Comp read-through <span>{comp_cat} categorised, {comp_rev} flagged for review, {comp_pub} carried</span></h2>
 <ul class="compact">
 {comp_items}
 </ul>
@@ -235,27 +249,29 @@ system produces: it names a hole in coverage with a real example. <b>{g_new} une
 </div>
 
 <h2>Reconciliation <span>arithmetic is exact</span></h2>
-<pre class="recon">{r_all}   candidate clusters in the 24-hour window
+<pre class="recon">{r_all}   candidate clusters in the {win_h}-hour window
       |
       +-- {r_C}  comps
       |        +-- {rC_bear}  alias in headline
       |        |        +-- {rC_junk}  re-dater domains            <i>dropped</i>
       |        |        +-- {rC_clean}  carried into review
+      |        |                 +-- {rC_rev}  flagged for review (source grade, interview, echoes)
       |        |                 +-- {rC_cat}  with a category
       |        |                          +-- {rC_pub}  published  <b>above</b>
       |        +-- {rC_inherit}  alias not in headline             <i>held</i>
       |
       +-- {r_A}  tier A
                +-- {rA_inherit}  alias not in headline (grouped OR query) <i>held</i>
-               +-- {rA_stand}  alias in standfirst only                   <i>held</i>
-               +-- {rA_bear}  alias in headline, or the company's own source ({rA_own} own-source rows)
+               +-- {rA_bear}  alias in headline or standfirst, or the company's own source ({rA_own} own-source rows; {rA_stand} standfirst-only rows, flagged)
                         +-- {rA_junk}  re-dater domains            <i>dropped</i>
+                        +-- {rA_dq}  never a credit event (sport, promotions, listings) <i>dropped</i>
                         +-- {rA_clean}  carried into review ({rA_redater} from re-dater domains, kept for the credit signal, flagged)
                                  +-- {rA_drop}  not credit relevant <i>dropped, table above</i>
                                  +-- {rA_pub}  published            <b>above</b>
 
 held = kept in the store, not published. Nothing is deleted.
-{rA_pub} + {rA_drop} = {rA_clean}  ·  {rA_clean} + {rA_junk} = {rA_bear}  ·  {rA_bear} + {rA_stand} + {rA_inherit} = {r_A}  ·  {r_A} + {r_C} = {r_all}</pre>
+{e_line}
+{rA_pub} + {rA_drop} = {rA_clean}  ·  {rA_clean} + {rA_junk} + {rA_dq} = {rA_bear}  ·  {rA_bear} + {rA_inherit} = {r_A}  ·  {r_A} + {r_C} = {r_all}</pre>
 
 <h2>Method</h2>
 <div class="method">
@@ -266,7 +282,9 @@ held = kept in the store, not published. Nothing is deleted.
   GitHub Actions because it costs more than the run budget allows.</p>
   <p><b>Name-bearing test.</b> The engine issues grouped OR queries across several names at a time, so a cluster
   can attach to a name whose headline never mentions it. Those {rA_inherit} tier-A rows are held and searchable
-  but not published, because publishing them is how a brief becomes noise.</p>
+  but not published, because publishing them is how a brief becomes noise. A tier-A row whose standfirst names
+  the company while the headline does not ({rA_stand} in this window) is offered for judgement flagged
+  "name in standfirst only"; comps stay on the headline test.</p>
   <p><b>This page is rendered by <code>scripts/build_brief.py</code></b> from the engine's own exports. Every
   count above is computed, not typed. Judgement is confined to the ranking of the lead and the commentary under
   each item.</p>
