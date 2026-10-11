@@ -1,0 +1,547 @@
+"""SQLite storage. Every fetched mention is kept with provenance, even when screened."""
+from __future__ import annotations
+
+import gzip
+import json
+import shutil
+import sqlite3
+import tempfile
+import threading
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any, Iterable, Optional
+
+from .models import Item, SourceResult
+
+
+def unpack_db(path: str | Path, target: str | Path) -> bool:
+    """Write a possibly gzipped database at `path` out to `target` as a plain SQLite file.
+
+    The committed backup is gzipped because GitHub rejects any file over 100MB and the database
+    passed that in September; it compresses to roughly a third. Returns False if there is nothing
+    usable to unpack.
+    """
+    p, t = Path(path), Path(target)
+    if not p.exists() or p.stat().st_size == 0:
+        return False
+    t.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        if p.suffix == ".gz":
+            with gzip.open(p, "rb") as src, open(t, "wb") as dst:
+                shutil.copyfileobj(src, dst, length=1 << 20)
+        elif p.resolve() != t.resolve():
+            shutil.copyfile(p, t)
+        return True
+    except (OSError, EOFError, gzip.BadGzipFile):
+        return False
+
+
+def db_generation(path: str | Path) -> tuple[int, int]:
+    """How far along a database file is, as (runs, items). (-1, -1) if it cannot be read.
+
+    Used to choose between candidate copies of the database. The engine carries its state in the
+    GitHub Actions cache, which is keyed per run and restored by key prefix, so a restore can hand
+    back an older surviving entry rather than the newest one. The copy committed to git is at most
+    a day old but never goes backwards. Both counters only ever increase, so the copy with the
+    higher run count is the one that has seen more of the world, and is the one to carry on from.
+    A truncated or corrupt file scores (-1, -1) and therefore always loses.
+
+    Accepts a gzipped file, which is how the committed backup is stored.
+    """
+    p = Path(path)
+    if not p.exists() or p.stat().st_size == 0:
+        return (-1, -1)
+    if p.suffix == ".gz":
+        with tempfile.TemporaryDirectory() as tmp:
+            plain = Path(tmp) / "unpacked.db"
+            return db_generation(plain) if unpack_db(p, plain) else (-1, -1)
+    try:
+        conn = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+        try:
+            runs = int(conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])
+            items = int(conn.execute("SELECT COUNT(*) FROM items").fetchone()[0])
+            return (runs, items)
+        finally:
+            conn.close()
+    except sqlite3.Error:
+        return (-1, -1)
+
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  canonical_url TEXT NOT NULL UNIQUE,
+  raw_link TEXT NOT NULL,
+  title TEXT NOT NULL,
+  title_key TEXT NOT NULL DEFAULT '',
+  summary TEXT NOT NULL DEFAULT '',
+  source_name TEXT NOT NULL DEFAULT '',
+  source_domain TEXT NOT NULL DEFAULT '',
+  published_at TEXT,
+  first_seen_at TEXT NOT NULL,
+  lang TEXT NOT NULL DEFAULT '',
+  country TEXT NOT NULL DEFAULT '',
+  route TEXT NOT NULL,
+  query TEXT NOT NULL DEFAULT '',
+  tier_hint INTEGER,
+  status TEXT NOT NULL DEFAULT 'new',
+  screen_reason TEXT NOT NULL DEFAULT '',
+  cluster_id INTEGER,
+  alert_categories TEXT NOT NULL DEFAULT '[]',
+  alert_candidate INTEGER NOT NULL DEFAULT 0,
+  notified_at TEXT,
+  run_id INTEGER,
+  also_routes TEXT NOT NULL DEFAULT '[]'
+);
+CREATE INDEX IF NOT EXISTS idx_items_seen ON items(first_seen_at);
+CREATE INDEX IF NOT EXISTS idx_items_pub ON items(published_at);
+CREATE INDEX IF NOT EXISTS idx_items_cluster ON items(cluster_id);
+
+CREATE TABLE IF NOT EXISTS matches (
+  item_id INTEGER NOT NULL,
+  name_id TEXT NOT NULL,
+  alias TEXT NOT NULL,
+  where_ TEXT NOT NULL,
+  confidence REAL NOT NULL,
+  PRIMARY KEY (item_id, name_id),
+  FOREIGN KEY (item_id) REFERENCES items(id)
+);
+CREATE INDEX IF NOT EXISTS idx_matches_name ON matches(name_id);
+
+CREATE TABLE IF NOT EXISTS seen_links (
+  page_url TEXT NOT NULL,
+  link TEXT NOT NULL,
+  first_seen_at TEXT NOT NULL,
+  PRIMARY KEY (page_url, link)
+);
+
+CREATE TABLE IF NOT EXISTS runs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  started_at TEXT NOT NULL,
+  finished_at TEXT,
+  items_fetched INTEGER NOT NULL DEFAULT 0,
+  items_new INTEGER NOT NULL DEFAULT 0,
+  notes TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS source_results (
+  run_id INTEGER NOT NULL,
+  route TEXT NOT NULL,
+  source TEXT NOT NULL,
+  ok INTEGER NOT NULL,
+  items INTEGER NOT NULL,
+  error TEXT NOT NULL DEFAULT '',
+  seconds REAL NOT NULL DEFAULT 0,
+  names TEXT NOT NULL DEFAULT ''
+);
+CREATE INDEX IF NOT EXISTS idx_sr_run ON source_results(run_id);
+
+CREATE TABLE IF NOT EXISTS feeds (
+  homepage TEXT PRIMARY KEY,
+  feed_url TEXT NOT NULL DEFAULT '',
+  discovered_at TEXT,
+  last_ok_at TEXT,
+  last_error TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS clusters (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name_id TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS state (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL DEFAULT '',
+  updated_at TEXT NOT NULL
+);
+"""
+
+
+def _iso(dt: Optional[datetime]) -> Optional[str]:
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
+
+
+def _parse(s: Optional[str]) -> Optional[datetime]:
+    if not s:
+        return None
+    try:
+        return datetime.fromisoformat(s)
+    except ValueError:
+        return None
+
+
+class Store:
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._lock = threading.RLock()
+        # jobs run in worker threads; the lock serialises access to the single connection
+        self.conn = sqlite3.connect(str(self.path), check_same_thread=False)
+        self.conn.row_factory = sqlite3.Row
+        self.conn.executescript(SCHEMA)
+        try:  # migration for databases created before the coverage ledger
+            self.conn.execute("ALTER TABLE source_results ADD COLUMN names TEXT NOT NULL DEFAULT ''")
+        except sqlite3.OperationalError:
+            pass
+        self.conn.commit()
+
+    # ---- runs ----------------------------------------------------------
+    def start_run(self, now: datetime) -> int:
+        cur = self.conn.execute("INSERT INTO runs(started_at) VALUES (?)", (_iso(now),))
+        self.conn.commit()
+        return int(cur.lastrowid)
+
+    def finish_run(self, run_id: int, now: datetime, fetched: int, new: int, notes: str = "") -> None:
+        self.conn.execute(
+            "UPDATE runs SET finished_at=?, items_fetched=?, items_new=?, notes=? WHERE id=?",
+            (_iso(now), fetched, new, notes, run_id),
+        )
+        self.conn.commit()
+
+    def add_source_results(self, run_id: int, results: Iterable[SourceResult]) -> None:
+        self.conn.executemany(
+            "INSERT INTO source_results(run_id, route, source, ok, items, error, seconds, names) VALUES (?,?,?,?,?,?,?,?)",
+            [(run_id, r.route, r.source, 1 if r.ok else 0, r.items, r.error, round(r.seconds, 2), ",".join(r.names)) for r in results],
+        )
+        self.conn.commit()
+
+    def last_run_started(self) -> Optional[datetime]:
+        row = self.conn.execute("SELECT started_at FROM runs WHERE finished_at IS NOT NULL ORDER BY id DESC LIMIT 1").fetchone()
+        return _parse(row["started_at"]) if row else None
+
+    # ---- engine state (survives between cycles: the database lives on disk for the whole job
+    #      and in the Actions cache between jobs) ---------------------------------------------
+    def get_state(self, key: str, default: str = "") -> str:
+        row = self.conn.execute("SELECT value FROM state WHERE key=?", (key,)).fetchone()
+        return str(row["value"]) if row else default
+
+    def set_state(self, key: str, value: str, now: datetime) -> None:
+        self.conn.execute(
+            "INSERT INTO state(key, value, updated_at) VALUES (?,?,?) "
+            "ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=excluded.updated_at",
+            (key, str(value), _iso(now)),
+        )
+        self.conn.commit()
+
+    def clear_state(self, key: str) -> None:
+        self.conn.execute("DELETE FROM state WHERE key=?", (key,))
+        self.conn.commit()
+
+    def last_attempt_runs(self, route: str) -> dict[str, int]:
+        """The last run that actually sent each query of a route (skips do not count).
+
+        Feeds the rotation of a capped route: the queries that have waited longest go first, so
+        a cap can never starve a query the way a fixed queue order would.
+        """
+        rows = self.conn.execute(
+            "SELECT source, MAX(run_id) AS last FROM source_results "
+            "WHERE route=? AND error NOT LIKE 'skipped:%' GROUP BY source",
+            (route,),
+        ).fetchall()
+        return {str(r["source"]): int(r["last"]) for r in rows}
+
+    def run_count(self) -> int:
+        return int(self.conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])
+
+    def prune_source_results(self, keep_days: int, now: datetime, keep_run_id: Optional[int] = None) -> int:
+        """Drop the per-job coverage ledger older than keep_days.
+
+        source_results is by far the largest table and it is append-only: roughly 40,000 rows a
+        day against 2,000 items. Health reads the last few runs and coverage reads 24 hours, so
+        nothing downstream needs months of it. Keeping the database small is what keeps it inside
+        the Actions cache, which is where the engine's dedupe state lives between runs.
+
+        The cutoff is measured from the run's own clock, not SQLite's `datetime('now')`, and the
+        current run is excluded outright. A backfill is timestamped in the past, and without both
+        of those a backfill would delete the ledger it had just written and blank its own health.
+        """
+        if keep_days <= 0:
+            return 0
+        cutoff = _iso(now - timedelta(days=int(keep_days)))
+        sql = "DELETE FROM source_results WHERE run_id IN (SELECT id FROM runs WHERE started_at < ?"
+        params: list[Any] = [cutoff]
+        if keep_run_id is not None:
+            sql += " AND id != ?"
+            params.append(keep_run_id)
+        cur = self.conn.execute(sql + ")", params)
+        self.conn.commit()
+        return int(cur.rowcount or 0)
+
+    def vacuum_if_bloated(self, min_free_ratio: float = 0.15) -> bool:
+        """VACUUM when enough of the file is free space to be worth reclaiming.
+
+        Deleting rows does not shrink a SQLite file: the pages go on a free list and are reused.
+        That is fine for a database living on a disk and wrong for one being copied into and out
+        of a cache on every run, where the file size is the thing that costs. VACUUM rewrites the
+        file without the free pages; it needs roughly twice the file size in scratch space and a
+        few seconds, so it runs only once the free list is worth the rewrite.
+        """
+        pages = int(self.conn.execute("PRAGMA page_count").fetchone()[0])
+        free = int(self.conn.execute("PRAGMA freelist_count").fetchone()[0])
+        if pages <= 0 or free / pages < min_free_ratio:
+            return False
+        self.conn.execute("VACUUM")
+        self.conn.commit()
+        return True
+
+    # ---- items -----------------------------------------------------------
+    def get_item_by_url(self, canonical_url: str) -> Optional[sqlite3.Row]:
+        return self.conn.execute("SELECT * FROM items WHERE canonical_url=?", (canonical_url,)).fetchone()
+
+    def insert_item(self, item: Item, title_key: str, run_id: int) -> int:
+        cur = self.conn.execute(
+            """INSERT INTO items(canonical_url, raw_link, title, title_key, summary, source_name, source_domain,
+                                published_at, first_seen_at, lang, country, route, query, tier_hint, status,
+                                screen_reason, cluster_id, run_id)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (
+                item.canonical_url, item.raw_link, item.title, title_key, item.summary, item.source_name,
+                item.source_domain, _iso(item.published_at), _iso(item.first_seen_at), item.lang, item.country,
+                item.route, item.query, item.tier_hint, item.status, item.screen_reason, item.cluster_id, run_id,
+            ),
+        )
+        return int(cur.lastrowid)
+
+    def note_also_route(self, item_id: int, route: str, query: str) -> None:
+        row = self.conn.execute("SELECT also_routes FROM items WHERE id=?", (item_id,)).fetchone()
+        routes = json.loads(row["also_routes"] or "[]") if row else []
+        entry = f"{route}:{query}"
+        if entry not in routes:
+            routes.append(entry)
+            self.conn.execute("UPDATE items SET also_routes=? WHERE id=?", (json.dumps(routes), item_id))
+
+    def update_item_enrichment(self, item_id: int, *, published_at: Optional[datetime] = None, summary: str = "", source_name: str = "") -> None:
+        row = self.conn.execute("SELECT published_at, summary, source_name FROM items WHERE id=?", (item_id,)).fetchone()
+        if row is None:
+            return
+        sets, vals = [], []
+        if published_at and not row["published_at"]:
+            sets.append("published_at=?"); vals.append(_iso(published_at))
+        if summary and not row["summary"]:
+            sets.append("summary=?"); vals.append(summary)
+        if source_name and not row["source_name"]:
+            sets.append("source_name=?"); vals.append(source_name)
+        if sets:
+            vals.append(item_id)
+            self.conn.execute(f"UPDATE items SET {', '.join(sets)} WHERE id=?", vals)
+
+    def set_screen(self, item_id: int, status: str, reason: str) -> None:
+        self.conn.execute("UPDATE items SET status=?, screen_reason=? WHERE id=?", (status, reason, item_id))
+
+    def set_alert(self, item_id: int, categories: list[str], candidate: bool) -> None:
+        self.conn.execute("UPDATE items SET alert_categories=?, alert_candidate=? WHERE id=?", (json.dumps(categories), 1 if candidate else 0, item_id))
+
+    def set_cluster(self, item_id: int, cluster_id: int) -> None:
+        self.conn.execute("UPDATE items SET cluster_id=? WHERE id=?", (cluster_id, item_id))
+
+    def new_cluster(self, name_id: str, now: datetime) -> int:
+        cur = self.conn.execute("INSERT INTO clusters(name_id, created_at) VALUES (?,?)", (name_id, _iso(now)))
+        return int(cur.lastrowid)
+
+    def add_match(self, item_id: int, name_id: str, alias: str, where: str, confidence: float) -> None:
+        self.conn.execute(
+            "INSERT OR REPLACE INTO matches(item_id, name_id, alias, where_, confidence) VALUES (?,?,?,?,?)",
+            (item_id, name_id, alias, where, confidence),
+        )
+
+    def recent_items_for_name(self, name_id: str, since: datetime) -> list[sqlite3.Row]:
+        return self.conn.execute(
+            """SELECT i.* FROM items i JOIN matches m ON m.item_id = i.id
+               WHERE m.name_id=? AND i.first_seen_at >= ? ORDER BY i.id DESC LIMIT 2000""",
+            (name_id, _iso(since)),
+        ).fetchall()
+
+    def commit(self) -> None:
+        self.conn.commit()
+
+    # ---- seen links (page watchers) --------------------------------------
+    def page_seen_count(self, page_url: str) -> int:
+        return int(self.conn.execute("SELECT COUNT(*) FROM seen_links WHERE page_url=?", (page_url,)).fetchone()[0])
+
+    def unseen_links(self, page_url: str, links: Iterable[str]) -> list[str]:
+        links = list(dict.fromkeys(links))
+        if not links:
+            return []
+        out = []
+        for chunk_start in range(0, len(links), 500):
+            chunk = links[chunk_start:chunk_start + 500]
+            q = f"SELECT link FROM seen_links WHERE page_url=? AND link IN ({','.join('?' * len(chunk))})"
+            seen = {r["link"] for r in self.conn.execute(q, (page_url, *chunk)).fetchall()}
+            out.extend(l for l in chunk if l not in seen)
+        return out
+
+    def mark_seen(self, page_url: str, links: Iterable[str], now: datetime) -> None:
+        self.conn.executemany(
+            "INSERT OR IGNORE INTO seen_links(page_url, link, first_seen_at) VALUES (?,?,?)",
+            [(page_url, l, _iso(now)) for l in links],
+        )
+        self.conn.commit()
+
+    # ---- feeds ------------------------------------------------------------
+    def get_feed(self, homepage: str) -> Optional[sqlite3.Row]:
+        return self.conn.execute("SELECT * FROM feeds WHERE homepage=?", (homepage,)).fetchone()
+
+    def set_feed(self, homepage: str, feed_url: str, now: datetime, error: str = "") -> None:
+        self.conn.execute(
+            """INSERT INTO feeds(homepage, feed_url, discovered_at, last_error) VALUES (?,?,?,?)
+               ON CONFLICT(homepage) DO UPDATE SET feed_url=excluded.feed_url, discovered_at=excluded.discovered_at, last_error=excluded.last_error""",
+            (homepage, feed_url, _iso(now), error),
+        )
+        self.conn.commit()
+
+    def feed_ok(self, homepage: str, now: datetime) -> None:
+        self.conn.execute("UPDATE feeds SET last_ok_at=?, last_error='' WHERE homepage=?", (_iso(now), homepage))
+
+    def feed_error(self, homepage: str, error: str) -> None:
+        self.conn.execute("UPDATE feeds SET last_error=? WHERE homepage=?", (error[:300], homepage))
+
+    # ---- export queries -----------------------------------------------------
+    def candidates(self, name_id: str, since: datetime) -> list[dict[str, Any]]:
+        rows = self.conn.execute(
+            """SELECT i.*, m.alias, m.where_, m.confidence FROM items i JOIN matches m ON m.item_id=i.id
+               WHERE m.name_id=? AND i.first_seen_at >= ?
+               ORDER BY COALESCE(i.published_at, i.first_seen_at) DESC""",
+            (name_id, _iso(since)),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def coverage_jobs(self, since: datetime) -> list[sqlite3.Row]:
+        """Job outcomes since `since` for jobs that declared the names they sweep."""
+        return self.conn.execute(
+            """SELECT sr.names, sr.ok, sr.error, sr.source FROM source_results sr
+               JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ? AND sr.names != ''""",
+            (_iso(since),),
+        ).fetchall()
+
+    def source_outcomes(self, since: datetime) -> dict[str, tuple[int, int]]:
+        """Per job label since `since`: (answered, attempted). Shared outlet feeds carry no names, so
+        their health is read by label."""
+        rows = self.conn.execute(
+            """SELECT sr.source AS source, SUM(sr.ok) AS ok, COUNT(*) AS n FROM source_results sr
+               JOIN runs r ON r.id = sr.run_id WHERE r.started_at >= ? GROUP BY sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return {r["source"]: (int(r["ok"] or 0), int(r["n"] or 0)) for r in rows}
+
+    def name_domain_last_seen(self, since: datetime) -> dict[tuple[str, str], str]:
+        """Per (name id, source domain): the newest item matched to the name since `since`."""
+        rows = self.conn.execute(
+            """SELECT m.name_id AS nid, i.source_domain AS dom, MAX(i.first_seen_at) AS latest
+               FROM matches m JOIN items i ON i.id = m.item_id
+               WHERE i.first_seen_at >= ? GROUP BY m.name_id, i.source_domain""",
+            (_iso(since),),
+        ).fetchall()
+        return {(r["nid"], (r["dom"] or "").lower()): r["latest"] for r in rows}
+
+    def name_mentions(self, since_recent: datetime) -> dict[str, dict[str, Any]]:
+        """Per name: total mentions, mentions since `since_recent`, latest mention time."""
+        rows = self.conn.execute(
+            """SELECT m.name_id AS nid, COUNT(*) AS total,
+                      SUM(CASE WHEN COALESCE(i.published_at, i.first_seen_at) >= ? THEN 1 ELSE 0 END) AS recent,
+                      MAX(COALESCE(i.published_at, i.first_seen_at)) AS latest
+               FROM matches m JOIN items i ON i.id = m.item_id GROUP BY m.name_id""",
+            (_iso(since_recent),),
+        ).fetchall()
+        return {r["nid"]: {"total": r["total"], "recent": r["recent"], "latest": r["latest"]} for r in rows}
+
+    def sources_starved(self, since: datetime) -> list[dict[str, Any]]:
+        """Sources attempted since `since` that never once completed: the jobs the run budget,
+        a tripped route, a dead feed or a blocked newsroom has kept dark for the whole window.
+        This is the job-level complement of coverage's name-level STARVED flag: a name can be
+        swept in every language through the grouped queries while its own newsroom, its home
+        solo query or a national outlet feed never runs at all."""
+        rows = self.conn.execute(
+            """SELECT sr.route, sr.source, COUNT(*) AS runs, SUM(sr.items) AS items,
+                      MAX(sr.error) AS last_error
+               FROM source_results sr JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ?
+               GROUP BY sr.route, sr.source
+               HAVING SUM(sr.ok) = 0
+               ORDER BY sr.route, sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def watchers_zero_yield(self, since: datetime) -> list[dict[str, Any]]:
+        """Newsroom watchers and outlet feeds that completed at least once since `since` and
+        never returned a single item. A 200 with nothing matched is how a watcher dies quietly:
+        the page moved, went script-rendered, or the link pattern no longer fits, and the health
+        table keeps counting it as OK. Over a week that list is the watchers to re-point. A
+        newsroom that genuinely published nothing in the window appears too, which is cheap to
+        tell apart by opening it."""
+        rows = self.conn.execute(
+            """SELECT sr.route, sr.source, SUM(sr.ok) AS ok_runs, COUNT(*) AS runs
+               FROM source_results sr JOIN runs r ON r.id = sr.run_id
+               WHERE r.started_at >= ? AND sr.route IN ('page', 'rss')
+               GROUP BY sr.route, sr.source
+               HAVING SUM(sr.ok) > 0 AND SUM(sr.items) = 0
+               ORDER BY sr.route, sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def source_health(self, last_runs: int = 4) -> list[dict[str, Any]]:
+        rows = self.conn.execute(
+            """SELECT sr.route, sr.source,
+                      SUM(sr.ok) AS ok_runs, COUNT(*) AS runs, SUM(sr.items) AS items,
+                      MAX(CASE WHEN sr.ok=0 THEN sr.error ELSE '' END) AS last_error
+               FROM source_results sr
+               WHERE sr.run_id IN (SELECT id FROM runs ORDER BY id DESC LIMIT ?)
+               GROUP BY sr.route, sr.source ORDER BY sr.route, sr.source""",
+            (last_runs,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def unnotified_alerts(self, since: datetime) -> list[dict[str, Any]]:
+        rows = self.conn.execute(
+            """SELECT i.*, GROUP_CONCAT(m.name_id) AS name_ids FROM items i JOIN matches m ON m.item_id=i.id
+               WHERE i.alert_candidate=1 AND i.notified_at IS NULL AND i.status='candidate' AND i.first_seen_at >= ?
+               GROUP BY i.id ORDER BY i.id""",
+            (_iso(since),),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def mark_notified(self, item_ids: Iterable[int], now: datetime) -> None:
+        self.conn.executemany("UPDATE items SET notified_at=? WHERE id=?", [(_iso(now), i) for i in item_ids])
+        self.conn.commit()
+
+    def stats(self) -> dict[str, Any]:
+        q = lambda sql, *a: self.conn.execute(sql, a).fetchone()[0]  # noqa: E731
+        return {
+            "items": q("SELECT COUNT(*) FROM items"),
+            "candidates": q("SELECT COUNT(*) FROM items WHERE status='candidate'"),
+            "screened": q("SELECT COUNT(*) FROM items WHERE status='screened'"),
+            "matches": q("SELECT COUNT(*) FROM matches"),
+            "runs": q("SELECT COUNT(*) FROM runs"),
+            "clusters": q("SELECT COUNT(*) FROM clusters"),
+            "pages_tracked": q("SELECT COUNT(DISTINCT page_url) FROM seen_links"),
+            "feeds_known": q("SELECT COUNT(*) FROM feeds WHERE feed_url != ''"),
+        }
+
+    # There used to be a prune() here that also deleted rows from `runs`. It was never called, and
+    # it is now a hazard: the run count is the signal the rollback guard uses to tell a restored
+    # database apart from an older one, so `runs` has to stay append-only. Use
+    # prune_source_results() instead, which drops only the per-job ledger.
+
+    def close(self) -> None:
+        self.conn.close()
+
+
+def _synchronized(fn):
+    def wrapper(self, *args, **kwargs):
+        with self._lock:
+            return fn(self, *args, **kwargs)
+    wrapper.__name__ = fn.__name__
+    wrapper.__doc__ = fn.__doc__
+    return wrapper
+
+
+for _name, _fn in list(Store.__dict__.items()):
+    if callable(_fn) and not _name.startswith("_"):
+        setattr(Store, _name, _synchronized(_fn))
