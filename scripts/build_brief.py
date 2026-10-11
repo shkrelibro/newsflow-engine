@@ -579,6 +579,58 @@ def review_score(r: dict) -> tuple[int, list[str]]:
     return score, why
 
 
+# ----------------------------------------------------------------------------- materiality (11 Oct, evening)
+# The bar is materiality on every name, focus or not. Each row gets a class, the order in which
+# events move a bond price: 1 rating, 2 financing (issuance, refinancing, tender, exchange, waiver,
+# default, an EQS or ad hoc release), 3 restructuring and insolvency, 4 M&A and merger control,
+# 5 results, guidance and profit warnings, 6 regulatory and litigation, 7 management change,
+# 8 operational events of scale, 9 everything else (share chatter included). The shortlist offers
+# every class 1 to 5 row on any name first; the lint asks for a decision on every class 1 to 3 row
+# on a tier-A name or a focus comp.
+MATERIAL_CLASS = {"rating": 1, "capital_markets": 2, "restructuring": 3, "m_and_a": 4, "results": 5,
+                  "regulatory": 6, "litigation": 6, "management": 7, "workforce": 8, "price_move": 9}
+GUIDANCE_RE = re.compile(
+    r"\b(?:results?|guidance|profit warning|Gewinnwarnung|Prognose\w*|outlook|EBITDA|Ebitda|trading update|"
+    r"Halbjahr\w*|Quartal\w*|quarter\w*|interim|FY ?\d{2,4}|H[12] ?\d{2,4}|Q[1-4] ?\d{2,4}|forecast\w*|"
+    r"r[ée]sultats?|risultati|resultados?|Zahlen|Jahresergebnis|Umsatz|revenue|margin\w*|Marge|guida\w*|previsioni)\b",
+    re.IGNORECASE)
+MATERIAL_LABEL = {1: "rating", 2: "financing", 3: "restructuring", 4: "M&A", 5: "results or guidance",
+                  6: "regulatory or litigation", 7: "management", 8: "operational", 9: "other"}
+
+
+AGENCY_RE = re.compile(r"\b(?:S&P|Standard\s*&\s*Poor|Moody'?s|Fitch|Scope Ratings|KBRA|DBRS|Creditreform|Morningstar DBRS)\b", re.IGNORECASE)
+BROKER_RE = re.compile(r"(?:\b(?:Buy|Sell|Hold|Outperform|Underperform|Overweight|Underweight|Neutral|Kaufen|Verkaufen|Kursziel|price target|target price|PT|stuft|riktkurs|kursmål|koersdoel|objectif de cours|prezzo obiettivo|precio objetivo|overvalued|undervalued)\b|τιμή[- ]στόχο)", re.IGNORECASE)
+CONSUMER_RE = re.compile(r"\b(?:our seats|my flight|refund|reader question|help!|passengers?)\b", re.IGNORECASE)
+CREDIT_WORD_RE = re.compile(r"\b(?:credit|bond|notes|debt|Anleihe|Bonität|kredit|crédit|credito|rating agency|Ratingagentur|outlook)\b", re.IGNORECASE)
+
+
+def material_class(r: dict) -> int:
+    t = r.get("title") or ""
+    cats = list(r.get("cats") or [])
+    # a rating class needs an agency, or a rating word next to a credit word; a broker's Buy or
+    # Sell, "downgraded our seats" and the like are not rating actions
+    if "rating" in cats and not (AGENCY_RE.search(t) or (CREDIT_WORD_RE.search(t) and not BROKER_RE.search(t))):
+        cats.remove("rating")
+    if re.search(r"\bdowngrade\w*", t, re.IGNORECASE) and not (AGENCY_RE.search(t) or CREDIT_WORD_RE.search(t)):
+        t = re.sub(r"\bdowngrade\w*", "", t, flags=re.IGNORECASE)   # a downgraded seat, cabin or forecast
+    c = min((MATERIAL_CLASS.get(x, 9) for x in cats), default=9)
+    if c <= 5 and BROKER_RE.search(t) and not AGENCY_RE.search(t) and not HARD_EVENT.search(t):
+        c = 9                                  # an equity note, whatever category words it carries
+    if STOCK_CHATTER.search(t) and not HARD_EVENT.search(t) and c in (2, 9):
+        c = 9                                  # "bonds" in a stock-tip page is not financing news
+    if REGULATORY_TITLE.match(t):
+        c = min(c, 2)                          # the issuer's own words, whatever they say
+    if HARD_EVENT.search(t) and not CONSUMER_RE.search(t):
+        c = min(c, 3)
+    if c > 5 and GUIDANCE_RE.search(t) and credit_signal(t):
+        c = 5                                  # a results word with a number in the headline
+    if c > 5 and own_source(r):
+        c = 5                                  # a newsroom release is at least a results-class fact
+    if r.get("disqualified"):
+        c = 9
+    return c
+
+
 def grade_rows(P: dict) -> None:
     for r in P["A_rows"] + P["C_rows"]:
         r["grade"] = grade_of(r["domain"])
@@ -723,10 +775,22 @@ INSTRUMENT = re.compile(
 DASHES = ("—", " – ")
 
 
-def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] | None" = None) -> tuple[list[str], list[str]]:
-    """Errors block the publish; warnings must each be fixed or justified before it."""
+def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] | None" = None,
+         must_decide: "list[dict] | None" = None) -> tuple[list[str], list[str]]:
+    """Errors block the publish; warnings must each be fixed or justified before it.
+
+    must_decide: material rows (class 1 to 3 on a tier-A name or a focus comp) that need a decision:
+    a line in `so`, or the id in `drop` to record a deliberate pass. The bar is materiality on every
+    name; the focus list sets latency, not the bar."""
     errors: list[str] = []
     warns: list[str] = []
+    said = set((j.get("so") or {}).keys())
+    passed = {str(x) for x in (j.get("drop") or [])}
+    for r in (must_decide or []):
+        rid = str(r["id"])
+        if rid not in said and rid not in passed:
+            warns.append(f"material row undecided: {r['name']}: {(r.get('title') or '')[:80]} [{MATERIAL_LABEL.get(r.get('material', 9))}, {r.get('source')}]; "
+                         f"write a line, or list {rid} in drop to pass on it")
     texts: list[tuple[str, str, str]] = []
     for kind in ("so", "translate"):
         for k, v in (j.get(kind) or {}).items():
@@ -947,6 +1011,8 @@ def prepare(latest: dict, since: "datetime | None" = None) -> dict:
     P = partition(collect(latest))
     attach_echoes(P, collect_echoes(latest))
     grade_rows(P)
+    for r in P["A_rows"] + P["C_rows"] + P["A_echo_rows"] + P["C_echo_rows"]:
+        r["material"] = material_class(r)
     P["new_A"] = mark_new(P["A_rows"], since)
     P["new_C"] = mark_new(P["C_rows"], since)
     mark_new(P["A_echo_rows"] + P["C_echo_rows"], since)
@@ -982,13 +1048,18 @@ def focus_status(P: dict, latest: dict, coverage: dict, published: list[dict], l
             "rows": len(rs), "new": sum(1 for r in rs if r.get("new")),
             "comp_new": sum(1 for c in comps for r in rows_by.get(c, []) if r.get("new")),
             "ok_24h": cv.get("ok_24h"), "skipped_24h": cv.get("skipped_24h"), "last": cv.get("last_mention"),
+            "deferred_24h": cv.get("deferred_24h"), "refused_24h": cv.get("refused_24h"),
             "outlets": cv.get("outlets") or [],
         })
     return out
 
 
 def focus_rows_html(F: list[dict]) -> str:
-    out = []
+    """The focus table, compact (11 Oct evening): one short line per credit. What is on the page,
+    the last mention, and a flag only when the engine itself has a problem (no search answered,
+    Google refused, key outlets dark). The full engine detail (searches answered, skipped, every
+    key outlet) sits in a fold under the table, and in each row's title for hover."""
+    out, detail = [], []
     for f in F:
         if not f["known"]:
             out.append(f'<tr><td class="name">{e(f["name"])}</td><td class="c g-flag" colspan="2">Not in this export: '
@@ -1003,13 +1074,19 @@ def focus_rows_html(F: list[dict]) -> str:
         if f["comp_pub"]:
             page += f'; {f["comp_pub"]} comp item{"s" if f["comp_pub"] != 1 else ""}'
         ok, sk = f.get("ok_24h"), f.get("skipped_24h")
-        flag = ok in (0, None) or bool(sk and sk > 0.1 * (ok + sk))
+        refused = f.get("refused_24h") or 0
+        flag = ok in (0, None) or refused > 0
         eng = "no fetch answered in 24h" if not ok else f"{ok:,} fetches answered"
         if sk:
             eng += f", {sk} skipped on budget"
+        if refused:
+            eng += f", {refused} refused by Google"
         t = _parse_ts(f.get("last"))
         if t:
             eng += f"; last mention {t:%a %H:%M}Z"
+        short = ("no search answered in 24h" if not ok else (f"last mention {t:%a %H:%M}Z" if t else "no mention in 7 days"))
+        if refused:
+            short += f"; Google refused {refused}"
         ko = f.get("outlets") or []
         if ko:
             # dark: a channel was tried and nothing answered; pending: not searched yet (the site:
@@ -1026,15 +1103,25 @@ def focus_rows_html(F: list[dict]) -> str:
             if notes:
                 eng += " (" + "; ".join(notes) + ")"
             flag = flag or len(dark) * 2 > len(ko)
+            if dark:
+                short += f"; {len(dark)} of {len(ko)} key outlets dark" + (f" ({', '.join(dark[:2])})" if len(dark) <= 2 else "")
             hits = [(o["last_hit"], o["domain"]) for o in ko if o.get("last_hit")]
             if hits:
                 ts, dom = max(hits)
                 tt = _parse_ts(ts)
                 if tt:
                     eng += f"; last in {dom} {tt:%d %b}"
+                    short += f"; {dom} {tt:%d %b}"
         out.append(f'<tr><td class="name">{e(f["name"])}</td><td class="c">{e(page)}</td>'
-                   f'<td class="c{" g-flag" if flag else ""}">{e(eng)}</td></tr>')
-    return "\n".join(out) or '<tr><td colspan="3" class="c">No focus list configured (config/focus.yaml).</td></tr>'
+                   f'<td class="c{" g-flag" if flag else ""}" title="{e(eng)}">{e(short)}</td></tr>')
+        detail.append(f'<li><b>{e(f["name"])}</b>: {e(eng)}</li>')
+    if not out:
+        return '<tr><td colspan="3" class="c">No focus list configured (config/focus.yaml).</td></tr>'
+    rows = "\n".join(out)
+    if detail:
+        rows += ('\n  </tbody></table></div><details class="fold"><summary>Engine detail per focus credit: searches answered, '
+                 'skipped, every key outlet</summary><ul class="detail">' + "\n".join(detail) + '</ul></details><div class="scroll"><table class="drops focus hidden"><tbody>')
+    return rows
 
 
 def quiet_block(coverage: dict) -> dict:
@@ -1374,6 +1461,8 @@ def _dump_lines(obj: dict) -> str:
     return "{\n" + ",\n".join(parts) + "\n}\n"
 
 
+M_KEYS = ("id", "name", "focus", "title", "source", "grade", "sources", "signal", "new", "prev", "redater", "echo_n")
+GRADE_RANK = {"premium": 0, "trade": 1, "press": 2, "": 3, "churn": 4, "junk": 5}
 A_KEYS = ("id", "name", "focus", "title", "source", "grade", "lang", "cats", "sources", "seen", "signal",
           "redater", "standfirst", "watch", "new", "echo_n", "echo_titles", "prev", "prev_so")
 C_KEYS = ("id", "name", "focus", "title", "source", "grade", "cats", "sources", "seen", "signal", "new",
@@ -1479,7 +1568,10 @@ def main() -> int:
             j = merge_judgement(prev, j)
         low = {str(r["id"]) for r in P["A_rows"] + P["C_rows"] if r.get("redater")} | \
               {str(r["id"]) for r in P["A_echo_rows"] + P["C_echo_rows"]}
-        errors, warns = lint(j, load_facts(Path(a.facts) if a.facts else None), nid_of, low)
+        must = [r for r in P["A_rows"] + P["C_rows"]
+                if r.get("material", 9) <= 3 and (r in P["A_rows"] or r.get("focus")) and not r.get("redater")
+                and (not prev_at or r.get("new") or str(r["id"]) in (prev.get("so") or {}))]
+        errors, warns = lint(j, load_facts(Path(a.facts) if a.facts else None), nid_of, low, must)
         for m in errors:
             print("ERROR " + m)
         for m in warns:
@@ -1546,6 +1638,10 @@ def main() -> int:
                      "window_hours": window_h, "new_tier_a": P["new_A"], "new_comps": P["new_C"]},
             "focus": [{k: v for k, v in f.items() if v not in (None, "", 0, False) or k in ("ok_24h",)}
                       for f in focus_status(P, latest, coverage, [])],
+            # every class 1 to 5 row on any name, the bar being materiality, not the focus list
+            "material": [dict(_short(r, M_KEYS), kind="A" if r in P["A_rows"] else "C", cls=MATERIAL_LABEL[r["material"]])
+                         for r in sorted((x for x in P["A_rows"] + P["C_rows"] if x.get("material", 9) <= 5),
+                                         key=lambda x: (x["material"], GRADE_RANK.get(x.get("grade") or "", 3), -(x.get("sources") or 1)))[:120]],
             "tier_a": [_short(r, A_KEYS) for r in P["A_rows"]],
             "echoes": [_short(r, E_KEYS) for r in P["A_echo_rows"] + P["C_echo_rows"]],
             "comps": [_short(r, C_KEYS) for r in flagged if r.get("review") or r.get("prev") or r.get("focus")],

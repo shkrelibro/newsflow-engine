@@ -111,6 +111,15 @@ h3.grp:first-of-type{margin-top:16px}
 .drops.focus td.name{white-space:nowrap}
 .drops td.g-faint{color:var(--faint);font-family:var(--sans);font-size:12px;white-space:nowrap}
 .scroll{overflow-x:auto}
+table.hidden{display:none}
+details.fold{margin:6px 0 0;font-family:var(--sans);font-size:12px}
+details.fold>summary{color:var(--faint);cursor:pointer;padding:4px 0}
+details.fold ul.detail{margin:6px 0 0;padding-left:18px;color:var(--muted);line-height:1.6}
+details.fold ul.detail b{color:var(--ink);font-weight:600}
+details.audit{margin-top:46px;border-top:1px solid var(--ink);padding-top:6px}
+details.audit>summary{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+details.audit>summary span{font-family:var(--mono);font-weight:400;letter-spacing:0;text-transform:none;color:var(--faint);font-size:11px}
+details.audit h2:first-of-type{margin-top:18px}
 
 /* reconciliation */
 pre.recon{font-family:var(--mono);font-size:12.5px;line-height:1.75;background:var(--panel);
@@ -198,6 +207,8 @@ foot names exactly what consumed the rest. Nothing is deleted; everything not pu
 <ul class="compact">
 {comp_items}
 </ul>
+
+<details class="audit"><summary>Engine audit <span>{drop_n} dropped · {q_quiet} quiet of {q_total} tier A · {g_hits} of {g_events} golden events caught · reconciliation · method</span></summary>
 
 <h2>What the filter dropped, and why <span>{drop_n} tier-A clusters</span></h2>
 <p class="method" style="margin-top:14px">Each of these passed the name-bearing test, meaning the alias really
@@ -289,6 +300,8 @@ held = kept in the store, not published. Nothing is deleted.
   count above is computed, not typed. Judgement is confined to the ranking of the lead and the commentary under
   each item.</p>
 </div>
+
+</details>
 
 <footer>
   Generated from newsflow-engine run {run}, exported {stamp_full}.
