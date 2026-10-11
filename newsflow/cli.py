@@ -32,7 +32,8 @@ def cmd_run(args) -> int:
     store = Store(cfg.db_path)
     try:
         try:
-            summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False))
+            summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False),
+                               budget_minutes=getattr(args, 'budget_minutes', None))
         except StateRollback as exc:
             # Not a crash: a deliberate refusal to run on state that went backwards. Print it
             # plainly and exit non-zero so the workflow's failure alert fires with a readable
@@ -301,6 +302,9 @@ def main(argv=None) -> int:
     r = sub.add_parser("run", help="one fetch run, then export and alerts")
     r.add_argument("--backfill-days", type=int, default=None, help="widen the window to N days (golden set / first run)")
     r.add_argument("--all-routes", action="store_true", help="run every route on this run regardless of its every_n_runs cadence (use on hourly schedules)")
+    r.add_argument("--budget-minutes", type=float, default=None,
+                   help="override engine.max_run_minutes for this run only. A 3-day backfill issues about 1,350 "
+                        "Google News queries, 45 minutes at the 2 s spacing, which the 13-minute cycle cannot hold")
     r.set_defaults(fn=cmd_run)
 
     lp = sub.add_parser("loop", help="run forever every N minutes (server mode)")
