@@ -376,11 +376,31 @@ class Store:
     def coverage_jobs(self, since: datetime) -> list[sqlite3.Row]:
         """Job outcomes since `since` for jobs that declared the names they sweep."""
         return self.conn.execute(
-            """SELECT sr.names, sr.ok, sr.error FROM source_results sr
+            """SELECT sr.names, sr.ok, sr.error, sr.source FROM source_results sr
                JOIN runs r ON r.id = sr.run_id
                WHERE r.started_at >= ? AND sr.names != ''""",
             (_iso(since),),
         ).fetchall()
+
+    def source_outcomes(self, since: datetime) -> dict[str, tuple[int, int]]:
+        """Per job label since `since`: (answered, attempted). Shared outlet feeds carry no names, so
+        their health is read by label."""
+        rows = self.conn.execute(
+            """SELECT sr.source AS source, SUM(sr.ok) AS ok, COUNT(*) AS n FROM source_results sr
+               JOIN runs r ON r.id = sr.run_id WHERE r.started_at >= ? GROUP BY sr.source""",
+            (_iso(since),),
+        ).fetchall()
+        return {r["source"]: (int(r["ok"] or 0), int(r["n"] or 0)) for r in rows}
+
+    def name_domain_last_seen(self, since: datetime) -> dict[tuple[str, str], str]:
+        """Per (name id, source domain): the newest item matched to the name since `since`."""
+        rows = self.conn.execute(
+            """SELECT m.name_id AS nid, i.source_domain AS dom, MAX(i.first_seen_at) AS latest
+               FROM matches m JOIN items i ON i.id = m.item_id
+               WHERE i.first_seen_at >= ? GROUP BY m.name_id, i.source_domain""",
+            (_iso(since),),
+        ).fetchall()
+        return {(r["nid"], (r["dom"] or "").lower()): r["latest"] for r in rows}
 
     def name_mentions(self, since_recent: datetime) -> dict[str, dict[str, Any]]:
         """Per name: total mentions, mentions since `since_recent`, latest mention time."""

@@ -1,6 +1,8 @@
 """Exports: latest.json (the candidates pile), daily files, alerts, health, index.html."""
 from __future__ import annotations
 
+import re
+
 import html
 import json
 from collections import Counter, defaultdict
@@ -9,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import Config
-from .normalize import is_google_news_link
+from .normalize import domain_of, is_google_news_link
 from .match import Matcher
 from .store import Store
 
@@ -187,6 +189,36 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
             else:
                 c["failed"] += 1
     mentions = store.name_mentions(now - timedelta(days=7))
+    # v2: key outlets (overlay.yaml). Per outlet: did a channel to it answer in 24 hours (the name's
+    # site: query, or the outlet's own feed), and when did it last carry the name (30 days).
+    site_ok: dict[tuple[str, str], list[int]] = {}
+    for row in store.coverage_jobs(since24):
+        src = row["source"] or ""
+        m_site = re.search(r"site:([^\s\]]+)", src)
+        if not m_site:
+            continue
+        dom = m_site.group(1).lower()
+        for nid in row["names"].split(","):
+            c2 = site_ok.setdefault((nid, dom), [0, 0])
+            c2[1] += 1
+            c2[0] += 1 if row["ok"] else 0
+    outcomes = store.source_outcomes(since24)
+    feed_label = {}
+    for o in cfg.outlets:
+        d = domain_of(o.homepage)
+        feed_label.setdefault(d, f"{o.name} ({o.country})")
+    last_seen = store.name_domain_last_seen(now - timedelta(days=30))
+
+    def _outlets(n) -> list[dict[str, Any]]:
+        out = []
+        for dom in n.key_outlets:
+            ok_s, n_s = site_ok.get((n.id, dom), [0, 0])
+            ok_f, n_f = outcomes.get(feed_label.get(dom, ""), (0, 0))
+            hits = [v for (nid, d), v in last_seen.items() if nid == n.id and (d == dom or d.endswith("." + dom))]
+            out.append({"domain": dom, "site_ok": ok_s, "site_jobs": n_s, "feed_ok": ok_f, "feed_jobs": n_f,
+                        "answering": bool(ok_s or ok_f), "last_hit": max(hits) if hits else None})
+        return out
+
     names_out = {}
     flags = {"starved": [], "no_queries": [], "silent_over_14d": []}
     for n in cfg.names:
@@ -216,6 +248,7 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
             "jobs_24h": c["jobs"], "ok_24h": c["ok"], "failed_24h": c["failed"], "skipped_24h": c["skipped"],
             "mentions_7d": int(m["recent"] or 0), "mentions_total": int(m["total"] or 0),
             "last_mention": latest, "days_silent": days_silent,
+            "outlets": _outlets(n),
         }
     return {
         "generated_at": now.isoformat(timespec="seconds"),

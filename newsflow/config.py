@@ -115,6 +115,7 @@ class NameConfig:
     # whatever the headline carries. Set in overlay.yaml, not in the generated name file.
     watch: bool = False
     focus: str = ""            # "name" for a focus credit, "comp" for a comp of one (config/focus.yaml), else ""
+    key_outlets: list[str] = field(default_factory=list)   # overlay.yaml: outlets that must reach this name (site: query + proof)
 
     @property
     def langs(self) -> list[str]:
@@ -322,7 +323,7 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
     """
     by_id = {n.id: n for n in names}
     unknown: list[str] = []
-    counts = {"watch": 0, "aliases": 0, "exclude_terms": 0, "duplicates": 0, "widened": 0, "site_queries": 0}
+    counts = {"watch": 0, "aliases": 0, "exclude_terms": 0, "duplicates": 0, "widened": 0, "site_queries": 0, "key_outlets": 0}
     entries = raw.get("names", {}) or {}
     if not isinstance(entries, dict):
         raise ValueError("overlay.yaml: 'names' must be a mapping of name id -> {watch, aliases, exclude_terms}")
@@ -368,6 +369,18 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
         for dom in spec.get("site_queries", []) or []:
             dom = str(dom)
             if dom not in name.site_queries:
+                name.site_queries.append(dom)
+                counts["site_queries"] += 1
+        # Key outlets: the titles that must reach this name (the home-market business press and the
+        # sector's trade press). Each gets a site: query like any other, and coverage.json reports per
+        # outlet whether a channel to it answered in 24 hours and when it last carried the name, so
+        # "nothing in Dagens industri" is a measured statement rather than an assumption.
+        for dom in spec.get("key_outlets", []) or []:
+            dom = str(dom).strip().lower()
+            if dom and dom not in name.key_outlets:
+                name.key_outlets.append(dom)
+                counts["key_outlets"] += 1
+            if dom and dom not in name.site_queries:
                 name.site_queries.append(dom)
                 counts["site_queries"] += 1
         if spec.get("notes"):

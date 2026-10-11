@@ -200,6 +200,9 @@ def cmd_check(args) -> int:
     print(f"outlets: {len(cfg.outlets)} · tier1 categories: {list(cfg.tier1_terms)} · noise domains: {len(cfg.noise_domains)}")
     fc = sum(1 for n in cfg.names if n.focus == "comp")
     print(f"focus list: {len(cfg.focus)} credits, {fc} comps" + (f"; UNKNOWN ids: {cfg.focus_unknown}" if cfg.focus_unknown else ""))
+    no_ko = [nid for nid in cfg.focus if len(cfg.name(nid).key_outlets) < 3]
+    if no_ko:
+        print(f"WARNING focus credits with fewer than 3 key outlets (overlay.yaml key_outlets): {no_ko}")
     print(f"people overlay: {cfg.people_counts.get('people', 0)} executive aliases"
           + (f", {cfg.people_counts['unknown']} unknown id(s)" if cfg.people_counts.get('unknown') else ""))
     print(f"churn (demoted) domains: {len(cfg.noise_demote)}")
