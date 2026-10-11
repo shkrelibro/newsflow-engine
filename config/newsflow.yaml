@@ -29,11 +29,18 @@ engine:
     routes: [googlenews, bingnews, gdelt]   # search indexes only. A page watcher with nothing new
                               # answers ok-and-empty on every visit; with one watcher per name the
                               # page route would trip on every cycle (it already did on 25 and 28 Sep)
+    consecutive_empty_by_route:
+      bingnews: 60            # 11 Oct: the Bing reserve asks for quiet names in small markets, where an
+                              # empty page is the honest answer; 25 in a row would trip it on a normal day.
+                              # A real refusal (HTTP 429/5xx) trips every search route after 3 in a row
+                              # (routes.googlenews.quota.refused_trip_after) whatever this says.
   rate_limits:
     default_seconds: 1.0
-    googlenews_seconds: 2.0   # 4 Oct: 2.5 -> 2.0. Google News is the binding constraint: one host, serial spacing,
-                              # so 13 minutes at 2.0 s is about 390 queries a run against ~350 due on the busiest cycle.
-                              # The 429 penalty below widens it again automatically if Google objects.
+    googlenews_seconds: 3.0   # 11 Oct: 2.0 -> 3.0. The old code ran 2.5 s with workers starved behind it, about
+                              # 800 queries an hour, and drew no 503 for weeks; v2 at 2.0 s on its own lane sent
+                              # about 1,200 an hour and Google News answered 503 within 40 minutes of going live,
+                              # 80 minutes into a fresh runner, 30 minutes into the backfill runner. 3.0 s is
+                              # 20 a minute; with the per-cycle cap below the route stays near 640 an hour.
     bing_seconds: 2.0
     gdelt_seconds: 6.0
     max_penalty_seconds: 60   # a host that answers 429 has its spacing widened, doubling from its
@@ -54,9 +61,13 @@ routes:
     # page that fills up. Focus credits (config/focus.yaml) get the short cadences.
     home_every_n_runs: 2      # tier-A solo query in the home market: every 30 minutes (focus credits: every run)
     foreign_every_n_runs: 6   # tier-A solo query in every other market: every 90 minutes (was grouped only until v2)
-    focus_every_n_runs: 3     # focus credits: home market every run, every other market every 45 minutes (32 credits, 11 Oct)
-    focus_alias_every_n_runs: 4    # focus credits' executives and secondary aliases: at least hourly
-    focus_comp_every_n_runs: 6     # comps of focus credits: their own home-market query every 90 minutes, not only grouped
+    focus_every_n_runs: 6     # focus credits: home market every run, every other market every 90 minutes. 11 Oct evening:
+                              # 3 -> 6, under the Google quota below; a 1-day window loses nothing to the longer gap
+    focus_alias_every_n_runs: 4    # focus credits' executives and secondary aliases: at least hourly ...
+    focus_alias_min_every_n_runs: 4   # ... and at most hourly (11 Oct evening): an alias's own shorter cadence no longer wins
+    focus_comp_every_n_runs: 8     # comps of focus credits: their own home-market query every two hours, not only grouped (11 Oct: 6 -> 8)
+    site_max_per_name_per_run: 2   # 11 Oct evening: a name's own site: list rotates at most this many a cycle (Intrum lists
+                              # 225 outlets and regulators: 14 queries a cycle before, 2 now, each domain every 28 h on a 7-day window)
     alias_min_every_n_runs: 2      # other names' secondary aliases: at most every 30 minutes
     tier_a_group_every_n_runs: 4   # v2: grouped tier-A queries are now a safety net behind the solos
     comp_every_n_runs: 3      # 4 Oct: 2 -> 3. Comp market groups every 3rd run; the 1-day query window still sees everything
@@ -65,6 +76,26 @@ routes:
     # among themselves, so they can only truncate each other, never the five light names that
     # used to share their query (on 4 Oct nine groups returned exactly 100 items on every run).
     heavy_names: [nike, amazon, booking, expedia, disneyparks, paypal, adidas, abfoods, action, adecco, pfizer, bayer, unilever, gsk, enterprise]
+    # 11 Oct 2026: the Google quota (newsflow/pipeline.py, google_quota). The cadences above build
+    # about 300 queries a cycle; only max_per_run of them are sent, chosen focus credits first
+    # (their solo, alias and key-outlet queries), then the focus comps' solo queries, then the rest
+    # by how long each query has waited. Every query looks back a full day, so a deferred query
+    # loses latency, not stories: at 160 a cycle the 1,100 other queries each run within about
+    # three hours. On a refusal (three 429/5xx in a row) the route trips for the cycle, cools down
+    # (30 min, doubling to 3 h), is probed with one query a cycle, and the cap steps down a
+    # quarter; each clean cycle lifts the cap 5 back towards the ceiling. The Bing reserve
+    # (routes.bingnews.fallback) carries the focus credits and tier-A home markets meanwhile.
+    quota:
+      max_per_run: 160          # 0 disables the cap and the rotation
+      floor: 80
+      ceiling: 200              # 800 an hour at 15-minute cycles, the level the old code ran at
+      step_down: 0.75
+      recover_step: 5
+      refused_trip_after: 3
+      cooldown_minutes: 30
+      cooldown_max_minutes: 180
+      backfill_window_hours: 4  # --backfill-days N opens a window; cycles inside it carry the N-day
+                                # lookback and run every query once through the rotation, then it closes
   bingnews:
     enabled: true             # 11 Oct (v2): back on as a narrow lane. Off as a broad sweep since 4 Oct (its breaker
                               # tripped every run, 132 of 296 queries never completed, 3,300 items against Google's
@@ -75,6 +106,11 @@ routes:
     tier_a_only: true
     every_n_runs: 1
     comp_every_n_runs: 4
+    focus_every_n_runs: 2     # 11 Oct: every focus credit gets a solo Bing query in its home market every
+                              # other cycle (16 a cycle), a second index behind Google at no Google cost
+    fallback: true            # 11 Oct: the reserve. While Google refuses us, every focus credit is searched
+                              # on Bing in every market and every other tier-A name at home (about 180
+                              # queries, six minutes at 2 s); submitted only on a refusal or a cool-down
   gdelt:
     enabled: false            # 4 Oct: off. 190 completed of 1,365 attempts in 24h, zero items, HTTP 429
                               # and 6-second spacing that kept jobs queued past the budget.
