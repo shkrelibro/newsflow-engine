@@ -539,6 +539,121 @@ def enrich_generic_titles(http: Http, items: list[RawItem], limit: int = 5) -> i
     return fetched
 
 
+# ----------------------------------------------------------------------
+# Page watchers have no date of their own: a link that is new to the watcher is not necessarily a
+# new article. On 12 October Adler's newsroom listed six releases from April (news ids 1558 to
+# 1573, below the ids 1574 to 1601 the watcher had stored in September) and all six went out as
+# today's news. So every new link is fetched once and dated from the article itself; an article
+# older than the freshness limit is dropped, and one with no readable date keeps published_at
+# None, which the brief treats as undated and will not publish without a date check.
+# ----------------------------------------------------------------------
+_DATE_META = [
+    re.compile(r"<meta[^>]+(?:property|name|itemprop)=[\"'](?:article:published_time|og:published_time|datePublished|date|dc\.date|DC\.date\.issued|pubdate|publish-date|parsely-pub-date|sailthru\.date)[\"'][^>]+content=[\"']([^\"']+)[\"']", re.IGNORECASE),
+    re.compile(r"<meta[^>]+content=[\"']([^\"']+)[\"'][^>]+(?:property|name|itemprop)=[\"'](?:article:published_time|og:published_time|datePublished|date|pubdate|publish-date)[\"']", re.IGNORECASE),
+    re.compile(r"\"datePublished\"\s*:\s*\"([^\"]+)\"", re.IGNORECASE),
+    re.compile(r"<time[^>]+datetime=[\"']([^\"']+)[\"']", re.IGNORECASE),
+]
+_MONTHS = {m: i for i, m in enumerate(
+    "january february march april may june july august september october november december".split(), 1)}
+_MONTHS.update({m: i for i, m in enumerate(
+    "janvier février mars avril mai juin juillet août septembre octobre novembre décembre".split(), 1)})
+_MONTHS.update({m: i for i, m in enumerate(
+    "januar februar märz april mai juni juli august september oktober november dezember".split(), 1)})
+_TEXT_DATE_NUM = re.compile(r"\b(\d{1,2})[./](\d{1,2})[./](20\d{2})\b")
+_TEXT_DATE_WORD = re.compile(r"\b(\d{1,2})\.?\s+([A-Za-zÀ-ÿ]+)\s+(20\d{2})\b")
+_URL_DATE = re.compile(r"/(20\d{2})[/-](\d{1,2})[/-](\d{1,2})(?:/|-|$)")
+
+
+def _parse_any_date(v: str) -> Optional[datetime]:
+    v = (v or "").strip()
+    if not v:
+        return None
+    try:
+        t = datetime.fromisoformat(v.replace("Z", "+00:00"))
+        return t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+    except ValueError:
+        pass
+    m = re.match(r"(20\d{2})-(\d{2})-(\d{2})", v)
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone.utc)
+        except ValueError:
+            return None
+    return None
+
+
+def date_from_article(html: str, url: str = "", text_fallback: bool = False) -> Optional[datetime]:
+    """The article's own publication date: meta tags and JSON-LD first, then <time>, then a date in
+    the URL. None when nothing is readable.
+
+    text_fallback also takes the first plain-text date in the body. It is off for the page watchers:
+    a regulatory piece cites older dates in its first paragraph ("the protocol signed on 23 July
+    2023"), and a sidebar lists newer ones, so a body date can neither prove an article old nor
+    prove it new. Such an article stays undated and the writer checks it."""
+    for pat in _DATE_META:
+        m = pat.search(html or "")
+        if m:
+            t = _parse_any_date(m.group(1))
+            if t:
+                return t
+    m = _URL_DATE.search(url or "")
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone.utc)
+        except ValueError:
+            pass
+    if not text_fallback:
+        return None
+    body = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html or "", flags=re.DOTALL | re.IGNORECASE)
+    body = re.sub(r"<[^>]+>", " ", body)
+    m = _TEXT_DATE_NUM.search(body)
+    if m:
+        try:
+            return datetime(int(m.group(3)), int(m.group(2)), int(m.group(1)), tzinfo=timezone.utc)
+        except ValueError:
+            pass
+    for m in _TEXT_DATE_WORD.finditer(body):
+        mon = _MONTHS.get(m.group(2).lower())
+        if mon:
+            try:
+                return datetime(int(m.group(3)), mon, int(m.group(1)), tzinfo=timezone.utc)
+            except ValueError:
+                continue
+    return None
+
+
+def date_page_items(http, items: list[RawItem], max_age_hours: float = 72.0, limit: int = 8,
+                    now: Optional[datetime] = None) -> tuple[list[RawItem], int, int]:
+    """Date each new page-watcher item from its article; drop the ones older than max_age_hours.
+    Returns (kept, dropped_old, undated). Items beyond `limit` fetches stay undated."""
+    now = now or datetime.now(timezone.utc)
+    kept: list[RawItem] = []
+    dropped = undated = fetched = 0
+    for it in items:
+        t = None
+        m = _URL_DATE.search(it.link or "")
+        if m:
+            try:
+                t = datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone.utc)
+            except ValueError:
+                t = None
+        if t is None and fetched < limit and http is not None and not it.link.lower().split("?")[0].endswith(".pdf"):
+            fetched += 1
+            try:
+                t = date_from_article(http.get_text(it.link, is_page=True), it.link)
+            except Exception:  # noqa: BLE001 - an unreachable article stays undated
+                t = None
+        if t is not None:
+            if (now - t).total_seconds() > max_age_hours * 3600:
+                dropped += 1
+                continue
+            it.published_at = t
+        else:
+            undated += 1
+        kept.append(it)
+    return kept, dropped, undated
+
+
 def page_items_from_links(
     links: Iterable[tuple[str, str]],
     page_url: str,

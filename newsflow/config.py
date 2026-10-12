@@ -70,6 +70,7 @@ class Alias:
     weight: float = 1.0
     search: bool = False        # run search-route queries for this alias (Google/Bing/GDELT)
     search_every: int = 1       # only every Nth run (rate-limit friendly for secondary aliases)
+    query: str = ""             # optional search query used instead of the quoted alias text
 
     def applies_to(self, lang: str) -> bool:
         return "all" in self.langs or not lang or lang in self.langs
@@ -204,6 +205,7 @@ def _parse_alias(raw: Any) -> Alias:
         weight=float(raw.get("weight", 1.0)),
         search=bool(raw.get("search", False)),
         search_every=max(1, int(raw.get("search_every", 1))),
+        query=str(raw.get("query", "") or ""),
     )
 
 

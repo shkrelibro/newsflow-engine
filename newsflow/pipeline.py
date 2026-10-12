@@ -28,6 +28,7 @@ from .routes import (
     fetch_google_news,
     fetch_page_links,
     enrich_generic_titles,
+    date_page_items,
     page_items_from_links,
 )
 from .store import Store
@@ -429,7 +430,10 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                     if m.lang in seen_langs:
                         continue
                     seen_langs.add(m.lang)
-                    q = f'"{alias.text}"'
+                    # an alias may carry its own query (CNAM, 13 Oct): "Assurance maladie" on its
+                    # own returned 74 rows a day of Vietnamese and Togolese social-security news and
+                    # nothing on lab tariffs; the query has to carry the sector context itself
+                    q = alias.query or f'"{alias.text}"'
                     jobs.append(JobSpec(f"{q} [{m.lang}-{m.country}]", "googlenews", lambda q=q, m=m, ids=ids: fetch_google_news(http, q, m.lang, m.country, ids, when_google), name_ids=list(ids), prio=2))
             # per-name site queries (only names that define them, e.g. Intrum), staggered. The key
             # outlets (overlay.yaml) keep the site_every cadence; a name's own long list of domains
@@ -626,6 +630,11 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     return jobs
 
 
+PAGE_RESEED_MAX_NEW = 3       # more unseen article links than this in one fetch, and
+PAGE_RESEED_SHARE = 0.5       # at least this share of the listed ones, is an archive re-read
+PAGE_MAX_AGE_HOURS = 72.0     # a newsroom article dated older than this is not news
+
+
 def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False, seed_items: int = 5) -> tuple[list[RawItem], SourceResult]:
     links, result = fetch_page_links(http, page.url)
     if not result.ok:
@@ -644,6 +653,19 @@ def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False
     items = page_items_from_links(
         [(u, t) for u, t in links if u in new_set], page.url, page.name_ids, page.tier, page.country, page.lang, page.name, page.link_pattern
     )
+    # A watcher that has been running and suddenly sees many article links it has never seen is
+    # re-reading its archive (a newsroom re-paginated, a CMS changed its link parameters), not
+    # reporting a burst of news: Adler's newsroom did exactly this on 12 October. Those links are
+    # now marked seen and nothing is emitted; a real burst is still caught by the search routes.
+    if not first_time and not backfill and len(items) > PAGE_RESEED_MAX_NEW:
+        listed = len(page_items_from_links(links, page.url, page.name_ids, page.tier, page.country,
+                                           page.lang, page.name, page.link_pattern))
+        # Half the list new at once is a re-read archive; a few new among many known (the engine
+        # was paused for a day) is a real backlog and goes on to the dating step.
+        if listed and len(items) >= PAGE_RESEED_SHARE * listed:
+            result.items = 0
+            result.error = f"reseeded: {len(items)} of {listed} article links unseen at once, none emitted"
+            return [], result
     if first_time and backfill and seed_items >= 0 and len(items) > seed_items:
         # A backfill run visits every watcher for the first time with the flood gate open. One
         # newsroom lists twenty releases; three hundred of them would put six thousand undated
@@ -657,6 +679,10 @@ def _page_job(http: Http, store: Store, page: PageSource, backfill: bool = False
         it.tier_hint = page.tier
     if items and http is not None:
         enrich_generic_titles(http, items)
+        # every new link is dated from the article itself; archive items are dropped here
+        items, old, undated = date_page_items(http, items, max_age_hours=PAGE_MAX_AGE_HOURS)
+        if old or undated:
+            result.error = (result.error + "; " if result.error else "") + f"{old} older than {PAGE_MAX_AGE_HOURS:.0f}h dropped, {undated} undated"
     result.items = len(items)
     return items, result
 
