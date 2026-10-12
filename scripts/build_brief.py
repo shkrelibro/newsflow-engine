@@ -618,8 +618,10 @@ def material_class(r: dict) -> int:
         c = 9                                  # an equity note, whatever category words it carries
     if STOCK_CHATTER.search(t) and not HARD_EVENT.search(t) and c in (2, 9):
         c = 9                                  # "bonds" in a stock-tip page is not financing news
-    if REGULATORY_TITLE.match(t):
+    if REGULATORY_TITLE.match(t) and not NOTICE_ONLY.search(t):
         c = min(c, 2)                          # the issuer's own words, whatever they say
+    elif NOTICE_ONLY.search(t) and c <= 5:
+        c = 9                                  # directors' dealings and voting-rights notices
     if HARD_EVENT.search(t) and not CONSUMER_RE.search(t):
         c = min(c, 3)
     if c > 5 and GUIDANCE_RE.search(t) and credit_signal(t):
@@ -739,6 +741,57 @@ def load_prev(path: "Path | None") -> dict:
         return {}
 
 
+# ----------------------------------------------------------------------------- freshness (13 Oct)
+# The page is today's newsflow, not an archive. On 12 October the evening page had 62 lines of
+# which 35 sat on articles more than two days old and 13 on articles more than four days old; five
+# of the six lead items were 63 to 165 hours old. Delta judgement carried every line forward until
+# it left a 72-hour window, so the page only ever grew. Now a carried line expires once its article
+# is older than CARRY_MAX_AGE_H unless the cut rewrites it on a newer development, and the lead
+# takes only articles younger than LEAD_MAX_AGE_H.
+CARRY_MAX_AGE_H = 48.0
+LEAD_MAX_AGE_H = 36.0
+LATE_MAX_AGE_H = 72.0      # older articles first seen now are offered as "late", never as news
+
+
+def article_age_h(r: dict, now: datetime) -> "float | None":
+    """Hours since the article was published, or since first seen when the outlet gives no date."""
+    t = _parse_ts(r.get("published")) or _parse_ts(r.get("seen"))
+    return (now - t).total_seconds() / 3600 if t else None
+
+
+def undated_newsroom_row(r: dict) -> bool:
+    """A page-watcher row with no publication date: a link new to the watcher, not proven news."""
+    return r.get("route") == "page" and not _parse_ts(r.get("published"))
+
+
+def expire_stale(j: dict, rows_by_id: dict, now: datetime) -> list[str]:
+    """Drop carried lines whose article is older than CARRY_MAX_AGE_H and was not rewritten this cut;
+    take lead items older than LEAD_MAX_AGE_H out of the lead. Returns the expired ids."""
+    fresh = {str(x) for x in j.get("fresh") or []}
+    expired = []
+    for i in list((j.get("so") or {}).keys()):
+        r = rows_by_id.get(str(i))
+        if r is None or str(i) in fresh:
+            continue
+        age = article_age_h(r, now)
+        if age is not None and age > CARRY_MAX_AGE_H:
+            expired.append(str(i))
+            for k in ("so", "translate", "tags"):
+                (j.get(k) or {}).pop(str(i), None)
+    # An undated newsroom row publishes only once the writer has checked the date on the article.
+    for i in list((j.get("so") or {}).keys()):
+        r = rows_by_id.get(str(i))
+        tags = " ".join(map(str, (j.get("tags") or {}).get(str(i)) or [])).lower()
+        if r is not None and undated_newsroom_row(r) and "date verified" not in tags:
+            expired.append(str(i))
+            for k in ("so", "translate", "tags"):
+                (j.get(k) or {}).pop(str(i), None)
+    j["lead"] = [str(i) for i in j.get("lead") or []
+                 if str(i) not in expired and not ((rows_by_id.get(str(i)) is not None)
+                 and (article_age_h(rows_by_id[str(i)], now) or 0) > LEAD_MAX_AGE_H)]
+    return expired
+
+
 def merge_judgement(prev: dict, delta: dict) -> dict:
     """Previous judgement, minus what this cut drops, plus what this cut writes.
 
@@ -756,7 +809,26 @@ def merge_judgement(prev: dict, delta: dict) -> dict:
         out["lead"] = [str(x) for x in delta["lead"]]
     else:
         out["lead"] = [str(x) for x in prev.get("lead") or [] if str(x) not in drop]
+    jf = delta.get("judged_from") or judged_from(prev)
+    if jf:
+        out["judged_from"] = jf.isoformat(timespec="minutes") if isinstance(jf, datetime) else str(jf)
+    out["drop"] = sorted(drop)          # the passes this cut recorded; the lint reads them, the page does not
+    out["fresh"] = sorted(str(i) for i in (delta.get("so") or {}))   # lines written this cut never expire
     return out
+
+
+def judged_from(prev: dict) -> "datetime | None":
+    """The earliest moment an unbroken chain of cuts has judged, carried forward page to page.
+
+    A row first seen between this watermark and the previous cut's export, and not on the page,
+    was in front of some cut and passed: it is not re-offered. Without a watermark the previous
+    cut's own window is the chain, which is what the first page of a chain carries forward."""
+    prev_at = _parse_ts(prev.get("export_at") or prev.get("cut_at")) if prev else None
+    if prev_at is None:
+        return None
+    start = prev_at - timedelta(hours=float(prev.get("window_hours") or 24))
+    jf = _parse_ts(prev.get("judged_from"))
+    return min(jf, start) if jf else start
 
 
 # ----------------------------------------------------------------------------- v2: lint
@@ -776,7 +848,8 @@ DASHES = ("—", " – ")
 
 
 def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] | None" = None,
-         must_decide: "list[dict] | None" = None) -> tuple[list[str], list[str]]:
+         must_decide: "list[dict] | None" = None, rows_by_id: "dict | None" = None,
+         now: "datetime | None" = None, catalysts: "list[dict] | None" = None) -> tuple[list[str], list[str]]:
     """Errors block the publish; warnings must each be fixed or justified before it.
 
     must_decide: material rows (class 1 to 3 on a tier-A name or a focus comp) that need a decision:
@@ -829,6 +902,37 @@ def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] 
         for k in so:
             if k not in nid_of:
                 warns.append(f"so[{k}]: id not in this export, it will not publish")
+    # Freshness. The lead is today's news: an article older than LEAD_MAX_AGE_H cannot lead. A
+    # newsroom row without a publication date is a link new to the watcher, not proven news (the
+    # Adler April releases reached the page that way on 12 October); it publishes only once the
+    # writer has opened the article and tagged the row "date verified".
+    if rows_by_id:
+        now = now or datetime.now(timezone.utc)
+        fresh = {str(x) for x in j.get("fresh") or []}
+        for k in j.get("lead") or []:
+            r = rows_by_id.get(str(k))
+            age = article_age_h(r, now) if r else None
+            if age is not None and age > LEAD_MAX_AGE_H:
+                errors.append(f"lead[{k}]: article is {age:.0f}h old; the lead takes only articles under {LEAD_MAX_AGE_H:.0f}h")
+        for k in so:
+            r = rows_by_id.get(str(k))
+            if not r:
+                continue
+            tags = " ".join(map(str, (j.get("tags") or {}).get(str(k)) or [])).lower()
+            if undated_newsroom_row(r) and "date verified" not in tags:
+                errors.append(f"so[{k}]: undated newsroom row ({r.get('source')}); open the article, confirm the date, "
+                              f"tag it \"date verified\", or drop it")
+            age = article_age_h(r, now)
+            if age is not None and age > CARRY_MAX_AGE_H and str(k) not in fresh:
+                warns.append(f"so[{k}]: article is {age:.0f}h old and carried; it expires at render unless rewritten on a new development")
+    for ev in catalysts or []:
+        if ev.get("due") not in ("today", "yesterday"):
+            continue
+        on_name = [k for k in so if nid_of.get(str(k)) == ev.get("name")]
+        if not on_name:
+            warns.append(f"catalyst due {ev['due']}: {ev.get('name')}: {ev.get('what')}; find the outcome "
+                         f"(check {', '.join(ev.get('check') or []) or 'the trade press'}) and publish it, "
+                         f"or say on the page that no outcome is reported yet")
     return errors, warns
 
 
@@ -864,6 +968,32 @@ def set_focus(latest: dict, ids: "list[str] | None") -> None:
 
 def load_focus(path: "Path | None") -> list[str]:
     return [x for x in _yaml_list_ordered(path, "names")]
+
+
+# ----------------------------------------------------------------------------- scheduled catalysts
+# config/catalysts.json lists dated events the desk knows are coming: a tariff meeting, a vote, a
+# results date. On 11 October the engine collected Le Quotidien du Médecin's piece saying the Cnam
+# and the biologists would hold a decisive conventional meeting on 12 October. It was on the page all
+# day on the 12th, but its line never gave the date and no cut went looking for the outcome. A
+# catalyst due today or yesterday now sits at the top of the shortlist and the lint asks for a line.
+def load_catalysts(path: "Path | None", now: datetime, before_days: int = 1, after_days: int = 3) -> list[dict]:
+    if path is None or not path.exists():
+        return []
+    try:
+        events = json.loads(path.read_text(encoding="utf-8")).get("events") or []
+    except (ValueError, AttributeError):
+        return []
+    out = []
+    today = now.date()
+    for ev in events:
+        try:
+            d = datetime.fromisoformat(str(ev.get("date"))[:10]).date()
+        except ValueError:
+            continue
+        delta = (d - today).days
+        if -before_days <= delta <= after_days:
+            out.append(dict(ev, due=("today" if delta == 0 else "yesterday" if delta == -1 else f"in {delta}d")))
+    return out
 
 
 def _yaml_list_ordered(path: "Path | None", key: str) -> list[str]:
@@ -928,6 +1058,10 @@ def new_since(rows: list[dict], hours: float, now: datetime) -> int:
 
 
 REGULATORY_TITLE = re.compile(r"^\s*(?:EQS|DGAP|Ad[ -]?hoc)\b", re.IGNORECASE)
+# Filings that are not events: directors' dealings, voting-rights and total-voting-rights notices
+NOTICE_ONLY = re.compile(r"EQS-(?:DD|PVR|TR)\b|Directors.{0,3}Dealings|Voting rights|Stimmrechtsmitteilung|"
+                         r"Gesamtzahl der Stimmrechte|Total Voting Rights|Article 40|§ ?40 WpHG|Eigengeschäfte von Führungskräften",
+                         re.IGNORECASE)
 
 
 def partition(rows: list[dict]) -> dict:
@@ -1266,11 +1400,16 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
         new_label = f"New in {int(since_hours)}h"
         new_phrase = f"in the last {int(since_hours)} hours"
 
+    rows_by_id = {str(r["id"]): r for r in P["A_rows"] + P["C_rows"] + P["A_echo_rows"] + P["C_echo_rows"]}
+    if j.get("so"):
+        # ages are read at the export, which the cut renders within minutes of
+        expire_stale(j, rows_by_id, exported if age_min >= 0 else now)
     lead_ids = [str(x) for x in (j.get("lead") or [])]
     by_id = {str(r["id"]): r for r in P["A_rows"] + P["A_echo_rows"]}
     lead = [by_id[i] for i in lead_ids if i in by_id]
-    if not lead:                                   # no judgement supplied: take the categorised ones
-        lead = [r for r in P["A_rows"] if r["cats"]][:6]
+    if not lead and not j.get("so"):               # no judgement supplied: take the categorised ones
+        lead = [r for r in P["A_rows"] if r["cats"] and not undated_newsroom_row(r)
+                and (article_age_h(r, now) or 0) <= LEAD_MAX_AGE_H][:6]
     lead_set = {r["id"] for r in lead}
     # Group the lead under its category, keeping the judgement's order within each group and the
     # order in which categories first appear. Run-length grouping alternated headings whenever a
@@ -1418,6 +1557,8 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
     state = {"cut_at": now.isoformat(timespec="minutes"), "export_at": stamp,
              "since": since.isoformat(timespec="minutes") if since else None, "window_hours": window_h,
              "lead": [str(r["id"]) for r in lead]}
+    if j.get("judged_from"):
+        state["judged_from"] = str(j["judged_from"])   # the chain's watermark, see judged_from()
     for k in ("so", "translate", "tags"):
         state[k] = {str(i): v for i, v in (j.get(k) or {}).items() if str(i) in pub_ids}
     blob = json.dumps(state, ensure_ascii=False).replace("</", "<\\/")
@@ -1461,13 +1602,13 @@ def _dump_lines(obj: dict) -> str:
     return "{\n" + ",\n".join(parts) + "\n}\n"
 
 
-M_KEYS = ("id", "name", "focus", "title", "source", "grade", "sources", "signal", "new", "prev", "redater", "echo_n")
+M_KEYS = ("id", "name", "focus", "title", "source", "grade", "sources", "signal", "new", "prev", "redater", "echo_n", "age_h", "undated")
 GRADE_RANK = {"premium": 0, "trade": 1, "press": 2, "": 3, "churn": 4, "junk": 5}
 A_KEYS = ("id", "name", "focus", "title", "source", "grade", "lang", "cats", "sources", "seen", "signal",
-          "redater", "standfirst", "watch", "new", "echo_n", "echo_titles", "prev", "prev_so")
+          "redater", "standfirst", "watch", "new", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated")
 C_KEYS = ("id", "name", "focus", "title", "source", "grade", "cats", "sources", "seen", "signal", "new",
-          "review", "why", "echo_n", "echo_titles", "prev", "prev_so")
-E_KEYS = ("id", "name", "comp", "focus", "title", "source", "seen", "signal", "new", "echo_n", "echo_titles", "review", "prev", "prev_so")
+          "review", "why", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated")
+E_KEYS = ("id", "name", "comp", "focus", "title", "source", "seen", "signal", "new", "echo_n", "echo_titles", "review", "prev", "prev_so", "age_h", "undated")
 
 
 def load_facts(path: "Path | None") -> list[dict]:
@@ -1505,6 +1646,8 @@ def main() -> int:
                     help="print the filtered shortlist as JSON and stop, for the judgement pass")
     ap.add_argument("--lint", metavar="J_JSON",
                     help="check a judgement file against the desk rules; exit 1 on an error")
+    ap.add_argument("--catalysts", default="config/catalysts.json",
+                    help="dated events the desk is waiting on; due ones head the shortlist and the lint asks for a line")
     ap.add_argument("--focus", default="config/focus.yaml",
                     help="this week's focus list; falls back to the export's own focus flags")
     ap.add_argument("--forbid", default=None,
@@ -1534,6 +1677,8 @@ def main() -> int:
         print(f"prev: {'cut at ' + prev['cut_at'] + ', ' + str(len(prev.get('so') or {})) + ' published rows carried' if prev_at else 'no embedded judgement found, judging the full window'}",
               file=sys.stderr)
     if a.window_hours == "auto":
+        # 72 hours only when the cut reaches back over a gap (Monday's first cut); every other cut
+        # reads 24 hours. The 12 October rule that kept 72 hours all Monday kept stale lines alive.
         window_h = 72.0 if since and (now - since) > timedelta(hours=20) else 24.0
     else:
         window_h = float(a.window_hours)
@@ -1568,10 +1713,22 @@ def main() -> int:
             j = merge_judgement(prev, j)
         low = {str(r["id"]) for r in P["A_rows"] + P["C_rows"] if r.get("redater")} | \
               {str(r["id"]) for r in P["A_echo_rows"] + P["C_echo_rows"]}
+        jf = judged_from(prev) if prev_at else None
+
+        def fresh(r: dict) -> bool:
+            # in front of a cut for the first time: seen since the previous export, or older than
+            # the chain of cuts; a row the chain saw and left off the page was passed on
+            if not prev_at:
+                return True
+            t = _parse_ts(r.get("seen"))
+            return t is None or t >= prev_at or (jf is not None and t < jf)
         must = [r for r in P["A_rows"] + P["C_rows"]
                 if r.get("material", 9) <= 3 and (r in P["A_rows"] or r.get("focus")) and not r.get("redater")
-                and (not prev_at or r.get("new") or str(r["id"]) in (prev.get("so") or {}))]
-        errors, warns = lint(j, load_facts(Path(a.facts) if a.facts else None), nid_of, low, must)
+                and (fresh(r) or str(r["id"]) in (prev.get("so") or {}))]
+        rows_by_id = {str(r["id"]): r for r in P["A_rows"] + P["C_rows"] + P["A_echo_rows"] + P["C_echo_rows"]}
+        errors, warns = lint(j, load_facts(Path(a.facts) if a.facts else None), nid_of, low, must,
+                             rows_by_id=rows_by_id, now=now,
+                             catalysts=load_catalysts(Path(a.catalysts) if a.catalysts else None, now))
         for m in errors:
             print("ERROR " + m)
         for m in warns:
@@ -1603,10 +1760,11 @@ def main() -> int:
             # Judge only what is new since the last cut, plus what it carried. A row the last cut saw
             # and did not publish was a decision; it is not re-offered (the QA pass audits drops).
             prev_so = {str(k): v for k, v in (prev.get("so") or {}).items()}
-            # Only rows inside the previous cut's own window were in front of it. A row older than
-            # that window (the Monday cut reaching back over a weekend the Sunday cut never covered)
-            # was never judged, so it is offered like a new one.
-            prev_start = prev_at - timedelta(hours=float(prev.get("window_hours") or 24))
+            # Only rows a cut has had in front of it were judged. The page carries the watermark of
+            # the chain of cuts (judged_from), so the Monday cut reaching back over the weekend does
+            # not re-offer what Saturday's and Sunday's cuts passed on; a row older than the chain
+            # was never judged and is offered like a new one.
+            prev_start = judged_from(prev) or prev_at
             prev_lead = {str(x) for x in prev.get("lead") or []}
             for key in ("A_rows", "C_rows", "A_echo_rows", "C_echo_rows"):
                 keep = []
@@ -1622,6 +1780,21 @@ def main() -> int:
                     else:
                         held_n += 1
                 P[key] = keep
+        # Article age goes in front of the judge on every row: the lead takes under LEAD_MAX_AGE_H,
+        # a carried line expires past CARRY_MAX_AGE_H, and an older article first seen now is "late",
+        # offered as such and never as news. An undated newsroom row is flagged for a date check.
+        late = []
+        for key in ("A_rows", "C_rows", "A_echo_rows", "C_echo_rows"):
+            keep = []
+            for r in P[key]:
+                age = article_age_h(r, now)
+                r["age_h"] = round(age) if age is not None else None
+                r["undated"] = undated_newsroom_row(r)
+                if age is not None and age > LATE_MAX_AGE_H and not r.get("prev"):
+                    late.append(f'{r["id"]}|{r["name"]}|{r["source"][:24]}|{r["age_h"]}h|{r["title"][:100]}')
+                else:
+                    keep.append(r)
+            P[key] = keep
         flagged = [r for r in P["C_rows"] if r.get("review") or r["cats"] or r.get("signal")]
         flagged.sort(key=lambda r: (not r.get("review"), not r.get("focus"), -(r.get("score") or 0), rank(r)))
         P["A_rows"].sort(key=lambda r: (r.get("focus") != "name",))
@@ -1635,7 +1808,10 @@ def main() -> int:
             "meta": {"export": latest.get("generated_at"), "now": now.isoformat(timespec="minutes"),
                      "prev_cut": prev.get("cut_at") if prev_at else None,
                      "since": since.isoformat(timespec="minutes") if since else None,
-                     "window_hours": window_h, "new_tier_a": P["new_A"], "new_comps": P["new_C"]},
+                     "window_hours": window_h, "new_tier_a": P["new_A"], "new_comps": P["new_C"],
+                     "judged_from": (judged_from(prev).isoformat(timespec="minutes") if prev_at and judged_from(prev) else None),
+                     "held_judged_earlier": held_n},
+            "catalysts": load_catalysts(Path(a.catalysts) if a.catalysts else None, now),
             "focus": [{k: v for k, v in f.items() if v not in (None, "", 0, False) or k in ("ok_24h",)}
                       for f in focus_status(P, latest, coverage, [])],
             # every class 1 to 5 row on any name, the bar being materiality, not the focus list
@@ -1652,6 +1828,7 @@ def main() -> int:
             "disqualified": [f'{r["name"]}: {r["title"][:70]} ({r["disqualified"]})'
                              for r in (P["A_dq_rows"] + P["C_dq_rows"])[:30]],
             "redated": P.get("redated", []),
+            "late": late[:60],
             "counts": counts,
         }
         sys.stdout.write(_dump_lines(out))
