@@ -22,16 +22,24 @@ aliases:
   # nomenclature des actes de biologie medicale: specific enough to need no context
   - {text: "NABM", langs: [fr], search: true, weight: 0.8}
   # the regulator: only when the story is about labs (Cnam is also the Conservatoire national des arts et metiers)
-  - {text: "Cnam", langs: [fr], search: true, search_every: 2, weight: 0.8,
-     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie"]}
-  - {text: "Assurance maladie", langs: [fr], search: true, search_every: 2, weight: 0.7,
-     require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie"]}
+  # 13 Oct: the searches now carry the sector context themselves. The bare "Cnam" and
+  # "Assurance maladie" queries returned 74 rows on 12 October, all generic social-security news
+  # (Vietnam, Togo, the PLFSS at large), every one screened out, and the lab-tariff story of the
+  # day never surfaced; Google ranks a bare institutional name by volume, not by sector.
+  - {text: "Cnam", langs: [fr], search: true, search_every: 1, weight: 0.8,
+     query: 'Cnam (biologie OR biologistes OR labos OR "laboratoires d''analyses" OR NABM)',
+     require_context: ["biologie", "biologiste", "biologistes", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie", "labos", "labo", "laboratoires de ville"]}
+  - {text: "Assurance maladie", langs: [fr], search: true, search_every: 1, weight: 0.7,
+     query: '"Assurance maladie" (biologie OR biologistes OR labos OR "laboratoires d''analyses")',
+     require_context: ["biologie", "biologiste", "biologistes", "d'analyses", "d’analyses", "analyses médicales", "NABM", "prise de sang", "prises de sang", "laboratoire de biologie", "laboratoires de biologie", "labos", "labo", "laboratoires de ville"]}
   - {text: "UNCAM", langs: [fr], search: true, search_every: 4, weight: 0.8,
      require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "NABM", "laboratoire de biologie", "laboratoires de biologie"]}
   # the sector: only when the story is about tariffs, talks, budget or strikes
-  - {text: "biologie médicale", langs: [fr], search: true, search_every: 2, weight: 0.7,
+  - {text: "biologie médicale", langs: [fr], search: true, search_every: 1, weight: 0.7,
+     query: '"biologie médicale" (Cnam OR "Assurance maladie" OR PLFSS OR tarifs OR protocole OR baisse OR rentabilité)',
      require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
-  - {text: "biologiste", inflect: true, langs: [fr], search: true, search_every: 2, weight: 0.7,
+  - {text: "biologiste", inflect: true, langs: [fr], search: true, search_every: 1, weight: 0.7,
+     query: '(biologistes OR biologiste) (Cnam OR "Assurance maladie" OR PLFSS OR tarifs OR protocole OR grève OR amendement)',
      require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
   - {text: "laboratoires d'analyses", langs: [fr], search: true, search_every: 4, weight: 0.6,
      require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
@@ -40,6 +48,28 @@ aliases:
      require_context: ["Cnam", "Assurance maladie", "UNCAM", "Sécurité sociale", "PLFSS", "NABM", "nomenclature", "tarif", "tarifaire", "tarifaires", "cotation", "baisse", "protocole", "négociation", "convention", "conventionnel", "grève", "shutdown", "économie", "remboursement", "déremboursement", "financiarisation", "Igas", "IGF", "ministre", "Sénat", "décret", "Habert", "rabot"]}
   # the lab unions and the live policy threads
   - {text: "SDBIO", langs: [fr], search: true, search_every: 4, weight: 0.8}
+  # 13 Oct: the federation of lab unions and its president lead the talks with the Cnam
+  - {text: "Fédération de la biologie médicale", langs: [fr], search: true, search_every: 2, weight: 0.8}
+  - {text: "Blanchecotte", langs: [fr], search: true, search_every: 4, weight: 0.7,
+     require_context: ["biologie", "biologiste", "biologistes", "labos", "laboratoires", "Cnam", "Assurance maladie", "PLFSS"]}
+  # 13 Oct: the conventional meeting and the tariff-cut amendments; match only, the searches above find them
+  - {text: "réunion conventionnelle", langs: [fr], weight: 0.6,
+     require_context: ["biologie", "biologiste", "biologistes", "labos", "laboratoires de biologie"]}
+  - {text: "baisses de tarifs", langs: [fr], weight: 0.5,
+     require_context: ["PLFSS", "amendement", "amendements", "Cnam", "Uncam", "UNCAM", "Assurance maladie", "biologie", "biologistes"]}
+  - {text: "baisse des tarifs", langs: [fr], weight: 0.5,
+     require_context: ["PLFSS", "amendement", "amendements", "Cnam", "Uncam", "UNCAM", "Assurance maladie", "biologie", "biologistes"]}
+  # 13 Oct: French headlines say "labos" far more often than "laboratoires d'analyses"
+  - {text: "labos", langs: [fr], search: true, search_every: 1, weight: 0.6,
+     query: 'labos (Cnam OR "Assurance maladie" OR PLFSS OR tarifs OR biologie) -pharmaceutiques',
+     require_context: ["Cnam", "Assurance maladie", "UNCAM", "PLFSS", "NABM", "tarif", "tarifs", "biologie", "biologiste", "biologistes", "analyses", "prise de sang", "baisse", "grève", "protocole"]}
+  # the 12 Oct PLFSS amendments (Runel) cut tariffs where profitability is "manifestly excessive"
+  - {text: "rentabilité excessive", langs: [fr], search: true, search_every: 2, weight: 0.7,
+     query: '"rentabilité excessive" OR "rentabilité manifestement excessive" (tarifs OR PLFSS OR Uncam)',
+     require_context: ["biologie", "biologiste", "biologistes", "labos", "laboratoires", "imagerie", "radiolog", "tarif", "tarifs", "PLFSS", "Uncam", "UNCAM"]}
+  - {text: "PLFSS 2027", langs: [fr], search: true, search_every: 2, weight: 0.6,
+     query: '"PLFSS 2027" (biologie OR biologistes OR labos OR "laboratoires d''analyses")',
+     require_context: ["biologie", "biologiste", "biologistes", "labos", "d'analyses", "d’analyses", "NABM", "laboratoires de biologie"]}
   - {text: "SLBC", langs: [fr], weight: 0.6, require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "NABM"]}
   - {text: "financiarisation", langs: [fr], search: true, search_every: 4, weight: 0.6,
      require_context: ["biologie", "biologiste", "d'analyses", "d’analyses", "analyses médicales", "laboratoire de biologie", "laboratoires de biologie"]}
@@ -65,3 +95,8 @@ sources:
     - {url: "https://www.assurance-maladie.ameli.fr/presse", name: "Assurance Maladie press releases", tier: 0, country: FR, lang: fr, link_pattern: "assurance-maladie\\.ameli\\.fr/presse/.+"}
     - {url: "https://www.ameli.fr/laboratoire-d-analyses-medicales/actualites", name: "ameli.fr news for labs", tier: 0, country: FR, lang: fr, link_pattern: "/laboratoire-d-analyses-medicales/actualites/.+"}
     - {url: "https://sdbio.eu/category/fil-dinfo/", name: "SDBIO union news", tier: 2, country: FR, lang: fr, link_pattern: "sdbio\\.eu/\\d{4}/\\d{2}/\\d{2}/.+"}
+    # 13 Oct: egora (no working feed; rss.xml stops in Sep 2025) carried the 12 Oct PLFSS tariff-cut
+    # amendments. Its section pages show a date per article, which the dating step reads.
+    - {url: "https://www.egora.fr/actus-pro/politiques", name: "egora politiques", tier: 3, country: FR, lang: fr, link_pattern: "egora\\.fr/actus-pro/.+/.+"}
+    - {url: "https://www.egora.fr/actus-pro/vie-conventionnelle", name: "egora vie conventionnelle", tier: 3, country: FR, lang: fr, link_pattern: "egora\\.fr/actus-pro/.+/.+"}
+    - {url: "https://www.egora.fr/actus-pro/remuneration", name: "egora rémunération", tier: 3, country: FR, lang: fr, link_pattern: "egora\\.fr/actus-pro/.+/.+"}
