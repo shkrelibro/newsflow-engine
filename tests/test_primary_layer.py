@@ -154,7 +154,7 @@ def test_first_visit_under_backfill_takes_only_the_newest_links(cfg, tmp_path, f
     items, res = _page_job(http, store, page, backfill=True, seed_items=5)
     assert res.ok and len(items) == 5
     assert [it.link for it in items] == [f"https://acme.example/news/release-{i:02d}-a-headline-long-enough" for i in range(5)]
-    assert res.error == "seeded with the newest 5 of 20 article links"
+    assert res.error.startswith("seeded with the newest 5 of 20 article links")   # then the dating note (13 Oct)
     assert store.page_seen_count(page.url) == 21                 # every link is marked seen, nav included
 
     # the next visit is a normal one: a new link at the top is the event, the archive is not
