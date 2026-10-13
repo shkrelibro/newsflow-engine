@@ -386,5 +386,8 @@ def test_carry_forward_reoffers_rows_older_than_the_previous_window(tmp_path):
                           "--noise", str(REPO / "config" / "noise.yaml"), "--focus", "", "--prev", str(prev),
                           "--since", "2026-10-09T14:45:00+00:00", "--shortlist"],
                          capture_output=True, text=True, check=True).stdout
-    ids = {r["id"] for r in json.loads(out)["tier_a"]}
+    sl = json.loads(out)
+    # the shortlist reads ages against the real clock: once these rows are over 72 hours old they
+    # are offered under "late" rather than tier_a (13 October), which is still offered, not held
+    ids = {r["id"] for r in sl["tier_a"]} | {int(x.split("|")[0]) for x in sl.get("late") or []}
     assert ids == {1, 3}          # Saturday (outside the Sunday window) and Monday (new); Sunday was judged

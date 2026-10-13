@@ -22,6 +22,7 @@ from newsflow.store import Store
 
 REPO = Path(__file__).resolve().parent.parent
 NOW = datetime(2026, 10, 12, 20, 0, tzinfo=timezone.utc)
+TUE = datetime(2026, 10, 13, 20, 0, tzinfo=timezone.utc)   # carry tests: a weekday that is not Monday
 
 
 def _brief():
@@ -157,8 +158,8 @@ def test_the_cnam_day_headlines_match_and_the_noise_does_not(cfg):
 
 
 # ------------------------------------------------------------------ brief: expiry, lead age, lint
-def _row(rid, hours_old, route="googlenews", dated=True, nid="cnam"):
-    t = (NOW - timedelta(hours=hours_old)).isoformat()
+def _row(rid, hours_old, route="googlenews", dated=True, nid="cnam", now=TUE):
+    t = (now - timedelta(hours=hours_old)).isoformat()
     return {"id": rid, "nid": nid, "name": nid, "route": route, "source": "src",
             "published": t if dated else None, "seen": t}
 
@@ -167,12 +168,12 @@ def test_carried_lines_expire_and_the_lead_takes_only_fresh_articles():
     bb = _brief()
     rows = {"1": _row("1", 10), "2": _row("2", 60), "3": _row("3", 60), "4": _row("4", 40),
             "5": _row("5", 2, route="page", dated=False), "6": _row("6", 2, route="page", dated=False)}
-    j = {"so": {k: "line" for k in rows}, "fresh": ["3"], "lead": ["1", "2", "4", "5"],
+    j = {"so": {k: "line" for k in rows}, "fresh": ["3"], "added": ["3"], "lead": ["1", "2", "3", "4", "5"],
          "tags": {"6": ["date verified"]}}
-    expired = bb.expire_stale(j, rows, NOW)
-    assert set(expired) == {"2", "5"}                     # 2 carried at 60h; 5 undated newsroom, unchecked
-    assert set(j["so"]) == {"1", "3", "4", "6"}          # 3 rewritten this cut on a new development stays
-    assert j["lead"] == ["1"]                             # 4 is 40h old: on the page, not in the lead
+    expired = bb.expire_stale(j, rows, TUE)
+    assert set(expired) == {"2", "4", "5"}               # carried at 60h and 40h; 5 undated newsroom, unchecked
+    assert set(j["so"]) == {"1", "3", "6"}               # 3 is new to the page this cut: it publishes once
+    assert j["lead"] == ["1"]                             # 3 is 60h old: on the page, not in the lead
 
 
 def test_lint_blocks_an_old_lead_and_an_unchecked_newsroom_row():
@@ -180,14 +181,14 @@ def test_lint_blocks_an_old_lead_and_an_unchecked_newsroom_row():
     bb.EMPLOYER = None
     rows = {"1": _row("1", 50), "2": _row("2", 1, route="page", dated=False), "3": _row("3", 70)}
     j = {"lead": ["1"], "so": {"1": "Fitch cut it to B; bonds 2 pts lower", "2": "Release: notes tender at 101",
-                               "3": "Old line; bonds unchanged"}, "fresh": ["1", "2"]}
-    errors, warns = bb.lint(j, [], {"1": "cnam", "2": "adler", "3": "cnam"}, rows_by_id=rows, now=NOW)
+                               "3": "Old line; bonds unchanged"}, "fresh": ["1", "2", "3"], "added": ["1", "2"]}
+    errors, warns = bb.lint(j, [], {"1": "cnam", "2": "adler", "3": "cnam"}, rows_by_id=rows, now=TUE)
     text = " ".join(errors)
     assert "lead[1]: article is 50h old" in text and "so[2]: undated newsroom row" in text
     assert any(w.startswith("so[3]: article is 70h old and carried") for w in warns)
     j["tags"] = {"2": ["date verified"]}
     j["lead"] = []
-    errors, _ = bb.lint(j, [], {"1": "cnam", "2": "adler", "3": "cnam"}, rows_by_id=rows, now=NOW)
+    errors, _ = bb.lint(j, [], {"1": "cnam", "2": "adler", "3": "cnam"}, rows_by_id=rows, now=TUE)
     assert errors == []
 
 
