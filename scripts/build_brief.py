@@ -748,9 +748,60 @@ def load_prev(path: "Path | None") -> dict:
 # it left a 72-hour window, so the page only ever grew. Now a carried line expires once its article
 # is older than CARRY_MAX_AGE_H unless the cut rewrites it on a newer development, and the lead
 # takes only articles younger than LEAD_MAX_AGE_H.
-CARRY_MAX_AGE_H = 48.0
-LEAD_MAX_AGE_H = 36.0
+#
+# 13 October, evening: still too much old news (48 hours, and any rewrite reset the clock, so the
+# 8 October Cnam preview was on the page for five days). The desk's rule: carry a line 24 hours at
+# most, except on Mondays, when the page covers the whole weekend, back to Friday's last cut.
+# Rewriting a carried line no longer keeps it: a new development goes on its own, newer row. The
+# one exception is a line tagged "manual check, not collected by the engine" and rewritten this
+# cut, the way the desk waits on an outcome the engine cannot see (the Cnam meeting).
+CARRY_MAX_AGE_H = 24.0
+LEAD_MAX_AGE_H = 24.0
 LATE_MAX_AGE_H = 72.0      # older articles first seen now are offered as "late", never as news
+MANUAL_TAG = "manual check"
+
+try:
+    from zoneinfo import ZoneInfo
+    LONDON = ZoneInfo("Europe/London")
+except Exception:          # no tz database: UTC is within an hour of London, enough to find Monday
+    LONDON = timezone.utc
+
+
+def carry_cutoff(now: datetime, hours: float = CARRY_MAX_AGE_H) -> datetime:
+    """The oldest article a line may sit on: `hours` back, or from Saturday to Monday (London) back to
+    Friday's last scheduled cut when that is earlier, so the Monday page keeps the whole weekend's
+    newsflow. The writer's cron also fires at weekends; a Saturday or Sunday cut that expired
+    Saturday's lines would leave Monday nothing to carry."""
+    cut = now - timedelta(hours=hours)
+    wd = now.astimezone(LONDON).weekday()
+    if wd in (5, 6, 0):
+        fri = now.astimezone(LONDON).date() - timedelta(days=(wd - 4) % 7)
+        h, m = SLOTS_UTC[-1]
+        cut = min(cut, datetime(fri.year, fri.month, fri.day, h, m, tzinfo=timezone.utc))
+    return cut
+
+
+def carry_limit_h(now: datetime, hours: float = CARRY_MAX_AGE_H) -> float:
+    """CARRY_MAX_AGE_H, stretched at the weekend and on Monday to reach Friday's last cut."""
+    return (now - carry_cutoff(now, hours)).total_seconds() / 3600
+
+
+def auto_window_h(now: datetime, since: "datetime | None") -> float:
+    """The pile a cut reads with --window-hours auto. 72 hours when the cut reaches back over a gap
+    (Monday's first cut); on any other weekend or Monday cut, far enough to reach Friday's last cut,
+    because the Monday page carries the whole weekend (13 October, evening) and a row outside the
+    pile falls off the page; otherwise 24 hours. The carry limit, not the window, keeps the page fresh: the
+    12 October rule that kept 72 hours all Monday kept stale lines alive only because nothing
+    expired them then."""
+    window_h = 72.0 if since and (now - since) > timedelta(hours=20) else 24.0
+    lim = carry_limit_h(now)
+    if lim > CARRY_MAX_AGE_H + 0.5:
+        window_h = max(window_h, min(72.0, float(int(lim) + 1)))
+    return window_h
+
+
+def _manual(j: dict, i: str) -> bool:
+    return MANUAL_TAG in " ".join(map(str, (j.get("tags") or {}).get(str(i)) or [])).lower()
 
 
 def article_age_h(r: dict, now: datetime) -> "float | None":
@@ -765,16 +816,20 @@ def undated_newsroom_row(r: dict) -> bool:
 
 
 def expire_stale(j: dict, rows_by_id: dict, now: datetime) -> list[str]:
-    """Drop carried lines whose article is older than CARRY_MAX_AGE_H and was not rewritten this cut;
-    take lead items older than LEAD_MAX_AGE_H out of the lead. Returns the expired ids."""
+    """Drop carried lines whose article is older than the carry limit (24 hours; Monday back to
+    Friday's last cut). A line added this cut publishes once whatever its age; a carried line that
+    was rewritten does not get more time, unless it is a manual check rewritten this cut. Lead
+    items past the lead limit leave the lead. Returns the expired ids."""
     fresh = {str(x) for x in j.get("fresh") or []}
+    added = {str(x) for x in j.get("added", j.get("fresh")) or []}
+    carry_h, lead_h = carry_limit_h(now), carry_limit_h(now, LEAD_MAX_AGE_H)
     expired = []
     for i in list((j.get("so") or {}).keys()):
         r = rows_by_id.get(str(i))
-        if r is None or str(i) in fresh:
+        if r is None or str(i) in added or (str(i) in fresh and _manual(j, i)):
             continue
         age = article_age_h(r, now)
-        if age is not None and age > CARRY_MAX_AGE_H:
+        if age is not None and age > carry_h:
             expired.append(str(i))
             for k in ("so", "translate", "tags"):
                 (j.get(k) or {}).pop(str(i), None)
@@ -788,7 +843,7 @@ def expire_stale(j: dict, rows_by_id: dict, now: datetime) -> list[str]:
                 (j.get(k) or {}).pop(str(i), None)
     j["lead"] = [str(i) for i in j.get("lead") or []
                  if str(i) not in expired and not ((rows_by_id.get(str(i)) is not None)
-                 and (article_age_h(rows_by_id[str(i)], now) or 0) > LEAD_MAX_AGE_H)]
+                 and (article_age_h(rows_by_id[str(i)], now) or 0) > lead_h)]
     return expired
 
 
@@ -813,7 +868,9 @@ def merge_judgement(prev: dict, delta: dict) -> dict:
     if jf:
         out["judged_from"] = jf.isoformat(timespec="minutes") if isinstance(jf, datetime) else str(jf)
     out["drop"] = sorted(drop)          # the passes this cut recorded; the lint reads them, the page does not
-    out["fresh"] = sorted(str(i) for i in (delta.get("so") or {}))   # lines written this cut never expire
+    out["fresh"] = sorted(str(i) for i in (delta.get("so") or {}))   # lines written this cut
+    prev_so = {str(i) for i in (prev.get("so") or {})}
+    out["added"] = sorted(i for i in out["fresh"] if i not in prev_so)  # new to the page: publish once
     return out
 
 
@@ -909,11 +966,13 @@ def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] 
     if rows_by_id:
         now = now or datetime.now(timezone.utc)
         fresh = {str(x) for x in j.get("fresh") or []}
+        added = {str(x) for x in j.get("added", j.get("fresh")) or []}
+        carry_h, lead_h = carry_limit_h(now), carry_limit_h(now, LEAD_MAX_AGE_H)
         for k in j.get("lead") or []:
             r = rows_by_id.get(str(k))
             age = article_age_h(r, now) if r else None
-            if age is not None and age > LEAD_MAX_AGE_H:
-                errors.append(f"lead[{k}]: article is {age:.0f}h old; the lead takes only articles under {LEAD_MAX_AGE_H:.0f}h")
+            if age is not None and age > lead_h:
+                errors.append(f"lead[{k}]: article is {age:.0f}h old; the lead takes only articles under {lead_h:.0f}h")
         for k in so:
             r = rows_by_id.get(str(k))
             if not r:
@@ -923,8 +982,12 @@ def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] 
                 errors.append(f"so[{k}]: undated newsroom row ({r.get('source')}); open the article, confirm the date, "
                               f"tag it \"date verified\", or drop it")
             age = article_age_h(r, now)
-            if age is not None and age > CARRY_MAX_AGE_H and str(k) not in fresh:
-                warns.append(f"so[{k}]: article is {age:.0f}h old and carried; it expires at render unless rewritten on a new development")
+            # A carried line past the limit simply expires; the lint speaks only when the cut spent a
+            # rewrite on one, since that rewrite will not publish.
+            if (age is not None and age > carry_h and str(k) in fresh and str(k) not in added
+                    and not _manual(j, k)):
+                warns.append(f"so[{k}]: article is {age:.0f}h old and carried; rewriting does not keep it, it expires at "
+                             f"render (limit {carry_h:.0f}h): put the new development on its newer row")
     for ev in catalysts or []:
         if ev.get("due") not in ("today", "yesterday"):
             continue
@@ -1409,7 +1472,7 @@ def render(latest: dict, coverage: dict, j: dict, cut: str, since_hours: float =
     lead = [by_id[i] for i in lead_ids if i in by_id]
     if not lead and not j.get("so"):               # no judgement supplied: take the categorised ones
         lead = [r for r in P["A_rows"] if r["cats"] and not undated_newsroom_row(r)
-                and (article_age_h(r, now) or 0) <= LEAD_MAX_AGE_H][:6]
+                and (article_age_h(r, now) or 0) <= carry_limit_h(now, LEAD_MAX_AGE_H)][:6]
     lead_set = {r["id"] for r in lead}
     # Group the lead under its category, keeping the judgement's order within each group and the
     # order in which categories first appear. Run-length grouping alternated headings whenever a
@@ -1602,13 +1665,13 @@ def _dump_lines(obj: dict) -> str:
     return "{\n" + ",\n".join(parts) + "\n}\n"
 
 
-M_KEYS = ("id", "name", "focus", "title", "source", "grade", "sources", "signal", "new", "prev", "redater", "echo_n", "age_h", "undated")
+M_KEYS = ("id", "name", "focus", "title", "source", "grade", "sources", "signal", "new", "prev", "redater", "echo_n", "age_h", "undated", "expires")
 GRADE_RANK = {"premium": 0, "trade": 1, "press": 2, "": 3, "churn": 4, "junk": 5}
 A_KEYS = ("id", "name", "focus", "title", "source", "grade", "lang", "cats", "sources", "seen", "signal",
-          "redater", "standfirst", "watch", "new", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated")
+          "redater", "standfirst", "watch", "new", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated", "expires")
 C_KEYS = ("id", "name", "focus", "title", "source", "grade", "cats", "sources", "seen", "signal", "new",
-          "review", "why", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated")
-E_KEYS = ("id", "name", "comp", "focus", "title", "source", "seen", "signal", "new", "echo_n", "echo_titles", "review", "prev", "prev_so", "age_h", "undated")
+          "review", "why", "echo_n", "echo_titles", "prev", "prev_so", "age_h", "undated", "expires")
+E_KEYS = ("id", "name", "comp", "focus", "title", "source", "seen", "signal", "new", "echo_n", "echo_titles", "review", "prev", "prev_so", "age_h", "undated", "expires")
 
 
 def load_facts(path: "Path | None") -> list[dict]:
@@ -1677,9 +1740,7 @@ def main() -> int:
         print(f"prev: {'cut at ' + prev['cut_at'] + ', ' + str(len(prev.get('so') or {})) + ' published rows carried' if prev_at else 'no embedded judgement found, judging the full window'}",
               file=sys.stderr)
     if a.window_hours == "auto":
-        # 72 hours only when the cut reaches back over a gap (Monday's first cut); every other cut
-        # reads 24 hours. The 12 October rule that kept 72 hours all Monday kept stale lines alive.
-        window_h = 72.0 if since and (now - since) > timedelta(hours=20) else 24.0
+        window_h = auto_window_h(now, since)
     else:
         window_h = float(a.window_hours)
 
@@ -1781,8 +1842,11 @@ def main() -> int:
                         held_n += 1
                 P[key] = keep
         # Article age goes in front of the judge on every row: the lead takes under LEAD_MAX_AGE_H,
-        # a carried line expires past CARRY_MAX_AGE_H, and an older article first seen now is "late",
-        # offered as such and never as news. An undated newsroom row is flagged for a date check.
+        # a carried line expires past CARRY_MAX_AGE_H (Monday: back to Friday's last cut), and an
+        # older article first seen now is "late", offered as such and never as news. An undated
+        # newsroom row is flagged for a date check; a carried row past the limit is flagged
+        # "expires" so the judge knows it leaves the page at this render.
+        carry_h = carry_limit_h(now)
         late = []
         for key in ("A_rows", "C_rows", "A_echo_rows", "C_echo_rows"):
             keep = []
@@ -1790,6 +1854,8 @@ def main() -> int:
                 age = article_age_h(r, now)
                 r["age_h"] = round(age) if age is not None else None
                 r["undated"] = undated_newsroom_row(r)
+                if r.get("prev") and age is not None and age > carry_h:
+                    r["expires"] = True
                 if age is not None and age > LATE_MAX_AGE_H and not r.get("prev"):
                     late.append(f'{r["id"]}|{r["name"]}|{r["source"][:24]}|{r["age_h"]}h|{r["title"][:100]}')
                 else:
@@ -1810,7 +1876,8 @@ def main() -> int:
                      "since": since.isoformat(timespec="minutes") if since else None,
                      "window_hours": window_h, "new_tier_a": P["new_A"], "new_comps": P["new_C"],
                      "judged_from": (judged_from(prev).isoformat(timespec="minutes") if prev_at and judged_from(prev) else None),
-                     "held_judged_earlier": held_n},
+                     "held_judged_earlier": held_n,
+                     "carry_limit_h": round(carry_h), "lead_limit_h": round(carry_limit_h(now, LEAD_MAX_AGE_H))},
             "catalysts": load_catalysts(Path(a.catalysts) if a.catalysts else None, now),
             "focus": [{k: v for k, v in f.items() if v not in (None, "", 0, False) or k in ("ok_24h",)}
                       for f in focus_status(P, latest, coverage, [])],
