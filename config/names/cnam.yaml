@@ -59,6 +59,12 @@ aliases:
      require_context: ["PLFSS", "amendement", "amendements", "Cnam", "Uncam", "UNCAM", "Assurance maladie", "biologie", "biologistes"]}
   - {text: "baisse des tarifs", langs: [fr], weight: 0.5,
      require_context: ["PLFSS", "amendement", "amendements", "Cnam", "Uncam", "UNCAM", "Assurance maladie", "biologie", "biologistes"]}
+  # 13 Oct evening: the government's financialisation plan (Rist, Papin) reached egora with no lab
+  # word in the headline and the engine missed it; the full phrase is health-specific on its own
+  - {text: "financiarisation de la santé", langs: [fr], search: true, search_every: 4, weight: 0.7}
+  - {text: "financiarisation", langs: [fr], weight: 0.5,
+     require_context: ["santé", "soins", "médecins", "biologie", "biologistes", "laboratoires", "radiologues",
+                       "imagerie", "pharmacies", "professionnels de santé", "Rist", "Papin"]}
   # 13 Oct: French headlines say "labos" far more often than "laboratoires d'analyses"
   - {text: "labos", langs: [fr], search: true, search_every: 1, weight: 0.6,
      query: 'labos (Cnam OR "Assurance maladie" OR PLFSS OR tarifs OR biologie) -pharmaceutiques',
