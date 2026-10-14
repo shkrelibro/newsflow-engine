@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-14T18:20:43+00:00",
+ "generated_at": "2026-10-14T18:35:43+00:00",
  "alerts": [
   {
    "name_id": "advanz",
@@ -617,7 +617,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Air France-KLM\""
+      "googlenews:\"Air France-KLM\"",
+      "googlenews:(\"Air France-KLM\" OR \"Alten\" OR \"Brico Dépôt\" OR \"Centrakor\" OR \"Compagnie des Alpes\" OR \"Conforama\")"
      ],
      "alert_categories": [],
      "alert_candidate": false,
@@ -1964,7 +1965,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Eurofins Scientific\")",
-     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")",
+     "googlenews:\"Eurofins Scientific\""
     ],
     "alert_categories": [
      "m_and_a",
@@ -6137,6 +6139,55 @@
   {
    "name_id": "paypal",
    "name": "PayPal",
+   "cluster_id": 79598,
+   "primary": {
+    "id": 112794,
+    "title": "PayPal's Valuation Is Unreasonable, And A Potential Acquisition Could Rectify That (PYPL)",
+    "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQTTVkaFdvM1M1TXBLTHVqcWVfOEh3YkFPZ1ZuUXN3ZUd6T2l5aTVucjhCS0VkSngwUkJQdEJGcmU3eHlhcFBGbHAxRmNFQjN3bDJKYS0wQWhCb2wtRnFHM2owQ1pBXzVZbkFUbmRIdXI5SnF1dG8yUmlOaEU0UkE0c2NoQnQwdWJQRkR0R3NjeGFrc1FuUy1EbVh5WXpJdEEtUWxQZi12STByaTRITlBGOFNjaWM",
+    "raw_link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQTTVkaFdvM1M1TXBLTHVqcWVfOEh3YkFPZ1ZuUXN3ZUd6T2l5aTVucjhCS0VkSngwUkJQdEJGcmU3eHlhcFBGbHAxRmNFQjN3bDJKYS0wQWhCb2wtRnFHM2owQ1pBXzVZbkFUbmRIdXI5SnF1dG8yUmlOaEU0UkE0c2NoQnQwdWJQRkR0R3NjeGFrc1FuUy1EbVh5WXpJdEEtUWxQZi12STByaTRITlBGOFNjaWM?oc=5",
+    "source": "Seeking Alpha",
+    "domain": "seekingalpha.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-10-14T17:19:21+00:00",
+    "first_seen_at": "2026-10-14T18:25:46+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\")",
+    "tier_hint": null,
+    "summary": "PayPal's Valuation Is Unreasonable, And A Potential Acquisition Could Rectify That (PYPL) Seeking Alpha",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-10-14T17:19:21+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
    "cluster_id": 79428,
    "primary": {
     "id": 112501,
@@ -6158,7 +6209,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-     "googlenews:\"PayPal\""
+     "googlenews:\"PayPal\"",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "price_move"
@@ -6314,7 +6366,9 @@
     "alias": "Pfizer",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -6393,7 +6447,9 @@
      "alias": "Pfizer",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\")"
+     ],
      "alert_categories": [
       "workforce"
      ],
@@ -6574,7 +6630,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")"
+      "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+      "googlenews:\"Recordati\""
      ],
      "alert_categories": [
       "m_and_a"
@@ -7860,6 +7917,104 @@
     "GB"
    ],
    "latest": "2026-10-13T17:07:57+00:00"
+  },
+  {
+   "name_id": "welltower",
+   "name": "Welltower",
+   "cluster_id": 79601,
+   "primary": {
+    "id": 112798,
+    "title": "News | Welltower buys five retirement residences with Eastern Ontario portfolio purchase",
+    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNc3AyVHpiWGFKOGEzTW9DZy04SUthbkY5bGtqQ0ZOSTllN3ZxWTQ5RGFPN2F3Y3J6Xy1Mc2JnN0puMHd6LVZXalg4aUNqS0FJdGdfN1owMGRNaEw5cHh2VXl2elZzZTBmY3lvdFg0NEJ3cmxFS2xtc0R0ZHUzVnF4QlJkLXI4OFFTSVJGTGQxNG02Z3ItcU5vQTZxWUQ4aG8tSlpKUVdRRGZrU2kwNmM5U2hhZHg0eVdQaTJ1eGtPVQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNc3AyVHpiWGFKOGEzTW9DZy04SUthbkY5bGtqQ0ZOSTllN3ZxWTQ5RGFPN2F3Y3J6Xy1Mc2JnN0puMHd6LVZXalg4aUNqS0FJdGdfN1owMGRNaEw5cHh2VXl2elZzZTBmY3lvdFg0NEJ3cmxFS2xtc0R0ZHUzVnF4QlJkLXI4OFFTSVJGTGQxNG02Z3ItcU5vQTZxWUQ4aG8tSlpKUVdRRGZrU2kwNmM5U2hhZHg0eVdQaTJ1eGtPVQ?oc=5",
+    "source": "CoStar",
+    "domain": "costar.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-10-14T18:24:18+00:00",
+    "first_seen_at": "2026-10-14T18:25:46+00:00",
+    "route": "googlenews",
+    "query": "(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")",
+    "tier_hint": null,
+    "summary": "News | Welltower buys five retirement residences with Eastern Ontario portfolio purchase CoStar",
+    "alias": "Welltower",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Welltower"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-10-14T18:24:18+00:00"
+  },
+  {
+   "name_id": "welltower",
+   "name": "Welltower",
+   "cluster_id": 79600,
+   "primary": {
+    "id": 112797,
+    "title": "Brookdale to Acquire 30 Communities From Welltower for $290M",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPQ3NUaHZzMl8taWw4dk5SWUIxWkhVMllGcDBBZlJFRDJCdjE2TlZMVi1nbDlXeFR2elh3VFVSMnJHUlBINHdZdkR5NFJ6YU5OWGVBNlFSakJiSndhb2pySndhZWVsUUZSZ0txYVYxcDA3YnJUZ19PangybG9seGVzbWM2ellrR3M5WjNxNWtfWTd5MGVXd180OVQ2UQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPQ3NUaHZzMl8taWw4dk5SWUIxWkhVMllGcDBBZlJFRDJCdjE2TlZMVi1nbDlXeFR2elh3VFVSMnJHUlBINHdZdkR5NFJ6YU5OWGVBNlFSakJiSndhb2pySndhZWVsUUZSZ0txYVYxcDA3YnJUZ19PangybG9seGVzbWM2ellrR3M5WjNxNWtfWTd5MGVXd180OVQ2UQ?oc=5",
+    "source": "Seniors Housing Business",
+    "domain": "seniorshousingbusiness.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-10-14T18:02:44+00:00",
+    "first_seen_at": "2026-10-14T18:25:46+00:00",
+    "route": "googlenews",
+    "query": "(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")",
+    "tier_hint": null,
+    "summary": "Brookdale to Acquire 30 Communities From Welltower for $290M Seniors Housing Business",
+    "alias": "Welltower",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Welltower"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-10-14T18:02:44+00:00"
   },
   {
    "name_id": "welltower",
