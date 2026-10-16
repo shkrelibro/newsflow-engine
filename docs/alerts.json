@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-16T17:17:52+00:00",
+ "generated_at": "2026-10-16T17:32:50+00:00",
  "alerts": [
   {
    "name_id": "aedifica",
@@ -3876,7 +3876,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "price_move"
@@ -3886,8 +3887,36 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 119386,
+     "title": "Novavax Plunges 12% as Selloff Hits Vaccine Makers; Moderna Tumbles 10%, Pfizer Holds Steady",
+     "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNWXJXZm16MHRRU0g0ejI4T3JlRkZNSlFBZUhvYTh1RVpiZjRGaVVlZVhXc19icDlTRFk0U3BWbUl5Q0dSaWNhS0FGVnpKSmpmN2RzQnlxLTVKaklMcFllNEtGQ2cyNVcyVmFsV1d5cGdPaDFxWjNQTUZPTVd0VEJtVg",
+     "raw_link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNWXJXZm16MHRRU0g0ejI4T3JlRkZNSlFBZUhvYTh1RVpiZjRGaVVlZVhXc19icDlTRFk0U3BWbUl5Q0dSaWNhS0FGVnpKSmpmN2RzQnlxLTVKaklMcFllNEtGQ2cyNVcyVmFsV1d5cGdPaDFxWjNQTUZPTVd0VEJtVg?oc=5",
+     "source": "AOL.com",
+     "domain": "aol.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-10-16T16:44:10+00:00",
+     "first_seen_at": "2026-10-16T17:22:53+00:00",
+     "route": "googlenews",
+     "query": "(\"PayPal\" OR \"Pfizer\")",
+     "tier_hint": null,
+     "summary": "Novavax Plunges 12% as Selloff Hits Vaccine Makers; Moderna Tumbles 10%, Pfizer Holds Steady AOL.com",
+     "alias": "Pfizer",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "price_move"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "price_move"
@@ -3902,7 +3931,7 @@
    "countries": [
     "US"
    ],
-   "latest": "2026-10-16T16:44:00+00:00"
+   "latest": "2026-10-16T16:44:10+00:00"
   },
   {
    "name_id": "pfizer",
@@ -4793,6 +4822,55 @@
     "SE"
    ],
    "latest": "2026-10-16T00:00:00+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
+   "cluster_id": 83944,
+   "primary": {
+    "id": 119376,
+    "title": "12 Attacks on Ships in One Week as Hormuz Shipping Plunges 70%",
+    "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQYmhmOUNqMXV3ZTZNdkVrRHp1OHIwcmhoR25WM2Q4bEc3VWhYd2Y0M09JYWI3LTZwX3FFMHRfaUFuWU5DZXNjOVF5WUNJYl9tcXhMVGZvVnZyaGlJWDIyUWFac0E4Z0ZxSHkwMHJodlNvNlFkRUFIZEtheHdfRU9ibV8zMXhqbGtHQ0x1OTlQWFNPd2ZJVVgwangtU2k0OEdh",
+    "raw_link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQYmhmOUNqMXV3ZTZNdkVrRHp1OHIwcmhoR25WM2Q4bEc3VWhYd2Y0M09JYWI3LTZwX3FFMHRfaUFuWU5DZXNjOVF5WUNJYl9tcXhMVGZvVnZyaGlJWDIyUWFac0E4Z0ZxSHkwMHJodlNvNlFkRUFIZEtheHdfRU9ibV8zMXhqbGtHQ0x1OTlQWFNPd2ZJVVgwangtU2k0OEdh?oc=5",
+    "source": "Arab Times Kuwait News",
+    "domain": "arabtimesonline.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-16T16:37:12+00:00",
+    "first_seen_at": "2026-10-16T17:22:53+00:00",
+    "route": "googlenews",
+    "query": "\"Strait of Hormuz\"",
+    "tier_hint": null,
+    "summary": "12 Attacks on Ships in One Week as Hormuz Shipping Plunges 70% Arab Times Kuwait News",
+    "alias": "Hormuz",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-16T16:37:12+00:00"
   },
   {
    "name_id": "sector_jet_fuel",
@@ -5855,7 +5933,9 @@
     "alias": "Wizz Air",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Wizz Air\")"
+    ],
     "alert_categories": [
      "management"
     ],
