@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-16T00:34:31+00:00",
+ "generated_at": "2026-10-16T00:49:32+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -1640,7 +1640,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"CMA CGM\" site:splash247.com"
+     "googlenews:\"CMA CGM\" site:splash247.com",
+     "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -3426,7 +3427,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"1-2-3.tv\" OR \"ACS Dobfar\" OR \"Adyen\" OR \"Aedifica\" OR \"Air France-KLM\" OR \"Alten\")"
+     "googlenews:(\"1-2-3.tv\" OR \"ACS Dobfar\" OR \"Adyen\" OR \"Aedifica\" OR \"Air France-KLM\" OR \"Alten\")",
+     "googlenews:(\"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\" OR \"Maisons du Monde\" OR \"Maje\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -4091,7 +4093,9 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\" OR \"Maisons du Monde\" OR \"Maje\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -5749,58 +5753,6 @@
    "latest": "2026-10-15T03:00:00+00:00"
   },
   {
-   "name_id": "pfizer",
-   "name": "Pfizer",
-   "cluster_id": 77187,
-   "primary": {
-    "id": 113650,
-    "title": "Pfizer cuts 150 jobs at Portage factory",
-    "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOVW1zYnJ4VHZhRkV6ZDYxZDk1cVJKWFVuYW9ia3l1QUxTT0VTbVNuNEd3Sm1IN0U5TUIydE0zNVFScTRLNFRYVHA5ZWRqUXZCVWYtZEdzWko4ajFHWFQzOS1JcWRpZ3VGUld6YkpXd2t4X0NrVHVVSmNYV0NOVV9sTjQxNGdfZ2tDWVlJREV5cC1HTElKclFOQnZySmNGMTlfVnBNRHhyQmZJT0xsZVVwd1JTOXRnYkxnMHJXa2t4UzU0U2NhYjFvWUxxbEtGaF9SQ05vb0txTXBtdl9UM296eHRTWnpOWGtIQmZaX2ZrZy0",
-    "raw_link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOVW1zYnJ4VHZhRkV6ZDYxZDk1cVJKWFVuYW9ia3l1QUxTT0VTbVNuNEd3Sm1IN0U5TUIydE0zNVFScTRLNFRYVHA5ZWRqUXZCVWYtZEdzWko4ajFHWFQzOS1JcWRpZ3VGUld6YkpXd2t4X0NrVHVVSmNYV0NOVV9sTjQxNGdfZ2tDWVlJREV5cC1HTElKclFOQnZySmNGMTlfVnBNRHhyQmZJT0xsZVVwd1JTOXRnYkxnMHJXa2t4UzU0U2NhYjFvWUxxbEtGaF9SQ05vb0txTXBtdl9UM296eHRTWnpOWGtIQmZaX2ZrZy0?oc=5",
-    "source": "wwmtarc",
-    "domain": "arcwestmichigan.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-14T03:29:41+00:00",
-    "first_seen_at": "2026-10-15T00:36:54+00:00",
-    "route": "googlenews",
-    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-    "tier_hint": null,
-    "summary": "Pfizer cuts 150 jobs at Portage factory wwmtarc",
-    "alias": "Pfizer",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\")",
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Pfizer"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-14T03:29:41+00:00"
-  },
-  {
    "name_id": "planetfitness",
    "name": "Planet Fitness",
    "cluster_id": 80450,
@@ -7416,57 +7368,6 @@
     "US"
    ],
    "latest": "2026-10-15T15:30:31+00:00"
-  },
-  {
-   "name_id": "tagimmobilien",
-   "name": "TAG Immobilien",
-   "cluster_id": 80097,
-   "primary": {
-    "id": 113641,
-    "title": "TAG Immobilien AG : Jefferies reiterates its Buy rating",
-    "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNU3A2MC1FUWpRUDdtSzg4U3dtQzEtWllEUmJXbWg5OU1ReU83T2luREh4bmMtRnFvYXg0NTZvWkZuMFZCYzlLYTFrdDd4UEFWQ01Lb05wQnFMQlZ0NjhWcWdBN2UtNU5PM21qVnJlZHFNVVNJVWVaZnExRzU0RFhLMlRIWFpnNVgwalJRdy1SU0lFNGEtUWRka0drZXI4bVMxVm1GNlBGcU5RUQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNU3A2MC1FUWpRUDdtSzg4U3dtQzEtWllEUmJXbWg5OU1ReU83T2luREh4bmMtRnFvYXg0NTZvWkZuMFZCYzlLYTFrdDd4UEFWQ01Lb05wQnFMQlZ0NjhWcWdBN2UtNU5PM21qVnJlZHFNVVNJVWVaZnExRzU0RFhLMlRIWFpnNVgwalJRdy1SU0lFNGEtUWRka0drZXI4bVMxVm1GNlBGcU5RUQ?oc=5",
-    "source": "www.marketscreener.com",
-    "domain": "marketscreener.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-14T20:55:38+00:00",
-    "first_seen_at": "2026-10-15T00:36:54+00:00",
-    "route": "googlenews",
-    "query": "(\"Stripe\" OR \"SumUp\" OR \"Superdrug\" OR \"Swarovski\" OR \"Swiss Medical Network\" OR \"TAG Immobilien\")",
-    "tier_hint": null,
-    "summary": "TAG Immobilien AG : Jefferies reiterates its Buy rating www.marketscreener.com",
-    "alias": "TAG Immobilien",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Stripe\" OR \"SumUp\" OR \"Superdrug\" OR \"Swarovski\" OR \"Swiss Medical Network\" OR \"TAG Immobilien\")"
-    ],
-    "alert_categories": [
-     "rating"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "rating"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "TAG Immobilien"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-14T20:55:38+00:00"
   },
   {
    "name_id": "tesco",
