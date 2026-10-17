@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-17T08:08:36+00:00",
+ "generated_at": "2026-10-17T08:23:48+00:00",
  "alerts": [
   {
    "name_id": "advanz",
@@ -1389,7 +1389,9 @@
     "alias": "Danone",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -4277,6 +4279,55 @@
     "CH"
    ],
    "latest": "2026-10-16T08:29:13+00:00"
+  },
+  {
+   "name_id": "sector_property_credit",
+   "name": "Property credit, Nordic and German (sector)",
+   "cluster_id": 84746,
+   "primary": {
+    "id": 120576,
+    "title": "Fastighetskoncern begärd i konkurs – mångmiljonskulder",
+    "url": "https://dagensps.se/varlden/fastighetskoncern-begard-i-konkurs-mangmiljonskulder",
+    "raw_link": "https://www.dagensps.se/varlden/fastighetskoncern-begard-i-konkurs-mangmiljonskulder/",
+    "source": "Dagens PS",
+    "domain": "dagensps.se",
+    "country": "SE",
+    "lang": "sv",
+    "published_at": "2026-10-17T08:12:55+00:00",
+    "first_seen_at": "2026-10-17T08:13:51+00:00",
+    "route": "rss",
+    "query": "https://www.dagensps.se/feed",
+    "tier_hint": 3,
+    "summary": "En fastighetskoncern med 27 dotterbolag har begärts i konkurs. Koncernen har mångmiljonskulder och Kronofogden hittar inga pengar. Det är Annika Backlund AB, en fastighetskoncern med 27 dotterbolag, som begärts i konkurs. Den konkreta anledningen till konkursen är att ett annat fastighetsbolag vänt sig till tingsrätten efter att inte ha fått sina fakturor betalda. Totalt är […]",
+    "alias": "fastighetsbolag",
+    "alias_where": "summary",
+    "confidence": 0.42,
+    "also_routes": [],
+    "alert_categories": [
+     "restructuring"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "restructuring"
+   ],
+   "max_confidence": 0.42,
+   "aliases": [
+    "fastighetsbolag"
+   ],
+   "languages": [
+    "sv"
+   ],
+   "countries": [
+    "SE"
+   ],
+   "latest": "2026-10-17T08:12:55+00:00"
   },
   {
    "name_id": "sodexo",
