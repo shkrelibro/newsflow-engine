@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-18T20:58:43+00:00",
+ "generated_at": "2026-10-18T21:13:44+00:00",
  "alerts": [
   {
    "name_id": "booking",
@@ -23,7 +23,9 @@
     "alias": "Booking",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -495,6 +497,55 @@
   {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
+   "cluster_id": 86311,
+   "primary": {
+    "id": 122799,
+    "title": "Iran war: Saudi helicopter crash kills two as tanker attacks threaten Hormuz",
+    "url": "https://hellenicshippingnews.com/iran-war-saudi-helicopter-crash-kills-two-as-tanker-attacks-threaten-hormuz",
+    "raw_link": "https://www.hellenicshippingnews.com/iran-war-saudi-helicopter-crash-kills-two-as-tanker-attacks-threaten-hormuz/",
+    "source": "Hellenic Shipping News Worldwide",
+    "domain": "hellenicshippingnews.com",
+    "country": "GR",
+    "lang": "en",
+    "published_at": "2026-10-18T21:00:42+00:00",
+    "first_seen_at": "2026-10-18T21:03:46+00:00",
+    "route": "rss",
+    "query": "https://www.hellenicshippingnews.com/feed/",
+    "tier_hint": 4,
+    "summary": "Two Saudi military personnel were killed in a helicopter crash near Yemen on Sunday, as regional fighting intensified and tanker attacks threatened shipping through the Strait of Hormuz. The Saudi-led coalition said an AH-6i reconnaissance helicopter crashed in Najran due to a technical malfunction, killing both crew members. Coalition spokesman Major General Turki al-Maliki said ...",
+    "alias": "Hormuz",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GR"
+   ],
+   "latest": "2026-10-18T21:00:42+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
    "cluster_id": 85770,
    "primary": {
     "id": 122018,
@@ -856,57 +907,6 @@
     "DE"
    ],
    "latest": "2026-10-18T05:00:00+00:00"
-  },
-  {
-   "name_id": "sector_jet_fuel",
-   "name": "Jet fuel and kerosene (sector)",
-   "cluster_id": 85406,
-   "primary": {
-    "id": 121517,
-    "title": "Dangote Refinery’s Pricing Formula Hurting Jet Fuel Marketers — CITA Chairman",
-    "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQWEptTnV1S0ttaG15ckcxck93YjNaTjBGNE1mWUZ0UWtNRlF5Rm5laWgtamdyNkdEbldONkVDY3dQTlV1djRlc3JfYk9tWEFvZER0NWpncm9COHM5bjdyMl9neHhrajBJUFJRMmxXcExQa3NualdrTmtMR09uaHduaWJkbTZMYkxfcGxuYTJDckVxRERnY3dMOU42Yk1NVXVsRGxVRA",
-    "raw_link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQWEptTnV1S0ttaG15ckcxck93YjNaTjBGNE1mWUZ0UWtNRlF5Rm5laWgtamdyNkdEbldONkVDY3dQTlV1djRlc3JfYk9tWEFvZER0NWpncm9COHM5bjdyMl9neHhrajBJUFJRMmxXcExQa3NualdrTmtMR09uaHduaWJkbTZMYkxfcGxuYTJDckVxRERnY3dMOU42Yk1NVXVsRGxVRA?oc=5",
-    "source": "Newsmakers",
-    "domain": "newsmakerslive.org",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-17T19:39:04+00:00",
-    "first_seen_at": "2026-10-17T21:12:00+00:00",
-    "route": "googlenews",
-    "query": "(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")",
-    "tier_hint": null,
-    "summary": "Dangote Refinery’s Pricing Formula Hurting Jet Fuel Marketers — CITA Chairman Newsmakers",
-    "alias": "jet fuel",
-    "alias_where": "title",
-    "confidence": 0.8,
-    "also_routes": [
-     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 0.8,
-   "aliases": [
-    "jet fuel"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-17T19:39:04+00:00"
   },
   {
    "name_id": "sector_property_credit",
@@ -1273,58 +1273,6 @@
     "GB"
    ],
    "latest": "2026-10-18T16:47:49+00:00"
-  },
-  {
-   "name_id": "unilever",
-   "name": "Unilever",
-   "cluster_id": 85148,
-   "primary": {
-    "id": 121521,
-    "title": "FSSAI issues notices to Nestlé India and Hindustan Unilever, suspends two licences",
-    "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPcnNCbW9EbzBaQnlVd1VzT21zdmJYNlFzem5qQzBvVURucjZjbDRSaGZnTVhkVEVUdnhDdGFrbksyUFBPd3pTdUdhNmhfVXdMWTU5MmR4cXE1SXpFVjAwLVJ1ODloVWxXZ1VQTFNsRXVrNk9NdmFYOE9KYmJpUTNQRHgteHVvNjRYWm9VaGxRNmlXS3J1Wk1EU0MzSEVreUJBU1A3Nl9CdWZwWElzVXdlbGV5a1c4Vjlvam44bjNaUzBQLVFsSXluOVZwaw",
-    "raw_link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPcnNCbW9EbzBaQnlVd1VzT21zdmJYNlFzem5qQzBvVURucjZjbDRSaGZnTVhkVEVUdnhDdGFrbksyUFBPd3pTdUdhNmhfVXdMWTU5MmR4cXE1SXpFVjAwLVJ1ODloVWxXZ1VQTFNsRXVrNk9NdmFYOE9KYmJpUTNQRHgteHVvNjRYWm9VaGxRNmlXS3J1Wk1EU0MzSEVreUJBU1A3Nl9CdWZwWElzVXdlbGV5a1c4Vjlvam44bjNaUzBQLVFsSXluOVZwaw?oc=5",
-    "source": "Business Upturn",
-    "domain": "businessupturn.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-17T15:32:51+00:00",
-    "first_seen_at": "2026-10-17T21:12:00+00:00",
-    "route": "googlenews",
-    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-    "tier_hint": null,
-    "summary": "FSSAI issues notices to Nestlé India and Hindustan Unilever, suspends two licences Business Upturn",
-    "alias": "Unilever",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-     "googlenews:\"Dr. Reddy's\""
-    ],
-    "alert_categories": [
-     "regulatory"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "regulatory"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Unilever"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-17T15:32:51+00:00"
   },
   {
    "name_id": "vistry",
