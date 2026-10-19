@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T11:27:58+00:00",
+ "generated_at": "2026-10-19T11:42:49+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -708,7 +708,9 @@
     "alias": "HelloFresh",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.theguardian.com/uk/business/rss"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -789,7 +791,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Intrum\""
+     "googlenews:\"Intrum\"",
+     "googlenews:(\"Golden Goose\" OR \"Intrum\" OR \"iQera\" OR \"Kiloutou\" OR \"Merlin Entertainments\" OR \"PRA Group\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -839,7 +842,9 @@
     "alias": "ISS",
     "alias_where": "summary",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.theguardian.com/uk/business/rss"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -2607,6 +2612,55 @@
     "GB"
    ],
    "latest": "2026-10-18T17:34:59+00:00"
+  },
+  {
+   "name_id": "vonovia",
+   "name": "Vonovia",
+   "cluster_id": 87276,
+   "primary": {
+    "id": 124103,
+    "title": "Der Börsen-Tag: Vonovia: Vergesellschaftung hält vor Gericht nicht stand",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNZVh6VjFocXN4TElhT3ZDV2VjdmxXNC1LUWRvWVd6MDd1T2N3MkUtcGZMV0lCdkQ5c1A2dl8zOFVnalduZUFWeExmV2gyQkJnZHVIRlI2aS14SjBNaUZwMU8waFprRmtpZ1JCUEtWTjFSNkxMd2NnZ0FxWVI3Q1JrVjVNaGlBcTgzQ1Y4V0IzcGZfMUllaTFrS2F0ODltNXdyS2xtX3dtb1ZFUTVseGl3bk9tWXJlYmM1MjFN",
+    "raw_link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNZVh6VjFocXN4TElhT3ZDV2VjdmxXNC1LUWRvWVd6MDd1T2N3MkUtcGZMV0lCdkQ5c1A2dl8zOFVnalduZUFWeExmV2gyQkJnZHVIRlI2aS14SjBNaUZwMU8waFprRmtpZ1JCUEtWTjFSNkxMd2NnZ0FxWVI3Q1JrVjVNaGlBcTgzQ1Y4V0IzcGZfMUllaTFrS2F0ODltNXdyS2xtX3dtb1ZFUTVseGl3bk9tWXJlYmM1MjFN?oc=5",
+    "source": "n-tv.de",
+    "domain": "n-tv.de",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-10-19T11:13:40+00:00",
+    "first_seen_at": "2026-10-19T11:32:51+00:00",
+    "route": "googlenews",
+    "query": "\"Vonovia\"",
+    "tier_hint": null,
+    "summary": "Der Börsen-Tag: Vonovia: Vergesellschaftung hält vor Gericht nicht stand n-tv.de",
+    "alias": "Vonovia",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Vonovia"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-10-19T11:13:40+00:00"
   }
  ]
 }
