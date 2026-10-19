@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T01:28:44+00:00",
+ "generated_at": "2026-10-19T01:43:44+00:00",
  "alerts": [
   {
    "name_id": "booking",
@@ -127,7 +127,9 @@
     "alias": "ISS",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://economictimes.indiatimes.com/rssfeedsdefault.cms"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -646,7 +648,9 @@
      "alias": "Strait of Hormuz",
      "alias_where": "title",
      "confidence": 0.7,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Strait of Hormuz\""
+     ],
      "alert_categories": [
       "workforce"
      ],
@@ -695,7 +699,9 @@
     "alias": "Hormuz",
     "alias_where": "title",
     "confidence": 0.6,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Strait of Hormuz\""
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -1167,7 +1173,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Stripe\""
+      "googlenews:\"Stripe\"",
+      "googlenews:(\"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\" OR \"Univar\")"
      ],
      "alert_categories": [
       "price_move"
