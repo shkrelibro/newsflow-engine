@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T15:42:49+00:00",
+ "generated_at": "2026-10-19T15:55:19+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -1315,7 +1315,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")",
-     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")"
+     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")",
+     "googlenews:\"Labcorp\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -1785,7 +1786,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\" OR \"Royal Caribbean\")",
-     "googlenews:\"Quest Diagnostics\""
+     "googlenews:\"Quest Diagnostics\"",
+     "googlenews:(\"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\" OR \"Raízen\" OR \"Randstad\")"
     ],
     "alert_categories": [
      "rating"
@@ -2304,7 +2306,9 @@
     "alias": "freight rates",
     "alias_where": "title",
     "confidence": 0.8,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -2463,6 +2467,55 @@
     "GB"
    ],
    "latest": "2026-10-19T12:19:45+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
+   "cluster_id": 87863,
+   "primary": {
+    "id": 124889,
+    "title": "Global Trade Faces A Shipping Cost Squeeze As Freight Rates Surge 130%",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMVd1TUt1STh6c3VyakRkRWtHNXBhS0liRnl5V0xacThCZXlneGM3bklCaHBaSnFpYkJYWkhZaWl0aWRvQmFWY2JZTktTVERmcDYzVTNDUnhoc1UyRzdCSmZGd0h5Y2RoWk50MUF1OGtOQ1FxU3VfbGhkWWxldnRld0Z3U2o0Z2NEUG5UblNfNDR5OXRSVXd3LXhqaTR1cUxQTEJlTGtHX01lTWFEODFPVEN5cw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMVd1TUt1STh6c3VyakRkRWtHNXBhS0liRnl5V0xacThCZXlneGM3bklCaHBaSnFpYkJYWkhZaWl0aWRvQmFWY2JZTktTVERmcDYzVTNDUnhoc1UyRzdCSmZGd0h5Y2RoWk50MUF1OGtOQ1FxU3VfbGhkWWxldnRld0Z3U2o0Z2NEUG5UblNfNDR5OXRSVXd3LXhqaTR1cUxQTEJlTGtHX01lTWFEODFPVEN5cw?oc=5",
+    "source": "BW Businessworld",
+    "domain": "businessworld.in",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-19T11:30:05+00:00",
+    "first_seen_at": "2026-10-19T15:45:20+00:00",
+    "route": "googlenews",
+    "query": "(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")",
+    "tier_hint": null,
+    "summary": "Global Trade Faces A Shipping Cost Squeeze As Freight Rates Surge 130% BW Businessworld",
+    "alias": "freight rates",
+    "alias_where": "title",
+    "confidence": 0.8,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 0.8,
+   "aliases": [
+    "freight rates"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-19T11:30:05+00:00"
   },
   {
    "name_id": "sector_container_freight",
@@ -3371,6 +3424,55 @@
   {
    "name_id": "unilever",
    "name": "Unilever",
+   "cluster_id": 87874,
+   "primary": {
+    "id": 124901,
+    "title": "Exclusive | Unilever Agrees to Sell Welly Bandage Business to Private-Equity Firm",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXBaU1gxY2NFTlFoQ2FPQ3NXbllFVzBqZ0dLTHRwSTdsYzlBUGpUQ2pIel92YkYybWk3ZEEtT0pab1NRV0JsOUxDZFNlUVlXU1dMWmU3V1BZN1ozS3lTZlBObjdLcnpUd1VZUHBOQktZdVFaWlc1dzlnOHh6Zno2dFlqRGI2RHo1cF9NVmJFQ09RSnpFSTlCXzVTNUM5TDBiNWhXSjI2UXJDZFhTRWc0UjBvYw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPTXBaU1gxY2NFTlFoQ2FPQ3NXbllFVzBqZ0dLTHRwSTdsYzlBUGpUQ2pIel92YkYybWk3ZEEtT0pab1NRV0JsOUxDZFNlUVlXU1dMWmU3V1BZN1ozS3lTZlBObjdLcnpUd1VZUHBOQktZdVFaWlc1dzlnOHh6Zno2dFlqRGI2RHo1cF9NVmJFQ09RSnpFSTlCXzVTNUM5TDBiNWhXSjI2UXJDZFhTRWc0UjBvYw?oc=5",
+    "source": "WSJ",
+    "domain": "wsj.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-19T15:00:00+00:00",
+    "first_seen_at": "2026-10-19T15:45:20+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+    "tier_hint": null,
+    "summary": "Exclusive | Unilever Agrees to Sell Welly Bandage Business to Private-Equity Firm WSJ",
+    "alias": "Unilever",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Unilever"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-19T15:00:00+00:00"
+  },
+  {
+   "name_id": "unilever",
+   "name": "Unilever",
    "cluster_id": 87671,
    "primary": {
     "id": 124625,
@@ -3390,7 +3492,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -3748,7 +3852,9 @@
     "alias": "Worldline",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Worldline\""
+    ],
     "alert_categories": [
      "price_move"
     ],
