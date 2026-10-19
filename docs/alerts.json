@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T13:57:49+00:00",
+ "generated_at": "2026-10-19T14:12:49+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -502,7 +502,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Gifi\""
+     "googlenews:\"Gifi\"",
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
     ],
     "alert_categories": [
      "litigation"
@@ -605,7 +606,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Gifi\""
+     "googlenews:\"Gifi\"",
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
     ],
     "alert_categories": [
      "restructuring"
@@ -868,7 +870,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:\"HelloFresh\"",
-     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")"
+     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")",
+     "googlenews:(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\")"
     ],
     "alert_categories": [
      "litigation"
@@ -1157,7 +1160,9 @@
     "alias": "Labcorp",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1674,7 +1679,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\")"
+     "googlenews:(\"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\")",
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
     ],
     "alert_categories": [
      "price_move"
@@ -2794,6 +2800,33 @@
    },
    "also": [
     {
+     "id": 124543,
+     "title": "Stablecoin supply stalls, but payments jump 45% as Visa, Mastercard and Stripe connect crypto to cash",
+     "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE82TUY3WUZVcHRsSld4WDBfTlp1aWRWclRvcm83dXRiY0dZYkJMc0VtTG1pcHM2V3ZfNTd5S1BpM2FIZ3ZjN2tYcU9pUEoxVVpaak1VcTgxcw",
+     "raw_link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE82TUY3WUZVcHRsSld4WDBfTlp1aWRWclRvcm83dXRiY0dZYkJMc0VtTG1pcHM2V3ZfNTd5S1BpM2FIZ3ZjN2tYcU9pUEoxVVpaak1VcTgxcw?oc=5",
+     "source": "Cryptonews.net",
+     "domain": "cryptonews.net",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-10-18T14:31:14+00:00",
+     "first_seen_at": "2026-10-19T14:02:51+00:00",
+     "route": "googlenews",
+     "query": "(\"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\" OR \"Univar\")",
+     "tier_hint": null,
+     "summary": "Stablecoin supply stalls, but payments jump 45% as Visa, Mastercard and Stripe connect crypto to cash Cryptonews.net",
+     "alias": "Stripe",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "price_move"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
      "id": 122930,
      "title": "Stablecoin Payments Jump 45% to $482B as Visa, Mastercard, Stripe Connect Crypto to Cash: 5 outlets compared",
      "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPcGlibjRwRzU3a3k4d1JnNVpUT3JlNnhDa0JrTlN0U1lQeG1mOEdtdFhLRW03djdpNkVWcWJmbnk5UmJ0OGc0bGU0SnAtWllLdjNXRjdyM3JiUmY2cDNKNzkzX2h1bXdpaHBvQjQ5TnRPTXpDdlIxVW9qQlM5bVhkQm5kR2xBR1NQdDBkQzRCY25wR3JmUm0ybHI4T2VIX2RjeEVfcVdNZkRodmxVbHFtaHJrelNjNXU5N0VoUU12X2VyQXRtRXQzZmd3a2M2NUlxay0xWmY1VnAtZEYyeEZuRDdsdF9VZ2Zm",
@@ -2825,7 +2858,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "price_move"
