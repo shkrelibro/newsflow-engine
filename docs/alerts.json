@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T16:10:03+00:00",
+ "generated_at": "2026-10-19T16:25:18+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -159,7 +159,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -2129,7 +2131,9 @@
      "alias": "Hormuz",
      "alias_where": "title",
      "confidence": 0.6,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Strait of Hormuz\""
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -3801,7 +3805,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Worldline\""
+     "googlenews:\"Worldline\"",
+     "googlenews:(\"Vivion\" OR \"Wagamama\" OR \"Worldline\")"
     ],
     "alert_categories": [
      "price_move"
