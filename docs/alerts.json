@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T15:12:50+00:00",
+ "generated_at": "2026-10-19T15:27:49+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -1682,7 +1682,10 @@
     "alias": "PureGym",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"PureGym\"",
+     "googlenews:(\"PureGym\" OR \"Rekeep\" OR \"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1783,7 +1786,8 @@
     "alias_where": "summary",
     "confidence": 0.7,
     "also_routes": [
-     "googlenews:\"Quirónsalud\""
+     "googlenews:\"Quirónsalud\"",
+     "googlenews:(\"AmRest\" OR \"Parques Reunidos\" OR \"Primark\" OR \"Quirónsalud\" OR \"Ribera Salud\" OR \"Unilabs\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -3642,7 +3646,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\")"
+     "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\")",
+     "googlenews:\"Worldline\""
     ],
     "alert_categories": [
      "price_move"
@@ -3667,6 +3672,55 @@
    ],
    "countries": [
     "FR"
+   ],
+   "latest": "2026-10-19T14:48:00+00:00"
+  },
+  {
+   "name_id": "worldline",
+   "name": "Worldline",
+   "cluster_id": 87811,
+   "primary": {
+    "id": 124816,
+    "title": "Worldline stock plunges 47.9% over one year and drops out of the SBF 120",
+    "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQRlBobTFSTkpNQkdvVGNJM0d3a0pESnNoNnNaSkhzLTM1MnFjWUZqN3ZGQW9NTXRlekkyZkZtNk9XbFQ5TE5KeXZBcG9Nb2steUhXYXprMDVXX1loNWhBcXhRLXRVYVNZd3lyYURaamtQbjNCb0UyWVBEcHdZOGwtQnJpVnpoRlJWTmJ5NTJ4S3FqSmhtVVlBTFF0bnBfVUdBSHh4Wmg0aTRuQUZqVVM2SXJUTjlMeE1FYkhyNVl4alp0N1lkY2dhWldB",
+    "raw_link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQRlBobTFSTkpNQkdvVGNJM0d3a0pESnNoNnNaSkhzLTM1MnFjWUZqN3ZGQW9NTXRlekkyZkZtNk9XbFQ5TE5KeXZBcG9Nb2steUhXYXprMDVXX1loNWhBcXhRLXRVYVNZd3lyYURaamtQbjNCb0UyWVBEcHdZOGwtQnJpVnpoRlJWTmJ5NTJ4S3FqSmhtVVlBTFF0bnBfVUdBSHh4Wmg0aTRuQUZqVVM2SXJUTjlMeE1FYkhyNVl4alp0N1lkY2dhWldB?oc=5",
+    "source": "Idéal Investisseur",
+    "domain": "ideal-investisseur.fr",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-19T14:48:00+00:00",
+    "first_seen_at": "2026-10-19T15:17:52+00:00",
+    "route": "googlenews",
+    "query": "(\"Vivion\" OR \"Wagamama\" OR \"Worldline\")",
+    "tier_hint": null,
+    "summary": "Worldline stock plunges 47.9% over one year and drops out of the SBF 120 Idéal Investisseur",
+    "alias": "Worldline",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Worldline"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
    ],
    "latest": "2026-10-19T14:48:00+00:00"
   },
