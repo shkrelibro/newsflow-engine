@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-20T13:31:01+00:00",
+ "generated_at": "2026-10-20T13:46:01+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -497,7 +497,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")"
+     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
+     "googlenews:\"Branicks\""
     ],
     "alert_categories": [
      "restructuring"
@@ -760,7 +761,9 @@
      "alias": "Branicks",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Branicks\""
+     ],
      "alert_categories": [
       "capital_markets",
       "restructuring"
@@ -1143,7 +1146,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Arla Foods\" OR \"Balder\" OR \"Castellum\" OR \"Hoist Finance\" OR \"Inter IKEA\" OR \"Nexi\")"
+      "googlenews:(\"Arla Foods\" OR \"Balder\" OR \"Castellum\" OR \"Hoist Finance\" OR \"Inter IKEA\" OR \"Nexi\")",
+      "googlenews:\"Castellum\""
      ],
      "alert_categories": [
       "m_and_a"
@@ -1171,7 +1175,9 @@
      "alias": "Castellum",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Castellum\""
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -1251,7 +1257,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Arla Foods\" OR \"Balder\" OR \"Castellum\" OR \"Hoist Finance\" OR \"Inter IKEA\" OR \"Nexi\")"
+      "googlenews:(\"Arla Foods\" OR \"Balder\" OR \"Castellum\" OR \"Hoist Finance\" OR \"Inter IKEA\" OR \"Nexi\")",
+      "googlenews:\"Castellum\""
      ],
      "alert_categories": [
       "m_and_a"
@@ -2770,7 +2777,9 @@
     "alias": "Fnac Darty",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Worldpay\" OR \"Fitness First\" OR \"Fnac Darty\" OR \"FrieslandCampina\" OR \"GANNI\" OR \"G City Europe\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -7243,6 +7252,55 @@
    "latest": "2026-10-19T10:56:00+00:00"
   },
   {
+   "name_id": "sector_sugar_beet",
+   "name": "Sugar beet (sector)",
+   "cluster_id": 89695,
+   "primary": {
+    "id": 127518,
+    "title": "French Sugar Beet Yields Collapse and Support Firm EU Sugar Prices — CMB News",
+    "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNYlhkWV9Sc25OcjRReGlJdHJGU3gtWUQzeWFVWGdFQUlVR2NwWEZIRGNnWERTV3F1MEptQS00LWd3MXM0c1hyb1RHLXNJM2xISUVRUVI1Ym1ZZkZUd2hUbFlMNUhQY2F4MXZQVHZhZU9BNXRsWUhvZ3lXSUJOamhvOU1lc2dITm8",
+    "raw_link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNYlhkWV9Sc25OcjRReGlJdHJGU3gtWUQzeWFVWGdFQUlVR2NwWEZIRGNnWERTV3F1MEptQS00LWd3MXM0c1hyb1RHLXNJM2xISUVRUVI1Ym1ZZkZUd2hUbFlMNUhQY2F4MXZQVHZhZU9BNXRsWUhvZ3lXSUJOamhvOU1lc2dITm8?oc=5",
+    "source": "CMB News",
+    "domain": "commodity-board.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-20T12:14:44+00:00",
+    "first_seen_at": "2026-10-20T13:36:03+00:00",
+    "route": "googlenews",
+    "query": "(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")",
+    "tier_hint": null,
+    "summary": "French Sugar Beet Yields Collapse and Support Firm EU Sugar Prices — CMB News CMB News",
+    "alias": "sugar beet",
+    "alias_where": "title",
+    "confidence": 0.8,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 0.8,
+   "aliases": [
+    "sugar beet"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-20T12:14:44+00:00"
+  },
+  {
    "name_id": "sielaff",
    "name": "Sielaff",
    "cluster_id": 88025,
@@ -7317,7 +7375,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Skechers\""
+     "googlenews:\"Skechers\"",
+     "googlenews:(\"Planet Fitness\" OR \"Premier Inn\" OR \"Primark\" OR \"Priory Group\" OR \"Puma\" OR \"Quadient\")"
     ],
     "alert_categories": [
      "management"
@@ -8278,59 +8337,6 @@
     "GB"
    ],
    "latest": "2026-10-19T14:48:00+00:00"
-  },
-  {
-   "name_id": "xerox",
-   "name": "Xerox",
-   "cluster_id": 87497,
-   "primary": {
-    "id": 124417,
-    "title": "Xerox Partner Summit 2026: A New CEO, a Bigger Dealer Base and a Different Xerox",
-    "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxOQ3JHSENldWl6cmdEcHJrQ1lyT2hsNmpnMnJOTzR1V3BFbld3dnZJTTNSbWZXdzVRQ3lsaGxuUmo2azNxVWh3SklyWGR6VjdaYlhZY1VyeXQ1ZDF4cnVZS3lEd1RLWU50RzR5bG9NTDhFNmRsYlBxRE9qb3RsdDdwMTZRQjZzdFlZNGp1elp0a0dSTHZmcTlwclZWQ2JJWE1sY205cHo4MDdLNUJoQkUtU1JWRmVXLThtREpKQmtNVVFMX3ZZQy1ESDJxZmdORVo0Yk1uSVEtZkI2WnVCQzh1MGxxVzdHaGQ1dDBfQjRIT1U0ZnpGT1YxdEZzZVRhWDMt",
-    "raw_link": "https://news.google.com/rss/articles/CBMigAJBVV95cUxOQ3JHSENldWl6cmdEcHJrQ1lyT2hsNmpnMnJOTzR1V3BFbld3dnZJTTNSbWZXdzVRQ3lsaGxuUmo2azNxVWh3SklyWGR6VjdaYlhZY1VyeXQ1ZDF4cnVZS3lEd1RLWU50RzR5bG9NTDhFNmRsYlBxRE9qb3RsdDdwMTZRQjZzdFlZNGp1elp0a0dSTHZmcTlwclZWQ2JJWE1sY205cHo4MDdLNUJoQkUtU1JWRmVXLThtREpKQmtNVVFMX3ZZQy1ESDJxZmdORVo0Yk1uSVEtZkI2WnVCQzh1MGxxVzdHaGQ1dDBfQjRIT1U0ZnpGT1YxdEZzZVRhWDMt?oc=5",
-    "source": "Industry Analysts, Inc.",
-    "domain": "industryanalysts.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-19T13:13:23+00:00",
-    "first_seen_at": "2026-10-19T13:32:52+00:00",
-    "route": "googlenews",
-    "query": "(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")",
-    "tier_hint": null,
-    "summary": "Xerox Partner Summit 2026: A New CEO, a Bigger Dealer Base and a Different Xerox Industry Analysts, Inc.",
-    "alias": "Xerox",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"Xerox\"",
-     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")",
-     "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")"
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Xerox"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-19T13:13:23+00:00"
   }
  ]
 }
