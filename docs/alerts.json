@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-23T23:26:02+00:00",
+ "generated_at": "2026-10-23T23:41:02+00:00",
  "alerts": [
   {
    "name_id": "abfoods",
@@ -2289,7 +2289,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\" OR \"Lyfius\")",
-     "googlenews:\"Dr. Reddy's\""
+     "googlenews:\"Dr. Reddy's\"",
+     "googlenews:(\"Dr. Reddy's\" OR \"Dyson\" OR \"easyHotel\" OR \"easyJet holidays\" OR \"EG Group\" OR \"Encore Capital\")"
     ],
     "alert_categories": [
      "price_move"
@@ -2368,7 +2369,9 @@
     "alias": "Dr. Reddy's",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Dr. Reddy's\" OR \"Dyson\" OR \"easyHotel\" OR \"easyJet holidays\" OR \"EG Group\" OR \"Encore Capital\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -4940,7 +4943,9 @@
      "alias": "Pfizer",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     ],
      "alert_categories": [
       "price_move"
      ],
@@ -5251,7 +5256,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\" OR \"Royal Caribbean\")",
-     "googlenews:(\"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\" OR \"Raízen\" OR \"Randstad\")"
+     "googlenews:(\"Quest Diagnostics\" OR \"Quirónsalud\" OR \"QVC\" OR \"rag & bone\" OR \"Raízen\" OR \"Randstad\")",
+     "googlenews:\"Quest Diagnostics\""
     ],
     "alert_categories": [
      "regulatory",
@@ -5516,7 +5522,9 @@
     "alias": "Raízen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Raízen\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -6088,6 +6096,114 @@
   {
    "name_id": "rossini",
    "name": "Rossini (Recordati)",
+   "cluster_id": 97416,
+   "primary": {
+    "id": 139011,
+    "title": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno",
+    "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNcHZrQ2Rvb1duUGtNZF8teDE3UGRkWi1feWNfcW5oQ0ZtdW1kQ25HVks3d0o3N0RscndlblhLb3B6SEpDaXJSRFZRNEhZb3h6bGhkMGxweXhUTTJCWGNXbXZWQzN6NzhMVlZPb2o3a2FVTjIzdWFzYnpXVU5VaVZPZjJoN242clE1M2Z4Z21ibnU1c25WTWdBdTRsZjU0SU9OVVJOY3I3TkMyODQzSjZmSXJ0NkIwU1JXNDA3QzVUay1oM19mQkZ5WWl0S0l4aW8",
+    "raw_link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNcHZrQ2Rvb1duUGtNZF8teDE3UGRkWi1feWNfcW5oQ0ZtdW1kQ25HVks3d0o3N0RscndlblhLb3B6SEpDaXJSRFZRNEhZb3h6bGhkMGxweXhUTTJCWGNXbXZWQzN6NzhMVlZPb2o3a2FVTjIzdWFzYnpXVU5VaVZPZjJoN242clE1M2Z4Z21ibnU1c25WTWdBdTRsZjU0SU9OVVJOY3I3TkMyODQzSjZmSXJ0NkIwU1JXNDA3QzVUay1oM19mQkZ5WWl0S0l4aW8?oc=5",
+    "source": "Borsa Italiana",
+    "domain": "borsaitaliana.it",
+    "country": "IT",
+    "lang": "it",
+    "published_at": "2026-10-23T17:45:00+00:00",
+    "first_seen_at": "2026-10-23T17:49:52+00:00",
+    "route": "googlenews",
+    "query": "\"Recordati\"",
+    "tier_hint": null,
+    "summary": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno Borsa Italiana",
+    "alias": "Recordati",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [
+    {
+     "id": 139146,
+     "title": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno",
+     "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWVIxTEJtQWNRUFhTV0VFZzFHaGVuZkJrMlZmUWU1dEtPZV9SZE9MclhyNWdSQmNwRHdtbGxLd0lhVkV0RUVXOGRWN3pWMDNBaTA2bVJldTFfSEU2NC0tZ1VKdWxqUWVNS25FcGNobE5nbFBlb05sbjU3LW9xYngyM2xpRmZmbE9XdXFxQVd4X29MZW1RWEUycEVhV3FJM3E2NXVRVkdsSFdhSW8",
+     "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWVIxTEJtQWNRUFhTV0VFZzFHaGVuZkJrMlZmUWU1dEtPZV9SZE9MclhyNWdSQmNwRHdtbGxLd0lhVkV0RUVXOGRWN3pWMDNBaTA2bVJldTFfSEU2NC0tZ1VKdWxqUWVNS25FcGNobE5nbFBlb05sbjU3LW9xYngyM2xpRmZmbE9XdXFxQVd4X29MZW1RWEUycEVhV3FJM3E2NXVRVkdsSFdhSW8?oc=5",
+     "source": "Teleborsa",
+     "domain": "teleborsa.it",
+     "country": "IT",
+     "lang": "it",
+     "published_at": "2026-10-23T17:45:00+00:00",
+     "first_seen_at": "2026-10-23T18:34:52+00:00",
+     "route": "googlenews",
+     "query": "\"Respighi BidCo\"",
+     "tier_hint": null,
+     "summary": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno Teleborsa",
+     "alias": "Recordati",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+      "googlenews:\"Recordati\"",
+      "googlenews:\"Respighi BidCo\""
+     ],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 139627,
+     "title": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno",
+     "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE16MEItSnQ4ZVl6cGstM1NyOXJjRm43OHJkWXZuSjBzcURfa0p2bVNkdE52X3pBZFVzM0Q0aGhYejRmQ2NKb0VIOXVZSm9KYUNFWVlRc0djUXM5aDNmZUxNZ3pmSmJRMVBQNWRGVFNOdF9oYmZnWkh5TGs5OXY",
+     "raw_link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE16MEItSnQ4ZVl6cGstM1NyOXJjRm43OHJkWXZuSjBzcURfa0p2bVNkdE52X3pBZFVzM0Q0aGhYejRmQ2NKb0VIOXVZSm9KYUNFWVlRc0djUXM5aDNmZUxNZ3pmSmJRMVBQNWRGVFNOdF9oYmZnWkh5TGs5OXY?oc=5",
+     "source": "Eventi e News",
+     "domain": "eventi.news",
+     "country": "IT",
+     "lang": "it",
+     "published_at": "2026-10-23T23:20:00+00:00",
+     "first_seen_at": "2026-10-23T23:31:04+00:00",
+     "route": "googlenews",
+     "query": "(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+     "tier_hint": null,
+     "summary": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno Eventi e News",
+     "alias": "Recordati",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 3,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Recordati"
+   ],
+   "languages": [
+    "it"
+   ],
+   "countries": [
+    "IT"
+   ],
+   "latest": "2026-10-23T23:20:00+00:00"
+  },
+  {
+   "name_id": "rossini",
+   "name": "Rossini (Recordati)",
    "cluster_id": 97500,
    "primary": {
     "id": 139144,
@@ -6383,87 +6499,6 @@
     "IT"
    ],
    "latest": "2026-10-23T18:00:00+00:00"
-  },
-  {
-   "name_id": "rossini",
-   "name": "Rossini (Recordati)",
-   "cluster_id": 97416,
-   "primary": {
-    "id": 139011,
-    "title": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno",
-    "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNcHZrQ2Rvb1duUGtNZF8teDE3UGRkWi1feWNfcW5oQ0ZtdW1kQ25HVks3d0o3N0RscndlblhLb3B6SEpDaXJSRFZRNEhZb3h6bGhkMGxweXhUTTJCWGNXbXZWQzN6NzhMVlZPb2o3a2FVTjIzdWFzYnpXVU5VaVZPZjJoN242clE1M2Z4Z21ibnU1c25WTWdBdTRsZjU0SU9OVVJOY3I3TkMyODQzSjZmSXJ0NkIwU1JXNDA3QzVUay1oM19mQkZ5WWl0S0l4aW8",
-    "raw_link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNcHZrQ2Rvb1duUGtNZF8teDE3UGRkWi1feWNfcW5oQ0ZtdW1kQ25HVks3d0o3N0RscndlblhLb3B6SEpDaXJSRFZRNEhZb3h6bGhkMGxweXhUTTJCWGNXbXZWQzN6NzhMVlZPb2o3a2FVTjIzdWFzYnpXVU5VaVZPZjJoN242clE1M2Z4Z21ibnU1c25WTWdBdTRsZjU0SU9OVVJOY3I3TkMyODQzSjZmSXJ0NkIwU1JXNDA3QzVUay1oM19mQkZ5WWl0S0l4aW8?oc=5",
-    "source": "Borsa Italiana",
-    "domain": "borsaitaliana.it",
-    "country": "IT",
-    "lang": "it",
-    "published_at": "2026-10-23T17:45:00+00:00",
-    "first_seen_at": "2026-10-23T17:49:52+00:00",
-    "route": "googlenews",
-    "query": "\"Recordati\"",
-    "tier_hint": null,
-    "summary": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno Borsa Italiana",
-    "alias": "Recordati",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [
-    {
-     "id": 139146,
-     "title": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno",
-     "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWVIxTEJtQWNRUFhTV0VFZzFHaGVuZkJrMlZmUWU1dEtPZV9SZE9MclhyNWdSQmNwRHdtbGxLd0lhVkV0RUVXOGRWN3pWMDNBaTA2bVJldTFfSEU2NC0tZ1VKdWxqUWVNS25FcGNobE5nbFBlb05sbjU3LW9xYngyM2xpRmZmbE9XdXFxQVd4X29MZW1RWEUycEVhV3FJM3E2NXVRVkdsSFdhSW8",
-     "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWVIxTEJtQWNRUFhTV0VFZzFHaGVuZkJrMlZmUWU1dEtPZV9SZE9MclhyNWdSQmNwRHdtbGxLd0lhVkV0RUVXOGRWN3pWMDNBaTA2bVJldTFfSEU2NC0tZ1VKdWxqUWVNS25FcGNobE5nbFBlb05sbjU3LW9xYngyM2xpRmZmbE9XdXFxQVd4X29MZW1RWEUycEVhV3FJM3E2NXVRVkdsSFdhSW8?oc=5",
-     "source": "Teleborsa",
-     "domain": "teleborsa.it",
-     "country": "IT",
-     "lang": "it",
-     "published_at": "2026-10-23T17:45:00+00:00",
-     "first_seen_at": "2026-10-23T18:34:52+00:00",
-     "route": "googlenews",
-     "query": "\"Respighi BidCo\"",
-     "tier_hint": null,
-     "summary": "OPA Recordati, adesioni al 65,47% nell'ultimo giorno Teleborsa",
-     "alias": "Recordati",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
-      "googlenews:\"Recordati\"",
-      "googlenews:\"Respighi BidCo\""
-     ],
-     "alert_categories": [
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Recordati"
-   ],
-   "languages": [
-    "it"
-   ],
-   "countries": [
-    "IT"
-   ],
-   "latest": "2026-10-23T17:45:00+00:00"
   },
   {
    "name_id": "rossini",
