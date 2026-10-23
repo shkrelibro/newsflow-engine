@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-23T05:46:03+00:00",
+ "generated_at": "2026-10-23T06:01:03+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -105,7 +105,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"airBaltic\""
+      "googlenews:\"airBaltic\"",
+      "googlenews:(\"airBaltic\")"
      ],
      "alert_categories": [
       "restructuring"
@@ -2234,7 +2235,9 @@
      "alias": "CMA CGM",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Avis Budget\" OR \"CMA CGM\" OR \"Elior\" OR \"Flora Food\" OR \"Design Holding\" OR \"Golden Goose\")"
+     ],
      "alert_categories": [
       "workforce"
      ],
@@ -9790,59 +9793,6 @@
     "IE"
    ],
    "latest": "2026-10-22T06:36:07+00:00"
-  },
-  {
-   "name_id": "ryanair",
-   "name": "Ryanair",
-   "cluster_id": 89233,
-   "primary": {
-    "id": 133249,
-    "title": "Ryanair boss warns air fares could rise by up to 20% in 2027",
-    "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQeFdnNXJid0JHeEN6UmNqVnJPc2NsZ2ZwYTl0VGJIVXRVUFRSLWFid0pfRjJpRFluY0c0dmxudWdvVW1zeHNtRDctdml4QUFvQ19mRW0zTC15N2Y2bXhpM2xmSU9KU0ZMVFVvWHlWWUw2czNVRklJWERBM3lJcDlRTUZhdFFYbV9FNG13SDcwSFQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQeFdnNXJid0JHeEN6UmNqVnJPc2NsZ2ZwYTl0VGJIVXRVUFRSLWFid0pfRjJpRFluY0c0dmxudWdvVW1zeHNtRDctdml4QUFvQ19mRW0zTC15N2Y2bXhpM2xmSU9KU0ZMVFVvWHlWWUw2czNVRklJWERBM3lJcDlRTUZhdFFYbV9FNG13SDcwSFQ?oc=5",
-    "source": "Canarian Weekly",
-    "domain": "canarianweekly.com",
-    "country": "IE",
-    "lang": "en",
-    "published_at": "2026-10-22T05:54:35+00:00",
-    "first_seen_at": "2026-10-22T05:51:35+00:00",
-    "route": "googlenews",
-    "query": "(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")",
-    "tier_hint": null,
-    "summary": "Ryanair boss warns air fares could rise by up to 20% in 2027 Canarian Weekly",
-    "alias": "Ryanair",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\")",
-     "googlenews:\"Ryanair\"",
-     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
-    ],
-    "alert_categories": [
-     "price_move"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "price_move"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Ryanair"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "IE"
-   ],
-   "latest": "2026-10-22T05:54:35+00:00"
   },
   {
    "name_id": "sainsburys",
