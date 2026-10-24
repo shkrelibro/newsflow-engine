@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-24T09:00:53+00:00",
+ "generated_at": "2026-10-24T09:15:53+00:00",
  "alerts": [
   {
    "name_id": "abfoods",
@@ -3624,7 +3624,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
     ],
     "alert_categories": [
      "rating"
@@ -6018,132 +6019,6 @@
    "latest": "2026-10-23T10:15:00+00:00"
   },
   {
-   "name_id": "sbb",
-   "name": "SBB (Samhällsbyggnadsbolaget)",
-   "cluster_id": 96322,
-   "primary": {
-    "id": 137431,
-    "title": "SBB: The general meeting did not approve the proposal for the buy-back and redemption of D shares",
-    "url": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden/sbb-the-general-meeting-did-not-approve-the-proposal-for-the-buy-back-and-redemption-of-d-shares",
-    "raw_link": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden/sbb-the-general-meeting-did-not-approve-the-proposal-for-the-buy-back-and-redemption-of-d-shares",
-    "source": "SBB regulatory feed (MFN)",
-    "domain": "mfn.se",
-    "country": "SE",
-    "lang": "en",
-    "published_at": "2026-10-23T08:53:00+00:00",
-    "first_seen_at": "2026-10-23T09:06:08+00:00",
-    "route": "page",
-    "query": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden",
-    "tier_hint": 0,
-    "summary": "",
-    "alias": "(page)",
-    "alias_where": "none",
-    "confidence": 0.8,
-    "also_routes": [],
-    "alert_categories": [
-     "capital_markets"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [
-    {
-     "id": 137433,
-     "title": "SBB: The general meeting did not approve the proposal for the buy-back and redemption of D shares",
-     "url": "https://sbbnorden.se/en/sbb-the-general-meeting-did-not-approve-the-proposal-for-the-buy-back-and-redemption-of-d-shares",
-     "raw_link": "https://www.sbbnorden.se/en/sbb-the-general-meeting-did-not-approve-the-proposal-for-the-buy-back-and-redemption-of-d-shares/",
-     "source": "SBB (Samhällsbyggnadsbolaget) newsroom",
-     "domain": "sbbnorden.se",
-     "country": "SE",
-     "lang": "en",
-     "published_at": null,
-     "first_seen_at": "2026-10-23T09:06:08+00:00",
-     "route": "page",
-     "query": "https://www.sbbnorden.se/en/section/investors/press-releases/",
-     "tier_hint": 0,
-     "summary": "",
-     "alias": "(page)",
-     "alias_where": "none",
-     "confidence": 0.8,
-     "also_routes": [],
-     "alert_categories": [
-      "capital_markets"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": false
-    }
-   ],
-   "sources": 2,
-   "alert_candidate": true,
-   "alert_categories": [
-    "capital_markets"
-   ],
-   "max_confidence": 0.8,
-   "aliases": [
-    "(page)"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "SE"
-   ],
-   "latest": "2026-10-23T09:06:08+00:00"
-  },
-  {
-   "name_id": "sbb",
-   "name": "SBB (Samhällsbyggnadsbolaget)",
-   "cluster_id": 96323,
-   "primary": {
-    "id": 137432,
-    "title": "SBB: Bolagsstämman godkände inte förslaget om återköp och inlösen av D-aktier",
-    "url": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden/sbb-bolagsstamman-godkande-inte-forslaget-om-aterkop-och-inlosen-av-d-aktier",
-    "raw_link": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden/sbb-bolagsstamman-godkande-inte-forslaget-om-aterkop-och-inlosen-av-d-aktier",
-    "source": "SBB regulatory feed (MFN)",
-    "domain": "mfn.se",
-    "country": "SE",
-    "lang": "en",
-    "published_at": "2026-10-23T08:53:00+00:00",
-    "first_seen_at": "2026-10-23T09:06:08+00:00",
-    "route": "page",
-    "query": "https://mfn.se/a/samhallsbyggnadsbolaget-i-norden",
-    "tier_hint": 0,
-    "summary": "",
-    "alias": "(page)",
-    "alias_where": "none",
-    "confidence": 0.8,
-    "also_routes": [],
-    "alert_categories": [
-     "capital_markets"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "capital_markets"
-   ],
-   "max_confidence": 0.8,
-   "aliases": [
-    "(page)"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "SE"
-   ],
-   "latest": "2026-10-23T08:53:00+00:00"
-  },
-  {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
    "cluster_id": 98249,
@@ -6805,6 +6680,57 @@
     "GB"
    ],
    "latest": "2026-10-23T07:10:11+00:00"
+  },
+  {
+   "name_id": "ssp",
+   "name": "SSP Group",
+   "cluster_id": 98277,
+   "primary": {
+    "id": 140306,
+    "title": "Parvinder Jhota killing: Deadlock over post-mortem continues as family seeks Mansa SSPs transfer, firm on CM, DGPs resignation demand",
+    "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQSXYycDNqLXJ3VWI4MDJrWW43c3d6Umg1Zmw5TGZjSkdkalhVUllaR3Utajl1b3dLMy1HTmowTk5aQ19ib2ExUEVUUEEzdVN5RVdhbzJ1X01CZWJHVndxQS1uejlmaE5BVmNvMFJ1Y08xQ0xlNFVSRmlSbTF4Y0I4Y3FPZWt0QVpVNU1CaDd0dVE4My05Uk53elpYVUtKdFVFWDczT2tyNWpVa3VvX3JXWC1IVDA1Y3lZRDlzdVFJdE1tUUtEQjdiMkFNcw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQSXYycDNqLXJ3VWI4MDJrWW43c3d6Umg1Zmw5TGZjSkdkalhVUllaR3Utajl1b3dLMy1HTmowTk5aQ19ib2ExUEVUUEEzdVN5RVdhbzJ1X01CZWJHVndxQS1uejlmaE5BVmNvMFJ1Y08xQ0xlNFVSRmlSbTF4Y0I4Y3FPZWt0QVpVNU1CaDd0dVE4My05Uk53elpYVUtKdFVFWDczT2tyNWpVa3VvX3JXWC1IVDA1Y3lZRDlzdVFJdE1tUUtEQjdiMkFNcw?oc=5",
+    "source": "PTC News",
+    "domain": "ptcnews.tv",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-24T07:37:30+00:00",
+    "first_seen_at": "2026-10-24T09:05:55+00:00",
+    "route": "googlenews",
+    "query": "\"SSP\"",
+    "tier_hint": null,
+    "summary": "Parvinder Jhota killing: Deadlock over post-mortem continues as family seeks Mansa SSPs transfer, firm on CM, DGPs resignation demand PTC News",
+    "alias": "SSP",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Sixt\" OR \"Sodexo\" OR \"Sonic Healthcare\" OR \"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "SSP"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-24T07:37:30+00:00"
   },
   {
    "name_id": "tesco",
