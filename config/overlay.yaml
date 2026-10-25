@@ -15,6 +15,23 @@
 #                      to read a trade title whose feed is restricted or absent.
 #   notes: ""          appended to the name's notes (sources to open by hand, for instance).
 #
+# 15 October 2026, widening the net to the names a credit actually trades under:
+#   aliases: [...]     an entry for a text the name file already has now also UPGRADES it: search
+#                      true opens a match-only brand to search (search_every, query, search_langs as
+#                      given), require_context and reject_context terms are added to its guard, and
+#                      inflect / capitalized are switched on. State the alias's own langs, or the
+#                      entry widens it to every language as before.
+#                      New alias keys: search_langs (languages the search runs in), reject_context
+#                      (terms that disqualify the match: Brico Dépôt is not Maxeda's Brico) and
+#                      capitalized (first letter must be a capital: But, not "but").
+#   own_domains: []    the issuer's own domains: a site: query every own_site_every_n_runs for a focus
+#                      credit, and a row from one of them survives the export with no alias in its
+#                      headline, as the issuer's own word. {domain, lang, country} sets the language
+#                      to ask Google in, for a newsroom that publishes in another language than the
+#                      name's first market.
+#   comps: []          comps added to the name file's list, chiefly the sector entries (sector_*,
+#                      cnam), so a jet-fuel or sugar-beet story reads across to the credit it moves.
+#
 # Added 5 October 2026.
 names:
   branicks:
@@ -24,16 +41,27 @@ names:
     # on churn domains and the screen removed every trace of it.
     watch: true
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]   # German real estate trade press, 6 Oct
+    # 15 Oct: VIB Vermögen, the listed subsidiary carrying EUR 60m of new money in the restructuring,
+    # is reported under its own name ("VIB Vermögen: Gewinn bricht im ersten Halbjahr massiv ein",
+    # 4investors, 26 Aug). Four such rows reached the store from Branicks queries since August and
+    # all four were screened at export for want of an alias in the text. VIB's own site is read too.
+    aliases:
+      - {text: "VIB Vermögen", langs: [de, en], search: true, search_every: 4, search_langs: [de], weight: 0.9}
+      - {text: "VIB Vermoegen", langs: [de, en], weight: 0.9}
+    own_domains: [branicks.com, vib-ag.de]
+    comps: [sector_property_credit]
   airbaltic:
     key_outlets: [lsm.lv, db.lv, delfi.lv, nra.lv, jauns.lv, ch-aviation.com, aviation24.be]
     # Chapter 11 since 14 September with the state as controlling shareholder; the collective
     # redundancy procedure started 5 October; a new government deciding what to do with it.
     watch: true
+    comps: [sector_jet_fuel]          # 15 Oct: kerosene and surcharge stories read across
   cheplapharm:
     key_outlets: [handelsblatt.com, faz.net, apotheke-adhoc.de, deutsche-apotheker-zeitung.de, fiercepharma.com, ostsee-zeitung.de]
     # The EUR 1.28bn term loan refinancing launched 5 October, with up to EUR 400m of other senior
     # secured debt towards the Project Latour consideration; pricing and ratings to follow.
     watch: true
+    own_domains: [cheplapharm.com]    # 15 Oct: the newsroom watcher logged 7 rows in seven weeks
   rossini:
     # The offeror in the Recordati take-private is Respighi BidCo (CVC and GBL). Teleborsa's daily
     # acceptance count and the Consob filings name the vehicle, not the holdco.
@@ -44,10 +72,17 @@ names:
   heimstaden:
     key_outlets: [di.se, affarsvarlden.se, realtid.se, fastighetsvarlden.se, dn.se, iz.de, tagesspiegel.de]
     # The founder's name carries the Bostad story in the Nordic press as often as the company's.
+    # 15 Oct: searched in Norwegian and Swedish now, and inflected: "Tollefsens utleieboliger: Massiv
+    # brems i nedsalget" (Finansavisen, 12 Oct) is a genitive, which the plain alias missed, and the
+    # Alecta split stories name Alecta, which the surname's guard did not accept.
     aliases:
-      - {text: "Ivar Tollefsen", weight: 0.8, require_context: ["Heimstaden", "Fredensborg", "Bostad", "Alecta"]}
-      - {text: "Tollefsen", langs: [sv, nb, da, en], weight: 0.6, require_context: ["Heimstaden", "Fredensborg", "Bostad"]}
+      - {text: "Ivar Tollefsen", weight: 0.8, inflect: true, search: true, search_every: 8, search_langs: [nb, sv],
+         require_context: ["Heimstaden", "Fredensborg", "Bostad", "Alecta", "utleieboliger", "boliger", "eiendom", "fastighet", "bostäder", "hyresrätter"]}
+      - {text: "Tollefsen", langs: [sv, nb, da, en], weight: 0.6, inflect: true,
+         require_context: ["Heimstaden", "Fredensborg", "Bostad", "Alecta", "utleieboliger", "boliger", "eiendom", "fastighet", "bostäder", "hyresrätter"]}
     site_queries: [iz.de, greenstreetnews.com, tagesspiegel.de]   # the Berlin portfolio in the German property press, 6 Oct
+    own_domains: [{domain: heimstaden.com, lang: en, country: GB}]   # 15 Oct: the parent; the watcher reads Heimstaden Bostad's site
+    comps: [sector_property_credit]
   sbb:
     # Sveafastigheter is already an alias, Swedish only; the Realtid story on its merger with
     # KlaraBo named it in the standfirst, which the brief now offers. Listing it here widens the
@@ -74,6 +109,22 @@ names:
   cmacgm:
     key_outlets: [lesechos.fr, lloydslist.com, theloadstar.com, splash247.com, joc.com, tradewindsnews.com, container-news.com]
     site_queries: [cma-cgm.com]
+    # 15 Oct: CEVA, the logistics arm, is written CEVA or Ceva and seldom beside CMA CGM: "Another
+    # Ceva reboot, another 10,000 staff. Can it deliver?" (The Loadstar, 11 Oct) reached the store
+    # from a CMA CGM query and was screened at export for want of an alias. CEVA Logistics is searched
+    # now; the bare "Ceva" matches with a logistics word and never as Ceva Santé Animale or CEVA Inc.
+    # CMA Terminals carries the port deals.
+    aliases:
+      - {text: "CEVA Logistics", search: true, search_every: 4}
+      - {text: "Ceva", langs: [en, fr, it, es, de], weight: 0.6,
+         require_context: ["logistics", "logistique", "logistica", "Logistik", "freight", "fret", "forwarding", "forwarder",
+                           "warehouse", "warehousing", "entrepôt", "3PL", "contract logistics", "supply chain", "CMA CGM",
+                           "Moebel", "Bolloré", "staff", "jobs", "emplois"],
+         reject_context: ["Santé Animale", "Sante Animale", "Animal Health", "vétérinaire", "veterinary", "vaccin",
+                          "vaccine", "CEVA Inc", "DSP", "Nasdaq"]}
+      - {text: "CMA Terminals", search: true, search_every: 8, weight: 0.8}
+    own_domains: [cma-cgm.com, {domain: cevalogistics.com, lang: en, country: GB}]
+    comps: [sector_container_freight]
 
   # German real estate, 6 Oct 2026, per the desk: Thomas Daily and Immobilien Zeitung break the asset
   # sales, Green Street News (React News) the pan-European deals, Tagesspiegel the Berlin stories on
@@ -84,6 +135,7 @@ names:
   adler:
     key_outlets: [handelsblatt.com, boersen-zeitung.de, iz.de, thomas-daily.de, tagesspiegel.de]
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com, tagesspiegel.de]
+    comps: [sector_property_credit]   # 15 Oct
     notes: "The wallstreet-online board on the old ADO Properties thread (wallstreet-online.de/diskussion/1220823-1/ado-properties-berlin-pure-play-immobilien, 8,600 posts, newest first) carries retail chatter on smaller asset sales before the press does; the engine cannot read forum posts, so it is a hand read."
   aroundtown:
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
@@ -92,6 +144,8 @@ names:
   vivion:
     key_outlets: [handelsblatt.com, boersen-zeitung.de, iz.de, thomas-daily.de]
     site_queries: [iz.de, thomas-daily.de, greenstreetnews.com]
+    own_domains: [{domain: vivion.eu, lang: en}]   # 15 Oct: the newsroom watcher logged no row in seven weeks
+    comps: [sector_property_credit]
   grandcity:
     site_queries: [iz.de, greenstreetnews.com]
   vonovia:
@@ -107,51 +161,135 @@ names:
     key_outlets: [di.se, affarsvarlden.se, realtid.se, finanswatch.se, svd.se, placera.se, finansavisen.no]
   arrow:
     key_outlets: [ft.com, thetimes.com, creditstrategy.co.uk, credit-connect.co.uk, ilsole24ore.com]
+    own_domains: [arrowglobal.net]    # 15 Oct: the watcher logged one row in seven weeks
   wagamama:
     key_outlets: [ft.com, thetimes.com, telegraph.co.uk, bighospitality.co.uk, thecaterer.com]
   tereos:
     key_outlets: [usinenouvelle.com, lesechos.fr, terre-net.fr, reussir.fr, lebetteravier.fr, action-agricole-picarde.com]
+    own_domains: [tereos.com]         # 15 Oct
+    comps: [sector_sugar_beet]
   metlen:
     key_outlets: [naftemporiki.gr, capital.gr, kathimerini.gr, euro2day.gr, newmoney.gr]
   maxeda:
     key_outlets: [fd.nl, tijd.be, retailtrends.nl, retaildetail.nl]
+    # 15 Oct: Maxeda trades as Praxis (Netherlands) and Brico (Belgium) and its news runs under those
+    # names: the February creditor deal was "Moederbedrijf Praxis bereikt akkoord met schuldeisers"
+    # (RetailTrends, 2 Feb 2026), the store spin-offs "Brico wil 10 winkels verzelfstandigen". In
+    # seven weeks to 14 October the engine logged two Maxeda rows. Both brands are searched now,
+    # matched only when written as names, with the retail and creditor words added to their guards;
+    # "Brico" is never Kingfisher's Brico Dépôt nor E.Leclerc's Brico Leclerc.
+    aliases:
+      - {text: "Praxis", langs: [nl], search: true, search_every: 4, capitalized: true,
+         require_context: ["winkel", "filiaal", "filialen", "franchise", "franchisenemer", "schulden", "schuldeisers", "verkoop",
+                           "banen", "klus", "klussen", "Brico", "Gamma", "Karwei", "Hornbach", "moederbedrijf", "keten", "omzet"]}
+      - {text: "Brico", langs: [fr, nl], search: true, search_every: 4, capitalized: true,
+         require_context: ["Praxis", "Brico Planit", "doe-het-zelf", "bouwmarkt", "banen", "emplois", "franchise", "franchisés",
+                           "zelfstandig", "verzelfstandigen", "filialen", "filiales", "keten", "chaîne", "enseigne", "omzet",
+                           "licenciements", "ontslagen", "faillissement", "schulden"],
+         reject_context: ["Brico Dépôt", "Brico Depot", "Brico Leclerc", "Brico Cash", "Brico Pro", "Brico Marché",
+                          "Brico io", "Brico Center", "Brico Bravo", "Bricorama"]}
+    own_domains: [{domain: maxedadiygroup.com, lang: en}]
   tuigroup:
     key_outlets: [handelsblatt.com, faz.net, fvw.de, touristik-aktuell.de, reisevor9.de, travelweekly.co.uk]
+    comps: [sector_jet_fuel]          # 15 Oct
+    # 18 Oct (v2.15): of 55 TUI clusters over the weekend, 40 were Tui the Galician town (its
+    # diocese, council, school and fantasy-book fair, Faro de Vigo) or the TUI Palma Marathon. The
+    # alias now rejects those contexts; the group's own news never carries them.
+    aliases:
+      - {text: "TUI", reject_context: ["Vigo", "Pontevedra", "Galicia", "Galiza", "Miño", "Concello", "Diócesis",
+         "Deputación", "Valença", "TuidCon", "HispaCon", "Praza", "CEIP", "Primitiva", "Palma Marathon",
+         "Marathon Mallorca", "Tui Marathon", "Mallorca-Marathon", "Marathon", "Maratón", "Marató", "Läufer", "runners",
+         "Tui Snider", "fantasía", "cosplay", "Escape Room", "parque infantil", "licita", "Banda de Música",
+         "calendario y resultados", "Full Movie", "Lecture", "Oberfranken-Derby"]}
   isabelmarant:
     key_outlets: [lesechos.fr, fashionnetwork.com, fashionunited.fr, wwd.com, businessoffashion.com]
   biogroup:
     key_outlets: [lesechos.fr, usinenouvelle.com, biologiste365.fr, lequotidiendumedecin.fr]
+    own_domains: [biogroup.fr]        # 15 Oct
+    comps: [cnam]                     # 15 Oct: the lab-tariff decisions read across to every French lab credit
   cerba:
     key_outlets: [lesechos.fr, usinenouvelle.com, biologiste365.fr, lequotidiendumedecin.fr]
+    # 15 Oct: Cerballiance is Cerba's French lab network (about 700 labs) and is reported on its own:
+    # the April data breach (egora, 10 April 2026) never named Cerba, and the store has never held a
+    # Cerballiance row.
+    aliases:
+      - {text: "Cerballiance", langs: [fr, en], search: true, search_every: 4, search_langs: [fr], weight: 0.9}
+    own_domains: [cerbahealthcare.com]
+    comps: [cnam]
   synlab:
     key_outlets: [lesechos.fr, biologiste365.fr, handelsblatt.com, aerztezeitung.de]
+    own_domains: [{domain: synlab.com, lang: en}]   # 15 Oct
+    # 18 Oct (v2.15): Synnovis, Synlab's pathology venture with Guy's and St Thomas' and King's
+    # College Hospital, is how the London press names the 2024 hack; "Germany probes Vladimir K
+    # arrested in Japan over Synnovis hack" (NewsBytes, BBC, 16 Oct) never named Synlab.
+    aliases:
+      - {text: "Synnovis", weight: 0.8, search: true, search_every: 4, search_langs: [en]}
+    comps: [cnam]
   centrient:
     key_outlets: [fd.nl, fiercepharma.com, in-pharmatechnologist.com, pharmaceutical-technology.com, economictimes.indiatimes.com]
+    own_domains: [{domain: centrient.com, lang: en, country: GB}]   # 15 Oct
+    comps: [sector_antibiotics]
   elior:
     key_outlets: [lesechos.fr, usinenouvelle.com, neorestauration.com]
+    own_domains: [eliorgroup.com]     # 15 Oct
   travelodge:
     key_outlets: [ft.com, thetimes.com, thecaterer.com, propertyweek.com]
   paragon:
     key_outlets: [printweek.com, decisionmarketing.co.uk, ft.com]
   mpt:
     key_outlets: [bloomberg.com, reuters.com, globest.com, thetimes.com]
+    own_domains: [medicalpropertiestrust.com]   # 15 Oct: no newsroom watcher
   worldline:
     key_outlets: [lesechos.fr, latribune.fr, tijd.be, lecho.be, finextra.com]
+    # 15 Oct: Payone, Worldline's German payments business with the savings banks, is reported under
+    # its own name (BaFin's action against it, finanz-szene.de on its numbers); searched in German,
+    # with the banking words added to its guard.
+    aliases:
+      - {text: "Payone", langs: [de], search: true, search_every: 4,
+         require_context: ["Sparkasse", "Sparkassen-Finanzgruppe", "DSV", "BaFin", "Zahlungsdienstleister", "Zahlungsabwickler",
+                           "Geldwäsche", "Händler", "Payments", "Kartenzahlung", "Terminal", "Bezahldienst", "Payment-Dienstleister"]}
+    own_domains: [worldline.com]
   nexi:
     key_outlets: [ilsole24ore.com, milanofinanza.it, finextra.com]
   takko:
     key_outlets: [textilwirtschaft.de, fashionunited.de, fashionnetwork.com, handelsblatt.com, faz.net]
   avis:
     key_outlets: [reuters.com, bloomberg.com, wsj.com, autorentalnews.com, cnbc.com]
+    own_domains: [avisbudgetgroup.com]   # 15 Oct: the investor-relations feed fails
   bertrand:
     key_outlets: [lesechos.fr, lefigaro.fr, lsa-conso.fr, neorestauration.com, snacking.fr, lhotellerie-restauration.fr]
+    # 15 Oct: the group's stories name the founder and the brands ("Burger King, Léon, Hippopotamus...
+    # l'empire d'Olivier Bertrand bientôt en quête d'un nouvel actionnaire", L'Informé). Hippopotamus is
+    # searched in French (in English it is the animal); Olivier Bertrand is in sources/people.yaml.
+    aliases:
+      - {text: "Hippopotamus", search: true, search_every: 8, search_langs: [fr],
+         require_context: ["grill", "chaîne", "franchise", "franchisé", "restauration", "brasserie", "Burger King",
+                           "Au Bureau", "Léon", "fermeture", "salariés", "actionnaire"]}
+    own_domains: [groupe-bertrand.com]
   mobilux:
     key_outlets: [lesechos.fr, lsa-conso.fr, lefigaro.fr, bfmtv.com, capital.fr]
+    # 15 Oct: Mobilux is reported as But and, since the merger, as But and Conforama ("Décryptage:
+    # But/Conforama, le mariage qui dérange"); in seven weeks to 14 October the engine logged no
+    # Mobilux row at all. But is searched with phrases only the retailer produces and matches only
+    # written as a name (But, BUT), never the French word for aim or goal.
+    aliases:
+      - {text: "BUT", langs: [fr], search: true, search_every: 4, capitalized: true,
+         query: '("enseigne But" OR "magasins But" OR "magasin But" OR "But et Conforama" OR "Conforama et But" OR "But International")',
+         require_context: ["Conforama", "magasins", "enseignes", "meubles", "électroménager", "Mobilux", "salariés",
+                           "fermeture", "franchisés", "distributeur"]}
   dovalue:
     key_outlets: [ilsole24ore.com, milanofinanza.it, bebeez.it, naftemporiki.gr, capital.gr]
   evoca:
     key_outlets: [bebeez.it, ilsole24ore.com, milanofinanza.it, bloomberg.com]
+    own_domains: [evocagroup.com]     # 15 Oct
   hellofresh:
     key_outlets: [handelsblatt.com, faz.net, manager-magazin.de, wiwo.de, lebensmittelzeitung.net, businessinsider.de]
   hse:
     key_outlets: [handelsblatt.com, faz.net, horizont.net, wuv.de, textilwirtschaft.de]
+    # 15 Oct: the company calls itself HSE, which on its own is the British safety regulator or a
+    # Darmstadt utility; one HSE row in seven weeks. Searched in German with the teleshopping words.
+    aliases:
+      - {text: "HSE", langs: [de], search: true, search_every: 4,
+         query: '"HSE" (Teleshopping OR Shoppingsender OR Ismaning OR "Home Shopping" OR Homeshopping OR Verkaufssender)',
+         require_context: ["Shoppingsender", "Teleshoppingsender", "Teleshopping-Sender", "Verkaufssender", "Shopping-Sender",
+                           "Live-Shopping", "Home Shopping", "Homeshopping", "Sender", "Moderatorin"]}

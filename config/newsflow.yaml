@@ -54,6 +54,8 @@ routes:
     when: "1d"                # window for alias queries
     site_when: "7d"           # window for site-restricted outlet queries
     site_every_n_runs: 16     # 4 Oct: 6 -> 12; 11 Oct: 12 -> 16 for the key-outlet queries. Each site: query every 4 hours; they use a 7-day window, so nothing is lost
+    own_site_every_n_runs: 8  # 15 Oct: a focus credit's own domains (overlay.yaml own_domains), every two hours, phased by
+                              # name; the fallback channel to a newsroom the watcher cannot read, and the issuer's own word
     cold_start_when: "30d"    # window used for site: queries during the first two cycles (history for the golden set)
     group_size: 6             # names per grouped (OR) market query (comps, and the tier-A safety net)
     # v2 cadences. Every alias query looks back a full day ("when" above), so how often a query runs
