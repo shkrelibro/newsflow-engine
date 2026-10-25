@@ -2,8 +2,9 @@
 
 The desk's complaint: old stories stayed on the page too long. A carried line lived 48 hours, and
 any rewrite reset the clock, so the 8 October Cnam preview row was still on the page five days
-later. Now a carried line expires once its article is 24 hours old; on a Monday the page covers
-the whole weekend, back to Friday's last cut. A line new to the page publishes once whatever its
+later. Now a carried line expires once its article is 24 hours old; from Saturday to Monday the page
+reaches back to Friday's first cut (24 October: back to Friday's last cut lost Friday's results on
+Saturday morning). A line new to the page publishes once whatever its
 age (a late row, a story first seen now). Rewriting a carried line does not keep it, except a
 line tagged "manual check, not collected by the engine" that this cut rewrote.
 """
@@ -18,6 +19,7 @@ TUE = datetime(2026, 10, 13, 19, 0, tzinfo=timezone.utc)      # 20:00 London
 MON = datetime(2026, 10, 19, 4, 45, tzinfo=timezone.utc)      # Monday's first cut, 05:45 London
 MON_PM = datetime(2026, 10, 19, 14, 45, tzinfo=timezone.utc)  # Monday's last cut
 FRI_LAST = datetime(2026, 10, 16, 14, 45, tzinfo=timezone.utc)
+FRI_FIRST = datetime(2026, 10, 16, 4, 45, tzinfo=timezone.utc)
 
 
 def _brief():
@@ -36,8 +38,8 @@ def _row(rid, published, nid="cnam"):
 def test_the_limit_is_24_hours_on_a_weekday_and_reaches_friday_on_a_monday():
     bb = _brief()
     assert bb.carry_limit_h(TUE) == 24
-    assert bb.carry_cutoff(MON) == FRI_LAST                       # 62 hours back at 05:45 on Monday
-    assert bb.carry_cutoff(MON_PM) == FRI_LAST                    # all of Monday keeps the weekend
+    assert bb.carry_cutoff(MON) == FRI_FIRST                      # 72 hours back at 05:45 on Monday
+    assert bb.carry_cutoff(MON_PM) == FRI_FIRST                   # all of Monday keeps the weekend and Friday
     assert bb.carry_cutoff(MON + timedelta(days=1)) == MON + timedelta(days=1) - timedelta(hours=24)
 
 
@@ -59,19 +61,20 @@ def test_a_weekday_carries_24_hours_and_a_rewrite_does_not_extend_it():
     assert j["lead"] == ["23h"]                        # a 30h story new to the page cannot lead
 
 
-def test_a_monday_keeps_the_weekend_and_drops_friday():
+def test_a_monday_keeps_the_weekend_and_friday_and_drops_thursday():
     bb = _brief()
     sat = _row("sat", datetime(2026, 10, 17, 9, 0, tzinfo=timezone.utc))
     fri_eve = _row("fri_eve", FRI_LAST + timedelta(hours=2))
     fri_am = _row("fri_am", FRI_LAST - timedelta(hours=5))
-    rows = {r["id"]: r for r in (sat, fri_eve, fri_am)}
-    j = bb.merge_judgement({"so": {k: "line" for k in rows}}, {"lead": ["sat", "fri_eve", "fri_am"]})
+    thu = _row("thu", FRI_FIRST - timedelta(hours=5))
+    rows = {r["id"]: r for r in (sat, fri_eve, fri_am, thu)}
+    j = bb.merge_judgement({"so": {k: "line" for k in rows}}, {"lead": ["sat", "fri_eve", "fri_am", "thu"]})
     expired = bb.expire_stale(j, rows, MON)
-    assert expired == ["fri_am"]
-    assert j["lead"] == ["sat", "fri_eve"]
+    assert expired == ["thu"]
+    assert j["lead"] == ["sat", "fri_eve", "fri_am"]
     # Tuesday morning the weekend goes
     j = bb.merge_judgement({"so": {k: "line" for k in rows}}, {"lead": []})
-    assert set(bb.expire_stale(j, rows, MON + timedelta(days=1))) == {"sat", "fri_eve", "fri_am"}
+    assert set(bb.expire_stale(j, rows, MON + timedelta(days=1))) == {"sat", "fri_eve", "fri_am", "thu"}
 
 
 def test_lint_holds_the_lead_to_24_hours_but_lets_a_monday_lead_with_saturday():
@@ -92,7 +95,7 @@ def test_every_monday_cut_reads_back_to_friday_and_other_days_read_24_hours():
     assert bb.auto_window_h(MON, bb.previous_cut(MON)) == 72                 # first cut after the gap
     assert bb.auto_window_h(MON_PM, bb.previous_cut(MON_PM)) == 72           # last Monday cut: Friday is 72h back
     mid = datetime(2026, 10, 19, 9, 45, tzinfo=timezone.utc)
-    assert bb.auto_window_h(mid, bb.previous_cut(mid)) == 68                 # 67h back to Friday 14:45Z
+    assert bb.auto_window_h(mid, bb.previous_cut(mid)) == 72                 # 77h back to Friday 04:45Z, capped at the export's 72
     tue = MON + timedelta(days=1)
     assert bb.auto_window_h(tue, bb.previous_cut(tue)) == 24
     assert bb.auto_window_h(TUE, bb.previous_cut(TUE)) == 24
@@ -115,11 +118,26 @@ def test_weekend_cuts_keep_everything_since_friday_so_monday_has_it():
     bb = _brief()
     sat_am = datetime(2026, 10, 17, 8, 0, tzinfo=timezone.utc)
     sun_pm = datetime(2026, 10, 18, 14, 45, tzinfo=timezone.utc)
-    assert bb.carry_cutoff(sat_am) == sat_am - timedelta(hours=24)        # 24 hours already reaches past Friday's cut
-    assert bb.carry_cutoff(sun_pm) == FRI_LAST
+    assert bb.carry_cutoff(sat_am) == FRI_FIRST                           # Saturday morning still has Friday's results
+    assert bb.carry_cutoff(sun_pm) == FRI_FIRST
     sat = _row("sat", datetime(2026, 10, 17, 7, 0, tzinfo=timezone.utc))
     j = bb.merge_judgement({"so": {"sat": "line"}}, {"lead": ["sat"]})
     assert bb.expire_stale(j, {"sat": sat}, sun_pm) == [] and j["lead"] == ["sat"]
-    assert bb.auto_window_h(sun_pm, bb.previous_cut(sun_pm)) == 49         # 48h to Friday, plus an hour of margin
+    assert bb.auto_window_h(sun_pm, bb.previous_cut(sun_pm)) == 59         # 58h to Friday's first cut, plus an hour of margin
     fri_noon = datetime(2026, 10, 16, 11, 0, tzinfo=timezone.utc)   # Friday itself: plain 24 hours
     assert bb.carry_cutoff(fri_noon) == fri_noon - timedelta(hours=24)
+
+
+def test_friday_results_stay_on_the_weekend_page_24_october():
+    """24 October: Intrum's and Sodexo's results (Friday 05:00Z) left the page at Saturday's first cuts."""
+    bb = _brief()
+    fri_results = _row("intrum_q3", datetime(2026, 10, 23, 5, 0, tzinfo=timezone.utc), nid="intrum")
+    sat_pm = datetime(2026, 10, 24, 14, 45, tzinfo=timezone.utc)
+    sun_pm = datetime(2026, 10, 25, 19, 45, tzinfo=timezone.utc)
+    mon_first = datetime(2026, 10, 26, 4, 45, tzinfo=timezone.utc)
+    tue_first = datetime(2026, 10, 27, 4, 45, tzinfo=timezone.utc)
+    for now in (sat_pm, sun_pm, mon_first):
+        j = bb.merge_judgement({"so": {"intrum_q3": "line"}}, {"lead": ["intrum_q3"]})
+        assert bb.expire_stale(j, {"intrum_q3": fri_results}, now) == [], now
+    j = bb.merge_judgement({"so": {"intrum_q3": "line"}}, {"lead": []})
+    assert bb.expire_stale(j, {"intrum_q3": fri_results}, tue_first) == ["intrum_q3"]
