@@ -17,8 +17,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 TUE = datetime(2026, 10, 13, 19, 0, tzinfo=timezone.utc)      # 20:00 London
 MON = datetime(2026, 10, 19, 4, 45, tzinfo=timezone.utc)      # Monday's first cut, 05:45 London
-MON_PM = datetime(2026, 10, 19, 14, 45, tzinfo=timezone.utc)  # Monday's last cut
-FRI_LAST = datetime(2026, 10, 16, 14, 45, tzinfo=timezone.utc)
+MON_PM = datetime(2026, 10, 19, 19, 45, tzinfo=timezone.utc)  # Monday's last cut
+FRI_LAST = datetime(2026, 10, 16, 19, 45, tzinfo=timezone.utc)
 FRI_FIRST = datetime(2026, 10, 16, 4, 45, tzinfo=timezone.utc)
 
 
@@ -72,7 +72,7 @@ def test_a_monday_keeps_the_weekend_and_friday_and_drops_thursday():
     expired = bb.expire_stale(j, rows, MON)
     assert expired == ["thu"]
     assert j["lead"] == ["sat", "fri_eve", "fri_am"]
-    # Tuesday morning the weekend goes
+    # Tuesday morning the weekend and Friday go
     j = bb.merge_judgement({"so": {k: "line" for k in rows}}, {"lead": []})
     assert set(bb.expire_stale(j, rows, MON + timedelta(days=1))) == {"sat", "fri_eve", "fri_am", "thu"}
 

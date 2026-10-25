@@ -145,11 +145,11 @@ def test_a_tier_a_event_only_churn_sites_carried_becomes_one_echo_row():
 def test_monday_first_cut_reaches_back_to_friday_close():
     bb = _brief()
     mon = datetime(2026, 10, 12, 4, 52, tzinfo=timezone.utc)
-    assert bb.previous_cut(mon) == datetime(2026, 10, 9, 14, 45, tzinfo=timezone.utc)
+    assert bb.previous_cut(mon) == datetime(2026, 10, 9, 19, 45, tzinfo=timezone.utc)
     tue = datetime(2026, 10, 13, 9, 50, tzinfo=timezone.utc)
     assert bb.previous_cut(tue) == datetime(2026, 10, 13, 7, 45, tzinfo=timezone.utc)
     sun = datetime(2026, 10, 11, 4, 50, tzinfo=timezone.utc)
-    assert bb.previous_cut(sun) == datetime(2026, 10, 10, 14, 45, tzinfo=timezone.utc)
+    assert bb.previous_cut(sun) == datetime(2026, 10, 10, 19, 45, tzinfo=timezone.utc)
 
 
 def test_window_merge_adds_older_candidates_once():
@@ -389,5 +389,6 @@ def test_carry_forward_reoffers_rows_older_than_the_previous_window(tmp_path):
     sl = json.loads(out)
     # the shortlist reads ages against the real clock: once these rows are over 72 hours old they
     # are offered under "late" rather than tier_a (13 October), which is still offered, not held
-    ids = {r["id"] for r in sl["tier_a"]} | {int(x.split("|")[0]) for x in sl.get("late") or []}
+    ids = {r["id"] for r in sl["tier_a"]} | {int(x.split("|")[0]) for x in sl.get("late") or []
+                                             if not x.startswith("e")}   # echo rows (e<id>) age out too
     assert ids == {1, 3}          # Saturday (outside the Sunday window) and Monday (new); Sunday was judged

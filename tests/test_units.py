@@ -198,10 +198,17 @@ def test_site_queries_are_staggered(cfg, tmp_path):
     # site_max_per_name_per_run a cycle, so it takes several cycles of site_every runs; its share
     # of one cycle is site_max_per_name_per_run * every.
     cap = int(cfg.routes["googlenews"].get("site_max_per_name_per_run", 2))
+    # 15 Oct: a focus credit's own domains (overlay.yaml own_domains) run every own_site_every runs,
+    # phased by name; any other name's at the site_every cadence like the key outlets
+    from newsflow.pipeline import _due
+    own_every = int(cfg.routes["googlenews"].get("own_site_every_n_runs", 8))
     expected = 0
     for x in cfg.names:
-        key = [d for d in x.site_queries if d in x.key_outlets]
-        rest = [d for d in x.site_queries if d not in x.key_outlets]
+        own = [d for d in x.site_queries if d in x.own_domains]
+        key = [d for d in x.site_queries if d in x.key_outlets and d not in x.own_domains]
+        rest = [d for d in x.site_queries if d not in x.key_outlets and d not in x.own_domains]
+        o_every = own_every if x.focus == "name" else every
+        expected += sum(1 for i in range(len(own)) for r in range(1, every + 1) if _due(o_every, r, sum(x.id.encode()) + i))
         expected += len(key) + (len(rest) if len(rest) <= cap * every else cap * every)
     assert site_total == expected, (site_total, expected)
     assert max(per_run) - min(per_run) < max(len(n.site_queries), 40)  # no burst run
@@ -233,7 +240,8 @@ def test_time_budget_skips_remaining_jobs(cfg, tmp_path, fake_http_factory, goog
         return fetch_google_news(http, '"Intrum"', "sv", "SE", ["intrum"])
 
     specs = [JobSpec(f"slow-{i}", "googlenews", slow) for i in range(12)]
-    s = run_once(cfg, store, http=http, backfill_days=60, jobs=specs, budget_minutes=0.0)
+    # 18 Oct: backfill_days=60 put the August fixtures out of range once the calendar passed 17 Oct.
+    s = run_once(cfg, store, http=http, backfill_days=3650, jobs=specs, budget_minutes=0.0)
     assert s.skipped > 0 and s.skipped + (len(specs) - s.skipped) == len(specs)
     assert any("skipped: run time budget" in r.error for r in s.source_results)
     assert s.new_items >= 1            # whatever finished was still stored

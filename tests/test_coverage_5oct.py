@@ -181,7 +181,9 @@ def test_overlay_sets_watch_widens_and_adds_aliases_and_reports_unknown_ids():
         "nosuchname": {"watch": True},
     }})
     assert unknown == ["nosuchname"]
-    assert counts == {"watch": 1, "aliases": 1, "exclude_terms": 1, "duplicates": 1, "widened": 1, "site_queries": 1, "key_outlets": 0}
+    old_keys = ("watch", "aliases", "exclude_terms", "duplicates", "widened", "site_queries", "key_outlets")
+    assert {k: counts[k] for k in old_keys} == {"watch": 1, "aliases": 1, "exclude_terms": 1, "duplicates": 1, "widened": 1, "site_queries": 1, "key_outlets": 0}
+    assert counts["upgraded"] == counts["own_domains"] == counts["comps"] == 0   # 15 Oct keys, unused here
     sbb, ros = names
     assert ros.site_queries == ["recordati.com"]
     assert sbb.aliases[0].langs == ["sv", "en", "nb"] and len(sbb.aliases) == 1
