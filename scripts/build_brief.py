@@ -50,6 +50,13 @@ JUNK_DOMAINS: set[str] = set(FALLBACK_JUNK)
 FALLBACK_CHURN = {"ad-hoc-news.de", "boerse-global.de", "boerse-express.com", "boerse-express.de",
                   "finanztrends.de", "kapitalmarktexperten.de"}
 CHURN_DOMAINS: set[str] = set(FALLBACK_CHURN)
+# v2.15 (18 Oct 2026): outlets whose Google News rows have carried old articles under the day Google
+# found them. Latvian Public Media's English desk (an 1 April and a 6 July article led the brief on
+# 18 October), liepajniekiem.lv (LETA wires weeks late) and Orange Actualites (old video clips).
+# A row from one of them reaches the page only once the writer has opened the outlet's own page,
+# confirmed the date and tagged it "date verified" (noise.yaml verify_date_domains).
+FALLBACK_VERIFY_DATE = {"eng.lsm.lv", "liepajniekiem.lv", "actu.orange.fr", "news.inbox.eu"}
+VERIFY_DATE_DOMAINS: set[str] = set(FALLBACK_VERIFY_DATE)
 
 
 def _yaml_list(path: "Path | None", key: str) -> set[str]:
@@ -88,6 +95,19 @@ def load_junk(path: "Path | None") -> set[str]:
     domains = _yaml_list(path, "domains") | _yaml_list(path, "demote_domains")
     # Never let a parse failure quietly widen what gets published.
     return domains | set(FALLBACK_JUNK) if domains else set(FALLBACK_JUNK)
+
+
+def load_verify_date(path: "Path | None") -> set[str]:
+    """The outlets whose rows need a verified date before they publish (noise.yaml verify_date_domains)."""
+    return _yaml_list(path, "verify_date_domains") | set(FALLBACK_VERIFY_DATE)
+
+
+def needs_date_check(r: dict) -> bool:
+    """A row from a verify-date outlet that arrived as a Google News token, so nothing on it shows
+    the article's own date."""
+    dom = (r.get("domain") or "").lower()
+    via_google = "news.google.com" in (r.get("url") or "") or r.get("route") == "googlenews"
+    return via_google and any(dom == d or dom.endswith("." + d) for d in VERIFY_DATE_DOMAINS)
 
 
 def load_churn(path: "Path | None") -> set[str]:
@@ -141,6 +161,30 @@ def url_year(url: str) -> int | None:
     return min(years) if years else None
 
 
+_URL_YMD = re.compile(r"(?:^|[/\-_.])((?:19|20)\d{2})[/\-_.](0[1-9]|1[0-2])[/\-_.](0[1-9]|[12]\d|3[01])(?=[/\-_.]|$)")
+_URL_DMY = re.compile(r"(?:^|[/\-_])(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.((?:19|20)\d{2})(?=[/\-_.]|$)")
+_URL_YMD8 = re.compile(r"(?:^|[/\-_])((?:19|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?=[/\-_]|$)")
+
+
+def url_ymd(url: str) -> "datetime | None":
+    """The full date in an outlet's URL path (mirrors newsflow.normalize.url_date, v2.15)."""
+    from urllib.parse import urlsplit
+    try:
+        path = urlsplit(url).path
+    except ValueError:
+        return None
+    found = []
+    for pat, order in ((_URL_YMD, "ymd"), (_URL_DMY, "dmy"), (_URL_YMD8, "ymd")):
+        for m in pat.finditer(path):
+            a, b, c = (int(x) for x in m.groups())
+            y, mo, d = (a, b, c) if order == "ymd" else (c, b, a)
+            try:
+                found.append(datetime(y, mo, d, tzinfo=timezone.utc))
+            except ValueError:
+                continue
+    return min(found) if found else None
+
+
 # ---------------------------------------------------------------------------------------------
 # Deterministic disqualifiers. These run BEFORE the judgement pass sees anything, because a model
 # asked "is this relevant" will find a reason, and on 13 September it found one for a village
@@ -177,6 +221,29 @@ DISQUALIFY = [
     r"stock\s+(?:passes|crosses)\s+(?:above|below)|moving\s+average|Trading-Empfehlung)",
 ]
 _DISQUALIFY = [re.compile(p, re.IGNORECASE | re.UNICODE) for p in DISQUALIFY]
+
+
+_TITLE_DM = re.compile(r"\s[-\u2013]\s(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])\s*$")
+REDATE_GAP_DAYS = 14
+
+
+def redated_headline(r: dict) -> str:
+    """A headline that ends with its own broadcast date (" - 03/06"), more than REDATE_GAP_DAYS
+    before the date the row claims: an old clip under a new timestamp (Orange Actualites, v2.15).
+    Mirrors newsflow.normalize.title_trailing_date."""
+    m = _TITLE_DM.search(r.get("title") or "")
+    pub = _parse_ts(r.get("published")) or _parse_ts(r.get("seen"))
+    if not m or not pub:
+        return ""
+    d, mo = int(m.group(1)), int(m.group(2))
+    for y in (pub.year, pub.year - 1):
+        try:
+            cand = datetime(y, mo, d, tzinfo=timezone.utc)
+        except ValueError:
+            continue
+        if cand <= pub:
+            return f"re-dated clip ({d:02d}/{mo:02d})" if (pub - cand).days > REDATE_GAP_DAYS else ""
+    return ""
 
 
 def disqualified(title: str) -> str:
@@ -296,8 +363,10 @@ def junky(domain: str) -> bool:
 
 
 def own_source(row: dict) -> bool:
-    """A page watcher or name feed at tier 0 is the company's own source (config/sources/primary.yaml)."""
-    return row.get("route") in ("page", "rss") and row.get("tier") == 0
+    """A page watcher or name feed at tier 0 is the company's own source (config/sources/primary.yaml),
+    and so, since 15 Oct, is a row the engine found on one of the issuer's own domains through a
+    site: query (overlay.yaml own_domains; the export marks it own_site)."""
+    return (row.get("route") in ("page", "rss") and row.get("tier") == 0) or bool(row.get("own_site"))
 
 
 def rank(row: dict) -> tuple:
@@ -636,6 +705,9 @@ def material_class(r: dict) -> int:
 def grade_rows(P: dict) -> None:
     for r in P["A_rows"] + P["C_rows"]:
         r["grade"] = grade_of(r["domain"])
+        if needs_date_check(r):
+            r["verify_date"] = True
+            r["redater"] = True
     for r in P["C_rows"]:
         score, why = review_score(r)
         r["score"], r["why"] = score, why
@@ -656,7 +728,7 @@ def grade_rows(P: dict) -> None:
 
 # The scheduled cuts, in UTC (the writer's cron). A cut marks as new what arrived since the one
 # before it; the first cut on Monday reaches back to Friday's last, so the weekend is one delta.
-SLOTS_UTC = [(4, 45), (5, 45), (6, 45), (7, 45), (9, 45), (11, 45), (13, 45), (14, 45)]
+SLOTS_UTC = [(4, 45), (5, 45), (6, 45), (7, 45), (9, 45), (11, 45), (13, 45), (14, 45), (17, 45), (19, 45)]   # v2.15: two evening cuts
 
 
 def previous_cut(now: datetime) -> datetime:
@@ -755,6 +827,8 @@ def load_prev(path: "Path | None") -> dict:
 # Rewriting a carried line no longer keeps it: a new development goes on its own, newer row. The
 # one exception is a line tagged "manual check, not collected by the engine" and rewritten this
 # cut, the way the desk waits on an outcome the engine cannot see (the Cnam meeting).
+# 24 October (v2.16): from Saturday to Monday the page reaches back to Friday's FIRST cut, so
+# Friday's results stay on the page through the weekend (see carry_cutoff).
 CARRY_MAX_AGE_H = 24.0
 LEAD_MAX_AGE_H = 24.0
 LATE_MAX_AGE_H = 72.0      # older articles first seen now are offered as "late", never as news
@@ -981,6 +1055,10 @@ def lint(j: dict, facts: list[dict], nid_of: dict[str, str], low_ids: "set[str] 
             if not r:
                 continue
             tags = " ".join(map(str, (j.get("tags") or {}).get(str(k)) or [])).lower()
+            if r.get("verify_date") and "date verified" not in tags:
+                errors.append(f"so[{k}]: {r.get('source')} ({r.get('domain')}) has carried old articles under a new date; "
+                              f"find the outlet's own page (search the headline), confirm the date in its URL or byline, "
+                              f"tag it \"date verified\", or drop it")
             if undated_newsroom_row(r) and "date verified" not in tags:
                 errors.append(f"so[{k}]: undated newsroom row ({r.get('source')}); open the article, confirm the date, "
                               f"tag it \"date verified\", or drop it")
@@ -1097,6 +1175,7 @@ def collect(latest: dict) -> list[dict]:
                 "cats": c.get("alert_categories") or [], "sources": c.get("sources") or 1,
                 "screen_reason": p.get("screen_reason") or "", "watch": bool(nm.get("watch")),
                 "alias": p.get("alias"), "focus": FOCUS.get(nm["id"], ""),
+                "own_site": bool(p.get("own_site")),
             })
     return rows
 
@@ -1193,7 +1272,7 @@ def partition(rows: list[dict]) -> dict:
         # judgement. The reason is kept on the row so the drop table can name it.
         kept = []
         for r in clean:
-            why = disqualified(r["title"])
+            why = disqualified(r["title"]) or redated_headline(r)
             if why:
                 r["disqualified"] = why
             else:
@@ -1413,7 +1492,7 @@ def item_html(r: dict, j: dict, lead: bool) -> str:
         tags.append(f'<span class="tag cat">{e(CATEGORY_LABEL.get(c, c))}</span>')
     if r.get("redater"):
         tags.append('<span class="tag">re-dater domain</span>')
-        if "date unverified" not in extra:
+        if "date unverified" not in extra and "date verified" not in extra:
             tags.append('<span class="tag">date unverified</span>')
     if r.get("standfirst"):
         tags.append('<span class="tag">name in standfirst only</span>')
@@ -1724,13 +1803,14 @@ def main() -> int:
                          "and --judgement/--lint take a delta (so, translate, tags, drop, lead)")
     a = ap.parse_args()
 
-    global JUNK_DOMAINS, CHURN_DOMAINS, EMPLOYER
+    global JUNK_DOMAINS, CHURN_DOMAINS, VERIFY_DATE_DOMAINS, EMPLOYER
     import os
     forbid = a.forbid or os.environ.get("NF_FORBID")
     EMPLOYER = re.compile(forbid, re.IGNORECASE) if forbid else None
     noise = Path(a.noise) if a.noise else None
     JUNK_DOMAINS = load_junk(noise)
     CHURN_DOMAINS = load_churn(noise)
+    VERIFY_DATE_DOMAINS = load_verify_date(noise)
     graded = load_grades(Path(a.grades) if a.grades else None)
     print(f"domain screen: {len(JUNK_DOMAINS)} domains ({len(CHURN_DOMAINS)} churn) from "
           f"{noise if noise and noise.exists() else 'the built-in fallback'}; grades +{graded}", file=sys.stderr)
@@ -1811,7 +1891,10 @@ def main() -> int:
                     final, year = resolve_and_date(r["url"])
                     r["resolved_url"] = final
                     r["url_year"] = year
-                    if year is not None and year < this_year:
+                    ymd = url_ymd(final)
+                    claimed = _parse_ts(r.get("published")) or _parse_ts(r.get("seen"))
+                    if (year is not None and year < this_year) or (
+                            ymd and claimed and (claimed - ymd).days > REDATE_GAP_DAYS):
                         dropped.append({"name": r["name"], "title": r["title"],
                                         "year": year, "url": final})
                     else:
