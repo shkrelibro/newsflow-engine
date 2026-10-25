@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-25T22:48:17+00:00",
+ "generated_at": "2026-10-25T23:03:17+00:00",
  "revalidated_out": 583,
  "window_hours": 24.0,
  "names": [
@@ -147,7 +147,9 @@
       "alias": "Adidas",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"Adidas\" OR \"Bayer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -3717,7 +3719,9 @@
       "alias": "Bayer",
       "alias_where": "title",
       "confidence": 0.95,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"Adidas\" OR \"Bayer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "screened",
@@ -3853,7 +3857,9 @@
      "alias": "Bayer",
      "alias_where": "title",
      "confidence": 0.95,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Adidas\" OR \"Bayer\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "screened",
@@ -6035,7 +6041,8 @@
       "confidence": 0.4,
       "also_routes": [
        "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
-       "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
+       "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
+       "googlenews:\"Boots\""
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -9550,13 +9557,13 @@
     "cosco",
     "sector_container_freight"
    ],
-   "mentions_in_window": 62,
+   "mentions_in_window": 64,
    "unresolved_urls": 3,
    "screened": {
-    "count": 59,
+    "count": 61,
     "by_reason": {
-     "revalidated": 53,
-     "churn": 5,
+     "revalidated": 54,
+     "churn": 6,
      "republished": 1
     },
     "items": [
@@ -9747,6 +9754,31 @@
       "alert_candidate": false,
       "status": "candidate",
       "screen_reason": "revalidated: no longer matches the current config",
+      "url_unresolved": true
+     },
+     {
+      "id": 142511,
+      "title": "FedEx completes sale. FedEx stock trades 0.92 percent above EUR 266.10 Xetra close",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOREQ0NGw0dnF5NW9jQUxfSzNxVkpNV3dhR2JzV3dUazNoSVNCREN0dHhwY1p2SV83RGxGOUJ6VjlGRi1IcFNManYyNTlad2prLVM4TEF2Nzk4MEJXSlZtSkpPanU5YlkxSFRNeUxPcm1Wa01GVnd2Y3lSX3RQVjhraFZhMzRiT1h0RkpZU0FCYzNvLVhsdmc3bnRiS3hCS0tiaHc0VVE3bHRmMHRhNG9Fc2NxWXBJZ3BZTDB5ajdBSER5UFgycGFJUUVuZWZnUDhjRUN1QThYdnBVRHBY",
+      "raw_link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOREQ0NGw0dnF5NW9jQUxfSzNxVkpNV3dhR2JzV3dUazNoSVNCREN0dHhwY1p2SV83RGxGOUJ6VjlGRi1IcFNManYyNTlad2prLVM4TEF2Nzk4MEJXSlZtSkpPanU5YlkxSFRNeUxPcm1Wa01GVnd2Y3lSX3RQVjhraFZhMzRiT1h0RkpZU0FCYzNvLVhsdmc3bnRiS3hCS0tiaHc0VVE3bHRmMHRhNG9Fc2NxWXBJZ3BZTDB5ajdBSER5UFgycGFJUUVuZWZnUDhjRUN1QThYdnBVRHBY?oc=5",
+      "source": "ad-hoc-news.de",
+      "domain": "ad-hoc-news.de",
+      "country": "US",
+      "lang": "en",
+      "published_at": "2026-10-25T16:46:42+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "\"CMA CGM\"",
+      "tier_hint": null,
+      "summary": "FedEx completes sale. FedEx stock trades 0.92 percent above EUR 266.10 Xetra close ad-hoc-news.de",
+      "alias": "(query)",
+      "alias_where": "none",
+      "confidence": 0.4,
+      "also_routes": [],
+      "alert_categories": [],
+      "alert_candidate": false,
+      "status": "screened",
+      "screen_reason": "churn:ad-hoc-news.de",
       "url_unresolved": true
      },
      {
@@ -10220,37 +10252,35 @@
       "status": "candidate",
       "screen_reason": "revalidated: no longer matches the current config",
       "url_unresolved": true
-     },
-     {
-      "id": 141993,
-      "title": "Coupe de France de cyclo-cross - Nommay - Femmes #2 - Directs",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcGdPV3Z6N184UjJUQjJIdTFwbjFmWmxhX0lmLWJiZHNTNG51VUE1SW5NRmttTXl1allCaFJ3Y1pVeURaTDVmNXBfNkhQWW9lQV9mUmwyTm1ma19uYWpvOVhJRGZWWW9BZWlSaVdROFZCdTktTnVsc0otekxfZUVOQThYeEFLNXFHSFpFOVVzX0NRWGhf",
-      "raw_link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcGdPV3Z6N184UjJUQjJIdTFwbjFmWmxhX0lmLWJiZHNTNG51VUE1SW5NRmttTXl1allCaFJ3Y1pVeURaTDVmNXBfNkhQWW9lQV9mUmwyTm1ma19uYWpvOVhJRGZWWW9BZWlSaVdROFZCdTktTnVsc0otekxfZUVOQThYeEFLNXFHSFpFOVVzX0NRWGhf?oc=5",
-      "source": "DirectVelo",
-      "domain": "directvelo.com",
-      "country": "FR",
-      "lang": "fr",
-      "published_at": "2026-10-25T13:05:00+00:00",
-      "first_seen_at": "2026-10-25T16:12:07+00:00",
-      "route": "googlenews",
-      "query": "\"CMA CGM\"",
-      "tier_hint": null,
-      "summary": "Coupe de France de cyclo-cross - Nommay - Femmes #2 - Directs DirectVelo",
-      "alias": "(query)",
-      "alias_where": "none",
-      "confidence": 0.4,
-      "also_routes": [
-       "googlenews:\"CMA CGM\""
-      ],
-      "alert_categories": [],
-      "alert_candidate": false,
-      "status": "candidate",
-      "screen_reason": "revalidated: no longer matches the current config",
-      "url_unresolved": true
      }
     ]
    },
    "churn": [
+    {
+     "id": 142511,
+     "title": "FedEx completes sale. FedEx stock trades 0.92 percent above EUR 266.10 Xetra close",
+     "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOREQ0NGw0dnF5NW9jQUxfSzNxVkpNV3dhR2JzV3dUazNoSVNCREN0dHhwY1p2SV83RGxGOUJ6VjlGRi1IcFNManYyNTlad2prLVM4TEF2Nzk4MEJXSlZtSkpPanU5YlkxSFRNeUxPcm1Wa01GVnd2Y3lSX3RQVjhraFZhMzRiT1h0RkpZU0FCYzNvLVhsdmc3bnRiS3hCS0tiaHc0VVE3bHRmMHRhNG9Fc2NxWXBJZ3BZTDB5ajdBSER5UFgycGFJUUVuZWZnUDhjRUN1QThYdnBVRHBY",
+     "raw_link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOREQ0NGw0dnF5NW9jQUxfSzNxVkpNV3dhR2JzV3dUazNoSVNCREN0dHhwY1p2SV83RGxGOUJ6VjlGRi1IcFNManYyNTlad2prLVM4TEF2Nzk4MEJXSlZtSkpPanU5YlkxSFRNeUxPcm1Wa01GVnd2Y3lSX3RQVjhraFZhMzRiT1h0RkpZU0FCYzNvLVhsdmc3bnRiS3hCS0tiaHc0VVE3bHRmMHRhNG9Fc2NxWXBJZ3BZTDB5ajdBSER5UFgycGFJUUVuZWZnUDhjRUN1QThYdnBVRHBY?oc=5",
+     "source": "ad-hoc-news.de",
+     "domain": "ad-hoc-news.de",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-10-25T16:46:42+00:00",
+     "first_seen_at": "2026-10-25T22:53:19+00:00",
+     "route": "googlenews",
+     "query": "\"CMA CGM\"",
+     "tier_hint": null,
+     "summary": "FedEx completes sale. FedEx stock trades 0.92 percent above EUR 266.10 Xetra close ad-hoc-news.de",
+     "alias": "(query)",
+     "alias_where": "none",
+     "confidence": 0.4,
+     "also_routes": [],
+     "alert_categories": [],
+     "alert_candidate": false,
+     "status": "screened",
+     "screen_reason": "churn:ad-hoc-news.de",
+     "url_unresolved": true
+    },
     {
      "id": 142448,
      "title": "Nebius Stock: $40 Billion in Contracts, 20% Short Interest, and the Capex Question in Between",
@@ -12042,7 +12072,8 @@
       "also_routes": [
        "googlenews:(\"Deckers\" OR \"De'Longhi\" OR \"DER Touristik\" OR \"Dojo\" OR \"Domino's Pizza\" OR \"Dr. Martens\")",
        "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
-       "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
+       "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")",
+       "googlenews:\"Boots\""
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -14014,7 +14045,8 @@
       "alias_where": "none",
       "confidence": 0.4,
       "also_routes": [
-       "googlenews:(\"Europcar\" OR \"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"House of HR\" OR \"Intrum\")"
+       "googlenews:(\"Europcar\" OR \"Fressnapf\" OR \"Froneri\" OR \"Golden Goose\" OR \"House of HR\" OR \"Intrum\")",
+       "googlenews:\"Europcar\""
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -14604,6 +14636,49 @@
    ],
    "candidates": [
     {
+     "cluster_id": 99978,
+     "primary": {
+      "id": 142513,
+      "title": "Finnair palautti Tampere-Pirkkalan ja Turun lentoliikenneverkostoonsa - lennot alkoivat 25.10.",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPLXpJNHV5NDBSRHpjaUVrdmJUYUMxbXhVdEVOQ0dvalB1NXdXVWRremZNb0pzanNOdWpoaVZoOGxYSlJyT1BMOVBfYW1JamNhbUZZSG5nNm54RlE1b2tXQ2h1MFRoQl9DVjNPWTI2dHdkQ2I5cGFxQkQ5OEN5STcyNjFNSVgwRUlXX0VsYjIwM1dMLWg4X1VUXzcxS3lkNmdXc3hFeE9OWGNZdEVMM3VDMm95TENkci14WlJCNFVTYmladw",
+      "raw_link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPLXpJNHV5NDBSRHpjaUVrdmJUYUMxbXhVdEVOQ0dvalB1NXdXVWRremZNb0pzanNOdWpoaVZoOGxYSlJyT1BMOVBfYW1JamNhbUZZSG5nNm54RlE1b2tXQ2h1MFRoQl9DVjNPWTI2dHdkQ2I5cGFxQkQ5OEN5STcyNjFNSVgwRUlXX0VsYjIwM1dMLWg4X1VUXzcxS3lkNmdXc3hFeE9OWGNZdEVMM3VDMm95TENkci14WlJCNFVTYmladw?oc=5",
+      "source": "Lentoposti",
+      "domain": "lentoposti.fi",
+      "country": "FI",
+      "lang": "fi",
+      "published_at": "2026-10-25T20:14:00+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "\"Finnair\"",
+      "tier_hint": null,
+      "summary": "Finnair palautti Tampere-Pirkkalan ja Turun lentoliikenneverkostoonsa - lennot alkoivat 25.10. Lentoposti",
+      "alias": "Finnair",
+      "alias_where": "title",
+      "confidence": 1.0,
+      "also_routes": [],
+      "alert_categories": [],
+      "alert_candidate": false,
+      "status": "candidate",
+      "screen_reason": "",
+      "url_unresolved": true
+     },
+     "also": [],
+     "sources": 1,
+     "alert_candidate": false,
+     "alert_categories": [],
+     "max_confidence": 1.0,
+     "aliases": [
+      "Finnair"
+     ],
+     "languages": [
+      "fi"
+     ],
+     "countries": [
+      "FI"
+     ],
+     "latest": "2026-10-25T20:14:00+00:00"
+    },
+    {
      "cluster_id": 99824,
      "primary": {
       "id": 142293,
@@ -14741,13 +14816,13 @@
      "latest": "2026-10-24T15:32:54+00:00"
     }
    ],
-   "candidate_count": 3,
+   "candidate_count": 4,
    "kept_from_screen": 0,
    "watch": false,
    "focus": "comp",
    "comps": [],
-   "mentions_in_window": 3,
-   "unresolved_urls": 3,
+   "mentions_in_window": 4,
+   "unresolved_urls": 4,
    "screened": {
     "count": 0,
     "by_reason": {},
@@ -17312,12 +17387,12 @@
     "msc",
     "zim"
    ],
-   "mentions_in_window": 17,
+   "mentions_in_window": 16,
    "unresolved_urls": 1,
    "screened": {
-    "count": 15,
+    "count": 14,
     "by_reason": {
-     "revalidated": 11,
+     "revalidated": 10,
      "churn": 1,
      "noise_domain": 3
     },
@@ -17650,33 +17725,6 @@
        "googlenews:\"TUI Cruises\"",
        "googlenews:\"TUI\"",
        "googlenews:(\"TUI\")"
-      ],
-      "alert_categories": [],
-      "alert_candidate": false,
-      "status": "candidate",
-      "screen_reason": "revalidated: no longer matches the current config",
-      "url_unresolved": true
-     },
-     {
-      "id": 141139,
-      "title": "AI Boom and Energy Shift Drive Strong Demand for Freight Firms",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPTENYR1NjUHo5emxrVDg5OWE3VWE3QmZKT0dDSEdQMGpqNFNsXzRPanlCRnU4NS1UTlpaU1RfTlJKMkhzbG16OVFOZEF5WHdBUHdDMWs4YnYwMnBWQVJjRnlnenZ0OXM4R0JqMmxnRXRHVEQ3UkIzbjQ0RmhhUE5tc2daQ1Y1ZXF5Y18xelJxTzBLMjVKVzlj",
-      "raw_link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPTENYR1NjUHo5emxrVDg5OWE3VWE3QmZKT0dDSEdQMGpqNFNsXzRPanlCRnU4NS1UTlpaU1RfTlJKMkhzbG16OVFOZEF5WHdBUHdDMWs4YnYwMnBWQVJjRnlnenZ0OXM4R0JqMmxnRXRHVEQ3UkIzbjQ0RmhhUE5tc2daQ1Y1ZXF5Y18xelJxTzBLMjVKVzlj?oc=5",
-      "source": "EnergyNow",
-      "domain": "energynow.ca",
-      "country": "US",
-      "lang": "en",
-      "published_at": "2026-10-24T07:20:04+00:00",
-      "first_seen_at": "2026-10-24T22:57:58+00:00",
-      "route": "googlenews",
-      "query": "\"Hapag-Lloyd\"",
-      "tier_hint": null,
-      "summary": "AI Boom and Energy Shift Drive Strong Demand for Freight Firms EnergyNow",
-      "alias": "(query)",
-      "alias_where": "none",
-      "confidence": 0.4,
-      "also_routes": [
-       "googlenews:\"Hapag-Lloyd\""
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -23926,7 +23974,9 @@
       "alias": "Maisons du Monde",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"Maisons du Monde\" OR \"Maje\" OR \"McDonald's France\" OR \"Mr Bricolage\" OR \"Napaqaro\" OR \"Quadient\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -25490,12 +25540,40 @@
    "watch": false,
    "focus": "comp",
    "comps": [],
-   "mentions_in_window": 0,
+   "mentions_in_window": 1,
    "unresolved_urls": 0,
    "screened": {
-    "count": 0,
-    "by_reason": {},
-    "items": []
+    "count": 1,
+    "by_reason": {
+     "noise_domain": 1
+    },
+    "items": [
+     {
+      "id": 142512,
+      "title": "Mr Bricolage SA Estimates – TURQUOISE:ALMRBP",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPN0g4UGhIaVl4LVpyTW1PU2lsNjF6dW8zcDB6cmFIUjI5emVKOFotNlR6dHFGYXNDMzBvMWs4bEZOTVNMNDk1R0dGc2lSSk8xSzUzU1FKWkFfT0VBa2dkVDRickNLakRCWjd5MUk5Wk1aZTZXQjUtOXBSNnlrMmRoTGtjbElERU5XOXdhcmlaandDVDZ0ejBZ",
+      "raw_link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPN0g4UGhIaVl4LVpyTW1PU2lsNjF6dW8zcDB6cmFIUjI5emVKOFotNlR6dHFGYXNDMzBvMWs4bEZOTVNMNDk1R0dGc2lSSk8xSzUzU1FKWkFfT0VBa2dkVDRickNLakRCWjd5MUk5Wk1aZTZXQjUtOXBSNnlrMmRoTGtjbElERU5XOXdhcmlaandDVDZ0ejBZ?oc=5",
+      "source": "TradingView",
+      "domain": "fr.tradingview.com",
+      "country": "FR",
+      "lang": "fr",
+      "published_at": "2026-10-25T04:19:56+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "\"Mr Bricolage\"",
+      "tier_hint": null,
+      "summary": "Mr Bricolage SA Estimates – TURQUOISE:ALMRBP TradingView",
+      "alias": "Mr Bricolage",
+      "alias_where": "title",
+      "confidence": 1.0,
+      "also_routes": [],
+      "alert_categories": [],
+      "alert_candidate": false,
+      "status": "screened",
+      "screen_reason": "noise_domain:tradingview.com",
+      "url_unresolved": true
+     }
+    ]
    },
    "churn": []
   },
@@ -26380,7 +26458,9 @@
       "alias": "North China Pharmaceutical",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"Anglikang\" OR \"Chuanning Biotech\" OR \"COSCO\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "screened",
@@ -27469,7 +27549,10 @@
       "alias": "PayPal",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:\"PayPal\"",
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -27512,7 +27595,10 @@
       "alias": "PayPal",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:\"PayPal\"",
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -28179,7 +28265,9 @@
       "alias": "Pfizer",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -28222,7 +28310,9 @@
       "alias": "Pfizer",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -28266,7 +28356,8 @@
       "alias_where": "title",
       "confidence": 1.0,
       "also_routes": [
-       "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+       "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -28627,14 +28718,14 @@
    "watch": false,
    "focus": "",
    "comps": [],
-   "mentions_in_window": 23,
+   "mentions_in_window": 24,
    "unresolved_urls": 9,
    "screened": {
-    "count": 12,
+    "count": 13,
     "by_reason": {
      "noise_domain": 7,
-     "churn": 1,
-     "republished": 4
+     "republished": 5,
+     "churn": 1
     },
     "items": [
      {
@@ -28655,7 +28746,9 @@
       "alias": "Pfizer",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "screened",
@@ -28685,6 +28778,31 @@
       "alert_candidate": false,
       "status": "screened",
       "screen_reason": "noise_domain:investing.com",
+      "url_unresolved": true
+     },
+     {
+      "id": 142515,
+      "title": "is pfizer developing a weight loss drug",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOU012a2RLMTNaVEFZcnVQaHhLXzZLMVFRQzhGdnN6NF9iQnZTd3FPZ3hmWmNLaExNOGF3ck1QVXVWUUFjNC11SU10cDhrN1R3dFRmRDBkTk5HYUhWcDJqT3lfeTB6eWtFM29tSTUxaE1QQldmV2tBTlpRYUZuc1JwLWl0TWJYbUtuZE11VQ",
+      "raw_link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOU012a2RLMTNaVEFZcnVQaHhLXzZLMVFRQzhGdnN6NF9iQnZTd3FPZ3hmWmNLaExNOGF3ck1QVXVWUUFjNC11SU10cDhrN1R3dFRmRDBkTk5HYUhWcDJqT3lfeTB6eWtFM29tSTUxaE1QQldmV2tBTlpRYUZuc1JwLWl0TWJYbUtuZE11VQ?oc=5",
+      "source": "BusinessWorld Online",
+      "domain": "bworldonline.com",
+      "country": "US",
+      "lang": "en",
+      "published_at": "2026-10-25T16:23:46+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "(\"PayPal\" OR \"Pfizer\")",
+      "tier_hint": null,
+      "summary": "is pfizer developing a weight loss drug BusinessWorld Online",
+      "alias": "Pfizer",
+      "alias_where": "title",
+      "confidence": 1.0,
+      "also_routes": [],
+      "alert_categories": [],
+      "alert_candidate": false,
+      "status": "screened",
+      "screen_reason": "republished:2026-09-30",
       "url_unresolved": true
      },
      {
@@ -28817,7 +28935,9 @@
       "alias": "Pfizer",
       "alias_where": "title",
       "confidence": 1.0,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:(\"PayPal\" OR \"Pfizer\")"
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "screened",
@@ -32099,7 +32219,8 @@
       "confidence": 1.0,
       "also_routes": [
        "googlenews:(\"Ryanair\" OR \"Sainsbury's\" OR \"Sandoz\" OR \"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\")",
-       "googlenews:\"Ryanair\""
+       "googlenews:\"Ryanair\"",
+       "googlenews:\"Greggs\""
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -33910,6 +34031,53 @@
    ],
    "candidates": [
     {
+     "cluster_id": 99979,
+     "primary": {
+      "id": 142514,
+      "title": "Trump claims US strikes 'blew the hell out of' Iran's nuclear capacity, says Hormuz oil transit exceeds pre-war levels",
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQV1NLSTg2NmVSR0d6Zjc4UW5tNENHWVhBTWR6eEZKOFIwUEF1WWxqVm1GUk1BTmJKQXNuSHIxUjRUSXRzRUloaGlVaFZwd3ZmS2pJdTlDMmRySjRBVklzWUdRSVhtNHN6ZWc2d3pCb3ZNd3BhR1JiT2NrWGpQVFZfajY2T3VYajNLczVsZGdfeG96RWtFQ1hxOERtV0R3amFQcTJ6RVlUb2wzOW4wSG92MTBDUXJISUJtTVhlODAxTE9aMGlWLUsxSWx1dkNwWG4xdDJPNDlRYUlwOVVRQmdOMVcweEJKT1BoQ3QtRDRlaUtxQTFsQUljMg",
+      "raw_link": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQV1NLSTg2NmVSR0d6Zjc4UW5tNENHWVhBTWR6eEZKOFIwUEF1WWxqVm1GUk1BTmJKQXNuSHIxUjRUSXRzRUloaGlVaFZwd3ZmS2pJdTlDMmRySjRBVklzWUdRSVhtNHN6ZWc2d3pCb3ZNd3BhR1JiT2NrWGpQVFZfajY2T3VYajNLczVsZGdfeG96RWtFQ1hxOERtV0R3amFQcTJ6RVlUb2wzOW4wSG92MTBDUXJISUJtTVhlODAxTE9aMGlWLUsxSWx1dkNwWG4xdDJPNDlRYUlwOVVRQmdOMVcweEJKT1BoQ3QtRDRlaUtxQTFsQUljMg?oc=5",
+      "source": "ANI News",
+      "domain": "aninews.in",
+      "country": "GB",
+      "lang": "en",
+      "published_at": "2026-10-25T22:13:00+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "\"Strait of Hormuz\"",
+      "tier_hint": null,
+      "summary": "Trump claims US strikes 'blew the hell out of' Iran's nuclear capacity, says Hormuz oil transit exceeds pre-war levels ANI News",
+      "alias": "Hormuz",
+      "alias_where": "title",
+      "confidence": 0.6,
+      "also_routes": [],
+      "alert_categories": [
+       "workforce"
+      ],
+      "alert_candidate": true,
+      "status": "candidate",
+      "screen_reason": "",
+      "url_unresolved": true
+     },
+     "also": [],
+     "sources": 1,
+     "alert_candidate": true,
+     "alert_categories": [
+      "workforce"
+     ],
+     "max_confidence": 0.6,
+     "aliases": [
+      "Hormuz"
+     ],
+     "languages": [
+      "en"
+     ],
+     "countries": [
+      "GB"
+     ],
+     "latest": "2026-10-25T22:13:00+00:00"
+    },
+    {
      "cluster_id": 99734,
      "primary": {
       "id": 142174,
@@ -35267,7 +35435,7 @@
      "latest": "2026-10-23T17:55:39+00:00"
     }
    ],
-   "candidate_count": 25,
+   "candidate_count": 26,
    "kept_from_screen": 0,
    "watch": false,
    "focus": "comp",
@@ -35279,8 +35447,8 @@
     "cosco",
     "zim"
    ],
-   "mentions_in_window": 33,
-   "unresolved_urls": 21,
+   "mentions_in_window": 34,
+   "unresolved_urls": 22,
    "screened": {
     "count": 0,
     "by_reason": {},
@@ -44152,6 +44320,31 @@
      },
      "also": [
       {
+       "id": 142516,
+       "title": "TUI-cruiseschip botst op containerschip",
+       "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQa01QSU9Sdlo3OXJ1TkFkYTczWlN1RXVUcjh6RzN1dnFMOFRYb0pPTHd5STc0S0ZiSmNIVFZydEl5STRTUFJEYTM5eFdTeHpHQlkyaHg1a3pKQ1ZsaldoR3lkTEFxaU1RcjFyUHBLaUJaUTNsSl9URlZ0TldwSTRHN3p3NEN0WlQ0UXJmV29BU3NqU0k2TDYtSmdEY3liSUk",
+       "raw_link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQa01QSU9Sdlo3OXJ1TkFkYTczWlN1RXVUcjh6RzN1dnFMOFRYb0pPTHd5STc0S0ZiSmNIVFZydEl5STRTUFJEYTM5eFdTeHpHQlkyaHg1a3pKQ1ZsaldoR3lkTEFxaU1RcjFyUHBLaUJaUTNsSl9URlZ0TldwSTRHN3p3NEN0WlQ0UXJmV29BU3NqU0k2TDYtSmdEY3liSUk?oc=5",
+       "source": "MarketScreener Nederland",
+       "domain": "nl.marketscreener.com",
+       "country": "NL",
+       "lang": "nl",
+       "published_at": "2026-10-25T19:14:29+00:00",
+       "first_seen_at": "2026-10-25T22:53:19+00:00",
+       "route": "googlenews",
+       "query": "(\"TUI\" OR \"Versuni\")",
+       "tier_hint": null,
+       "summary": "TUI-cruiseschip botst op containerschip MarketScreener Nederland",
+       "alias": "TUI",
+       "alias_where": "title",
+       "confidence": 1.0,
+       "also_routes": [],
+       "alert_categories": [],
+       "alert_candidate": false,
+       "status": "candidate",
+       "screen_reason": "",
+       "url_unresolved": true
+      },
+      {
        "id": 142425,
        "title": "Cruiseschip van TUI botst met containerschip in Duitsland",
        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxONjJybGNHR3hFNHhyYWZxSGYzWUlZbUxNbW1OTjlNTkJkcHk1VFV3Mkc1cVVGUmRGQ0w2b0hTWkM3R3FHNENjeHdxb0VleE5hOTZHbUwtZGloa3hGZXZOamp4QUNtWU12Y0IwdFcyUU5ybE9jamk4LVl6dG0tSjZaT1V2bFNPN1ByWDB4TUk5V2RsNThyR3hEZzljUUNhTnZHNGdjUmpfT001dlRqcXc",
@@ -44170,7 +44363,8 @@
        "alias_where": "title",
        "confidence": 1.0,
        "also_routes": [
-        "googlenews:\"TUI\""
+        "googlenews:\"TUI\"",
+        "googlenews:(\"TUI\" OR \"Versuni\")"
        ],
        "alert_categories": [],
        "alert_candidate": false,
@@ -44179,7 +44373,7 @@
        "url_unresolved": true
       }
      ],
-     "sources": 1,
+     "sources": 2,
      "alert_candidate": false,
      "alert_categories": [],
      "max_confidence": 1.0,
@@ -45161,17 +45355,42 @@
     "dertouristik",
     "sector_jet_fuel"
    ],
-   "mentions_in_window": 73,
+   "mentions_in_window": 75,
    "unresolved_urls": 10,
    "screened": {
-    "count": 48,
+    "count": 49,
     "by_reason": {
-     "revalidated": 43,
+     "revalidated": 44,
      "noise_domain": 3,
      "churn": 1,
      "republished": 1
     },
     "items": [
+     {
+      "id": 142509,
+      "title": "Mein Schiff lanza podcast culinario con Hamburger Genuss-Guide",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQTTE3MmloT1JEXzVrU0JIMFpFTnFDNUxOTkpwbHJBRXJEVzZCZ2E5N1RVVlQ2NVVvRDlRZ2F2bUZRUlJLR1VPV3JoanVxZWowUElmdm5WdXVIWGs1aDlWcDBTbVgzbFIzXzR6cHg4RVR6U2ZJMl9tQS1ZdDFhWFhNeWszcFdfRFNvMV85WEtuSUNkWkk",
+      "raw_link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQTTE3MmloT1JEXzVrU0JIMFpFTnFDNUxOTkpwbHJBRXJEVzZCZ2E5N1RVVlQ2NVVvRDlRZ2F2bUZRUlJLR1VPV3JoanVxZWowUElmdm5WdXVIWGs1aDlWcDBTbVgzbFIzXzR6cHg4RVR6U2ZJMl9tQS1ZdDFhWFhNeWszcFdfRFNvMV85WEtuSUNkWkk?oc=5",
+      "source": "PortalCruceros",
+      "domain": "portalcruceros.cl",
+      "country": "ES",
+      "lang": "es",
+      "published_at": "2026-10-25T21:45:57+00:00",
+      "first_seen_at": "2026-10-25T22:53:19+00:00",
+      "route": "googlenews",
+      "query": "\"TUI\"",
+      "tier_hint": null,
+      "summary": "Mein Schiff lanza podcast culinario con Hamburger Genuss-Guide PortalCruceros",
+      "alias": "(query)",
+      "alias_where": "none",
+      "confidence": 0.4,
+      "also_routes": [],
+      "alert_categories": [],
+      "alert_candidate": false,
+      "status": "candidate",
+      "screen_reason": "revalidated: no longer matches the current config",
+      "url_unresolved": true
+     },
      {
       "id": 142378,
       "title": "VN roepen Charleroi uit tot “stad van innovatie”",
@@ -45192,7 +45411,8 @@
       "confidence": 0.4,
       "also_routes": [
        "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"TUI\" OR \"Worldline\")",
-       "googlenews:\"TUI\""
+       "googlenews:\"TUI\"",
+       "googlenews:(\"TUI\" OR \"Versuni\")"
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -45526,7 +45746,9 @@
       "alias": "(query)",
       "alias_where": "none",
       "confidence": 0.4,
-      "also_routes": [],
+      "also_routes": [
+       "bingnews:\"TUI\""
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -45842,34 +46064,6 @@
       "also_routes": [
        "googlenews:(\"Manuchar\" OR \"PRA Group\" OR \"SYNLAB\" OR \"Travelodge\" OR \"TUI\")",
        "googlenews:\"TUI\""
-      ],
-      "alert_categories": [],
-      "alert_candidate": false,
-      "status": "candidate",
-      "screen_reason": "revalidated: no longer matches the current config",
-      "url_unresolved": true
-     },
-     {
-      "id": 141370,
-      "title": "Calendario de actividades para el curso pastoral 2026-2027",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNZ1VyaGZaT1FoY0Z3QVBrTHA1WVNBdjQ2emlQWHBvLVdmVXp6NVVCMjV6d0RLZWdkZWdySFhBTUowWG5uTV9GZ1NpTGc5YTE2SzBDSTdjV1RwX2pJTVdNZVY4UXdfakVCSlg5eDRsb0g3UW9pYWZPRzRuMWRVUng3ZDVwajVuOVdxSHBrSWo5SmtRSzlF",
-      "raw_link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNZ1VyaGZaT1FoY0Z3QVBrTHA1WVNBdjQ2emlQWHBvLVdmVXp6NVVCMjV6d0RLZWdkZWdySFhBTUowWG5uTV9GZ1NpTGc5YTE2SzBDSTdjV1RwX2pJTVdNZVY4UXdfakVCSlg5eDRsb0g3UW9pYWZPRzRuMWRVUng3ZDVwajVuOVdxSHBrSWo5SmtRSzlF?oc=5",
-      "source": "Diócesis de Tui-Vigo",
-      "domain": "diocesetuivigo.org",
-      "country": "ES",
-      "lang": "es",
-      "published_at": "2026-10-25T06:02:17+00:00",
-      "first_seen_at": "2026-10-25T06:00:02+00:00",
-      "route": "googlenews",
-      "query": "(\"Manuchar\" OR \"PRA Group\" OR \"SYNLAB\" OR \"Travelodge\" OR \"TUI\")",
-      "tier_hint": null,
-      "summary": "Calendario de actividades para el curso pastoral 2026-2027 Diócesis de Tui-Vigo",
-      "alias": "TUI",
-      "alias_where": "summary",
-      "confidence": 0.7,
-      "also_routes": [
-       "googlenews:\"TUI\"",
-       "googlenews:(\"Manuchar\" OR \"PRA Group\" OR \"SYNLAB\" OR \"Travelodge\" OR \"TUI\")"
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -48212,12 +48406,12 @@
     "pho",
     "rosasthai"
    ],
-   "mentions_in_window": 17,
+   "mentions_in_window": 16,
    "unresolved_urls": 1,
    "screened": {
-    "count": 16,
+    "count": 15,
     "by_reason": {
-     "revalidated": 16
+     "revalidated": 15
     },
     "items": [
      {
@@ -48350,7 +48544,9 @@
       "alias": "(query)",
       "alias_where": "none",
       "confidence": 0.4,
-      "also_routes": [],
+      "also_routes": [
+       "googlenews:\"Wagamama\""
+      ],
       "alert_categories": [],
       "alert_candidate": false,
       "status": "candidate",
@@ -48599,35 +48795,6 @@
        "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")",
        "googlenews:\"Wagamama\"",
        "googlenews:(\"Vivion\" OR \"Wagamama\" OR \"Worldline\")"
-      ],
-      "alert_categories": [],
-      "alert_candidate": false,
-      "status": "candidate",
-      "screen_reason": "revalidated: no longer matches the current config",
-      "url_unresolved": true
-     },
-     {
-      "id": 141138,
-      "title": "Concern grows over Ric Flair's health after collapsing in the middle of the street",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPcmRhcUp6QTUwUEk3T0ZCUXdLT0tCZkd6ZHdYekVBcW1WNkxpTkpVSHQyWHpCcXF4Skl4enhYUUtkVDc1c3JwRFFmQ3BxTEJwRHhEbFNDNmNkT1JPSV9lQUM5TVExRFZLTUVRUUJzdE5jcmY1VTIxWnF2YW9FLVpOVTAzR1E2YUZWa2NabVRwZkpUSzRIMXNUd0wxd0x1MjJ0MjdxUjFuMzJrZDVBX0hYZ0d4R0RHT1g0WjJxRHdwal9WazhpQnfSAcYBQVVfeXFMT3JkYXFKekE1MFBJN09GQlF3S09LQmZHemR3WHpFQXFtVjZMaU5KVUh0Mlh6QnFxeEpJeHp4WFFLZFQ3NXNycERRZkNwcUxCcER4RGxTQzZjZE9ST0lfZUFDOU1RMURWS01FUVFCc3ROY3JmNVUyMVpxdmFvRS1aTlUwM0dRNmFGVmtjWm1UcGZKVEs0SDFzVHdMMXdMdTIydDI3cVIxbjMya2Q1QV9IWGdHeEdER09YNFoycUR3cGpfVms4aUJ3",
-      "raw_link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPcmRhcUp6QTUwUEk3T0ZCUXdLT0tCZkd6ZHdYekVBcW1WNkxpTkpVSHQyWHpCcXF4Skl4enhYUUtkVDc1c3JwRFFmQ3BxTEJwRHhEbFNDNmNkT1JPSV9lQUM5TVExRFZLTUVRUUJzdE5jcmY1VTIxWnF2YW9FLVpOVTAzR1E2YUZWa2NabVRwZkpUSzRIMXNUd0wxd0x1MjJ0MjdxUjFuMzJrZDVBX0hYZ0d4R0RHT1g0WjJxRHdwal9WazhpQnfSAcYBQVVfeXFMT3JkYXFKekE1MFBJN09GQlF3S09LQmZHemR3WHpFQXFtVjZMaU5KVUh0Mlh6QnFxeEpJeHp4WFFLZFQ3NXNycERRZkNwcUxCcER4RGxTQzZjZE9ST0lfZUFDOU1RMURWS01FUVFCc3ROY3JmNVUyMVpxdmFvRS1aTlUwM0dRNmFGVmtjWm1UcGZKVEs0SDFzVHdMMXdMdTIydDI3cVIxbjMya2Q1QV9IWGdHeEdER09YNFoycUR3cGpfVms4aUJ3?oc=5",
-      "source": "MARCA",
-      "domain": "marca.com",
-      "country": "GB",
-      "lang": "en",
-      "published_at": "2026-10-24T20:50:21+00:00",
-      "first_seen_at": "2026-10-24T22:57:58+00:00",
-      "route": "googlenews",
-      "query": "\"Wagamama\"",
-      "tier_hint": null,
-      "summary": "Concern grows over Ric Flair's health after collapsing in the middle of the street MARCA",
-      "alias": "(query)",
-      "alias_where": "none",
-      "confidence": 0.4,
-      "also_routes": [
-       "googlenews:\"Wagamama\"",
-       "googlenews:(\"Vivion\" OR \"Wagamama\" OR \"Worldline\")",
-       "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")"
       ],
       "alert_categories": [],
       "alert_candidate": false,
@@ -51248,6 +51415,55 @@
   {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
+   "cluster_id": 99979,
+   "primary": {
+    "id": 142514,
+    "title": "Trump claims US strikes 'blew the hell out of' Iran's nuclear capacity, says Hormuz oil transit exceeds pre-war levels",
+    "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQV1NLSTg2NmVSR0d6Zjc4UW5tNENHWVhBTWR6eEZKOFIwUEF1WWxqVm1GUk1BTmJKQXNuSHIxUjRUSXRzRUloaGlVaFZwd3ZmS2pJdTlDMmRySjRBVklzWUdRSVhtNHN6ZWc2d3pCb3ZNd3BhR1JiT2NrWGpQVFZfajY2T3VYajNLczVsZGdfeG96RWtFQ1hxOERtV0R3amFQcTJ6RVlUb2wzOW4wSG92MTBDUXJISUJtTVhlODAxTE9aMGlWLUsxSWx1dkNwWG4xdDJPNDlRYUlwOVVRQmdOMVcweEJKT1BoQ3QtRDRlaUtxQTFsQUljMg",
+    "raw_link": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQV1NLSTg2NmVSR0d6Zjc4UW5tNENHWVhBTWR6eEZKOFIwUEF1WWxqVm1GUk1BTmJKQXNuSHIxUjRUSXRzRUloaGlVaFZwd3ZmS2pJdTlDMmRySjRBVklzWUdRSVhtNHN6ZWc2d3pCb3ZNd3BhR1JiT2NrWGpQVFZfajY2T3VYajNLczVsZGdfeG96RWtFQ1hxOERtV0R3amFQcTJ6RVlUb2wzOW4wSG92MTBDUXJISUJtTVhlODAxTE9aMGlWLUsxSWx1dkNwWG4xdDJPNDlRYUlwOVVRQmdOMVcweEJKT1BoQ3QtRDRlaUtxQTFsQUljMg?oc=5",
+    "source": "ANI News",
+    "domain": "aninews.in",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-25T22:13:00+00:00",
+    "first_seen_at": "2026-10-25T22:53:19+00:00",
+    "route": "googlenews",
+    "query": "\"Strait of Hormuz\"",
+    "tier_hint": null,
+    "summary": "Trump claims US strikes 'blew the hell out of' Iran's nuclear capacity, says Hormuz oil transit exceeds pre-war levels ANI News",
+    "alias": "Hormuz",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "workforce"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "workforce"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-25T22:13:00+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
    "cluster_id": 99734,
    "primary": {
     "id": 142174,
@@ -51887,8 +52103,8 @@
   }
  ],
  "source_health": {
-  "sources": 1291,
-  "failing": 142,
+  "sources": 1284,
+  "failing": 135,
   "starved_24h": 67,
   "starved_24h_detail": [
    {
@@ -52366,7 +52582,7 @@
    {
     "route": "page",
     "source": "https://arcaplanetgroup.com/category/news/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -52402,19 +52618,19 @@
    {
     "route": "page",
     "source": "https://corporate.puregym.com/investor/investor-overview/default.aspx",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
     "route": "page",
     "source": "https://corporate.puregym.com/newsroom/news/default.aspx",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
     "route": "page",
     "source": "https://corporate.qvc.com/newsroom/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -52426,7 +52642,7 @@
    {
     "route": "page",
     "source": "https://covispharma.com/index.php/news/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -52606,7 +52822,7 @@
    {
     "route": "page",
     "source": "https://opengatecapital.com/news/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -52822,7 +53038,7 @@
    {
     "route": "page",
     "source": "https://www.cranepi.com/en/resource-center/news",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -52834,7 +53050,7 @@
    {
     "route": "page",
     "source": "https://www.cumberlandfarms.group/news",
-    "ok_runs": 596,
+    "ok_runs": 597,
     "runs": 641
    },
    {
@@ -53020,7 +53236,7 @@
    {
     "route": "page",
     "source": "https://www.hhglobal.com/news",
-    "ok_runs": 329,
+    "ok_runs": 330,
     "runs": 641
    },
    {
@@ -53194,7 +53410,7 @@
    {
     "route": "page",
     "source": "https://www.kedrion.com/news-archive/",
-    "ok_runs": 321,
+    "ok_runs": 322,
     "runs": 641
    },
    {
@@ -53224,7 +53440,7 @@
    {
     "route": "page",
     "source": "https://www.maxedadiygroup.com/en/news/archive/",
-    "ok_runs": 256,
+    "ok_runs": 255,
     "runs": 641
    },
    {
@@ -53266,7 +53482,7 @@
    {
     "route": "page",
     "source": "https://www.natuzzigroup.com/en-EN/ir/financial-release.html",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -53326,7 +53542,7 @@
    {
     "route": "page",
     "source": "https://www.pepcogroup.eu/media-news/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -53428,7 +53644,7 @@
    {
     "route": "page",
     "source": "https://www.thecampbellscompany.com/newsroom/press-releases/",
-    "ok_runs": 330,
+    "ok_runs": 331,
     "runs": 641
    },
    {
@@ -53861,6 +54077,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Adler Group\" [fr-LU]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Adler Real Estate\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
@@ -53925,6 +54149,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Air France-KLM\" [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 12,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Alex Baldock\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
@@ -53960,15 +54192,15 @@
     "source": "\"Antibiotika\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 6,
+    "items": 7,
     "last_error": ""
    },
    {
     "route": "googlenews",
-    "source": "\"Aroundtown\" site:greenstreetnews.com [de-DE]",
+    "source": "\"Aramark\" [en-US]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 2,
     "last_error": ""
    },
    {
@@ -53989,7 +54221,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Arrow Global\" [it-IT]",
+    "source": "\"Arrow Global\" [pt-PT]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -53997,10 +54229,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Arrow Global\" site:arrowglobal.net [en-GB]",
+    "source": "\"Aspen Pharmacare\" [en-ZA]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 3,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -54017,14 +54249,6 @@
     "ok_runs": 2,
     "runs": 2,
     "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Aurobindo Pharma\" [en-IN]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 7,
     "last_error": ""
    },
    {
@@ -54053,14 +54277,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Avis Budget\" site:avisbudgetgroup.com [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 2,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Avis Budget\" site:bloomberg.com [en-US]",
     "ok_runs": 1,
     "runs": 1,
@@ -54069,15 +54285,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Avis Budget\" site:reuters.com [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Avis Budget\" site:wsj.com [en-US]",
+    "source": "\"Avis Budget\" site:cnbc.com [en-US]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54085,7 +54293,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Axactor\" [de-DE]",
+    "source": "\"Avis Budget\" site:wsj.com [en-US]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54125,6 +54333,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Axactor\" [sv-SE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"B&B Italia\" [en-US]",
     "ok_runs": 1,
     "runs": 2,
@@ -54138,6 +54354,14 @@
     "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
+   },
+   {
+    "route": "googlenews",
+    "source": "\"B2 Impact\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -54166,14 +54390,6 @@
    {
     "route": "googlenews",
     "source": "\"B2 Impact\" [pl-PL]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"B2 Impact\" [sv-SE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54213,7 +54429,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Biogroup\" [en-GB]",
+    "source": "\"Biogroup\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54246,6 +54462,22 @@
    {
     "route": "googlenews",
     "source": "\"Biogroup\" [nl-BE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Biogroup\" site:biogroup.fr [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 52,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Biogroup\" site:lesechos.fr [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54293,14 +54525,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Boels\" [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Boels\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
@@ -54317,19 +54541,19 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Boels\" [nb-NO]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Boels\" [nl-NL]",
     "ok_runs": 1,
     "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Boels\" [pl-PL]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -54360,7 +54584,7 @@
     "source": "\"Boots\" [en-GB]",
     "ok_runs": 1,
     "runs": 2,
-    "items": 49,
+    "items": 53,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -54389,14 +54613,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Brico Dépôt\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Brico\" [fr-BE]",
     "ok_runs": 1,
     "runs": 1,
@@ -54406,6 +54622,14 @@
    {
     "route": "googlenews",
     "source": "\"Brico\" [nl-NL]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"British Sugar\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54445,10 +54669,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"CMA CGM\" [en-GB]",
+    "source": "\"CMA CGM\" [en-US]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 7,
+    "items": 6,
     "last_error": ""
    },
    {
@@ -54477,7 +54701,23 @@
    },
    {
     "route": "googlenews",
+    "source": "\"COSCO\" [en-CN]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Ceconomy\" [de-AT]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Ceconomy\" [de-CH]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54501,14 +54741,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Ceconomy\" [it-IT]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Ceconomy\" [nl-NL]",
     "ok_runs": 1,
     "runs": 1,
@@ -54525,7 +54757,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Centrient\" [en-GB]",
+    "source": "\"Ceconomy\" [pt-PT]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54533,7 +54765,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Centrient\" [en-IN]",
+    "source": "\"Centrient\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54597,14 +54829,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Cerba\" [it-IT]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Cerba\" site:cerbahealthcare.com [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
@@ -54632,6 +54856,14 @@
     "source": "\"Cheplapharm\" [de-DE]",
     "ok_runs": 4,
     "runs": 4,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Cheplapharm\" site:apotheke-adhoc.de [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -54670,14 +54902,6 @@
    {
     "route": "googlenews",
     "source": "\"Christos Gavalas\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Chuanning Biotech\" [zh-CN]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54733,14 +54957,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Cristal Union\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Critical Medicines Act\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
@@ -54757,7 +54973,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"DEMIRE\" [en-GB]",
+    "source": "\"DEMIRE\" site:iz.de [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54765,7 +54981,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"DEMIRE\" site:iz.de [de-DE]",
+    "source": "\"DEMIRE\" site:thomas-daily.de [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54789,10 +55005,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Design Holding\" [en-GB]",
+    "source": "\"Design Holding\" [da-DK]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 1,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -54809,14 +55025,6 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 8,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Drewry\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
     "last_error": ""
    },
    {
@@ -54845,26 +55053,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Elior\" [es-ES]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Elior\" [fr-FR]",
     "ok_runs": 4,
     "runs": 4,
     "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Elior\" site:eliorgroup.com [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 18,
     "last_error": ""
    },
    {
@@ -54877,7 +55069,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Eurofins Scientific\" [fr-FR]",
+    "source": "\"Europcar\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54885,7 +55077,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Europcar\" [de-DE]",
+    "source": "\"Europcar\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54917,10 +55109,18 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Evoca\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Evoca\" [it-IT]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 38,
+    "items": 39,
     "last_error": ""
    },
    {
@@ -54933,7 +55133,23 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Flora Food\" [en-GB]",
+    "source": "\"Finnair\" [fi-FI]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 5,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Fiserv\" [en-US]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 5,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Flora Food\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -54997,7 +55213,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Fressnapf\" [hu-HU]",
+    "source": "\"Fressnapf\" [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55005,7 +55221,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Fressnapf\" [pl-PL]",
+    "source": "\"Fressnapf\" [hu-HU]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55026,6 +55242,14 @@
     "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Froneri\" [es-ES]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -55109,10 +55333,18 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Golden Goose\" [en-GB]",
+    "source": "\"Gifi\" [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 8,
+    "items": 5,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Golden Goose\" [en-US]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 7,
     "last_error": ""
    },
    {
@@ -55149,7 +55381,23 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Greggs\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 14,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Grifols\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Grifols\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 1,
@@ -55173,6 +55421,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Groupe Bertrand\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Groupe Bertrand\" [fr-FR]",
     "ok_runs": 4,
     "runs": 4,
@@ -55181,10 +55437,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Groupe Bertrand\" site:lefigaro.fr [fr-FR]",
+    "source": "\"Groupe Bertrand\" site:lhotellerie-restauration.fr [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 1,
+    "items": 16,
     "last_error": ""
    },
    {
@@ -55261,14 +55517,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Grünenthal\" [es-ES]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"HSE\" (Teleshopping OR Shoppingsender OR Ismaning OR \"Home Shopping\" OR Homeshopping OR Verkaufssender) [de-DE]",
     "ok_runs": 1,
     "runs": 1,
@@ -55309,7 +55557,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Hapag-Lloyd\" [en-US]",
+    "source": "\"Hapag-Lloyd\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 3,
@@ -55317,10 +55565,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Heimstaden\" [cs-CZ]",
+    "source": "\"Hapag-Lloyd\" [en-US]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 3,
     "last_error": ""
    },
    {
@@ -55342,6 +55590,14 @@
    {
     "route": "googlenews",
     "source": "\"Heimstaden\" [nb-NO]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Heimstaden\" [nl-NL]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55373,18 +55629,18 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Heimstaden\" site:realtid.se [sv-SE]",
+    "source": "\"Heimstaden\" site:fastighetsvarlden.se [sv-SE]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 13,
     "last_error": ""
    },
    {
     "route": "googlenews",
-    "source": "\"Heimstaden\" site:tagesspiegel.de [de-DE]",
+    "source": "\"Heimstaden\" site:realtid.se [sv-SE]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 5,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -55417,14 +55673,6 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 5,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"HelloFresh\" [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 4,
     "last_error": ""
    },
    {
@@ -55469,6 +55717,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Hoist Finance\" [sv-SE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Home Shopping Europe\" [de-DE]",
     "ok_runs": 4,
     "runs": 4,
@@ -55486,14 +55742,6 @@
    {
     "route": "googlenews",
     "source": "\"Home Shopping Europe\" site:textilwirtschaft.de [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Home Shopping Europe\" site:wuv.de [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55533,19 +55781,19 @@
    },
    {
     "route": "googlenews",
-    "source": "\"House of HR\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"House of HR\" [nl-BE]",
     "ok_runs": 1,
     "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
+   },
+   {
+    "route": "googlenews",
+    "source": "\"ISS\" [da-DK]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -55605,14 +55853,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Intrum\" [cs-CZ]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Intrum\" [da-DK]",
     "ok_runs": 1,
     "runs": 1,
@@ -55621,7 +55861,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Intrum\" [de-CH]",
+    "source": "\"Intrum\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55633,14 +55873,6 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Intrum\" [en-IE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
     "last_error": ""
    },
    {
@@ -55661,6 +55893,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Intrum\" [fr-BE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Intrum\" [fr-CH]",
     "ok_runs": 1,
     "runs": 1,
@@ -55669,7 +55909,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Intrum\" [it-IT]",
+    "source": "\"Intrum\" [hu-HU]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55781,30 +56021,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Intrum\" site:newmoney.gr [el-GR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 2,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Intrum\" site:ot.gr [el-GR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Intrum\" site:placera.se [sv-SE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 23,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Intrum\" site:portfolio.hu [hu-HU]",
     "ok_runs": 1,
     "runs": 1,
@@ -55817,6 +56033,22 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 1,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Intrum\" site:privatbankar.hu [hu-HU]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Intrum\" site:vg.hu [hu-HU]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -55840,7 +56072,15 @@
     "source": "\"Isabel Marant\" [fr-FR]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 3,
+    "items": 2,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Isabel Marant\" site:businessoffashion.com [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -55854,14 +56094,6 @@
    {
     "route": "googlenews",
     "source": "\"Isabel Marant\" site:fashionunited.fr [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Isabel Marant\" site:lesechos.fr [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55949,7 +56181,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Kiloutou\" [en-GB]",
+    "source": "\"Kiloutou\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55957,7 +56189,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Kiloutou\" [es-ES]",
+    "source": "\"Kiloutou\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -55981,14 +56213,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Labcorp\" [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 7,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Lowell\" [da-DK]",
     "ok_runs": 1,
     "runs": 1,
@@ -56008,7 +56232,15 @@
     "source": "\"Lowell\" [en-GB]",
     "ok_runs": 2,
     "runs": 2,
-    "items": 101,
+    "items": 99,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Lowell\" [nb-NO]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
     "last_error": ""
    },
    {
@@ -56029,7 +56261,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Loxam\" [en-GB]",
+    "source": "\"Loxam\" [es-ES]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56054,14 +56286,6 @@
    {
     "route": "googlenews",
     "source": "\"Loxam\" [nb-NO]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Loxam\" [sv-SE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56101,14 +56325,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Maersk\" [da-DK]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Magnum Ice Cream Company\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
@@ -56121,14 +56337,6 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 2,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Magnum Ice Cream Company\" [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
     "last_error": ""
    },
    {
@@ -56161,6 +56369,14 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 2,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Manuchar\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -56237,25 +56453,9 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Maxeda\" [nl-BE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Maxeda\" [nl-NL]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Maxeda\" site:retaildetail.nl [nl-NL]",
-    "ok_runs": 1,
-    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -56317,26 +56517,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Medical Properties Trust\" site:globest.com [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Medical Properties Trust\" site:thetimes.com [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Mediterranean Shipping Company\" [it-CH]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 3,
     "last_error": ""
    },
    {
@@ -56381,18 +56565,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Merlin Entertainments\" [it-IT]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Metlen\" [el-GR]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 26,
+    "items": 28,
     "last_error": ""
    },
    {
@@ -56413,6 +56589,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Metlen\" site:kathimerini.gr [el-GR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 3,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Metlen\" site:naftemporiki.gr [el-GR]",
     "ok_runs": 1,
     "runs": 1,
@@ -56421,25 +56605,9 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Mobilux\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Mobilux\" [fr-FR]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Mobilux\" site:bfmtv.com [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -56453,19 +56621,19 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Motel One\" [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 1,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Motor Fuel Group\" [en-GB]",
     "ok_runs": 1,
     "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Mr Bricolage\" [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 2,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -56525,23 +56693,15 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Nando's\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 4,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Napaqaro\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Nexi\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Nexi\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 1,
@@ -56565,7 +56725,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Nexi\" [nb-NO]",
+    "source": "\"Nexi\" [pl-PL]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56606,6 +56766,14 @@
    {
     "route": "googlenews",
     "source": "\"Niels Pörksen\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Nordzucker\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56757,7 +56925,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"PRA Group\" [nb-NO]",
+    "source": "\"PRA Group\" [pl-PL]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56781,7 +56949,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Paragon Customer Communications\" [en-IE]",
+    "source": "\"Paragon Customer Communications\" [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56789,10 +56957,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Paragon Customer Communications\" [fr-FR]",
+    "source": "\"PayPal\" [en-US]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 37,
     "last_error": ""
    },
    {
@@ -56806,6 +56974,14 @@
    {
     "route": "googlenews",
     "source": "\"Peach Property\" [de-CH]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Pho (restaurant group)\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -56840,7 +57016,7 @@
     "source": "\"Praxis\" [nl-NL]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 3,
+    "items": 4,
     "last_error": ""
    },
    {
@@ -56861,6 +57037,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"PureGym\" [de-CH]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"PureGym\" [en-GB]",
     "ok_runs": 1,
     "runs": 2,
@@ -56869,19 +57053,19 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Quadient\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Quick\" [fr-FR]",
     "ok_runs": 1,
     "runs": 2,
-    "items": 10,
+    "items": 11,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Quirónsalud\" [es-ES]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 4,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -56922,14 +57106,6 @@
     "runs": 2,
     "items": 3,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Rekeep\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -57037,6 +57213,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"SYNLAB\" [de-CH]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"SYNLAB\" [de-DE]",
     "ok_runs": 4,
     "runs": 4,
@@ -57077,22 +57261,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"SYNLAB\" [nl-BE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Samhällsbyggnadsbolaget\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Samhällsbyggnadsbolaget\" [sv-SE]",
     "ok_runs": 1,
     "runs": 2,
@@ -57121,6 +57289,22 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Sandoz\" [de-CH]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Sandro\" [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 8,
     "last_error": ""
    },
    {
@@ -57157,6 +57341,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Skechers\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 7,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Skechers\" [en-US]",
     "ok_runs": 2,
     "runs": 2,
@@ -57189,10 +57381,18 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Sonnenklar TV\" [de-DE]",
+    "source": "\"Strait of Hormuz\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 100,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Stripe\" [en-US]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 33,
     "last_error": ""
    },
    {
@@ -57253,7 +57453,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Südzucker\" [fr-BE]",
+    "source": "\"Südzucker\" [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57293,23 +57493,23 @@
    },
    {
     "route": "googlenews",
-    "source": "\"TUI Cruises\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 5,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"TUI\" [de-DE]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 71,
+    "items": 70,
     "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "\"TUI\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 9,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"TUI\" [es-ES]",
     "ok_runs": 1,
     "runs": 1,
     "items": 9,
@@ -57333,23 +57533,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"TUI\" site:reisevor9.de [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 3,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"TUI\" site:travelweekly.co.uk [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Takko\" [cs-CZ]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57373,7 +57557,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Tereos\" [en-GB]",
+    "source": "\"Takko\" [nl-NL]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57389,18 +57573,26 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Tereos\" site:lebetteravier.fr [fr-FR]",
+    "source": "\"Tereos\" [pt-BR]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 1,
+    "items": 0,
     "last_error": ""
    },
    {
     "route": "googlenews",
-    "source": "\"Tereos\" site:lesechos.fr [fr-FR]",
+    "source": "\"Tereos\" site:action-agricole-picarde.com [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 40,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Tereos\" site:lebetteravier.fr [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
     "last_error": ""
    },
    {
@@ -57453,25 +57645,9 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Teva\" [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 10,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Teva\" [he-IL]",
     "ok_runs": 2,
     "runs": 2,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Teya\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -57501,7 +57677,23 @@
    },
    {
     "route": "googlenews",
+    "source": "\"The Very Group\" [en-IE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 1,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Thom Group\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
+    "source": "\"Thom Group\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57568,7 +57760,7 @@
     "source": "\"Upfield\" [en-US]",
     "ok_runs": 1,
     "runs": 2,
-    "items": 11,
+    "items": 10,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -57582,14 +57774,6 @@
    {
     "route": "googlenews",
     "source": "\"VIB Vermögen\" [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Versuni\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57621,14 +57805,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Vivion\" [de-DE]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Vivion\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
@@ -57645,26 +57821,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Vivion\" site:vivion.eu [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"Wagamama\" [en-GB]",
     "ok_runs": 4,
     "runs": 4,
-    "items": 23,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Wagamama\" [en-US]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 2,
+    "items": 28,
     "last_error": ""
    },
    {
@@ -57701,7 +57861,7 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Worldline\" [de-DE]",
+    "source": "\"Worldline\" [en-GB]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57709,10 +57869,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"Worldline\" [en-GB]",
+    "source": "\"Worldline\" [fr-BE]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 2,
     "last_error": ""
    },
    {
@@ -57734,14 +57894,6 @@
    {
     "route": "googlenews",
     "source": "\"Worldline\" site:finextra.com [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "\"Worldline\" site:lecho.be [fr-BE]",
     "ok_runs": 1,
     "runs": 1,
     "items": 0,
@@ -57773,6 +57925,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"Zuckerpreis\" [de-DE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"Zuckerrübe\" [de-DE]",
     "ok_runs": 1,
     "runs": 1,
@@ -57781,10 +57941,10 @@
    },
    {
     "route": "googlenews",
-    "source": "\"airBaltic\" [en-GB]",
+    "source": "\"airBaltic\" [et-EE]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 6,
+    "items": 0,
     "last_error": ""
    },
    {
@@ -57861,14 +58021,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"doValue\" [en-GB]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"doValue\" [es-ES]",
     "ok_runs": 1,
     "runs": 1,
@@ -57885,18 +58037,18 @@
    },
    {
     "route": "googlenews",
-    "source": "\"doValue\" site:capital.gr [el-GR]",
+    "source": "\"doValue\" [pt-PT]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 4,
+    "items": 0,
     "last_error": ""
    },
    {
     "route": "googlenews",
-    "source": "\"doValue\" site:naftemporiki.gr [el-GR]",
+    "source": "\"doValue\" site:capital.gr [el-GR]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 4,
     "last_error": ""
    },
    {
@@ -57989,6 +58141,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"kérosène\" [fr-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 16,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"laboratoires d'analyses\" [fr-FR]",
     "ok_runs": 1,
     "runs": 1,
@@ -58037,14 +58197,6 @@
    },
    {
     "route": "googlenews",
-    "source": "\"pénurie d'antibiotiques\" [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "\"rag & bone\" [en-US]",
     "ok_runs": 1,
     "runs": 1,
@@ -58085,6 +58237,14 @@
    },
    {
     "route": "googlenews",
+    "source": "\"sugar price\" [en-GB]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 3,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "\"伊犁川宁\" [zh-CN]",
     "ok_runs": 1,
     "runs": 1,
@@ -58096,7 +58256,7 @@
     "source": "\"华北制药\" [zh-CN]",
     "ok_runs": 2,
     "runs": 2,
-    "items": 1,
+    "items": 2,
     "last_error": ""
    },
    {
@@ -58191,48 +58351,48 @@
     "route": "googlenews",
     "source": "(\"1-2-3.tv\" OR \"Arla Foods\" OR \"Aroundtown\" OR \"Aurelius\" OR \"Birkenstock\" OR \"Bosch\") [de-DE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 17,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"ACS Dobfar\" OR \"Arcaplanet\" OR \"Bianchi Industry\" OR \"De'Longhi\" OR \"Kedrion\" OR \"Morellato\") [it-IT]",
-    "ok_runs": 1,
-    "runs": 2,
-    "items": 2,
+    "ok_runs": 0,
+    "runs": 1,
+    "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Action\" OR \"Booking\" OR \"Unilever\") [nl-NL]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 15,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Adecco\") [de-CH]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Adecco\") [fr-CH]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 1,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Adidas\" OR \"Bayer\") [de-DE]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 100,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -58254,10 +58414,10 @@
    {
     "route": "googlenews",
     "source": "(\"Adler Group\" OR \"Biogroup\" OR \"Cerba\" OR \"Vivion\") [fr-LU]",
-    "ok_runs": 0,
+    "ok_runs": 1,
     "runs": 1,
-    "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "items": 1,
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -58270,9 +58430,9 @@
    {
     "route": "googlenews",
     "source": "(\"Adyen\" OR \"Air France-KLM\" OR \"Basic-Fit\" OR \"C&A\" OR \"FrieslandCampina\" OR \"IMCD\") [nl-NL]",
-    "ok_runs": 1,
-    "runs": 2,
-    "items": 6,
+    "ok_runs": 0,
+    "runs": 1,
+    "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -58295,9 +58455,9 @@
     "route": "googlenews",
     "source": "(\"Air France-KLM\" OR \"Alten\" OR \"Brico Dépôt\" OR \"Centrakor\" OR \"Compagnie des Alpes\" OR \"Conforama\") [fr-FR]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 11,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58311,57 +58471,57 @@
     "route": "googlenews",
     "source": "(\"AmRest\" OR \"Nexi\" OR \"Pepco\") [pl-PL]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 9,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"AmRest\" OR \"Parques Reunidos\" OR \"Primark\" OR \"Quirónsalud\" OR \"Ribera Salud\" OR \"Unilabs\") [es-ES]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 13,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 100,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Anglikang\" OR \"Chuanning Biotech\" OR \"COSCO\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\") [en-CN]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 1,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Anglikang\" OR \"Chuanning Biotech\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\" OR \"Weiqida\") [zh-CN]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 0,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Applegreen\" OR \"Primark\" OR \"Ryanair\") [en-IE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 38,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Campbell's\" OR \"Carnival\" OR \"Circle K\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 64,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58375,16 +58535,16 @@
     "route": "googlenews",
     "source": "(\"Arla Foods\" OR \"Balder\" OR \"Castellum\" OR \"Hoist Finance\" OR \"Inter IKEA\" OR \"Nexi\") [sv-SE]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 1,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Arla Foods\" OR \"Circle K\" OR \"GANNI\" OR \"ISS\" OR \"Maersk\" OR \"Nexi\") [da-DK]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 1,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -58439,9 +58599,9 @@
     "route": "googlenews",
     "source": "(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\" OR \"Lyfius\") [en-IN]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 40,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -58541,18 +58701,10 @@
    },
    {
     "route": "googlenews",
-    "source": "(\"Boels\" OR \"Centrient\" OR \"Flora Food\" OR \"Maxeda\" OR \"Magnum Ice Cream Company\" OR \"Versuni\") site:acm.nl [en-NL]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
     "source": "(\"Boels\" OR \"Design Holding\" OR \"Heimstaden\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\") [da-DK]",
     "ok_runs": 1,
     "runs": 1,
-    "items": 0,
+    "items": 1,
     "last_error": ""
    },
    {
@@ -58583,9 +58735,9 @@
     "route": "googlenews",
     "source": "(\"Brenntag\" OR \"C&A\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"CPI Property\" OR \"CSL Behring\") [de-DE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 1,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58598,8 +58750,8 @@
    {
     "route": "googlenews",
     "source": "(\"CPI Property\") [cs-CZ]",
-    "ok_runs": 2,
-    "runs": 2,
+    "ok_runs": 1,
+    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -58687,9 +58839,9 @@
     "route": "googlenews",
     "source": "(\"Circle K\" OR \"Nexi\" OR \"property lender\") [nb-NO]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 1,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58703,9 +58855,9 @@
     "route": "googlenews",
     "source": "(\"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\" OR \"Deckers\" OR \"Encore Capital\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 25,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58719,17 +58871,17 @@
     "route": "googlenews",
     "source": "(\"Covis Pharma\" OR \"Octapharma\" OR \"On Holding\" OR \"Peach Property\" OR \"Sandoz\" OR \"Swiss Medical Network\") [de-CH]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 1,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\") [fr-FR]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 6,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58742,9 +58894,9 @@
    {
     "route": "googlenews",
     "source": "(\"DER Touristik\" OR \"Fitness First\" OR \"Grand City Properties\" OR \"Hamborner REIT\" OR \"Hornbach\" OR \"KiK\") [de-DE]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 15,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -58775,9 +58927,9 @@
     "route": "googlenews",
     "source": "(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 21,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58806,18 +58958,18 @@
    {
     "route": "googlenews",
     "source": "(\"Eversys\" OR \"Swiss Medical Network\" OR \"Unilabs\") [fr-CH]",
-    "ok_runs": 1,
-    "runs": 2,
-    "items": 1,
+    "ok_runs": 0,
+    "runs": 1,
+    "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Finnair\" OR \"Nexi\") [fi-FI]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 4,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58877,6 +59029,14 @@
    },
    {
     "route": "googlenews",
+    "source": "(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\") site:cnil.fr [en-FR]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "(\"Groupe Bertrand\" OR \"Biogroup\" OR \"Cerba\" OR \"CMA CGM\" OR \"NABM\" OR \"Elior\") site:economie.gouv.fr [en-FR]",
     "ok_runs": 1,
     "runs": 1,
@@ -58909,6 +59069,14 @@
    },
    {
     "route": "googlenews",
+    "source": "(\"Heimstaden\" OR \"Intrum\" OR \"Samhällsbyggnadsbolaget\") site:imy.se [en-SE]",
+    "ok_runs": 1,
+    "runs": 1,
+    "items": 0,
+    "last_error": ""
+   },
+   {
+    "route": "googlenews",
     "source": "(\"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\" OR \"Intrum\" OR \"Kiloutou\" OR \"Lowell\") [de-DE]",
     "ok_runs": 0,
     "runs": 1,
@@ -58918,10 +59086,10 @@
    {
     "route": "googlenews",
     "source": "(\"HelloFresh\" OR \"House of HR\" OR \"Intrum\" OR \"Maxeda\" OR \"Takko\" OR \"Magnum Ice Cream Company\") [nl-NL]",
-    "ok_runs": 1,
+    "ok_runs": 0,
     "runs": 1,
     "items": 0,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -58942,9 +59110,9 @@
    {
     "route": "googlenews",
     "source": "(\"Inter IKEA\" OR \"Mollie\" OR \"Randstad\") [nl-NL]",
-    "ok_runs": 1,
-    "runs": 2,
-    "items": 6,
+    "ok_runs": 0,
+    "runs": 1,
+    "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -58983,9 +59151,9 @@
     "route": "googlenews",
     "source": "(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\") [de-DE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 37,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59006,10 +59174,10 @@
    {
     "route": "googlenews",
     "source": "(\"Loxam\" OR \"Merlin Entertainments\" OR \"PureGym\") [da-DK]",
-    "ok_runs": 0,
+    "ok_runs": 1,
     "runs": 1,
     "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -59030,10 +59198,10 @@
    {
     "route": "googlenews",
     "source": "(\"Loxam\") [fi-FI]",
-    "ok_runs": 1,
+    "ok_runs": 0,
     "runs": 1,
     "items": 0,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59054,9 +59222,9 @@
    {
     "route": "googlenews",
     "source": "(\"Maisons du Monde\" OR \"Maje\" OR \"McDonald's France\" OR \"Mr Bricolage\" OR \"Napaqaro\" OR \"Quadient\") [fr-FR]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 8,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -59087,9 +59255,9 @@
     "route": "googlenews",
     "source": "(\"Mediterranean Shipping Company\" OR \"MSC Cruises\" OR \"Natuzzi\" OR \"Nexi\" OR \"Rheavendors\" OR \"SandenVendo\") [it-IT]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 10,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -59111,9 +59279,9 @@
     "route": "googlenews",
     "source": "(\"MillerKnoll\" OR \"Norwegian Cruise Line\" OR \"Omega Healthcare\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 19,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59135,9 +59303,9 @@
     "route": "googlenews",
     "source": "(\"NKD\" OR \"Nordzucker\" OR \"Otto\" OR \"Premier Inn\" OR \"Primark\" OR \"Puma\") [de-DE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 23,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59174,8 +59342,8 @@
    {
     "route": "googlenews",
     "source": "(\"Pandora\") [da-DK]",
-    "ok_runs": 0,
-    "runs": 1,
+    "ok_runs": 1,
+    "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
@@ -59198,9 +59366,9 @@
    {
     "route": "googlenews",
     "source": "(\"Parkland\") [en-CA]",
-    "ok_runs": 1,
-    "runs": 2,
-    "items": 20,
+    "ok_runs": 0,
+    "runs": 1,
+    "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -59222,9 +59390,9 @@
    {
     "route": "googlenews",
     "source": "(\"PayPal\" OR \"Pfizer\") [en-US]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 28,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -59239,9 +59407,9 @@
     "route": "googlenews",
     "source": "(\"Planet Fitness\" OR \"Quest Diagnostics\" OR \"QVC\" OR \"rag & bone\" OR \"Robert Half\" OR \"Royal Caribbean\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 43,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59254,8 +59422,8 @@
    {
     "route": "googlenews",
     "source": "(\"QVC\" OR \"antibiotic shortage\" OR \"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\") [de-DE]",
-    "ok_runs": 0,
-    "runs": 1,
+    "ok_runs": 1,
+    "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
@@ -59265,14 +59433,6 @@
     "ok_runs": 1,
     "runs": 1,
     "items": 19,
-    "last_error": ""
-   },
-   {
-    "route": "googlenews",
-    "source": "(\"Quick\" OR \"Tereos\" OR \"Thom Group\" OR \"Worldline\") site:autoritedelaconcurrence.fr [en-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 0,
     "last_error": ""
    },
    {
@@ -59319,24 +59479,24 @@
     "route": "googlenews",
     "source": "(\"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\" OR \"jet fuel\" OR \"sugar beet\" OR \"Sodexo\") [fr-FR]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 11,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Sielaff\" OR \"Sixt\" OR \"Sonnenklar TV\" OR \"SumUp\" OR \"TAG Immobilien\" OR \"Triton Partners\") [de-DE]",
-    "ok_runs": 0,
-    "runs": 1,
+    "ok_runs": 1,
+    "runs": 2,
     "items": 0,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"Signet Jewelers\" OR \"Steelcase\" OR \"Stripe\" OR \"Takeda\" OR \"United Rentals\" OR \"Univar\") [en-US]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 33,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
@@ -59438,8 +59598,8 @@
    {
     "route": "googlenews",
     "source": "(\"Thermoplan\") [de-CH]",
-    "ok_runs": 2,
-    "runs": 2,
+    "ok_runs": 1,
+    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -59455,9 +59615,9 @@
     "route": "googlenews",
     "source": "(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\") [en-US]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 17,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59470,8 +59630,8 @@
    {
     "route": "googlenews",
     "source": "(\"Viva Wallet\") [en-GR]",
-    "ok_runs": 2,
-    "runs": 2,
+    "ok_runs": 1,
+    "runs": 1,
     "items": 0,
     "last_error": ""
    },
@@ -59487,9 +59647,9 @@
     "route": "googlenews",
     "source": "(\"Vonovia\" OR \"WMF\" OR \"Zooplus\") [de-DE]",
     "ok_runs": 1,
-    "runs": 1,
+    "runs": 2,
     "items": 24,
-    "last_error": ""
+    "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
@@ -59510,17 +59670,17 @@
    {
     "route": "googlenews",
     "source": "(\"Weiqida\") [en-CN]",
-    "ok_runs": 1,
-    "runs": 1,
+    "ok_runs": 2,
+    "runs": 2,
     "items": 0,
     "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Wizz Air\") [hu-HU]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 12,
+    "ok_runs": 2,
+    "runs": 2,
+    "items": 23,
     "last_error": ""
    },
    {
@@ -59551,25 +59711,25 @@
     "route": "googlenews",
     "source": "(\"ZIM\") [he-IL]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"Zadig & Voltaire\") [fr-FR]",
-    "ok_runs": 1,
-    "runs": 1,
-    "items": 2,
+    "ok_runs": 2,
+    "runs": 2,
+    "items": 4,
     "last_error": ""
    },
    {
     "route": "googlenews",
     "source": "(\"airBaltic\" OR \"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Intrum\" OR \"Lowell\") [fi-FI]",
-    "ok_runs": 0,
+    "ok_runs": 1,
     "runs": 1,
     "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -59646,18 +59806,18 @@
    {
     "route": "googlenews",
     "source": "(\"ibis budget\" OR \"Ingenico\" OR \"Inovie\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"Leroy Merlin\") [fr-FR]",
-    "ok_runs": 0,
-    "runs": 1,
-    "items": 0,
+    "ok_runs": 1,
+    "runs": 2,
+    "items": 4,
     "last_error": "skipped: googlenews rotation (cap 200 a run)"
    },
    {
     "route": "googlenews",
     "source": "(\"property lender\" OR \"Triton Partners\") [sv-SE]",
     "ok_runs": 1,
-    "runs": 2,
+    "runs": 1,
     "items": 0,
-    "last_error": "skipped: googlenews rotation (cap 200 a run)"
+    "last_error": ""
    },
    {
     "route": "googlenews",
@@ -62240,7 +62400,7 @@
     "source": "Blick Wirtschaft (CH)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 167,
+    "items": 166,
     "last_error": ""
    },
    {
@@ -62384,7 +62544,7 @@
     "source": "Corriere Economia (IT)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 520,
+    "items": 519,
     "last_error": ""
    },
    {
@@ -62544,7 +62704,7 @@
     "source": "Dinheiro Vivo (PT)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 49,
+    "items": 46,
     "last_error": ""
    },
    {
@@ -63104,7 +63264,7 @@
     "source": "Le Figaro Économie (FR)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 76,
+    "items": 75,
     "last_error": ""
    },
    {
@@ -63280,7 +63440,7 @@
     "source": "ORF Wirtschaft (AT)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 118,
+    "items": 121,
     "last_error": ""
    },
    {
@@ -63408,7 +63568,7 @@
     "source": "RTL Nieuws Economie (NL)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 3026,
+    "items": 3029,
     "last_error": ""
    },
    {
@@ -63552,7 +63712,7 @@
     "source": "TVNET (LV)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 92,
+    "items": 88,
     "last_error": ""
    },
    {
@@ -63680,7 +63840,7 @@
     "source": "TradeWinds (NO)",
     "ok_runs": 4,
     "runs": 4,
-    "items": 739,
+    "items": 742,
     "last_error": ""
    },
    {
@@ -63862,12 +64022,12 @@
   }
  },
  "stats": {
-  "items": 142508,
-  "candidates": 120254,
-  "screened": 22254,
-  "matches": 142925,
-  "runs": 4438,
-  "clusters": 99974,
+  "items": 142516,
+  "candidates": 120259,
+  "screened": 22257,
+  "matches": 142933,
+  "runs": 4439,
+  "clusters": 99979,
   "pages_tracked": 278,
   "feeds_known": 126
  },
