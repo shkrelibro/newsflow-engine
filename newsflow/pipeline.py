@@ -18,7 +18,7 @@ from .http import BudgetExceeded, Http, RateLimiter, UpstreamRefused
 from .match import Matcher
 from .signal import hard_signal
 from .models import Item, RawItem, SourceResult
-from .normalize import canonical_url, domain_of, is_google_news_link, url_year
+from .normalize import canonical_url, domain_of, is_google_news_link, title_trailing_date, url_date, url_year
 from .routes import (
     bing_market,
     discover_feed,
@@ -226,6 +226,7 @@ class RunSummary:
     screened: int = 0
     kept_from_screen: int = 0     # tier-A rows a noise domain would have screened, kept flagged
     stale: int = 0
+    republished: int = 0          # v2.15: old headlines under a new timestamp, screened
     unrelated: int = 0
     alerts: int = 0
     source_results: list[SourceResult] = field(default_factory=list)
@@ -421,9 +422,15 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 home_lang = next((mk.lang for mk in markets if mk.country == name.home_country), markets[0].lang if markets else "en")
                 open_alias = "all" in alias.langs or not alias.langs
                 for m in sorted(markets, key=lambda mk: mk.country != name.home_country):
-                    if not alias.applies_to(m.lang):
+                    if alias.search_langs:
+                        # 15 Oct: an alias can name the languages it is searched in, which then
+                        # replace the rules below: Hippopotamus in French only, Ivar Tollefsen in
+                        # Norwegian and Swedish (the main query already covers English)
+                        if m.lang not in alias.search_langs and m.lang.split("-")[0] not in alias.search_langs:
+                            continue
+                    elif not alias.applies_to(m.lang):
                         continue
-                    if open_alias and not cjk and m.lang.split("-")[0] not in (home_lang.split("-")[0], "en"):
+                    elif open_alias and not cjk and m.lang.split("-")[0] not in (home_lang.split("-")[0], "en"):
                         continue
                     if cjk and m.lang.split("-")[0] not in ("zh", "ja", "ko"):
                         continue
@@ -442,21 +449,35 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
             # seven-day window, so a domain visited every 28 hours still misses nothing.
             site_every = max(1, int(g.get("site_every_n_runs", 4)))
             site_name_cap = max(1, int(g.get("site_max_per_name_per_run", 2)))
+            own_every = max(1, int(g.get("own_site_every_n_runs", 8)))
             if name.site_queries:
-                key = [d for d in name.site_queries if d in name.key_outlets]
-                rest = [d for d in name.site_queries if d not in name.key_outlets]
-                due_doms = [d for i, d in enumerate(key) if force or i % site_every == run_number % site_every]
+                own = [d for d in name.site_queries if d in name.own_domains]
+                key = [d for d in name.site_queries if d in name.key_outlets and d not in name.own_domains]
+                rest = [d for d in name.site_queries if d not in name.key_outlets and d not in name.own_domains]
+                # 15 Oct: the issuer's own domains (overlay.yaml own_domains) are the fallback channel to
+                # a newsroom the watcher cannot read, so a focus credit's own domains run every
+                # own_site_every runs, phased by name so they spread over the cycle; any other name's
+                # run at the key-outlet cadence
+                own_due_every = own_every if name.focus == "name" else site_every
+                ph = sum(name.id.encode())
+                due_own = [d for i, d in enumerate(own) if force or _due(own_due_every, run_number, ph + i)]
+                # 15 Oct: the key outlets and short lists are phased by name as well. Phased by list
+                # position alone, every name's first outlet fell on the same cycle, so one run in
+                # sixteen carried some thirty focus site: queries and the rest of the queue waited.
+                due_doms = [d for i, d in enumerate(key) if force or (i + ph) % site_every == run_number % site_every]
                 if rest:
                     if force or len(rest) <= site_name_cap * site_every:
-                        due_doms += [d for i, d in enumerate(rest) if force or i % site_every == run_number % site_every]
+                        due_doms += [d for i, d in enumerate(rest) if force or (i + ph + len(key)) % site_every == run_number % site_every]
                     else:
                         due_doms += [rest[(run_number * site_name_cap + k) % len(rest)] for k in range(site_name_cap)]
-                for dom in due_doms:
+                for dom in due_own + due_doms:
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
+                    if dom in name.own_domain_markets:
+                        lang, country = name.own_domain_markets[dom]
                     q = f'"{main}" site:{dom}'
-                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids), prio=3))
+                    jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids), prio=1 if dom in due_own else 3))
         # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
             for f in name.feeds:
@@ -716,6 +737,78 @@ def _primary_name(matches) -> str:
     return max(matches, key=lambda m: m.confidence).name_id if matches else ""
 
 
+REDATE_GAP_DAYS = 14
+
+
+def _redated(url: str, title: str, published: Optional[datetime], cutoff: datetime) -> bool:
+    """True when the URL path or the headline carries a date that gives the claimed one the lie.
+
+    18 October 2026: three airBaltic lead items were old articles under fresh timestamps (Latvian
+    Public Media of 1 April and 6 July, a liepajniekiem.lv copy of a 25 August LETA wire), and
+    Orange Actualites re-dated a June clip of Olivier Bertrand. The path date is written when the
+    article is created; the " - 03/06" Orange appends is the broadcast date. Either one more than
+    REDATE_GAP_DAYS before the claimed date, or before the lookback cutoff when no date is claimed,
+    marks the item stale."""
+    ref = (published or cutoff).date()
+    limit = ref - timedelta(days=REDATE_GAP_DAYS) if published else cutoff.date()
+    d = url_date(url)
+    if d and d < limit:
+        return True
+    t = title_trailing_date(title, published) if published else None
+    return bool(t and t < limit)
+
+
+REPUBLISH_MIN_AGE_H = 72
+REPUBLISH_LOOKBACK_DAYS = 150
+REPUBLISH_JACCARD = 0.85
+_DIGITS = re.compile(r"\d+")
+
+
+class _TitleHistory:
+    """Headlines the store first saw between REPUBLISH_LOOKBACK_DAYS and REPUBLISH_MIN_AGE_H ago,
+    indexed by token, built once per run. A new item whose headline matches one of them (token
+    Jaccard >= REPUBLISH_JACCARD on five or more tokens, and the same numbers) is a republication of
+    an old story, not news: liepajniekiem.lv re-posts LETA wires weeks later and the Google News
+    route stamps them with the day it found them (v2.15, 18 Oct 2026)."""
+
+    def __init__(self, store: Store, now: datetime) -> None:
+        from .dedupe import tokens
+        self._tokens = tokens
+        self.rows: list[tuple[set, set, str]] = []
+        self.index: dict[str, list[int]] = {}
+        try:
+            hist = store.title_keys_between(now - timedelta(days=REPUBLISH_LOOKBACK_DAYS),
+                                            now - timedelta(hours=REPUBLISH_MIN_AGE_H))
+        except Exception:                      # noqa: BLE001 - an old schema or empty store: no history
+            hist = []
+        for key, seen in hist:
+            tk = tokens(key)
+            if len(tk) < 5:
+                continue
+            i = len(self.rows)
+            self.rows.append((tk, set(_DIGITS.findall(key)), seen[:10]))
+            for t in tk:
+                self.index.setdefault(t, []).append(i)
+
+    def first_seen(self, key: str) -> str:
+        tk = self._tokens(key)
+        if len(tk) < 5:
+            return ""
+        digits = set(_DIGITS.findall(key))
+        counts: dict[int, int] = {}
+        for t in tk:
+            for i in self.index.get(t, ()):
+                counts[i] = counts.get(i, 0) + 1
+        best = ""
+        for i, inter in counts.items():
+            ta, da, seen = self.rows[i]
+            if da != digits:
+                continue
+            if inter / len(tk | ta) >= REPUBLISH_JACCARD and (not best or seen < best):
+                best = seen
+        return best
+
+
 def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Http], raw_items: list[RawItem], run_id: int, now: datetime, summary: RunSummary, lookback_hours: float) -> None:
     cutoff = now - timedelta(hours=lookback_hours)
     resolve = bool(cfg.engine.get("resolve_redirects", False)) and http is not None
@@ -734,6 +827,11 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
     comp_ids = {n.id for n in cfg.names if n.kind == "comp"}
     watched = {n.id for n in cfg.names if n.watch}
     watch_or_tier_a = {n.id for n in cfg.names if n.kind != "comp"} | watched
+
+    history = getattr(store, "_title_history", None)
+    if history is None or getattr(store, "_title_history_run", None) != run_id:
+        history = _TitleHistory(store, now)
+        store._title_history, store._title_history_run = history, run_id   # type: ignore[attr-defined]
 
     for raw in raw_items:
         summary.fetched += 1
@@ -761,6 +859,12 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
             summary.stale += 1
             log.debug("stale by URL year %s: %s", year, raw.title[:80])
             continue
+        # 4. (v2.15) The full date in the path, and a broadcast date at the end of the headline, are
+        #    compared with the claimed date: a gap of more than REDATE_GAP_DAYS is a re-date.
+        if _redated(raw.link, raw.title, raw.published_at, cutoff):
+            summary.stale += 1
+            log.debug("stale by URL or headline date: %s", raw.title[:80])
+            continue
         canon = canonical_url(raw.link)
         if resolve and is_google_news_link(canon):
             resolved = http.head_final_url(canon)  # type: ignore[union-attr]
@@ -772,6 +876,10 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
                 if year and year < cutoff.year:
                     summary.stale += 1
                     log.debug("stale by resolved URL year %s: %s", year, raw.title[:80])
+                    continue
+                if _redated(canon, "", raw.published_at, cutoff):
+                    summary.stale += 1
+                    log.debug("stale by resolved URL date: %s", raw.title[:80])
                     continue
         domain = raw.source_domain or domain_of(canon)
 
@@ -832,13 +940,18 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
             if kept_why:
                 status = "candidate"
                 reason = f"kept:{reason}:{kept_why}"
+        tkey = title_key(raw.title, raw.source_name)
+        seen_before = history.first_seen(tkey)
+        if seen_before:
+            # an old story under a new timestamp: stored for the audit, never a candidate
+            status, reason, kept_why = "screened", f"republished:{seen_before}", ""
+            summary.republished += 1
         item = Item(
             id=None, canonical_url=canon, raw_link=raw.link, title=raw.title.strip(), summary=raw.summary.strip(),
             source_name=raw.source_name, source_domain=domain, published_at=raw.published_at, first_seen_at=now,
             lang=raw.lang, country=raw.country, route=raw.route, query=raw.query, tier_hint=raw.tier_hint,
             status=status, screen_reason=reason,
         )
-        tkey = title_key(raw.title, raw.source_name)
         item_id = store.insert_item(item, tkey, run_id)
         summary.new_items += 1
         if status == "screened":

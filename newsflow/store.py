@@ -356,6 +356,14 @@ class Store:
             (name_id, _iso(since)),
         ).fetchall()
 
+    def title_keys_between(self, since: datetime, until: datetime) -> list[tuple[str, str]]:
+        """(title_key, first_seen_at) of every item first seen in [since, until): the history the
+        republish check compares a new headline against (v2.15)."""
+        rows = self.conn.execute(
+            "SELECT title_key, first_seen_at FROM items WHERE first_seen_at >= ? AND first_seen_at < ? AND title_key != ''",
+            (_iso(since), _iso(until))).fetchall()
+        return [(str(r[0]), str(r[1])) for r in rows]
+
     def commit(self) -> None:
         self.conn.commit()
 

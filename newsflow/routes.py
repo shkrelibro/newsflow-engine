@@ -489,6 +489,7 @@ GENERIC_LINK_TEXT = re.compile(
     r"|lire\s+la\s+suite|en\s+savoir\s+plus|lire|leer\s+m[áa]s|leggi(?:\s+tutto|\s+di\s+pi[uù])?"
     r"|l[äa]s\s+mer|les\s+mer|l[æa]s\s+mere|lue\s+lis[äa][äa]|czytaj\s+wi[ęe]cej|tov[áa]bb|meer\s+lezen|lees\s+meer"
     r"|download|pdf|herunterladen|open|view|link|here|click\s+here|learn\s+more|find\s+out\s+more|full\s+(?:story|article|release)"
+    r"|press\s+releases?|news(?:room)?|latest\s+news|investor\s+news|announcements?|pressemitteilung(?:en)?|communiqu[ée]s?(?:\s+de\s+presse)?"
     r"|chevron_right|arrow_forward|→|»|>)\s*(?:chevron_right|arrow_forward|→|»|>)?\s*$",
     re.IGNORECASE)
 _OG_TITLE = re.compile(r"<meta[^>]+property=[\"']og:title[\"'][^>]+content=[\"']([^\"']+)[\"']", re.IGNORECASE)
@@ -519,14 +520,33 @@ def title_from_article(html: str) -> str:
     return ""
 
 
+def title_from_pdf_name(url: str) -> str:
+    """A readable headline from a PDF's file name: Travelodge's 13 October bondholder notice, the
+    GBP 85m sale of 13 hotels, was listed as "click here" on a link to
+    Property_sal_bondholder_announcement.pdf, and a PDF is never fetched for its title."""
+    from urllib.parse import unquote
+    name = unquote(url.split("?")[0].rstrip("/").rsplit("/", 1)[-1])
+    name = re.sub(r"\.pdf$", "", name, flags=re.IGNORECASE)
+    name = re.sub(r"[_\-+.]+", " ", name)
+    name = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", name)          # CamelCase file names
+    name = re.sub(r"\s+", " ", name).strip()
+    return f"{name} (PDF)" if len(name) >= 12 and not re.fullmatch(r"[\d ]+", name) else ""
+
+
 def enrich_generic_titles(http: Http, items: list[RawItem], limit: int = 5) -> int:
-    """Replace button-text headlines with the article's own, fetching at most `limit` pages."""
+    """Replace button-text headlines with the article's own, fetching at most `limit` pages; a PDF
+    takes its file name instead, which costs no fetch."""
     fetched = 0
     for it in items:
+        if not generic_link_text(it.title):
+            continue
+        if it.link.lower().split("?")[0].endswith(".pdf"):
+            t = title_from_pdf_name(it.link)
+            if t:
+                it.title = t
+            continue
         if fetched >= limit:
             break
-        if not generic_link_text(it.title) or it.link.lower().split("?")[0].endswith(".pdf"):
-            continue
         try:
             html = http.get_text(it.link, is_page=True)
         except Exception:  # noqa: BLE001 - a failed enrichment keeps the link text

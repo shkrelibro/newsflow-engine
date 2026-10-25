@@ -23,9 +23,16 @@ _CJK = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-
 
 
 def _alias_regex(alias: Alias) -> re.Pattern:
-    text = re.escape(alias.text.strip())
+    raw = alias.text.strip()
+    text = re.escape(raw)
     # allow flexible whitespace/hyphen inside multi-word aliases
     text = text.replace(r"\ ", r"[\s\-]+")
+    if alias.capitalized and raw[:1].isalpha():
+        # 15 Oct: a brand that is a common word ("But") must be written as a name: the first letter
+        # is matched case-sensitively (a scoped flag), the rest as usual, so "But" and "BUT" match
+        # and "dans le but de" does not
+        rest = re.escape(raw[1:]).replace(r"\ ", r"[\s\-]+")
+        text = f"(?-i:{re.escape(raw[0])}){rest}"
     if _CJK.search(alias.text):
         return re.compile(text, re.IGNORECASE | re.UNICODE)
     if alias.inflect:
@@ -46,10 +53,20 @@ def _context_regex(alias: Alias) -> Optional[re.Pattern]:
     inside Nottinghamshire for Boots. The terms are the analyst's; requiring them to appear as
     words is the only sane reading of what they meant.
     """
-    if not alias.require_context:
+    return _terms_regex(alias.require_context)
+
+
+def _reject_regex(alias: Alias) -> Optional[re.Pattern]:
+    """The same word-boundary matcher for an alias's reject_context terms (15 Oct 2026): any of
+    them in the text disqualifies the alias, as "Brico Dépôt" disqualifies Maxeda's "Brico"."""
+    return _terms_regex(alias.reject_context)
+
+
+def _terms_regex(terms: list[str]) -> Optional[re.Pattern]:
+    if not terms:
         return None
     parts = []
-    for term in alias.require_context:
+    for term in terms:
         t = re.escape(term.strip())
         t = t.replace(r"\ ", r"[\s\-]+")       # "fast food" also matches "fast-food"
         if _CJK.search(term):
@@ -65,7 +82,7 @@ def _context_regex(alias: Alias) -> Optional[re.Pattern]:
 @dataclass
 class CompiledName:
     cfg: NameConfig
-    aliases: list[tuple[Alias, re.Pattern, Optional[re.Pattern]]]
+    aliases: list[tuple[Alias, re.Pattern, Optional[re.Pattern], Optional[re.Pattern]]]   # alias, pattern, context, reject
     exclude: list[re.Pattern]
     noise_domains: list[str]
     noise_titles: list[re.Pattern]
@@ -105,7 +122,7 @@ class Matcher:
             names.append(
                 CompiledName(
                     cfg=n,
-                    aliases=[(a, _alias_regex(a), _context_regex(a)) for a in n.aliases],
+                    aliases=[(a, _alias_regex(a), _context_regex(a), _reject_regex(a)) for a in n.aliases],
                     exclude=[re.compile(re.escape(t), re.IGNORECASE) for t in n.exclude_terms],
                     noise_domains=[d.lower() for d in n.noise_domains],
                     noise_titles=[re.compile(p, re.IGNORECASE) for p in n.noise_title_patterns],
@@ -136,7 +153,7 @@ class Matcher:
                 continue
             best: MatchResult | None = None
             excluded = any(p.search(text_all) for p in cn.exclude)
-            for alias, pat, ctx in cn.aliases:
+            for alias, pat, ctx, rej in cn.aliases:
                 if not alias.applies_to(lang):
                     continue
                 where = ""
@@ -146,7 +163,7 @@ class Matcher:
                     where = "summary"
                 if not where:
                     continue
-                if ctx is not None and not ctx.search(text_all):
+                if (ctx is not None and not ctx.search(text_all)) or (rej is not None and rej.search(text_all)):
                     if rejected is not None:
                         rejected.add(cn.cfg.id)
                     continue

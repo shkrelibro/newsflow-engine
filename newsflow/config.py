@@ -71,6 +71,17 @@ class Alias:
     search: bool = False        # run search-route queries for this alias (Google/Bing/GDELT)
     search_every: int = 1       # only every Nth run (rate-limit friendly for secondary aliases)
     query: str = ""             # optional search query used instead of the quoted alias text
+    # 15 Oct 2026, widening the net to the brands a credit trades under. Three controls, so a brand
+    # that is also a common word can be searched without filing the common word:
+    #  search_langs     languages the search runs in (default: the alias's own languages).
+    #                   Hippopotamus is a Groupe Bertrand chain in French and an animal in English.
+    #  reject_context   terms that disqualify the match: "Brico" is Maxeda's Belgian chain, while
+    #                   "Brico Dépôt" is Kingfisher's French one and "Brico Leclerc" a hypermarket's.
+    #  capitalized      the first letter must be a capital: Mobilux trades as "But", and in French
+    #                   "but" (aim, goal) runs through every other sentence in lower case.
+    search_langs: list[str] = field(default_factory=list)
+    reject_context: list[str] = field(default_factory=list)
+    capitalized: bool = False
 
     def applies_to(self, lang: str) -> bool:
         return "all" in self.langs or not lang or lang in self.langs
@@ -117,6 +128,12 @@ class NameConfig:
     watch: bool = False
     focus: str = ""            # "name" for a focus credit, "comp" for a comp of one (config/focus.yaml), else ""
     key_outlets: list[str] = field(default_factory=list)   # overlay.yaml: outlets that must reach this name (site: query + proof)
+    # overlay.yaml (15 Oct 2026): the company's own domains (newsroom, investor site, a listed
+    # subsidiary's site). Each gets a site: query on its own cadence (routes.googlenews.
+    # own_site_every_n_runs), and a row from one of them is the issuer's own word: the export keeps
+    # it even when the headline names no alias ("Half-year report January to June 2026").
+    own_domains: list[str] = field(default_factory=list)
+    own_domain_markets: dict[str, tuple[str, str]] = field(default_factory=dict)   # domain -> (lang, country) for its site: query
 
     @property
     def langs(self) -> list[str]:
@@ -197,6 +214,9 @@ def _parse_alias(raw: Any) -> Alias:
     langs = raw.get("langs", ["all"])
     if isinstance(langs, str):
         langs = [langs]
+    search_langs = raw.get("search_langs") or []
+    if isinstance(search_langs, str):
+        search_langs = [search_langs]
     return Alias(
         text=str(raw["text"]),
         langs=[str(l) for l in langs],
@@ -206,7 +226,59 @@ def _parse_alias(raw: Any) -> Alias:
         search=bool(raw.get("search", False)),
         search_every=max(1, int(raw.get("search_every", 1))),
         query=str(raw.get("query", "") or ""),
+        search_langs=[str(l) for l in search_langs],
+        reject_context=[str(c) for c in raw.get("reject_context", [])],
+        capitalized=bool(raw.get("capitalized", False)),
     )
+
+
+def _upgrade_alias(existing: Alias, raw: Any) -> bool:
+    """Apply an overlay entry to an alias the name file already carries. True if anything changed.
+
+    Until 15 October an overlay entry for an existing text could only widen its languages, so a
+    brand the generated file holds as match-only (CEVA Logistics, Praxis, Brico, Payone, But) could
+    never be searched: it matched only when some other query or feed happened to carry it, and over
+    seven weeks to 14 October Mobilux, which trades as But, logged no match at all. Only the keys
+    the entry states are applied, so an entry that says nothing about inflection cannot switch it
+    off: search opens the alias to search (with search_every, query and search_langs as given),
+    require_context and reject_context terms are added to the existing guard, inflect and
+    capitalized are switched on, and an explicit weight replaces the old one.
+    """
+    if not isinstance(raw, dict):
+        return False
+    changed = False
+    if raw.get("search") and not existing.search:
+        existing.search = True
+        changed = True
+    if "search_every" in raw and max(1, int(raw["search_every"])) != existing.search_every:
+        existing.search_every = max(1, int(raw["search_every"]))
+        changed = True
+    if raw.get("query") and str(raw["query"]) != existing.query:
+        existing.query = str(raw["query"])
+        changed = True
+    if raw.get("search_langs"):
+        langs = raw["search_langs"]
+        langs = [str(langs)] if isinstance(langs, str) else [str(l) for l in langs]
+        if langs != existing.search_langs:
+            existing.search_langs = langs
+            changed = True
+    for key in ("require_context", "reject_context"):
+        have = getattr(existing, key)
+        lower = {t.lower() for t in have}
+        for term in raw.get(key, []) or []:
+            term = str(term)
+            if term.lower() not in lower:
+                have.append(term)
+                lower.add(term.lower())
+                changed = True
+    for key in ("inflect", "capitalized"):
+        if raw.get(key) and not getattr(existing, key):
+            setattr(existing, key, True)
+            changed = True
+    if "weight" in raw and float(raw["weight"]) != existing.weight:
+        existing.weight = float(raw["weight"])
+        changed = True
+    return changed
 
 
 def _parse_page(raw: dict, default_ids: list[str], kind: str) -> PageSource:
@@ -314,7 +386,8 @@ def _merge_primary(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
 
 
 def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[str, int]]:
-    """Merge overlay.yaml into the parsed names: the watch flag, extra aliases, extra exclude terms.
+    """Merge overlay.yaml into the parsed names: the watch flag, extra aliases (or upgrades to the
+    name file's own), extra exclude terms, site: queries, key outlets, own domains and comps.
 
     Same reasoning as the primary layer. The generator rewrites every name file it owns, so an
     alias added by hand to sbb.yaml lives until the next regeneration and then does not. The
@@ -325,7 +398,8 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
     """
     by_id = {n.id: n for n in names}
     unknown: list[str] = []
-    counts = {"watch": 0, "aliases": 0, "exclude_terms": 0, "duplicates": 0, "widened": 0, "site_queries": 0, "key_outlets": 0}
+    counts = {"watch": 0, "aliases": 0, "exclude_terms": 0, "duplicates": 0, "widened": 0, "site_queries": 0, "key_outlets": 0,
+              "upgraded": 0, "own_domains": 0, "comps": 0, "comps_unknown": 0}
     entries = raw.get("names", {}) or {}
     if not isinstance(entries, dict):
         raise ValueError("overlay.yaml: 'names' must be a mapping of name id -> {watch, aliases, exclude_terms}")
@@ -344,9 +418,11 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
             alias = _parse_alias(entry)
             existing = have.get(alias.text.lower())
             if existing is not None:
+                changed = False
                 # Same text already there: widen its languages rather than add a second copy.
                 # The generated sbb.yaml has Sveafastigheter for Swedish only; the overlay can
-                # open it to English without touching the generated file.
+                # open it to English without touching the generated file. An entry that means only
+                # to upgrade an alias therefore states the alias's own languages.
                 if "all" not in existing.langs:
                     new_langs = [l for l in alias.langs if l not in existing.langs]
                     if "all" in alias.langs:
@@ -355,8 +431,13 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
                         existing.langs.extend(new_langs)
                     if new_langs:
                         counts["widened"] += 1
-                        continue
-                counts["duplicates"] += 1
+                        changed = True
+                # 15 Oct: and it can open a match-only brand to search, or widen its guard
+                if _upgrade_alias(existing, entry):
+                    counts["upgraded"] += 1
+                    changed = True
+                if not changed:
+                    counts["duplicates"] += 1
                 continue
             have[alias.text.lower()] = alias
             name.aliases.append(alias)
@@ -385,6 +466,45 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
             if dom and dom not in name.site_queries:
                 name.site_queries.append(dom)
                 counts["site_queries"] += 1
+        # Own domains (15 Oct): the issuer's newsroom, investor site or a listed subsidiary's site.
+        # They are site: queries too, on their own cadence, and the export keeps a row from one of
+        # them even when its headline names no alias, because it is the issuer's own word.
+        # An entry is a bare domain, or {domain, lang, country} when the site publishes in another
+        # language than the name's first market: Google answers a site: query in the edition's
+        # language where the site has one (intrum.com answers the Swedish edition in Swedish), so an
+        # English-only newsroom is asked in English.
+        for entry in spec.get("own_domains", []) or []:
+            if isinstance(entry, dict):
+                dom = str(entry.get("domain", "")).strip().lower()
+                lang = str(entry.get("lang", "") or "").strip().lower()
+                country = _cc(entry["country"]) if entry.get("country") not in (None, "") else ""
+            else:
+                dom, lang, country = str(entry).strip().lower(), "", ""
+            if not dom:
+                continue
+            if dom not in name.own_domains:
+                name.own_domains.append(dom)
+                counts["own_domains"] += 1
+            if lang:
+                home = next((m.country for m in name.markets if m.lang == lang), name.home_country)
+                name.own_domain_markets[dom] = (lang, country or home or "GB")
+            if dom not in name.site_queries:
+                name.site_queries.append(dom)
+                counts["site_queries"] += 1
+        # Comps added by hand (15 Oct): chiefly the sector entries (sector_*.yaml, cnam), which list
+        # their issuers but were listed by none of them, so a sugar-beet or jet-fuel story never read
+        # across to the focus credit it moves. Applied before config/focus.yaml, so a comp added here
+        # is marked as a focus comp like any other. An id with no name file is counted for check-config.
+        for cid in spec.get("comps", []) or []:
+            cid = str(cid).strip()
+            if not cid or cid in name.comps:
+                continue
+            if cid not in by_id:
+                counts["comps_unknown"] += 1
+                unknown.append(f"{nid}.comps:{cid}")
+                continue
+            name.comps.append(cid)
+            counts["comps"] += 1
         if spec.get("notes"):
             name.notes = (name.notes + " " if name.notes else "") + str(spec["notes"]).strip()
     return unknown, counts

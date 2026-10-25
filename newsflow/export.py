@@ -46,6 +46,14 @@ def _item_public(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def on_domains(domain: str, domains: list[str]) -> bool:
+    """True if `domain` is one of `domains` or a subdomain of one (investors.worldline.com)."""
+    d = (domain or "").lower().strip()
+    if d.startswith("www."):
+        d = d[4:]
+    return bool(d) and any(d == x or d.endswith("." + x) for x in domains)
+
+
 def _primary_sort_key(it: dict[str, Any]):
     tier = it["tier_hint"] if it["tier_hint"] is not None else 9
     unresolved = 1 if it["url_unresolved"] else 0
@@ -83,7 +91,16 @@ def build_export(cfg: Config, store: Store, now: datetime, window_hours: float) 
             # "Pricing of EUR 400m senior secured notes" on the company's own newsroom names no
             # alias and never will. Re-testing it here screened exactly the rows the primary
             # layer exists to catch.
-            attributed = pub.get("alias") in ("(page)", "(feed)")
+            # 15 Oct: the same holds for a row that came back from a site: query on one of the
+            # issuer's own domains (overlay.yaml own_domains). "Pinnacle Bidco plc - Redemption of
+            # Senior Secured Notes due 2028" on corporate.puregym.com is PureGym's own word whether
+            # or not the headline says PureGym. Every other query row with no alias in its text
+            # (alias "(query)") is still screened here; on outlet domains those are mostly page
+            # furniture and company-register listings.
+            own_site = on_domains(pub.get("domain") or "", n.own_domains)
+            if own_site:
+                pub["own_site"] = True
+            attributed = pub.get("alias") in ("(page)", "(feed)") or own_site
             if r["status"] != "screened" and not attributed and not matcher.match(
                     r["title"] or "", r["summary"] or "", r["lang"] or "", only=[n.id]):
                 revalidated += 1
@@ -228,12 +245,17 @@ def build_coverage(cfg: Config, store: Store, now: datetime) -> dict[str, Any]:
 
     def _outlets(n) -> list[dict[str, Any]]:
         out = []
-        for dom in n.key_outlets:
+        # 15 Oct: the name's own domains are reported beside its key outlets, flagged "own", so a
+        # week on it is a measured fact which newsrooms Google answers for and which it never does
+        for dom in n.key_outlets + [d for d in n.own_domains if d not in n.key_outlets]:
             ok_s, n_s = site_ok.get((n.id, dom), [0, 0])
             ok_f, n_f = outcomes.get(feed_label.get(dom, ""), (0, 0))
             hits = [v for (nid, d), v in last_seen.items() if nid == n.id and (d == dom or d.endswith("." + dom))]
-            out.append({"domain": dom, "site_ok": ok_s, "site_jobs": n_s, "feed_ok": ok_f, "feed_jobs": n_f,
-                        "answering": bool(ok_s or ok_f), "last_hit": max(hits) if hits else None})
+            row = {"domain": dom, "site_ok": ok_s, "site_jobs": n_s, "feed_ok": ok_f, "feed_jobs": n_f,
+                   "answering": bool(ok_s or ok_f), "last_hit": max(hits) if hits else None}
+            if dom in n.own_domains:
+                row["own"] = True
+            out.append(row)
         return out
 
     names_out = {}
@@ -290,7 +312,10 @@ _COMPACT_KEYS = ("id", "title", "url", "source", "domain", "country", "lang", "p
 def compact_window(data: dict[str, Any]) -> dict[str, Any]:
     """The 72-hour pile in the shape scripts/build_brief.py reads, minus everything heavy."""
     def slim(it: dict[str, Any]) -> dict[str, Any]:
-        return {k: it.get(k) for k in _COMPACT_KEYS}
+        out = {k: it.get(k) for k in _COMPACT_KEYS}
+        if it.get("own_site"):
+            out["own_site"] = True          # only where set, so the file does not grow by a key per row
+        return out
     names = []
     for n in data["names"]:
         names.append({

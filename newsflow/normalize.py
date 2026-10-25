@@ -116,3 +116,56 @@ def url_year(url: str) -> Optional[int]:
         if 1990 <= year <= 2100:
             best = year if best is None else min(best, year)
     return best
+
+
+# v2.15 (18 Oct 2026): the full date in a URL path, not just the year. url_year() catches a 2009 story
+# re-dated in 2026; it cannot catch a 6 July Latvian Public Media article re-dated to 18 October,
+# which led the brief on 18 October (eng.lsm.lv/article/.../06.07.2026-latvian-pm-kulbergs-...).
+_URL_YMD = re.compile(r"(?:^|[/\-_.])((?:19|20)\d{2})[/\-_.](0[1-9]|1[0-2])[/\-_.](0[1-9]|[12]\d|3[01])(?=[/\-_.]|$)")
+_URL_DMY = re.compile(r"(?:^|[/\-_])(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.((?:19|20)\d{2})(?=[/\-_.]|$)")
+_URL_YMD8 = re.compile(r"(?:^|[/\-_])((?:19|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?=[/\-_]|$)")
+
+
+def url_date(url: str):
+    """The publication date written into a URL path (yyyy/mm/dd, yyyy-mm-dd, dd.mm.yyyy or a
+    stand-alone yyyymmdd segment), or None. The earliest is taken when several appear."""
+    from datetime import date
+    try:
+        path = urlsplit(url).path
+    except ValueError:
+        return None
+    found = []
+    for pat, order in ((_URL_YMD, "ymd"), (_URL_DMY, "dmy"), (_URL_YMD8, "ymd")):
+        for m in pat.finditer(path):
+            a, b, c = (int(x) for x in m.groups())
+            y, mo, d = (a, b, c) if order == "ymd" else (c, b, a)
+            try:
+                found.append(date(y, mo, d))
+            except ValueError:
+                continue
+    return min(found) if found else None
+
+
+# Orange Actualites republishes old BFM and Challenges clips under a fresh timestamp but keeps the
+# broadcast date at the end of the headline: "Olivier Bertrand (Groupe Bertrand) : \"Nous allons
+# terminer l'annee dans le rouge\" - 03/06", collected on 16 October 2026 as new.
+_TITLE_DM = re.compile(r"\s[-–]\s(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])\s*$")
+
+
+def title_trailing_date(title: str, published):
+    """The day/month a headline ends with (" - 27/04"), placed in the year that makes it no later
+    than the published date, or None."""
+    from datetime import date
+    m = _TITLE_DM.search(title or "")
+    if not m or published is None:
+        return None
+    d, mo = int(m.group(1)), int(m.group(2))
+    pub = published.date() if hasattr(published, "date") else published
+    for y in (pub.year, pub.year - 1):
+        try:
+            cand = date(y, mo, d)
+        except ValueError:
+            continue
+        if cand <= pub:
+            return cand
+    return None

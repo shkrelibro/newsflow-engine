@@ -221,7 +221,8 @@ def cmd_check(args) -> int:
     print(f"overlay (overlay.yaml): {oc.get('watch', 0)} watched ({', '.join(watched) or 'none'}), "
           f"+{oc.get('aliases', 0)} aliases, {oc.get('widened', 0)} widened to more languages, "
           f"+{oc.get('exclude_terms', 0)} exclude terms, +{oc.get('site_queries', 0)} site queries, "
-          f"{oc.get('duplicates', 0)} already in a name file")
+          f"{oc.get('upgraded', 0)} name-file aliases upgraded (search or guard), +{oc.get('own_domains', 0)} own domains, "
+          f"+{oc.get('comps', 0)} comps, {oc.get('duplicates', 0)} already in a name file")
     if cfg.overlay_unknown:
         print(f"WARNING: overlay.yaml names {len(cfg.overlay_unknown)} id(s) with no name file (ignored): "
               + ", ".join(cfg.overlay_unknown))
