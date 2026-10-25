@@ -14,6 +14,8 @@ markets:
 aliases:
   - {text: "Flora Food", search: true}
   - {text: "Upfield", search: true, search_every: 2}
+  # 14 Oct: the September reports of KKR's sale of the business said "Flora", not "Flora Food"
+  - {text: "Flora", weight: 0.5, require_context: ["KKR", "margarine", "Upfield", "spreads", "plant-based", "Violife", "Becel", "Rama", "Platinum Equity", "One Rock"]}
   - {text: "Violife", weight: 0.6, require_context: ["Flora", "Upfield", "vegan", "plant-based"]}
   - {text: "Becel", weight: 0.5, require_context: ["Upfield", "Flora", "margarine"]}
   - {text: "Rama", langs: [de], weight: 0.5, require_context: ["Upfield", "Flora", "Margarine"]}

@@ -11,7 +11,14 @@ markets:
   - {country: GB, lang: en}
 aliases:
   - {text: "Mobilux", inflect: true, search: true}
-  - {text: "BUT", langs: [fr], weight: 0.6, require_context: ["magasin", "ameublement", "enseigne", "Mobilux", "meuble", "distribution"]}
+  - {text: "BUT", langs: [fr], weight: 0.6, require_context: ["magasin", "ameublement", "enseigne", "Mobilux", "meuble", "distribution", "Conforama", "BUT International"]}
+  # 14 Oct: zero mentions since the name was added. Mobilux owns BUT and Conforama France, and the
+  # press writes "But" with the other chain; these phrases need no context. 15 Oct: they are searched
+  # together, in one query, by the BUT alias (overlay.yaml), which also matches "But" written as a name.
+  - {text: "But et Conforama", langs: [fr], weight: 0.8}
+  - {text: "Conforama et But", langs: [fr], weight: 0.8}
+  - {text: "enseigne But", langs: [fr], weight: 0.7}
+  - {text: "magasins But", langs: [fr], weight: 0.7}
 comps: [interikea, conforama, maisonsdumonde, gifi, centrakor]
 
 # Own newsroom: an independent route that does not depend on Google News returning
