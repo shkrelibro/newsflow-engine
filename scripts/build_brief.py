@@ -769,26 +769,29 @@ except Exception:          # no tz database: UTC is within an hour of London, en
 
 def carry_cutoff(now: datetime, hours: float = CARRY_MAX_AGE_H) -> datetime:
     """The oldest article a line may sit on: `hours` back, or from Saturday to Monday (London) back to
-    Friday's last scheduled cut when that is earlier, so the Monday page keeps the whole weekend's
-    newsflow. The writer's cron also fires at weekends; a Saturday or Sunday cut that expired
-    Saturday's lines would leave Monday nothing to carry."""
+    Friday's first scheduled cut when that is earlier, so Friday's newsflow stays on the page through the
+    weekend and the Monday page keeps it with the weekend's. The writer's cron also fires at weekends;
+    a Saturday or Sunday cut that expired Saturday's lines would leave Monday nothing to carry.
+    24 October: the cutoff was Friday's last cut, so Friday's results (Intrum and Sodexo at 07:00 CEST)
+    left the page on Saturday morning and never reached Monday. The window still caps at 72 hours
+    (the export's depth), so Friday's earliest lines go at Monday's second cut."""
     cut = now - timedelta(hours=hours)
     wd = now.astimezone(LONDON).weekday()
     if wd in (5, 6, 0):
         fri = now.astimezone(LONDON).date() - timedelta(days=(wd - 4) % 7)
-        h, m = SLOTS_UTC[-1]
+        h, m = SLOTS_UTC[0]
         cut = min(cut, datetime(fri.year, fri.month, fri.day, h, m, tzinfo=timezone.utc))
     return cut
 
 
 def carry_limit_h(now: datetime, hours: float = CARRY_MAX_AGE_H) -> float:
-    """CARRY_MAX_AGE_H, stretched at the weekend and on Monday to reach Friday's last cut."""
+    """CARRY_MAX_AGE_H, stretched at the weekend and on Monday to reach Friday's first cut."""
     return (now - carry_cutoff(now, hours)).total_seconds() / 3600
 
 
 def auto_window_h(now: datetime, since: "datetime | None") -> float:
     """The pile a cut reads with --window-hours auto. 72 hours when the cut reaches back over a gap
-    (Monday's first cut); on any other weekend or Monday cut, far enough to reach Friday's last cut,
+    (Monday's first cut); on any other weekend or Monday cut, far enough to reach Friday's first cut,
     because the Monday page carries the whole weekend (13 October, evening) and a row outside the
     pile falls off the page; otherwise 24 hours. The carry limit, not the window, keeps the page fresh: the
     12 October rule that kept 72 hours all Monday kept stale lines alive only because nothing
