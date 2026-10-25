@@ -746,7 +746,8 @@ names:
     pages:
       # 5 Oct 2026: the name had no own source and no mention in 24 hours; the S&P outlook change to negative of
       # 22 Sep sits on this list. Fetched 5 Oct: six items from 12 Jun to 22 Sep, slugs under the site root.
-      - {url: "https://vivion.eu/news/", name: "Vivion news", tier: 0, country: "LU", lang: en, require_alias: false, link_pattern: 'vivion\.eu/(?!news/?$|contact|about|portfolio|team|careers|privacy|imprint|cookie)[a-z0-9]+(?:-[a-z0-9]+)+/?$'}
+      - {url: "https://vivion.eu/news/", name: "Vivion news", tier: 0, country: "LU", lang: en, require_alias: false, link_pattern: 'vivion\.eu/(?!news/?$|contact|about|portfolio|team|careers|privacy|imprint|cookie|investors?/?$|sustainability|esg|governance|reports?/?$|home/?$)[a-z0-9][a-z0-9-]{4,}/?$'}
+      # 14 Oct: the slug may have no hyphen; the 7 Oct EUR 119m refinancing sits at vivion.eu/germanrefi/
   wagamama:   # Wagamama [name]
     pages:
       - {url: "https://www.wagamama.com/investors", name: "Wagamama newsroom", tier: 0, country: "GB", lang: en, require_alias: false, link_pattern: 'datocms-assets\.com/177323/.+\.pdf'}
