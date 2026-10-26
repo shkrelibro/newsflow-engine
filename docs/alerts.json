@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-26T21:53:47+00:00",
+ "generated_at": "2026-10-26T22:08:47+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -208,7 +208,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -1876,7 +1878,9 @@
      "alias": "Labcorp",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -2379,7 +2383,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "price_move"
@@ -4538,7 +4543,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Mein Schiff\""
+     "googlenews:\"Mein Schiff\"",
+     "googlenews:(\"Magnum Ice Cream Company\" OR \"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -5354,6 +5360,55 @@
     "DE"
    ],
    "latest": "2026-10-26T20:50:34+00:00"
+  },
+  {
+   "name_id": "tuigroup",
+   "name": "TUI Group",
+   "cluster_id": 102246,
+   "primary": {
+    "id": 145442,
+    "title": "TUI CEO Sebastian Ebel fordert mehr Fokus auf Wachstum und Innovationen für Deutschland und Europa",
+    "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPQjJOT01qZmpGLXpiZUFHUVJJZW8zRUJLc3Z4dndSTm4tb3NEbDdQTk5Wbl9NM0VrSk16alh5dlRZVXRFRjBUaVROMk43RnRkcjBiU3JJSDVwYkp3QUlrR25rdDBId21vQXVDLW1NcEg1WUtnci1WVzVJcDkydEdPRW5fbVBVTUthNWQxTnJwQ3pHMTNjZkxvUHdDSlNEREh4RzNtR0VBLWhhSmxKMVdDS1hKaU51SEVNdFdMOFNheURaRmREb1RpMW05cUZRM2Q0T0pUTms1b2o",
+    "raw_link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPQjJOT01qZmpGLXpiZUFHUVJJZW8zRUJLc3Z4dndSTm4tb3NEbDdQTk5Wbl9NM0VrSk16alh5dlRZVXRFRjBUaVROMk43RnRkcjBiU3JJSDVwYkp3QUlrR25rdDBId21vQXVDLW1NcEg1WUtnci1WVzVJcDkydEdPRW5fbVBVTUthNWQxTnJwQ3pHMTNjZkxvUHdDSlNEREh4RzNtR0VBLWhhSmxKMVdDS1hKaU51SEVNdFdMOFNheURaRmREb1RpMW05cUZRM2Q0T0pUTms1b2o?oc=5",
+    "source": "TUI Group",
+    "domain": "tuigroup.com",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-10-26T19:01:03+00:00",
+    "first_seen_at": "2026-10-26T21:58:49+00:00",
+    "route": "googlenews",
+    "query": "\"TUI\"",
+    "tier_hint": null,
+    "summary": "TUI CEO Sebastian Ebel fordert mehr Fokus auf Wachstum und Innovationen für Deutschland und Europa TUI Group",
+    "alias": "TUI",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "TUI"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-10-26T19:01:03+00:00"
   },
   {
    "name_id": "tuigroup",
