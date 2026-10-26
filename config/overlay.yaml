@@ -28,7 +28,9 @@
 #                      credit, and a row from one of them survives the export with no alias in its
 #                      headline, as the issuer's own word. {domain, lang, country} sets the language
 #                      to ask Google in, for a newsroom that publishes in another language than the
-#                      name's first market.
+#                      name's first market. {domain, path} confines the site: query to that path
+#                      (site:eliorgroup.com/media), for a corporate site whose careers pages Google
+#                      indexes (v2.18, 26 Oct).
 #   comps: []          comps added to the name file's list, chiefly the sector entries (sector_*,
 #                      cnam), so a jet-fuel or sugar-beet story reads across to the credit it moves.
 #
@@ -231,7 +233,8 @@ names:
     comps: [sector_antibiotics]
   elior:
     key_outlets: [lesechos.fr, usinenouvelle.com, neorestauration.com]
-    own_domains: [eliorgroup.com]     # 15 Oct
+    own_domains: [{domain: eliorgroup.com, path: /media}]   # 15 Oct; 26 Oct (v2.18): confined to the newsroom path, the
+                                      # bare domain returned seventeen job adverts in twenty rows
   travelodge:
     key_outlets: [ft.com, thetimes.com, thecaterer.com, propertyweek.com]
   paragon:

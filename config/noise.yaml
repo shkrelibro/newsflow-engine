@@ -138,6 +138,18 @@ title_patterns:
   - " per share of .+ [–-] [A-Z]+:[A-Z0-9]+"
   - "^(?:Enterprise value|Market cap|Price to book|EV/EBITDA|Dividend yield) of .+ [–-] [A-Z]+:[A-Z0-9]+"
 
+  # --- Job adverts, added 26 October 2026 (v2.18) ---------------------------------------------
+  # Google indexes the careers pages of corporate sites, and a site: query on an issuer's own
+  # domain returns them with the issuer's name attached: seventeen of Elior's twenty rows on
+  # 26 October were vacancies ("Chef d'équipe - NEVERS (H/F)", "Conseiller culinaire F/H",
+  # "Gestmax application form"). The gender suffix is the mark of a French, German or Spanish
+  # advert; no news headline carries it.
+  - "\\((?:[HFMWDX]\\s?/\\s?){1,2}[HFMWDX]\\)"
+  - "\\b(?:H/F|F/H|M/F|W/M/D|M/W/D)\\b"
+  - "Gestmax application form"
+  - "^(?:CDD|CDI|Alternance|Stage|Apprenti(?:ssage)?|Vacataire)\\s*(?:[-:|\u2013(]|$)"
+  - "\\b(?:Offre d'emploi|Job (?:offer|opening|vacancy))\\b"
+
 # --- Outlets whose dates must be verified (v2.15, 18 October 2026) --------------------------------
 # Their Google News rows have carried old articles under the day Google found them: Latvian Public
 # Media's English desk (a 1 April and a 6 July article led the brief on 18 October), liepajniekiem.lv

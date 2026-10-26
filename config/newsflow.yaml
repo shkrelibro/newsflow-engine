@@ -95,9 +95,26 @@ routes:
       recover_step: 5
       refused_trip_after: 3
       cooldown_minutes: 30
-      cooldown_max_minutes: 180
+      cooldown_max_minutes: 60  # v2.18 (26 Oct): 180 -> 60. The route is probed every cycle whatever the
+                                # figure says, so a three-hour label only misreported the state on the brief
       backfill_window_hours: 4  # --backfill-days N opens a window; cycles inside it carry the N-day
                                 # lookback and run every query once through the rotation, then it closes
+      # v2.18 (26 Oct 2026). The Monday catch-up of 26 October started at 05:03Z instead of 00:23Z,
+      # forced every site: and regulator query as well as the press queries, went out at the 200
+      # ceiling, and drew Google's 503 within the hour; 1,245 queries were deferred a cycle and 243
+      # of them were Intrum's, mostly site: searches of regulators that had not returned an item in
+      # a week. Four rules bound that now: a catch-up runs under backfill_max_per_run, not the
+      # ceiling; a backfill forces the one-day press queries only (the seven-day site: and
+      # regulator queries keep their cadence, which already covers a weekend); no single name's solo
+      # queries take more than name_share of a cycle; and a query with no item in dormant_days
+      # over at least dormant_min_attempts sends ranks behind everything that finds things.
+      backfill_max_per_run: 100
+      name_share: 0.15          # of the cap, per name, solo queries; never below name_share_min
+      name_share_min: 6
+      dormant_days: 7           # 0 turns the dormant tier off
+      dormant_min_attempts: 3
+      dormant_share: 0.10       # the slice of each cycle the dormant queries keep among themselves, by staleness,
+      dormant_min_slots: 5      # so a quiet market is still asked every few hours; never fewer than this many
   bingnews:
     enabled: true             # 11 Oct (v2): back on as a narrow lane. Off as a broad sweep since 4 Oct (its breaker
                               # tripped every run, 132 of 296 queries never completed, 3,300 items against Google's
