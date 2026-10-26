@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-26T20:38:47+00:00",
+ "generated_at": "2026-10-26T20:53:47+00:00",
  "alerts": [
   {
    "name_id": "airbaltic",
@@ -909,7 +909,9 @@
      "alias": "doValue",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "bingnews:\"doValue\""
+     ],
      "alert_categories": [
       "capital_markets"
      ],
@@ -1734,7 +1736,9 @@
     "alias": "Labcorp",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -4497,7 +4501,10 @@
     "alias": "Mein Schiff",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"TUI Cruises\"",
+     "googlenews:\"Mein Schiff\""
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -4547,7 +4554,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Mein Schiff\""
+     "googlenews:\"Mein Schiff\"",
+     "googlenews:\"TUI Cruises\""
     ],
     "alert_categories": [
      "price_move"
@@ -4576,7 +4584,9 @@
      "alias": "Mein Schiff",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Mein Schiff\""
+     ],
      "alert_categories": [
       "price_move"
      ],
@@ -4728,7 +4738,9 @@
     "alias": "Mein Schiff",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Mein Schiff\""
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -5175,6 +5187,55 @@
   {
    "name_id": "tuigroup",
    "name": "TUI Group",
+   "cluster_id": 102138,
+   "primary": {
+    "id": 145295,
+    "title": "„Mein Schiff 3“-Crash: TUI löscht Porträts und Videos des Kapitäns",
+    "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNMk1DbUk4RVRxRnYzTEN3dlNGa1h6UlF6aXJUMjBhLXVibkR4OGFBcThVaG44ZkJXVnBYVHJsRGxkYmp5T3I5elNaRjhoaDZVOEtHV3FpNEpyZVpNOEtPQUo0NjgwM28wNWQyUVZfV3ZJSTFaSEpJSnk3WjJ2aEtKd3lMNnVETUdWUHNLSThqZHlINnhuLU5PeHlEdkxZV01ncnhwaUhaNnVZdklzemRETVBGNlJ2bER0SEw3SnVqaG9HZFlUekE",
+    "raw_link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNMk1DbUk4RVRxRnYzTEN3dlNGa1h6UlF6aXJUMjBhLXVibkR4OGFBcThVaG44ZkJXVnBYVHJsRGxkYmp5T3I5elNaRjhoaDZVOEtHV3FpNEpyZVpNOEtPQUo0NjgwM28wNWQyUVZfV3ZJSTFaSEpJSnk3WjJ2aEtKd3lMNnVETUdWUHNLSThqZHlINnhuLU5PeHlEdkxZV01ncnhwaUhaNnVZdklzemRETVBGNlJ2bER0SEw3SnVqaG9HZFlUekE?oc=5",
+    "source": "BILD",
+    "domain": "bild.de",
+    "country": "AT",
+    "lang": "de",
+    "published_at": "2026-10-26T20:50:34+00:00",
+    "first_seen_at": "2026-10-26T20:43:49+00:00",
+    "route": "googlenews",
+    "query": "(\"TUI\")",
+    "tier_hint": null,
+    "summary": "„Mein Schiff 3“-Crash: TUI löscht Porträts und Videos des Kapitäns BILD",
+    "alias": "TUI",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "TUI"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "AT"
+   ],
+   "latest": "2026-10-26T20:50:34+00:00"
+  },
+  {
+   "name_id": "tuigroup",
+   "name": "TUI Group",
    "cluster_id": 101786,
    "primary": {
     "id": 144854,
@@ -5439,7 +5500,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -5903,6 +5966,55 @@
     "GB"
    ],
    "latest": "2026-10-26T01:16:25+00:00"
+  },
+  {
+   "name_id": "vonovia",
+   "name": "Vonovia",
+   "cluster_id": 102136,
+   "primary": {
+    "id": 145293,
+    "title": "Vonovia SE : Gets a Buy rating from JP Morgan",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQYUVSa2pmZ0g0eDk3eWZXSmJROXk5d2MzbWNZWlZ4MHJ5SUZWa3NxZHd5VTRJWTlrbE9mRlgwYS1OcGdmMERrUlRsTmRfbjU0eVd0aVk1b2tSSGRlNmRMT0FXNkg1TUduUllsWXVVNExiU1RrMkUtUlR0QWRjM29DV1oxQS1USWRIalM2NkpkS1lYR2xYSXMzWlUwd1o",
+    "raw_link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQYUVSa2pmZ0g0eDk3eWZXSmJROXk5d2MzbWNZWlZ4MHJ5SUZWa3NxZHd5VTRJWTlrbE9mRlgwYS1OcGdmMERrUlRsTmRfbjU0eVd0aVk1b2tSSGRlNmRMT0FXNkg1TUduUllsWXVVNExiU1RrMkUtUlR0QWRjM29DV1oxQS1USWRIalM2NkpkS1lYR2xYSXMzWlUwd1o?oc=5",
+    "source": "www.marketscreener.com",
+    "domain": "marketscreener.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-10-26T17:02:50+00:00",
+    "first_seen_at": "2026-10-26T20:43:49+00:00",
+    "route": "googlenews",
+    "query": "(\"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\" OR \"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\")",
+    "tier_hint": null,
+    "summary": "Vonovia SE : Gets a Buy rating from JP Morgan www.marketscreener.com",
+    "alias": "Vonovia",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "rating"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "rating"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Vonovia"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-10-26T17:02:50+00:00"
   },
   {
    "name_id": "vonovia",
