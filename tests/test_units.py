@@ -301,7 +301,9 @@ def test_job_order_rotates_per_run(cfg, tmp_path):
     a2 = [j.label for j in build_jobs(cfg, http, store, run_number=1, all_routes=True)]
     b = [j.label for j in build_jobs(cfg, http, store, run_number=2, all_routes=True)]
     assert a1 == a2                       # deterministic for a given run number
-    assert sorted(a1) == sorted(b)        # same job set under force
+    # same job set under force, except a name's long site: list, which rotates a few domains a
+    # cycle whatever the run (v2.18, 26 Oct 2026: Intrum's 225 domains no longer flood a forced run)
+    assert sorted(l for l in a1 if " site:" not in l) == sorted(l for l in b if " site:" not in l)
     assert a1 != b                        # ...but a different order, so the budget tail rotates
     # routes are interleaved, not all-solos-first: googlenews must not fill the entire first half
     half = a1[: len(a1) // 2]

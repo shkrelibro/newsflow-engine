@@ -46,6 +46,7 @@ def test_cap_sends_focus_credits_first_and_rotates_the_rest_by_staleness(cfg, tm
     store, http = Store(cfg.db_path), Http("test")
     quota = google_quota(cfg)
     focus = {n.id for n in cfg.names if n.focus == "name"}
+    share = max(quota["name_share_min"], int(quota["cap"] * quota["name_share"]))
     sent_by_label: dict[str, int] = {}
     seen_deferred_focus = 0
     built = set()
@@ -57,10 +58,18 @@ def test_cap_sends_focus_credits_first_and_rotates_the_rest_by_staleness(cfg, tm
         built |= {j.label for j in google}
         sent = [j for j in google if not j.skip]
         assert len(sent) <= quota["cap"]
-        # a focus credit's own query is never held back
-        seen_deferred_focus += sum(1 for j in google if j.skip and len(j.name_ids) == 1 and j.name_ids[0] in focus)
-        # the ledger the rotation reads: every sent query recorded as sent, every skip as a skip
-        store.add_source_results(run_id, [SourceResult("googlenews", j.label, True, 0, "", 1.0) for j in sent]
+        # a focus credit's press query is never held back unless the name is over its share of the
+        # cycle (v2.18); its site: queries rotate like everyone else's
+        per_name: dict[str, int] = {}
+        for j in sent:
+            if len(j.name_ids) == 1:
+                per_name[j.name_ids[0]] = per_name.get(j.name_ids[0], 0) + 1
+        seen_deferred_focus += sum(1 for j in google if j.skip and len(j.name_ids) == 1 and j.name_ids[0] in focus
+                                   and j.prio <= 2 and per_name.get(j.name_ids[0], 0) < share)
+        assert max(per_name.values(), default=0) <= share
+        # the ledger the rotation reads: every sent query recorded as sent, every skip as a skip;
+        # press queries find something now and then, site: queries mostly do not
+        store.add_source_results(run_id, [SourceResult("googlenews", j.label, True, 0 if " site:" in j.label else 1, "", 1.0) for j in sent]
                                  + [SourceResult("googlenews", j.label, False, 0, j.skip, 0.0) for j in google if j.skip])
         for j in sent:
             sent_by_label[j.label] = sent_by_label.get(j.label, 0) + 1
