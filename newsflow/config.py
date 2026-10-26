@@ -134,6 +134,9 @@ class NameConfig:
     # it even when the headline names no alias ("Half-year report January to June 2026").
     own_domains: list[str] = field(default_factory=list)
     own_domain_markets: dict[str, tuple[str, str]] = field(default_factory=dict)   # domain -> (lang, country) for its site: query
+    # v2.18 (26 Oct 2026): domain -> path the site: query is confined to ("/media" for eliorgroup.com,
+    # whose careers pages were seventeen of the twenty Elior rows in the export)
+    own_domain_paths: dict[str, str] = field(default_factory=dict)
 
     @property
     def langs(self) -> list[str]:
@@ -474,10 +477,17 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
         # language where the site has one (intrum.com answers the Swedish edition in Swedish), so an
         # English-only newsroom is asked in English.
         for entry in spec.get("own_domains", []) or []:
+            path = ""
             if isinstance(entry, dict):
                 dom = str(entry.get("domain", "")).strip().lower()
                 lang = str(entry.get("lang", "") or "").strip().lower()
                 country = _cc(entry["country"]) if entry.get("country") not in (None, "") else ""
+                # v2.18: an optional path confines the site: query to the newsroom ("/media"), so
+                # a corporate site whose careers pages Google indexes stops returning job adverts
+                path = str(entry.get("path", "") or "").strip()
+                if path and not path.startswith("/"):
+                    path = "/" + path
+                path = path.rstrip("/")
             else:
                 dom, lang, country = str(entry).strip().lower(), "", ""
             if not dom:
@@ -488,6 +498,8 @@ def _merge_overlay(names: list[NameConfig], raw: dict) -> tuple[list[str], dict[
             if lang:
                 home = next((m.country for m in name.markets if m.lang == lang), name.home_country)
                 name.own_domain_markets[dom] = (lang, country or home or "GB")
+            if path:
+                name.own_domain_paths[dom] = path
             if dom not in name.site_queries:
                 name.site_queries.append(dom)
                 counts["site_queries"] += 1

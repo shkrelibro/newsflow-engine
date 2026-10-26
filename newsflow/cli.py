@@ -27,12 +27,33 @@ def _setup_logging(verbose: bool) -> None:
     )
 
 
+STATE_BACKFILL_ONCE = "backfill.once:"      # + tag -> the ISO week it last ran (v2.18)
+
+
+def backfill_once_per_week(store: Store, tag: str, backfill_days, now: datetime | None = None):
+    """The Monday catch-up guard (v2.18, 26 Oct 2026). With the loop chaining its own successor,
+    the job that is running when Monday arrives is as likely to be a chained one as a scheduled
+    one, and either may start before 06:00; whichever asks first opens the window and the others
+    run a normal cycle. Returns the backfill_days to use (None when this week's has run)."""
+    if not backfill_days or not tag:
+        return backfill_days
+    now = now or datetime.now(timezone.utc)
+    week = "%d-W%02d" % now.isocalendar()[:2]
+    key = STATE_BACKFILL_ONCE + str(tag)
+    if store.get_state(key) == week:
+        logging.getLogger("newsflow").warning("backfill '%s' already ran in %s: this cycle runs without the window", tag, week)
+        return None
+    store.set_state(key, week, now)
+    return backfill_days
+
+
 def cmd_run(args) -> int:
     cfg = load_config(args.config)
     store = Store(cfg.db_path)
     try:
         try:
-            summary = run_once(cfg, store, backfill_days=args.backfill_days, all_routes=getattr(args, 'all_routes', False),
+            backfill_days = backfill_once_per_week(store, getattr(args, "once_per_week", None), args.backfill_days)
+            summary = run_once(cfg, store, backfill_days=backfill_days, all_routes=getattr(args, 'all_routes', False),
                                budget_minutes=getattr(args, 'budget_minutes', None))
         except StateRollback as exc:
             # Not a crash: a deliberate refusal to run on state that went backwards. Print it
@@ -310,6 +331,9 @@ def main(argv=None) -> int:
     r.add_argument("--budget-minutes", type=float, default=None,
                    help="override engine.max_run_minutes for this run only. A 3-day backfill issues about 1,350 "
                         "Google News queries, 45 minutes at the 2 s spacing, which the 13-minute cycle cannot hold")
+    r.add_argument("--once-per-week", default=None, metavar="TAG",
+                   help="with --backfill-days: open the window only if no backfill tagged TAG has run this ISO week "
+                        "(v2.18: the Monday catch-up, whichever loop job reaches Monday morning first)")
     r.set_defaults(fn=cmd_run)
 
     lp = sub.add_parser("loop", help="run forever every N minutes (server mode)")

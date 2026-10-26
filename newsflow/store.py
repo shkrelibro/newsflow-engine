@@ -245,6 +245,25 @@ class Store:
         ).fetchall()
         return {str(r["source"]): int(r["last"]) for r in rows}
 
+    def zero_yield_labels(self, route: str, since: datetime, min_attempts: int = 3) -> set[str]:
+        """The queries of a route that were actually sent at least min_attempts times since `since`
+        and returned nothing every time (v2.18, 26 Oct 2026).
+
+        Feeds the rotation's dormant tier: Intrum alone carries 225 site: queries on regulators and
+        outlets in 23 countries, 249 Google queries in all, and on 26 October not one of them had
+        returned an item in a week while they took 243 of the 1,267 rotation slots the Monday
+        catch-up deferred. A dormant query is not deleted and still runs when the queue has room;
+        it simply never again stands in front of a query that finds things.
+        """
+        rows = self.conn.execute(
+            "SELECT sr.source AS source, COUNT(*) AS sends, COALESCE(SUM(sr.items), 0) AS total_items "
+            "FROM source_results sr JOIN runs r ON r.id = sr.run_id "
+            "WHERE sr.route=? AND r.started_at >= ? AND sr.error NOT LIKE 'skipped:%' "
+            "GROUP BY sr.source HAVING sends >= ? AND total_items = 0",
+            (route, _iso(since), int(min_attempts)),
+        ).fetchall()
+        return {str(r["source"]) for r in rows}
+
     def run_count(self) -> int:
         return int(self.conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0])
 

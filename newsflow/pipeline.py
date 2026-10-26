@@ -94,6 +94,15 @@ def google_quota(cfg: Config) -> dict:
         "cooldown_min": int(q.get("cooldown_minutes", 30)),
         "cooldown_max": int(q.get("cooldown_max_minutes", 180)),
         "backfill_hours": float(q.get("backfill_window_hours", 4)),
+        # v2.18 (26 Oct 2026): a catch-up never runs at the ceiling, no single name takes more than
+        # a share of a cycle, and a query that has found nothing in a week goes to the back
+        "backfill_cap": int(q.get("backfill_max_per_run", 100) or 0),       # 0: the ordinary cap applies
+        "name_share": float(q.get("name_share", 0.15)),                      # of the cap, per name, solo queries
+        "name_share_min": int(q.get("name_share_min", 6)),
+        "dormant_days": float(q.get("dormant_days", 7)),                     # 0 turns the dormant tier off
+        "dormant_min_attempts": int(q.get("dormant_min_attempts", 3)),
+        "dormant_share": float(q.get("dormant_share", 0.10)),                # of the cap kept for dormant queries ...
+        "dormant_min_slots": int(q.get("dormant_min_slots", 5)),             # ... and never fewer than this
     }
 
 
@@ -175,14 +184,23 @@ def google_answered(cfg: Config, store: Store, now: datetime, state: dict) -> No
 ROTATION_WEIGHT = {0: 1.0, 1: 1.0, 2: 1.4, 3: 1.8, 4: 2.2, 5: 2.6, 6: 3.0}
 
 
-def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[str], comp_ids: set[str], reason: str) -> int:
+def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[str], comp_ids: set[str], reason: str,
+                  dormant: Optional[set[str]] = None, name_share: int = 0, dormant_slots: int = 0) -> int:
     """Keep the `cap` most valuable Google jobs this cycle and mark the rest skipped.
 
-    Order: focus credits' own queries (solo, alias, key-outlet site:), then the focus comps' solo
-    queries, then everything else; inside each tier by how long the query has waited (never-sent
-    first), with the queue's value order as the tie-break. Every query looks back a day, so a
-    deferred query loses latency, not stories, and the staleness order guarantees it is sent the
-    next time it is due and the queue has room. Returns the number deferred.
+    Order: focus credits' press queries (solo, alias, own-domain site:), then their key-outlet
+    site: queries, then the focus comps' solo queries, then everything else; inside each tier by
+    how long the query has waited (never-sent first), with the queue's value order as the
+    tie-break. Every query looks back a day, so a deferred query loses latency, not stories, and
+    the staleness order guarantees it is sent the next time it is due and the queue has room.
+
+    v2.18 (26 Oct 2026), after the Monday catch-up put 249 Intrum queries, 225 of them site:
+    searches of regulators that had not returned an item in a week, in front of every other
+    name's press query for two hours: a query in `dormant` (no item in a week, see
+    Store.zero_yield_labels) ranks behind everything that finds things, but keeps `dormant_slots`
+    of the cap to itself so a quiet market is still asked every few hours rather than never; and
+    no single name's solo queries take more than `name_share` of the cap in one cycle. What a
+    name cannot fit waits for the next cycle with its staleness intact. Returns the number deferred.
     """
     if cap <= 0:
         return 0
@@ -191,14 +209,15 @@ def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[st
         return 0
     last = store.last_attempt_runs("googlenews")
     order = {id(j): i for i, j in enumerate(google)}      # the queue's own value order
+    dormant = dormant or set()
 
     def tier(j: JobSpec) -> int:
         ids = set(j.name_ids)
         if len(ids) == 1 and ids <= focus_ids:
-            return 0
+            return 0 if j.prio <= 2 else 1       # press and own-domain queries before key-outlet site: queries
         if len(ids) == 1 and ids <= comp_ids:
-            return 1
-        return 2
+            return 2
+        return 3
 
     now_run = max(last.values(), default=0) + 1
 
@@ -208,10 +227,35 @@ def rotate_google(jobs: list[JobSpec], cap: int, store: Store, focus_ids: set[st
         age = float(now_run * 10) if sent is None else float(now_run - sent)
         return -age / ROTATION_WEIGHT.get(j.prio, 3.0)
 
-    ranked = sorted(google, key=lambda j: (tier(j), waited(j), j.prio, order[id(j)]))
-    for j in ranked[cap:]:
-        j.skip = reason
-    return len(google) - cap
+    key = lambda j: (tier(j), waited(j), j.prio, order[id(j)])   # noqa: E731
+    live = sorted((j for j in google if j.label not in dormant), key=key)
+    asleep = sorted((j for j in google if j.label in dormant), key=key)
+    # the dormant queries' reserved slice: never more than there are dormant queries, never more
+    # than the cap leaves after one live query
+    reserve = min(max(0, dormant_slots), len(asleep), max(0, cap - 1)) if asleep else 0
+    kept = 0
+    taken: dict[str, int] = {}
+
+    def take(seq, limit):
+        nonlocal kept
+        n = 0
+        for j in seq:
+            if n >= limit:
+                j.skip = reason
+                continue
+            ids = j.name_ids
+            if name_share > 0 and len(ids) == 1:
+                if taken.get(ids[0], 0) >= name_share:
+                    j.skip = reason
+                    continue
+                taken[ids[0]] = taken.get(ids[0], 0) + 1
+            n += 1
+        kept += n
+        return n
+
+    n_live = take(live, cap - reserve)
+    take(asleep, cap - n_live)
+    return len(google) - kept
 
 
 @dataclass
@@ -301,12 +345,20 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
         gstate["backfill"] = bf
     bf_days = int((gstate.get("backfill") or {}).get("days") or 0)
     when_google = f"{bf_days}d" if bf_days else str(routes.get("googlenews", {}).get("when", "1d"))
-    when_site = f"{backfill_days}d" if backfill_days else (cold_window if cold else str(routes.get("googlenews", {}).get("site_when", "7d")))
+    # v2.18: the site: and regulator queries keep their seven-day window inside a backfill. A 3-day
+    # lookback on a query that already looks back seven days is narrower, not wider.
+    when_site = cold_window if cold else str(routes.get("googlenews", {}).get("site_when", "7d"))
     gdelt_span = f"{backfill_days}d" if backfill_days else str(routes.get("gdelt", {}).get("timespan", "24h"))
     outlet_by_domain = {domain_of(o.homepage): o for o in cfg.outlets}
     # run every cadenced route regardless of its every_n_runs: a manual run, or any cycle inside an
     # open backfill window, so the rotation can work through the whole queue with the wide lookback
     force = backfill_days is not None or all_routes or bool(bf_days)
+    # v2.18 (26 Oct 2026): a backfill forces the one-day press queries only. The site: queries on
+    # key outlets, a name's own long list of outlets and regulators, and the regulator sweeps all
+    # look back seven days on their ordinary cadence, so a weekend is covered without forcing them;
+    # forced, they were 1,245 deferred queries and two hours of Google's 503 on the Monday catch-up
+    # of 26 October. A manual --all-routes run without a backfill still forces everything once.
+    force_site = bool(all_routes) and backfill_days is None and not bf_days
 
     # ------------------------------------------------------------------
     # Search routes are GROUPED so fetch load scales with markets, not names:
@@ -464,19 +516,23 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 # 15 Oct: the key outlets and short lists are phased by name as well. Phased by list
                 # position alone, every name's first outlet fell on the same cycle, so one run in
                 # sixteen carried some thirty focus site: queries and the rest of the queue waited.
-                due_doms = [d for i, d in enumerate(key) if force or (i + ph) % site_every == run_number % site_every]
+                due_doms = [d for i, d in enumerate(key) if force_site or (i + ph) % site_every == run_number % site_every]
                 if rest:
-                    if force or len(rest) <= site_name_cap * site_every:
-                        due_doms += [d for i, d in enumerate(rest) if force or (i + ph + len(key)) % site_every == run_number % site_every]
+                    if len(rest) <= site_name_cap * site_every:
+                        due_doms += [d for i, d in enumerate(rest) if force_site or (i + ph + len(key)) % site_every == run_number % site_every]
                     else:
-                        due_doms += [rest[(run_number * site_name_cap + k) % len(rest)] for k in range(site_name_cap)]
+                        # v2.18: a long list never floods a cycle, forced or not. It rotates
+                        # site_max_per_name_per_run domains a cycle, twice that on a forced run.
+                        due_doms += [rest[(run_number * site_name_cap + k) % len(rest)] for k in range(site_name_cap * (2 if force_site else 1))]
                 for dom in due_own + due_doms:
                     o = outlet_by_domain.get(dom)
                     lang = o.lang if o and o.lang else (markets[0].lang if markets else "en")
                     country = o.country if o else (markets[0].country if markets else "GB")
                     if dom in name.own_domain_markets:
                         lang, country = name.own_domain_markets[dom]
-                    q = f'"{main}" site:{dom}'
+                    # v2.18: an own domain may name the path its newsroom lives under (overlay.yaml
+                    # own_domains path), so the query stops returning the careers pages
+                    q = f'"{main}" site:{dom}{name.own_domain_paths.get(dom, "")}'
                     jobs.append(JobSpec(f"{q} [{lang}-{country}]", "googlenews", lambda q=q, lang=lang, country=country, ids=ids: fetch_google_news(http, q, lang, country, ids, when_site), name_ids=list(ids), prio=1 if dom in due_own else 3))
         # name-specific feeds and pages (any tier that defines them)
         if cfg.route_enabled("rss"):
@@ -518,7 +574,7 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
                 for ci, chunk in _chunks(entries, group_size):
                     reg_jobs.append((cc, dom, ci, chunk))
         for idx, (cc, dom, ci, chunk) in enumerate(reg_jobs):
-            if not force and idx % reg_every != run_number % reg_every:
+            if not force_site and idx % reg_every != run_number % reg_every:
                 continue
             q = _or_query(chunk) + f" site:{dom}"
             nids = [nid for nid, _ in chunk]
@@ -595,7 +651,8 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
         wanted_countries = {m.country for n in cfg.names for m in n.markets}
         discover_budget = int(routes.get("rss", {}).get("discover_per_run", 20))
         retry_after = timedelta(hours=float(routes.get("rss", {}).get("discover_retry_hours", 24)))
-        now = datetime.now(timezone.utc)
+        # v2.18: the run's own clock, as everywhere else in this function. This used to reset `now`
+        # to the wall clock for everything built after the outlet feeds.
         for o in cfg.outlets:
             if not o.enabled or o.country not in wanted_countries:
                 continue
@@ -632,20 +689,34 @@ def build_jobs(cfg: Config, http: Http, store: Store, run_number: int, backfill_
     # so coverage.json can tell a rotation from a budget skip and a refusal. Reserve Bing jobs
     # are not part of the queue until Google is down.
     cap = int(gstate.get("cap") or 0)
+    quota = google_quota(cfg)
+    bf = gstate.get("backfill") or {}
+    if cap and bf and quota["backfill_cap"]:
+        # v2.18: a catch-up runs under its own, lower cap. The 26 October catch-up went out at the
+        # 200 ceiling and drew Google's 503 within the hour.
+        cap = min(cap, quota["backfill_cap"])
     if cap and cfg.route_enabled("googlenews"):
         focus_ids = {n.id for n in cfg.names if n.focus == "name"}
         comp_ids = {n.id for n in cfg.names if n.focus == "comp"}
-        deferred = rotate_google(jobs, cap, store, focus_ids, comp_ids, f"skipped: googlenews rotation (cap {cap} a run)")
+        dormant: set[str] = set()
+        if quota["dormant_days"] > 0:
+            dormant = store.zero_yield_labels("googlenews", now - timedelta(days=quota["dormant_days"]), quota["dormant_min_attempts"])
+        share = max(quota["name_share_min"], int(cap * quota["name_share"])) if quota["name_share"] > 0 else 0
+        dslots = max(quota["dormant_min_slots"], int(cap * quota["dormant_share"])) if dormant else 0
+        deferred = rotate_google(jobs, cap, store, focus_ids, comp_ids, f"skipped: googlenews rotation (cap {cap} a run)",
+                                 dormant=dormant, name_share=share, dormant_slots=dslots)
         if deferred:
-            log.info("googlenews cap %d: %d queries deferred to later cycles by staleness", cap, deferred)
-        bf = gstate.get("backfill") or {}
+            log.info("googlenews cap %d: %d queries deferred to later cycles by staleness (%d dormant on %d slots, share %d a name)", cap, deferred, len(dormant), dslots, share)
         if bf and not deferred:
             # every query fitted this cycle, so the backfill window has nothing left to do
             store.clear_state(STATE_BACKFILL)
         elif bf:
+            # the window is done once every press query it widened has been sent since it opened;
+            # the site: and regulator queries (v2.18) run on their own cadence and seven-day
+            # window and are not what the window waits for
             last = store.last_attempt_runs("googlenews")
             since = int(bf.get("since_run") or 0)
-            left = [j for j in jobs if j.route == "googlenews" and j.skip and last.get(j.label, -1) < since]
+            left = [j for j in jobs if j.route == "googlenews" and j.skip and " site:" not in j.label and last.get(j.label, -1) < since]
             if not left:
                 store.clear_state(STATE_BACKFILL)
     return jobs
@@ -809,6 +880,34 @@ class _TitleHistory:
         return best
 
 
+RESERVE_MIN_GAP_H = 1.0       # a later copy at least this much younger than the original is a re-serve
+
+
+def _reserved_copy(store: Store, name_id: str, tkey: str, domain: str, source_name: str, published: Optional[datetime], since: datetime):
+    """The item the store already holds for this outlet and this headline, if the new one is a
+    later copy of it (v2.18). Same normalised headline, same outlet (domain, or the outlet name
+    when the domain is the aggregator's), and the original published, or first seen, at least
+    RESERVE_MIN_GAP_H earlier than the copy claims. Returns the stored row or None."""
+    if not tkey or not name_id:
+        return None
+    dom = (domain or "").lower()
+    src = (source_name or "").strip().lower()
+    for row in store.recent_items_for_name(name_id, since):
+        if row["title_key"] != tkey:
+            continue
+        same_outlet = (dom and (row["source_domain"] or "").lower() == dom) or (src and (row["source_name"] or "").strip().lower() == src)
+        if not same_outlet:
+            continue
+        stored = _parse_iso(row["published_at"] or "") or _parse_iso(row["first_seen_at"] or "")
+        if stored is None:
+            continue
+        if published is None:
+            return row
+        if (published - stored).total_seconds() >= RESERVE_MIN_GAP_H * 3600:
+            return row
+    return None
+
+
 def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Http], raw_items: list[RawItem], run_id: int, now: datetime, summary: RunSummary, lookback_hours: float) -> None:
     cutoff = now - timedelta(hours=lookback_hours)
     resolve = bool(cfg.engine.get("resolve_redirects", False)) and http is not None
@@ -941,6 +1040,19 @@ def process_items(cfg: Config, store: Store, matcher: Matcher, http: Optional[Ht
                 status = "candidate"
                 reason = f"kept:{reason}:{kept_why}"
         tkey = title_key(raw.title, raw.source_name)
+        # v2.18 (26 Oct 2026): the same outlet serving the same headline again under a later
+        # timestamp is the article the store already holds, not a second article. Google News
+        # re-served a Friday Main-Post piece on Südzucker on the Sunday with a fresh date and a
+        # fresh redirect URL; the copy joined the Friday cluster and moved its date to Sunday. The
+        # copy is noted on the original (also_routes) and never inserted, so a cluster's date is
+        # the first time the outlet published, not the last time the index served it.
+        if raw.route != "page":
+            original = _reserved_copy(store, primary, tkey, domain, raw.source_name, raw.published_at, cluster_window)
+            if original is not None:
+                store.note_also_route(int(original["id"]), raw.route, raw.query)
+                summary.republished += 1
+                log.debug("re-served copy of item %s, not inserted: %s", original["id"], raw.title[:80])
+                continue
         seen_before = history.first_seen(tkey)
         if seen_before:
             # an old story under a new timestamp: stored for the audit, never a candidate
