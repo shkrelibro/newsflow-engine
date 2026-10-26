@@ -260,7 +260,10 @@ names:
       - {url: "https://www.eversys.com/en/news", name: "Eversys newsroom", tier: 0, country: "CH", lang: en, require_alias: false, link_pattern: 'eversys\.com/(?:blog|en/news)/.+'}
   evoca:   # Evoca Group [name]
     pages:
-      - {url: "https://www.evocagroup.com/en/news-media/press-releases", name: "Evoca Group newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'newebcdn\.evocagroup\.com/sites/corporate/files/press-investors/.+\.pdf'}
+      # 26 Oct 2026 (v2.18): the releases live under files/press/<yyyy-mm>/ and the investor ones under
+      # files/press-investors/; the pattern only knew the second folder, so the watcher ran every cycle
+      # and never matched a release (five on the page on 26 October, the newest of 3 September)
+      - {url: "https://www.evocagroup.com/en/news-media/press-releases", name: "Evoca Group newsroom", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: 'newebcdn\.evocagroup\.com/sites/corporate/files/press(?:-investors)?/.+\.pdf'}
       - {url: "https://www.evocagroup.com/en/investors", name: "Evoca Group investor page", tier: 0, country: "IT", lang: en, require_alias: false, link_pattern: '(?:newebcdn\.evocagroup\.com/sites/corporate/files/press-investors/.+\.pdf|evocagroup\.com/.+\.pdf)'}
   expedia:   # Expedia [comp]
     feeds:
