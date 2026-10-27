@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-27T07:46:21+00:00",
+ "generated_at": "2026-10-27T08:01:22+00:00",
  "alerts": [
   {
    "name_id": "airfranceklm",
@@ -1253,7 +1253,9 @@
     "alias": "Finnair",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.di.se/rss"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -1302,7 +1304,9 @@
     "alias": "Finnair",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.efn.se/rss"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -1593,35 +1597,64 @@
    "name": "Heimstaden",
    "cluster_id": 102829,
    "primary": {
-    "id": 146202,
+    "id": 146225,
     "title": "Vd-byte i Heimstaden",
-    "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1MRFNSZllaekVhRlhKU0NzNWRNUzMzV3hKUkxyNXpSZ2FzLTlfdWxtS0NMdGExdFNuZ2hpaFUxcDRXWi1ZMFFhOW8tRXlTNWd0YktXUm13bw",
-    "raw_link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1MRFNSZllaekVhRlhKU0NzNWRNUzMzV3hKUkxyNXpSZ2FzLTlfdWxtS0NMdGExdFNuZ2hpaFUxcDRXWi1ZMFFhOW8tRXlTNWd0YktXUm13bw?oc=5",
-    "source": "DI",
+    "url": "https://di.se/live/vd-byte-i-heimstaden",
+    "raw_link": "https://www.di.se/live/vd-byte-i-heimstaden/",
+    "source": "Dagens industri",
     "domain": "di.se",
     "country": "SE",
     "lang": "sv",
-    "published_at": "2026-10-27T07:36:11+00:00",
-    "first_seen_at": "2026-10-27T07:36:23+00:00",
-    "route": "googlenews",
-    "query": "\"Helge Krogsbøl\"",
-    "tier_hint": null,
-    "summary": "Vd-byte i Heimstaden DI",
+    "published_at": "2026-10-27T07:46:01+00:00",
+    "first_seen_at": "2026-10-27T07:51:23+00:00",
+    "route": "rss",
+    "query": "https://www.di.se/rss",
+    "tier_hint": 3,
+    "summary": "Fastighetsbolaget Heimstaden, vars preferensaktie är noterad på Nasdaq First North, genomför ett vd-byte.",
     "alias": "Heimstaden",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\")"
-    ],
+    "also_routes": [],
     "alert_categories": [
      "management"
     ],
     "alert_candidate": true,
     "status": "candidate",
     "screen_reason": "",
-    "url_unresolved": true
+    "url_unresolved": false
    },
-   "also": [],
+   "also": [
+    {
+     "id": 146202,
+     "title": "Vd-byte i Heimstaden",
+     "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1MRFNSZllaekVhRlhKU0NzNWRNUzMzV3hKUkxyNXpSZ2FzLTlfdWxtS0NMdGExdFNuZ2hpaFUxcDRXWi1ZMFFhOW8tRXlTNWd0YktXUm13bw",
+     "raw_link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1MRFNSZllaekVhRlhKU0NzNWRNUzMzV3hKUkxyNXpSZ2FzLTlfdWxtS0NMdGExdFNuZ2hpaFUxcDRXWi1ZMFFhOW8tRXlTNWd0YktXUm13bw?oc=5",
+     "source": "DI",
+     "domain": "di.se",
+     "country": "SE",
+     "lang": "sv",
+     "published_at": "2026-10-27T07:36:11+00:00",
+     "first_seen_at": "2026-10-27T07:36:23+00:00",
+     "route": "googlenews",
+     "query": "\"Helge Krogsbøl\"",
+     "tier_hint": null,
+     "summary": "Vd-byte i Heimstaden DI",
+     "alias": "Heimstaden",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\")",
+      "googlenews:\"Heimstaden\""
+     ],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -1637,7 +1670,7 @@
    "countries": [
     "SE"
    ],
-   "latest": "2026-10-27T07:36:11+00:00"
+   "latest": "2026-10-27T07:46:01+00:00"
   },
   {
    "name_id": "heimstaden",
@@ -1776,7 +1809,8 @@
      "confidence": 1.0,
      "also_routes": [
       "googlenews:\"Helge Krogsbøl\"",
-      "googlenews:(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\")"
+      "googlenews:(\"Axactor\" OR \"B2 Impact\" OR \"Boels\" OR \"Heimstaden\" OR \"Intrum\" OR \"Lowell\")",
+      "googlenews:\"Heimstaden\""
      ],
      "alert_categories": [
       "management"
@@ -1826,7 +1860,9 @@
     "alias": "Heimstaden",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1836,6 +1872,33 @@
     "url_unresolved": true
    },
    "also": [
+    {
+     "id": 146244,
+     "title": "Christian Fladeland new CEO at Heimstaden Bostad AB",
+     "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPU3laU2FlUXI0a285cHFIU25sQWFyR3lGVWd4aG5ENEprZ2dvWkJySTIwSUFsZ2xyTmdNWnp5QjRmdFhYSnRqY3JkMGNESWxFMzNaYjh5S2MwekJDbU1wWUU5T3MzMzFRU0EwY3FnWVNDOHVaVDF2TWRQSGxfTm84MzlCX3huT09jVy11U0VjNUZEOEdXQ0JoaUdwTlhGWHJzRXJCem1ydFdueDBmX3lld2hka3QzdXZKd2MzNnFCZ2VoSVHSAcgBQVVfeXFMUE1xX1laUDFnNXprRVp4SWtnSnp3eXVBVFBZa1VTZGJ1MnBMb2t6bDVTWm5xYUFPVHAwdEVJaXMxWUpnSmtEdWR6Snd4UjNTOEl6T0hwT2s0NU9ESGpQd0wyYzdDQnhqZFpzWTVOWVlFQzAzclQ0dmZfN3RRVWpuZGpLRE82SE9tc1lZZG5FNlRGRUxJNlcxX1hHdk9NVUlnSHBhMXFDdHJ5bGN6NEIyWE9Rc18zX1ZSdGpERlJ1NVBTMkhPcWVPb0I",
+     "raw_link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPU3laU2FlUXI0a285cHFIU25sQWFyR3lGVWd4aG5ENEprZ2dvWkJySTIwSUFsZ2xyTmdNWnp5QjRmdFhYSnRqY3JkMGNESWxFMzNaYjh5S2MwekJDbU1wWUU5T3MzMzFRU0EwY3FnWVNDOHVaVDF2TWRQSGxfTm84MzlCX3huT09jVy11U0VjNUZEOEdXQ0JoaUdwTlhGWHJzRXJCem1ydFdueDBmX3lld2hka3QzdXZKd2MzNnFCZ2VoSVHSAcgBQVVfeXFMUE1xX1laUDFnNXprRVp4SWtnSnp3eXVBVFBZa1VTZGJ1MnBMb2t6bDVTWm5xYUFPVHAwdEVJaXMxWUpnSmtEdWR6Snd4UjNTOEl6T0hwT2s0NU9ESGpQd0wyYzdDQnhqZFpzWTVOWVlFQzAzclQ0dmZfN3RRVWpuZGpLRE82SE9tc1lZZG5FNlRGRUxJNlcxX1hHdk9NVUlnSHBhMXFDdHJ5bGN6NEIyWE9Rc18zX1ZSdGpERlJ1NVBTMkhPcWVPb0I?oc=5",
+     "source": "The Manila Times",
+     "domain": "manilatimes.net",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-10-27T07:19:18+00:00",
+     "first_seen_at": "2026-10-27T07:51:23+00:00",
+     "route": "googlenews",
+     "query": "(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")",
+     "tier_hint": null,
+     "summary": "Christian Fladeland new CEO at Heimstaden Bostad AB The Manila Times",
+     "alias": "Heimstaden",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
     {
      "id": 146187,
      "title": "Christian Fladeland new CEO at Heimstaden AB",
@@ -1854,7 +1917,9 @@
      "alias": "Heimstaden",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")"
+     ],
      "alert_categories": [
       "management"
      ],
@@ -2964,6 +3029,55 @@
     "GB"
    ],
    "latest": "2026-10-26T10:40:00+00:00"
+  },
+  {
+   "name_id": "rossini",
+   "name": "Rossini (Recordati)",
+   "cluster_id": 100245,
+   "primary": {
+    "id": 146226,
+    "title": "OPA Recordati, i risultati finali",
+    "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQZ2RKREMydjViWnctcjhmbmZYaHR6UHdnSVptR1FCN1Q4bUFuM0Z3MU5DZVZWd1plOFBNektuZVVkV1U2U3M5WEpvUDhxdnhTWXZ2bVI4SXBON2xMT2lTZTVaWXFkYlp6a0FVYlFPYWRXOUtEVGNGMlM2cEpraGpEdENPZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQZ2RKREMydjViWnctcjhmbmZYaHR6UHdnSVptR1FCN1Q4bUFuM0Z3MU5DZVZWd1plOFBNektuZVVkV1U2U3M5WEpvUDhxdnhTWXZ2bVI4SXBON2xMT2lTZTVaWXFkYlp6a0FVYlFPYWRXOUtEVGNGMlM2cEpraGpEdENPZw?oc=5",
+    "source": "SoldiOnline.it",
+    "domain": "soldionline.it",
+    "country": "IT",
+    "lang": "it",
+    "published_at": "2026-10-27T06:51:00+00:00",
+    "first_seen_at": "2026-10-27T07:51:23+00:00",
+    "route": "googlenews",
+    "query": "\"Recordati\"",
+    "tier_hint": null,
+    "summary": "OPA Recordati, i risultati finali SoldiOnline.it",
+    "alias": "Recordati",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Recordati"
+   ],
+   "languages": [
+    "it"
+   ],
+   "countries": [
+    "IT"
+   ],
+   "latest": "2026-10-27T06:51:00+00:00"
   },
   {
    "name_id": "rossini",
@@ -4659,58 +4773,6 @@
     "GB"
    ],
    "latest": "2026-10-26T07:33:10+00:00"
-  },
-  {
-   "name_id": "synlab",
-   "name": "SYNLAB",
-   "cluster_id": 100294,
-   "primary": {
-    "id": 142950,
-    "title": "Finland's PlusTerveys clears regulator to buy SYNLAB's 38-site diagnostics network",
-    "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQOGl6TGg4eWlkQjVDaFhGTHN1NFV6OWxhZlc3UzcwVk1DMl9tTFpwaFc4TFVDMzMyWkYyMmVLUGVQZVFXd0RSU0NTcHk1YjRfTkIyWXFOTW5vYmdHblBobXhJbDRKM1ZEMHpTcTZmMXp1WUx6dWhNWDRrX09ySjU5dmV0Y3J2cFlKSld3T28tdmtNTW9jSHU2QURjY0lrRDN5NmNRZWVUcWtMRHg5YUI2MExOeUd2SEE",
-    "raw_link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQOGl6TGg4eWlkQjVDaFhGTHN1NFV6OWxhZlc3UzcwVk1DMl9tTFpwaFc4TFVDMzMyWkYyMmVLUGVQZVFXd0RSU0NTcHk1YjRfTkIyWXFOTW5vYmdHblBobXhJbDRKM1ZEMHpTcTZmMXp1WUx6dWhNWDRrX09ySjU5dmV0Y3J2cFlKSld3T28tdmtNTW9jSHU2QURjY0lrRDN5NmNRZWVUcWtMRHg5YUI2MExOeUd2SEE?oc=5",
-    "source": "Dealroom",
-    "domain": "app.dealroom.co",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-10-26T06:15:01+00:00",
-    "first_seen_at": "2026-10-26T07:48:43+00:00",
-    "route": "googlenews",
-    "query": "\"SYNLAB\"",
-    "tier_hint": null,
-    "summary": "Finland's PlusTerveys clears regulator to buy SYNLAB's 38-site diagnostics network Dealroom",
-    "alias": "SYNLAB",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"SYNLAB\"",
-     "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\")"
-    ],
-    "alert_categories": [
-     "regulatory"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "regulatory"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "SYNLAB"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-10-26T06:15:01+00:00"
   },
   {
    "name_id": "tesco",
