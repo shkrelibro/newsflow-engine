@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-28T15:23:52+00:00",
+ "generated_at": "2026-10-28T15:38:52+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -825,7 +825,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+     "googlenews:\"Booking\""
     ],
     "alert_categories": [
      "litigation"
@@ -875,7 +876,9 @@
     "alias": "Booking",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Booking\""
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -905,7 +908,8 @@
      "confidence": 1.0,
      "also_routes": [
       "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
-      "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+      "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
+      "googlenews:\"Booking\""
      ],
      "alert_categories": [
       "litigation"
@@ -2224,7 +2228,9 @@
     "alias": "Intrum",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Intrum\" site:affarsvarlden.se"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -4316,59 +4322,6 @@
   {
    "name_id": "rossini",
    "name": "Rossini (Recordati)",
-   "cluster_id": 104062,
-   "primary": {
-    "id": 147876,
-    "title": "Recordati, Opa al 74,58%: riapertura a novembre e nodo delisting",
-    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMnBrR0JVX3Azb0tLQ2lYa3ZQdmN6cXhZVVRITXd4c2JDS3drWkJTOWtfQXVGYk5vWC1UMnBoUEZnYkRONUNsM3VESVdGQmp3SDQtR0staXJTeDlRS3V1M29vREY1SV84dGlFVlFlSFVlWUs2ajdvZlVoYWE3Q0xLd1B4OUFPRFVORGgtZ1AxQUZXeW1xSjNj",
-    "raw_link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMnBrR0JVX3Azb0tLQ2lYa3ZQdmN6cXhZVVRITXd4c2JDS3drWkJTOWtfQXVGYk5vWC1UMnBoUEZnYkRONUNsM3VESVdGQmp3SDQtR0staXJTeDlRS3V1M29vREY1SV84dGlFVlFlSFVlWUs2ajdvZlVoYWE3Q0xLd1B4OUFPRFVORGgtZ1AxQUZXeW1xSjNj?oc=5",
-    "source": "Benzinga Italia",
-    "domain": "it.benzinga.com",
-    "country": "IT",
-    "lang": "it",
-    "published_at": "2026-10-27T15:27:25+00:00",
-    "first_seen_at": "2026-10-27T15:32:50+00:00",
-    "route": "googlenews",
-    "query": "\"Respighi BidCo\"",
-    "tier_hint": null,
-    "summary": "Recordati, Opa al 74,58%: riapertura a novembre e nodo delisting Benzinga Italia",
-    "alias": "Recordati",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"Recordati\"",
-     "googlenews:\"Respighi BidCo\"",
-     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Recordati"
-   ],
-   "languages": [
-    "it"
-   ],
-   "countries": [
-    "IT"
-   ],
-   "latest": "2026-10-27T15:27:25+00:00"
-  },
-  {
-   "name_id": "rossini",
-   "name": "Rossini (Recordati)",
    "cluster_id": 104455,
    "primary": {
     "id": 148430,
@@ -5078,8 +5031,36 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 151539,
+     "title": "Sandoz-CEO warnt vor möglichen EU-Plänen zur Streichung von Amoxicillin aus der Liste kritischer Arzneimittel",
+     "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOWGFDTC01SlpBMFkzMjM2TVR4ZjcyZHBMTmY0SWxaTjM0NmYzUnp1dkJjNkd6aWRiVzdDOEV4Q0ROQUVkVUU0Ym82bXBjemdzSWUyR0puOXBYVUdWLThmVFFYb1VQckJLNTVSWDBnUjlINzJHZmhLNXFJc0pGNjBnUURlTWU4b2N2RGh0RGozN0UzbG5JZDlyMnl0T0E0OU5idWlVd3ljR281a3Z6UnVnaFVZQ2V5TnJ2eDc2aHZEVlpybzJyWXZFUEd3czFpWVBxSTJpOVVvdlN1NEFmVmV0TEFkN01oR3VsZ254b1ZyU004cWhfRnRDWEt0Z0U",
+     "raw_link": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxOWGFDTC01SlpBMFkzMjM2TVR4ZjcyZHBMTmY0SWxaTjM0NmYzUnp1dkJjNkd6aWRiVzdDOEV4Q0ROQUVkVUU0Ym82bXBjemdzSWUyR0puOXBYVUdWLThmVFFYb1VQckJLNTVSWDBnUjlINzJHZmhLNXFJc0pGNjBnUURlTWU4b2N2RGh0RGozN0UzbG5JZDlyMnl0T0E0OU5idWlVd3ljR281a3Z6UnVnaFVZQ2V5TnJ2eDc2aHZEVlpybzJyWXZFUEd3czFpWVBxSTJpOVVvdlN1NEFmVmV0TEFkN01oR3VsZ254b1ZyU004cWhfRnRDWEt0Z0U?oc=5",
+     "source": "MarketScreener Schweiz",
+     "domain": "ch.marketscreener.com",
+     "country": "CH",
+     "lang": "de",
+     "published_at": "2026-10-28T12:08:30+00:00",
+     "first_seen_at": "2026-10-28T15:28:54+00:00",
+     "route": "googlenews",
+     "query": "(\"Covis Pharma\" OR \"Octapharma\" OR \"On Holding\" OR \"Peach Property\" OR \"Sandoz\" OR \"Swiss Medical Network\")",
+     "tier_hint": null,
+     "summary": "Sandoz-CEO warnt vor möglichen EU-Plänen zur Streichung von Amoxicillin aus der Liste kritischer Arzneimittel MarketScreener Schweiz",
+     "alias": "Sandoz",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -5322,7 +5303,9 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Takko\" OR \"Tereos\" OR \"Teva\" OR \"Thom Group\")",
-     "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")"
+     "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")",
+     "googlenews:\"Teva\"",
+     "googlenews:\"Teva Pharmaceutical\""
     ],
     "alert_categories": [
      "m_and_a"
