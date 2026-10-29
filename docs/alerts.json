@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-29T13:50:06+00:00",
+ "generated_at": "2026-10-29T14:05:06+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -769,7 +769,9 @@
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"airBaltic\""
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -2565,6 +2567,55 @@
    "latest": "2026-10-28T14:46:06+00:00"
   },
   {
+   "name_id": "heimstaden",
+   "name": "Heimstaden",
+   "cluster_id": 103982,
+   "primary": {
+    "id": 154433,
+    "title": "Heimstaden utser Christian Fladeland till vd - Helge Krogsbøl lämnar",
+    "url": "https://placera.se/telegram/heimstaden-heimstaden-utser-christian-fladeland-till-vd-helge-krogsbol-lamnar-20261027",
+    "raw_link": "https://www.placera.se/telegram/heimstaden-heimstaden-utser-christian-fladeland-till-vd-helge-krogsbol-lamnar-20261027",
+    "source": "placera",
+    "domain": "placera.se",
+    "country": "SE",
+    "lang": "sv",
+    "published_at": "2026-10-27T01:18:00+00:00",
+    "first_seen_at": "2026-10-29T13:55:08+00:00",
+    "route": "bingnews",
+    "query": "\"Heimstaden\"",
+    "tier_hint": null,
+    "summary": "Fastighetsbolaget Heimstaden meddelar att Helge Krogsbøl har beslutat att lämna rollen som delad vd. Christian Fladeland, som i dag delar vd-posten med Krogsbøl och är investeringschef, utses till ...",
+    "alias": "Heimstaden",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Heimstaden"
+   ],
+   "languages": [
+    "sv"
+   ],
+   "countries": [
+    "SE"
+   ],
+   "latest": "2026-10-27T01:18:00+00:00"
+  },
+  {
    "name_id": "intrum",
    "name": "Intrum AB",
    "cluster_id": 107800,
@@ -2916,18 +2967,18 @@
    "name": "Lufthansa",
    "cluster_id": 108673,
    "primary": {
-    "id": 154280,
+    "id": 154437,
     "title": "Keine Streikgefahr: Condor einigt sich langfristig mit Piloten",
-    "url": "https://tagesspiegel.de/wirtschaft/dpa-keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten-16215590.html",
-    "raw_link": "https://www.tagesspiegel.de/wirtschaft/dpa-keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten-16215590.html",
-    "source": "tagesspiegel.de: News",
-    "domain": "tagesspiegel.de",
+    "url": "https://handelsblatt.com/politik/deutschland/keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten/100265949.html",
+    "raw_link": "https://www.handelsblatt.com/politik/deutschland/keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten/100265949.html",
+    "source": "Handelsblatt Schlagzeilen",
+    "domain": "handelsblatt.com",
     "country": "DE",
     "lang": "de",
-    "published_at": "2026-10-29T13:27:37+00:00",
-    "first_seen_at": "2026-10-29T13:40:08+00:00",
+    "published_at": "2026-10-29T13:26:30+00:00",
+    "first_seen_at": "2026-10-29T13:55:08+00:00",
     "route": "rss",
-    "query": "https://www.tagesspiegel.de/contentexport/feed/wirtschaft",
+    "query": "https://feeds.cms.handelsblatt.com/schlagzeilen",
     "tier_hint": 3,
     "summary": "Condor-Piloten bekommen erst ab Oktober 2028 mehr Gehalt. Der neue Vertrag verspricht dennoch dauerhafte Verbesserungen – und setzt einen Kontrast zu den festgefahrenen Verhandlungen bei Lufthansa.",
     "alias": "Lufthansa",
@@ -2942,8 +2993,63 @@
     "screen_reason": "",
     "url_unresolved": false
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 154280,
+     "title": "Keine Streikgefahr: Condor einigt sich langfristig mit Piloten",
+     "url": "https://tagesspiegel.de/wirtschaft/dpa-keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten-16215590.html",
+     "raw_link": "https://www.tagesspiegel.de/wirtschaft/dpa-keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten-16215590.html",
+     "source": "tagesspiegel.de: News",
+     "domain": "tagesspiegel.de",
+     "country": "DE",
+     "lang": "de",
+     "published_at": "2026-10-29T13:27:37+00:00",
+     "first_seen_at": "2026-10-29T13:40:08+00:00",
+     "route": "rss",
+     "query": "https://www.tagesspiegel.de/contentexport/feed/wirtschaft",
+     "tier_hint": 3,
+     "summary": "Condor-Piloten bekommen erst ab Oktober 2028 mehr Gehalt. Der neue Vertrag verspricht dennoch dauerhafte Verbesserungen – und setzt einen Kontrast zu den festgefahrenen Verhandlungen bei Lufthansa.",
+     "alias": "Lufthansa",
+     "alias_where": "summary",
+     "confidence": 0.7,
+     "also_routes": [
+      "rss:https://www.tagesspiegel.de/contentexport/feed/wirtschaft"
+     ],
+     "alert_categories": [
+      "workforce"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": false
+    },
+    {
+     "id": 154436,
+     "title": "Fluggesellschaft: Condor einigt sich langfristig mit Piloten",
+     "url": "https://wiwo.de/unternehmen/dienstleister/keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten/100265944.html",
+     "raw_link": "https://www.wiwo.de/unternehmen/dienstleister/keine-streikgefahr-condor-einigt-sich-langfristig-mit-piloten/100265944.html",
+     "source": "WirtschaftsWoche Online Schlagzeilen",
+     "domain": "wiwo.de",
+     "country": "DE",
+     "lang": "de",
+     "published_at": "2026-10-29T13:51:00+00:00",
+     "first_seen_at": "2026-10-29T13:55:08+00:00",
+     "route": "rss",
+     "query": "https://feeds.cms.wiwo.de/rss/schlagzeilen",
+     "tier_hint": 3,
+     "summary": "Condor-Piloten bekommen erst ab Oktober 2028 mehr Gehalt. Der neue Vertrag verspricht dennoch dauerhafte Verbesserungen – und setzt einen Kontrast zu den festgefahrenen Verhandlungen bei Lufthansa.",
+     "alias": "Lufthansa",
+     "alias_where": "summary",
+     "confidence": 0.7,
+     "also_routes": [],
+     "alert_categories": [],
+     "alert_candidate": false,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": false
+    }
+   ],
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "workforce"
@@ -2958,7 +3064,7 @@
    "countries": [
     "DE"
    ],
-   "latest": "2026-10-29T13:27:37+00:00"
+   "latest": "2026-10-29T13:51:00+00:00"
   },
   {
    "name_id": "lufthansa",
@@ -3086,7 +3192,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:\"Metlen\"",
-     "googlenews:\"Mytilineos\""
+     "googlenews:\"Mytilineos\"",
+     "googlenews:(\"doValue\" OR \"Intrum\" OR \"Metlen\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -4153,33 +4260,6 @@
    },
    "also": [
     {
-     "id": 151044,
-     "title": "Oud-minister Van Gennip nieuwe topvrouw Randstad Nederland",
-     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNS0FISlMyQnV3MHpCby1FLUJmaUVrQUNHZWdlTk9ULWVGZ3V4OGZjUDQtRVdtSkxxd2JPMXFHY0ROLUt5cUFmeE1UcXlWcHh0UTVCZjVnSjZPendQS0V6dmVUaERlR2t2UG5GVkhpZmlhYnVnc2p6WkFBNC1RQXNSY0lRYVBMTkhaMmU1dlFEOUgwZjFLaGRFWFUyYW9JZ3RnQzZQbEt3TWZ0T3ltR1lRXw",
-     "raw_link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNS0FISlMyQnV3MHpCby1FLUJmaUVrQUNHZWdlTk9ULWVGZ3V4OGZjUDQtRVdtSkxxd2JPMXFHY0ROLUt5cUFmeE1UcXlWcHh0UTVCZjVnSjZPendQS0V6dmVUaERlR2t2UG5GVkhpZmlhYnVnc2p6WkFBNC1RQXNSY0lRYVBMTkhaMmU1dlFEOUgwZjFLaGRFWFUyYW9JZ3RnQzZQbEt3TWZ0T3ltR1lRXw?oc=5",
-     "source": "Drimble",
-     "domain": "drimble.nl",
-     "country": "NL",
-     "lang": "nl",
-     "published_at": "2026-10-28T13:57:45+00:00",
-     "first_seen_at": "2026-10-28T14:02:19+00:00",
-     "route": "googlenews",
-     "query": "(\"Inter IKEA\" OR \"Mollie\" OR \"Randstad\")",
-     "tier_hint": null,
-     "summary": "Oud-minister Van Gennip nieuwe topvrouw Randstad Nederland Drimble",
-     "alias": "Randstad",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Inter IKEA\" OR \"Mollie\" OR \"Randstad\")"
-     ],
-     "alert_categories": [],
-     "alert_candidate": false,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
-    {
      "id": 153644,
      "title": "Oud-minister Van Gennip nieuwe topvrouw Randstad Nederland",
      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPYTBtUENjLUxYY3RTVDNzdEU5VGRRTWZ1TEdSUFZkaGtsd1Nzd3NiNHk1ZnZyVTRxV181bUE5VEE0aXpBOV8wdDJKRDhDNEUtZTlMUkM2UmNDMmprT1JWX0dxTWRTbFozaklSak5sVXljcjlxWDBkY2JVTW1WTTd1ODg5U3RYd0FJalVPdmFna2VZTGdnMk5tYm9uMlpyMHY2RTRJMA",
@@ -4207,7 +4287,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 3,
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -5799,7 +5879,9 @@
     "alias": "Mein Schiff",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Mein Schiff\""
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -6035,6 +6117,55 @@
     "DE"
    ],
    "latest": "2026-10-28T14:43:57+00:00"
+  },
+  {
+   "name_id": "unilever",
+   "name": "Unilever",
+   "cluster_id": 108800,
+   "primary": {
+    "id": 154466,
+    "title": "Clorox benoemt Unilever-topman tot nieuwe CEO",
+    "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPTVF1bGJvZ3pzZi1VM1g3S2FaT1puZWQ5MHJRSlpxMDczZWpSX1VlQWVXMEdZZFlhRTdYaFo3MjE1MmxQRS1rT0hWWW1kTEgxXzFGcUVNT3QtZ3lwUjJ3R0c2dEt6UkVRUE92UlpYSUo4eG5nTWxOMWVCclZSNXU0bW55RjJmRTVzYnozRldFZDJsNkJQSVpVU09seFJvVzRiR1d2M3Uxbw",
+    "raw_link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPTVF1bGJvZ3pzZi1VM1g3S2FaT1puZWQ5MHJRSlpxMDczZWpSX1VlQWVXMEdZZFlhRTdYaFo3MjE1MmxQRS1rT0hWWW1kTEgxXzFGcUVNT3QtZ3lwUjJ3R0c2dEt6UkVRUE92UlpYSUo4eG5nTWxOMWVCclZSNXU0bW55RjJmRTVzYnozRldFZDJsNkJQSVpVU09seFJvVzRiR1d2M3Uxbw?oc=5",
+    "source": "MarketScreener Nederland",
+    "domain": "nl.marketscreener.com",
+    "country": "NL",
+    "lang": "nl",
+    "published_at": "2026-10-29T13:29:57+00:00",
+    "first_seen_at": "2026-10-29T13:55:08+00:00",
+    "route": "googlenews",
+    "query": "(\"Action\" OR \"Booking\" OR \"Unilever\")",
+    "tier_hint": null,
+    "summary": "Clorox benoemt Unilever-topman tot nieuwe CEO MarketScreener Nederland",
+    "alias": "Unilever",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Unilever"
+   ],
+   "languages": [
+    "nl"
+   ],
+   "countries": [
+    "NL"
+   ],
+   "latest": "2026-10-29T13:29:57+00:00"
   },
   {
    "name_id": "unilever",
