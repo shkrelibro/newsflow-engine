@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-05T20:35:00+00:00",
+ "generated_at": "2026-11-05T20:50:00+00:00",
  "alerts": [
   {
    "name_id": "acsdobfar",
@@ -926,7 +926,10 @@
     "alias": "Aurobindo Pharma",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Aurobindo Pharma\"",
+     "googlenews:(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\" OR \"Lyfius\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -1010,7 +1013,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\" OR \"Lyfius\")",
-     "googlenews:(\"Aurelius\" OR \"Aurobindo Pharma\" OR \"Azelis\" OR \"Balder\" OR \"Barratt Redrow\" OR \"Basic-Fit\")"
+     "googlenews:(\"Aurelius\" OR \"Aurobindo Pharma\" OR \"Azelis\" OR \"Balder\" OR \"Barratt Redrow\" OR \"Basic-Fit\")",
+     "googlenews:\"Aurobindo Pharma\""
     ],
     "alert_categories": [
      "price_move"
@@ -1679,7 +1683,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")"
+     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
+     "googlenews:\"Ceconomy\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -1737,6 +1742,55 @@
     "DE"
    ],
    "latest": "2026-11-05T19:38:33+00:00"
+  },
+  {
+   "name_id": "ceconomy",
+   "name": "Ceconomy",
+   "cluster_id": 124802,
+   "primary": {
+    "id": 176949,
+    "title": "Is MediaMarkt nog veilig na overname door Chinese JD.com?",
+    "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNRTRMeXM4a3ZWcW9TSlBKdDlhazFXdmlKM2FLbFpqSXdNX2k1SlZUQUVXaDhGVU1SQm1vTFpVckhXQ0hBTXJaZGN5Mk5BdGpPNnUtbm9Ha1o4dWNSVnZ0Qno0R3V1cVNnRjhXZjRqMlBaLXV1Yjh3NjRwRDJTbXN4VUlJMC1IQ1lqMmtCYXRPOUxvVi1VU0lLNEptbWRJTkc4bFZ0Ull6SDc0RG1lQi1jd1hxNnJXS3UwMTNhZGhwYnhJaVJMTVFUM25UNHBySVNzT0pVN2ZfaHRRQ2Mxa1JxeUVOLUFFTnY0cU9iNUNFd09tSWM",
+    "raw_link": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNRTRMeXM4a3ZWcW9TSlBKdDlhazFXdmlKM2FLbFpqSXdNX2k1SlZUQUVXaDhGVU1SQm1vTFpVckhXQ0hBTXJaZGN5Mk5BdGpPNnUtbm9Ha1o4dWNSVnZ0Qno0R3V1cVNnRjhXZjRqMlBaLXV1Yjh3NjRwRDJTbXN4VUlJMC1IQ1lqMmtCYXRPOUxvVi1VU0lLNEptbWRJTkc4bFZ0Ull6SDc0RG1lQi1jd1hxNnJXS3UwMTNhZGhwYnhJaVJMTVFUM25UNHBySVNzT0pVN2ZfaHRRQ2Mxa1JxeUVOLUFFTnY0cU9iNUNFd09tSWM?oc=5",
+    "source": "De Telegraaf",
+    "domain": "telegraaf.nl",
+    "country": "NL",
+    "lang": "nl",
+    "published_at": "2026-11-05T19:36:39+00:00",
+    "first_seen_at": "2026-11-05T20:40:02+00:00",
+    "route": "googlenews",
+    "query": "(\"Arrow Global\" OR \"Boels\" OR \"Ceconomy\" OR \"Centrient\" OR \"Flora Food\" OR \"Heimstaden\")",
+    "tier_hint": null,
+    "summary": "Is MediaMarkt nog veilig na overname door Chinese JD.com? De Telegraaf",
+    "alias": "MediaMarkt",
+    "alias_where": "title",
+    "confidence": 0.9,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 0.9,
+   "aliases": [
+    "MediaMarkt"
+   ],
+   "languages": [
+    "nl"
+   ],
+   "countries": [
+    "NL"
+   ],
+   "latest": "2026-11-05T19:36:39+00:00"
   },
   {
    "name_id": "ceconomy",
@@ -2802,26 +2856,25 @@
    "name": "Comcast",
    "cluster_id": 121875,
    "primary": {
-    "id": 173281,
+    "id": 175711,
     "title": "Comcast planning major layoffs as part of its restructuring: Report",
-    "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBWOGF2RlI3djkxUlBlNVlha2EyeEtZeUFScXE0QnY0TTBqam8xLUZWWmJKZ08wX19MUDVfWUhUZHNIVExmaFVHRTJKUllvVlBoaTNMYVRGS2Vya1R5QnFhWlRSeHp0X0c3c0dj",
-    "raw_link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBWOGF2RlI3djkxUlBlNVlha2EyeEtZeUFScXE0QnY0TTBqam8xLUZWWmJKZ08wX19MUDVfWUhUZHNIVExmaFVHRTJKUllvVlBoaTNMYVRGS2Vya1R5QnFhWlRSeHp0X0c3c0dj?oc=5",
-    "source": "FOX6 News Milwaukee",
-    "domain": "fox6now.com",
-    "country": "US",
+    "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBOaDNGMjFuUDdvSUkxLURYclotRnZSZGNyb3NjRHZWVFlwUHlRaVZScVdhUEVucm4tcVllVXhkeDJOZmdjRXBCZ2xDVmhaaHpzSjN4VW5lT2lzWi1nblBYSmdjem5qWk5mSFJEZWFtQjFHdw",
+    "raw_link": "https://news.google.com/rss/articles/CBMickFVX3lxTFBOaDNGMjFuUDdvSUkxLURYclotRnZSZGNyb3NjRHZWVFlwUHlRaVZScVdhUEVucm4tcVllVXhkeDJOZmdjRXBCZ2xDVmhaaHpzSjN4VW5lT2lzWi1nblBYSmdjem5qWk5mSFJEZWFtQjFHdw?oc=5",
+    "source": "FOX 35 Orlando",
+    "domain": "fox35orlando.com",
+    "country": "GB",
     "lang": "en",
     "published_at": "2026-11-04T17:16:03+00:00",
-    "first_seen_at": "2026-11-04T20:45:07+00:00",
+    "first_seen_at": "2026-11-05T13:07:57+00:00",
     "route": "googlenews",
-    "query": "(\"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\" OR \"Deckers\" OR \"Encore Capital\")",
+    "query": "(\"Circle Health\" OR \"Circle K\" OR \"Cofinimmo\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\")",
     "tier_hint": null,
-    "summary": "Comcast planning major layoffs as part of its restructuring: Report FOX6 News Milwaukee",
+    "summary": "Comcast planning major layoffs as part of its restructuring: Report FOX 35 Orlando",
     "alias": "Comcast",
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Circle Health\" OR \"Circle K\" OR \"Cofinimmo\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\")",
-     "googlenews:(\"Comcast\" OR \"Crane Merchandising\" OR \"Crocs\" OR \"CSL Behring\" OR \"Deckers\" OR \"Encore Capital\")"
+     "googlenews:(\"Circle Health\" OR \"Circle K\" OR \"Cofinimmo\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\")"
     ],
     "alert_categories": [
      "restructuring",
@@ -2832,39 +2885,8 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 175711,
-     "title": "Comcast planning major layoffs as part of its restructuring: Report",
-     "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBOaDNGMjFuUDdvSUkxLURYclotRnZSZGNyb3NjRHZWVFlwUHlRaVZScVdhUEVucm4tcVllVXhkeDJOZmdjRXBCZ2xDVmhaaHpzSjN4VW5lT2lzWi1nblBYSmdjem5qWk5mSFJEZWFtQjFHdw",
-     "raw_link": "https://news.google.com/rss/articles/CBMickFVX3lxTFBOaDNGMjFuUDdvSUkxLURYclotRnZSZGNyb3NjRHZWVFlwUHlRaVZScVdhUEVucm4tcVllVXhkeDJOZmdjRXBCZ2xDVmhaaHpzSjN4VW5lT2lzWi1nblBYSmdjem5qWk5mSFJEZWFtQjFHdw?oc=5",
-     "source": "FOX 35 Orlando",
-     "domain": "fox35orlando.com",
-     "country": "GB",
-     "lang": "en",
-     "published_at": "2026-11-04T17:16:03+00:00",
-     "first_seen_at": "2026-11-05T13:07:57+00:00",
-     "route": "googlenews",
-     "query": "(\"Circle Health\" OR \"Circle K\" OR \"Cofinimmo\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\")",
-     "tier_hint": null,
-     "summary": "Comcast planning major layoffs as part of its restructuring: Report FOX 35 Orlando",
-     "alias": "Comcast",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Circle Health\" OR \"Circle K\" OR \"Cofinimmo\" OR \"Comcast\" OR \"Compagnie des Alpes\" OR \"Compass Group\")"
-     ],
-     "alert_categories": [
-      "restructuring",
-      "workforce"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "restructuring",
@@ -2878,8 +2900,7 @@
     "en"
    ],
    "countries": [
-    "GB",
-    "US"
+    "GB"
    ],
    "latest": "2026-11-04T17:16:03+00:00"
   },
@@ -5759,7 +5780,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")",
-     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")"
+     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")",
+     "googlenews:\"Labcorp\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -8529,7 +8551,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")"
+     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+     "googlenews:\"Recordati\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -9955,7 +9978,9 @@
      "alias": "Unilever",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Action\" OR \"Booking\" OR \"Unilever\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
