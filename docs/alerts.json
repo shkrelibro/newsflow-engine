@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-06T04:46:34+00:00",
+ "generated_at": "2026-11-06T05:01:34+00:00",
  "alerts": [
   {
    "name_id": "acsdobfar",
@@ -207,7 +207,11 @@
      "alias": "airBaltic",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"airBaltic\"",
+      "googlenews:\"airBaltic\" site:db.lv",
+      "googlenews:(\"airBaltic\")"
+     ],
      "alert_categories": [
       "restructuring"
      ],
@@ -1150,7 +1154,8 @@
      "confidence": 1.0,
      "also_routes": [
       "googlenews:\"Aurobindo Pharma\"",
-      "googlenews:(\"Aurelius\" OR \"Aurobindo Pharma\" OR \"Azelis\" OR \"Balder\" OR \"Barratt Redrow\" OR \"Basic-Fit\")"
+      "googlenews:(\"Aurelius\" OR \"Aurobindo Pharma\" OR \"Azelis\" OR \"Balder\" OR \"Barratt Redrow\" OR \"Basic-Fit\")",
+      "googlenews:(\"Aurobindo Pharma\" OR \"Dr. Reddy's\" OR \"Lupin\" OR \"Lyfius\")"
      ],
      "alert_categories": [],
      "alert_candidate": false,
@@ -5475,7 +5480,10 @@
      "alias": "Hapag-Lloyd",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Hapag-Lloyd\"",
+      "googlenews:(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -7441,7 +7449,9 @@
     "alias": "Metlen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Metlen\""
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -8961,6 +8971,33 @@
    },
    "also": [
     {
+     "id": 177668,
+     "title": "Recordati, adesioni all'OPA di Respighi BidCo al 67,5% nel terzo giorno di riapertura",
+     "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPQ3hUOEJJeVpsdlFqSjhFUElaRXg3cWluV2J1bGJHVFJQWEE2WTJCYzBwY3Z1emxKa0szX2V6SHdNSmpNQndLU2ZNTURFOVV2WEJITzNaUHVqOGMwbG5LRW5sTWVYRmtablUtaEdRMFh4X3pEWGQ5YjJEemdaZV9lYTJIdGktUGh4UnlSOFQ5N041dmxO",
+     "raw_link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPQ3hUOEJJeVpsdlFqSjhFUElaRXg3cWluV2J1bGJHVFJQWEE2WTJCYzBwY3Z1emxKa0szX2V6SHdNSmpNQndLU2ZNTURFOVV2WEJITzNaUHVqOGMwbG5LRW5sTWVYRmtablUtaEdRMFh4X3pEWGQ5YjJEemdaZV9lYTJIdGktUGh4UnlSOFQ5N041dmxO?oc=5",
+     "source": "Traders Union",
+     "domain": "tradersunion.com",
+     "country": "IT",
+     "lang": "it",
+     "published_at": "2026-11-05T19:24:46+00:00",
+     "first_seen_at": "2026-11-06T04:51:36+00:00",
+     "route": "googlenews",
+     "query": "\"Respighi BidCo\"",
+     "tier_hint": null,
+     "summary": "Recordati, adesioni all'OPA di Respighi BidCo al 67,5% nel terzo giorno di riapertura Traders Union",
+     "alias": "Recordati",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
      "id": 176858,
      "title": "OPA Recordati, adesioni al 67,5% nel terzo giorno di riapertura",
      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQUHZYdzhPNmtCX2RWcm1pT1ItUE96aTlPUXY2Z3BRaWtLQUhIUlQ4b3BtV3FWclgyZXFwSVZUOGZNYzlGQkU3bEdLLUhtY2JqVU9ySS1Idm5FQmRHUURxX3BpMjNqYk9JeVd3VlNQUVNxNkNtaldNekoyc1dramVqU3pBMHc1QmkzV3hRVFVJcjRWMWNJLUhZRUxiTnkyNXlJRXVfTmFRa29jX29rb0gzeVNTVEkyeGxhdXpnb1lKSTRZbkVR",
@@ -9021,7 +9058,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -10668,6 +10705,85 @@
   {
    "name_id": "unilever",
    "name": "Unilever",
+   "cluster_id": 124218,
+   "primary": {
+    "id": 176124,
+    "title": "Unilever verkoopt belang in joint venture in Myanmar",
+    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNTmM4RFBvcmFGRzdtZ0JTTzNGNml3Q25BTGhsUUM1RHdBMGVSX1paWk83WUVwcUNJbVdVRThuVXpnYUwwWWtkT0t2dnBaUnNweDJNZ1h5T1ctT2hHT1MzdnFmV29kY1RPY29zYWdoYlFFdzRoMTRrelZ1a3RZeDN2TFpGbDRGbFJpWUZON19mRThlNDRpVVk2a3RLOTdJZ1hfNkVCdVN4VnV1MFBsaU9Weg",
+    "raw_link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNTmM4RFBvcmFGRzdtZ0JTTzNGNml3Q25BTGhsUUM1RHdBMGVSX1paWk83WUVwcUNJbVdVRThuVXpnYUwwWWtkT0t2dnBaUnNweDJNZ1h5T1ctT2hHT1MzdnFmV29kY1RPY29zYWdoYlFFdzRoMTRrelZ1a3RZeDN2TFpGbDRGbFJpWUZON19mRThlNDRpVVk2a3RLOTdJZ1hfNkVCdVN4VnV1MFBsaU9Weg?oc=5",
+    "source": "MarketScreener Nederland",
+    "domain": "nl.marketscreener.com",
+    "country": "NL",
+    "lang": "nl",
+    "published_at": "2026-11-05T11:16:19+00:00",
+    "first_seen_at": "2026-11-05T14:52:56+00:00",
+    "route": "googlenews",
+    "query": "(\"Action\" OR \"Booking\" OR \"Unilever\")",
+    "tier_hint": null,
+    "summary": "Unilever verkoopt belang in joint venture in Myanmar MarketScreener Nederland",
+    "alias": "Unilever",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Action\" OR \"Booking\" OR \"Unilever\")"
+    ],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [
+    {
+     "id": 177671,
+     "title": "Unilever doet belang in joint venture in Myanmar van de hand",
+     "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQN0V1cnEtbW5JMzRSUVctdURNc2hqcF9hdDJhc0R1eXp2MjIyZlFJc2JqNldkOG93QXJQbTNBbHREb3NDM1JCTWdEXzBkdHJsQ2VOd2NnTkdYS3pLOWlrTVNNSHpzZ2xOZDJNamFkaUloa212X0F2c05iVER1RzZhT0g5WkJTNUN1V1dsRnYtblNTLWxTWnJXMW1WSUNPX1kxdThDV0toSWI2NF9lMW1WOGJQZWppUHJDUHFF",
+     "raw_link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQN0V1cnEtbW5JMzRSUVctdURNc2hqcF9hdDJhc0R1eXp2MjIyZlFJc2JqNldkOG93QXJQbTNBbHREb3NDM1JCTWdEXzBkdHJsQ2VOd2NnTkdYS3pLOWlrTVNNSHpzZ2xOZDJNamFkaUloa212X0F2c05iVER1RzZhT0g5WkJTNUN1V1dsRnYtblNTLWxTWnJXMW1WSUNPX1kxdThDV0toSWI2NF9lMW1WOGJQZWppUHJDUHFF?oc=5",
+     "source": "MarketScreener Nederland",
+     "domain": "nl.marketscreener.com",
+     "country": "NL",
+     "lang": "nl",
+     "published_at": "2026-11-06T04:24:21+00:00",
+     "first_seen_at": "2026-11-06T04:51:36+00:00",
+     "route": "googlenews",
+     "query": "(\"Action\" OR \"Booking\" OR \"Unilever\")",
+     "tier_hint": null,
+     "summary": "Unilever doet belang in joint venture in Myanmar van de hand MarketScreener Nederland",
+     "alias": "Unilever",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Unilever"
+   ],
+   "languages": [
+    "nl"
+   ],
+   "countries": [
+    "NL"
+   ],
+   "latest": "2026-11-06T04:24:21+00:00"
+  },
+  {
+   "name_id": "unilever",
+   "name": "Unilever",
    "cluster_id": 123401,
    "primary": {
     "id": 175006,
@@ -10745,57 +10861,6 @@
     "NL"
    ],
    "latest": "2026-11-05T13:26:44+00:00"
-  },
-  {
-   "name_id": "unilever",
-   "name": "Unilever",
-   "cluster_id": 124218,
-   "primary": {
-    "id": 176124,
-    "title": "Unilever verkoopt belang in joint venture in Myanmar",
-    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNTmM4RFBvcmFGRzdtZ0JTTzNGNml3Q25BTGhsUUM1RHdBMGVSX1paWk83WUVwcUNJbVdVRThuVXpnYUwwWWtkT0t2dnBaUnNweDJNZ1h5T1ctT2hHT1MzdnFmV29kY1RPY29zYWdoYlFFdzRoMTRrelZ1a3RZeDN2TFpGbDRGbFJpWUZON19mRThlNDRpVVk2a3RLOTdJZ1hfNkVCdVN4VnV1MFBsaU9Weg",
-    "raw_link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNTmM4RFBvcmFGRzdtZ0JTTzNGNml3Q25BTGhsUUM1RHdBMGVSX1paWk83WUVwcUNJbVdVRThuVXpnYUwwWWtkT0t2dnBaUnNweDJNZ1h5T1ctT2hHT1MzdnFmV29kY1RPY29zYWdoYlFFdzRoMTRrelZ1a3RZeDN2TFpGbDRGbFJpWUZON19mRThlNDRpVVk2a3RLOTdJZ1hfNkVCdVN4VnV1MFBsaU9Weg?oc=5",
-    "source": "MarketScreener Nederland",
-    "domain": "nl.marketscreener.com",
-    "country": "NL",
-    "lang": "nl",
-    "published_at": "2026-11-05T11:16:19+00:00",
-    "first_seen_at": "2026-11-05T14:52:56+00:00",
-    "route": "googlenews",
-    "query": "(\"Action\" OR \"Booking\" OR \"Unilever\")",
-    "tier_hint": null,
-    "summary": "Unilever verkoopt belang in joint venture in Myanmar MarketScreener Nederland",
-    "alias": "Unilever",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Action\" OR \"Booking\" OR \"Unilever\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Unilever"
-   ],
-   "languages": [
-    "nl"
-   ],
-   "countries": [
-    "NL"
-   ],
-   "latest": "2026-11-05T11:16:19+00:00"
   },
   {
    "name_id": "unilever",
