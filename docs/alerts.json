@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-06T20:31:30+00:00",
+ "generated_at": "2026-11-06T20:46:29+00:00",
  "alerts": [
   {
    "name_id": "acsdobfar",
@@ -1731,7 +1731,10 @@
     "alias": "MediaMarkt",
     "alias_where": "title",
     "confidence": 0.9,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Ceconomy\"",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1783,7 +1786,8 @@
     "also_routes": [
      "googlenews:\"Ceconomy\"",
      "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
-     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
+     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -1998,58 +2002,6 @@
     "ES"
    ],
    "latest": "2026-11-05T19:40:05+00:00"
-  },
-  {
-   "name_id": "ceconomy",
-   "name": "Ceconomy",
-   "cluster_id": 124802,
-   "primary": {
-    "id": 176949,
-    "title": "Is MediaMarkt nog veilig na overname door Chinese JD.com?",
-    "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNRTRMeXM4a3ZWcW9TSlBKdDlhazFXdmlKM2FLbFpqSXdNX2k1SlZUQUVXaDhGVU1SQm1vTFpVckhXQ0hBTXJaZGN5Mk5BdGpPNnUtbm9Ha1o4dWNSVnZ0Qno0R3V1cVNnRjhXZjRqMlBaLXV1Yjh3NjRwRDJTbXN4VUlJMC1IQ1lqMmtCYXRPOUxvVi1VU0lLNEptbWRJTkc4bFZ0Ull6SDc0RG1lQi1jd1hxNnJXS3UwMTNhZGhwYnhJaVJMTVFUM25UNHBySVNzT0pVN2ZfaHRRQ2Mxa1JxeUVOLUFFTnY0cU9iNUNFd09tSWM",
-    "raw_link": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNRTRMeXM4a3ZWcW9TSlBKdDlhazFXdmlKM2FLbFpqSXdNX2k1SlZUQUVXaDhGVU1SQm1vTFpVckhXQ0hBTXJaZGN5Mk5BdGpPNnUtbm9Ha1o4dWNSVnZ0Qno0R3V1cVNnRjhXZjRqMlBaLXV1Yjh3NjRwRDJTbXN4VUlJMC1IQ1lqMmtCYXRPOUxvVi1VU0lLNEptbWRJTkc4bFZ0Ull6SDc0RG1lQi1jd1hxNnJXS3UwMTNhZGhwYnhJaVJMTVFUM25UNHBySVNzT0pVN2ZfaHRRQ2Mxa1JxeUVOLUFFTnY0cU9iNUNFd09tSWM?oc=5",
-    "source": "De Telegraaf",
-    "domain": "telegraaf.nl",
-    "country": "NL",
-    "lang": "nl",
-    "published_at": "2026-11-05T19:36:39+00:00",
-    "first_seen_at": "2026-11-05T20:40:02+00:00",
-    "route": "googlenews",
-    "query": "(\"Arrow Global\" OR \"Boels\" OR \"Ceconomy\" OR \"Centrient\" OR \"Flora Food\" OR \"Heimstaden\")",
-    "tier_hint": null,
-    "summary": "Is MediaMarkt nog veilig na overname door Chinese JD.com? De Telegraaf",
-    "alias": "MediaMarkt",
-    "alias_where": "title",
-    "confidence": 0.9,
-    "also_routes": [
-     "googlenews:\"Ceconomy\"",
-     "googlenews:(\"Arrow Global\" OR \"Boels\" OR \"Ceconomy\" OR \"Centrient\" OR \"Flora Food\" OR \"Heimstaden\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 0.9,
-   "aliases": [
-    "MediaMarkt"
-   ],
-   "languages": [
-    "nl"
-   ],
-   "countries": [
-    "NL"
-   ],
-   "latest": "2026-11-05T19:36:39+00:00"
   },
   {
    "name_id": "cheplapharm",
@@ -3594,7 +3546,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+     "googlenews:\"GSK\""
     ],
     "alert_categories": [
      "management"
