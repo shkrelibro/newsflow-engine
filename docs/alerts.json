@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-09T17:38:57+00:00",
+ "generated_at": "2026-11-09T17:53:58+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -23,7 +23,9 @@
     "alias": "Adyen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"1-2-3.tv\" OR \"ACS Dobfar\" OR \"Adyen\" OR \"Aedifica\" OR \"Air France-KLM\" OR \"Alten\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -695,7 +697,9 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Biogroup\" OR \"Boels\" OR \"House of HR\" OR \"Intrum\" OR \"Manuchar\" OR \"Maxeda\")"
+     "googlenews:(\"Biogroup\" OR \"Boels\" OR \"House of HR\" OR \"Intrum\" OR \"Manuchar\" OR \"Maxeda\")",
+     "googlenews:\"Intrum\"",
+     "googlenews:(\"HelloFresh\" OR \"House of HR\" OR \"Intrum\" OR \"Maxeda\" OR \"Takko\" OR \"Magnum Ice Cream Company\")"
     ],
     "alert_categories": [
      "capital_markets"
@@ -1260,7 +1264,9 @@
     "alias": "Intrum",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Intrum\" site:di.se"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -1751,7 +1757,9 @@
      "alias": "Metlen",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "bingnews:\"Metlen\""
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -2520,6 +2528,35 @@
      "alias": "Raízen",
      "alias_where": "title",
      "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Raízen\")"
+     ],
+     "alert_categories": [
+      "capital_markets"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 184674,
+     "title": "Raízen (RAIZ55) aprova aumento de capital de até R$ 39,8 bilhões",
+     "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPT0NQVWdESjBDVWdjZmdYQjIwUlN5OGFUcmpsRTQ1amVZRXloYTNpWmRHbllzM254UzA5bmxDMGJSMjJOZ2NXTGEyRUFBZktiV2FweHg2b0R5YlZUOUdUQUJfSlFiampvcHQwbjZpYXctSTVsTmZDRTVCaW5yX1Fuem9Ca3lhZnhv",
+     "raw_link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPT0NQVWdESjBDVWdjZmdYQjIwUlN5OGFUcmpsRTQ1amVZRXloYTNpWmRHbllzM254UzA5bmxDMGJSMjJOZ2NXTGEyRUFBZktiV2FweHg2b0R5YlZUOUdUQUJfSlFiampvcHQwbjZpYXctSTVsTmZDRTVCaW5yX1Fuem9Ca3lhZnhv?oc=5",
+     "source": "melhorinvestimento.net",
+     "domain": "melhorinvestimento.net",
+     "country": "BR",
+     "lang": "pt",
+     "published_at": "2026-11-09T15:38:39+00:00",
+     "first_seen_at": "2026-11-09T17:44:00+00:00",
+     "route": "googlenews",
+     "query": "(\"Raízen\")",
+     "tier_hint": null,
+     "summary": "Raízen (RAIZ55) aprova aumento de capital de até R$ 39,8 bilhões melhorinvestimento.net",
+     "alias": "Raízen",
+     "alias_where": "title",
+     "confidence": 1.0,
      "also_routes": [],
      "alert_categories": [
       "capital_markets"
@@ -2530,7 +2567,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "capital_markets"
@@ -2545,7 +2582,7 @@
    "countries": [
     "BR"
    ],
-   "latest": "2026-11-09T12:55:51+00:00"
+   "latest": "2026-11-09T15:38:39+00:00"
   },
   {
    "name_id": "raizen",
@@ -2621,7 +2658,9 @@
     "alias": "The Restaurant",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"The Restaurant\" OR \"Rheavendors\" OR \"Ribera Salud\" OR \"Robert Half\" OR \"Rosa's Thai\" OR \"Royal Caribbean\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -2850,7 +2889,9 @@
     "alias": "Recordati",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Recordati\""
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -2951,7 +2992,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")"
+     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+     "googlenews:\"Recordati\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -3133,57 +3175,6 @@
    "latest": "2026-11-08T20:37:23+00:00"
   },
   {
-   "name_id": "sector_container_freight",
-   "name": "Container freight (sector)",
-   "cluster_id": 127624,
-   "primary": {
-    "id": 182646,
-    "title": "Iran reports oil tanker fire after mine strike near Strait of Hormuz",
-    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOYjRhYUdLakFqNjY2MjB4TWt6MzBrcDVnWFlWVnVuNmdNdEszeVlFUUx0OV96Ym9INHVuRGp2WEQxYlh0WDBkOWozcUlhc1VJODhXLWlxVVQ0VjFkTWRzZEg1VG84RUIyczVYbHNNb2ZKN3E4VjEzN2E3ZWFrbkFPTjFlUEx6ZEE0RDY1b0d1RlRWS1E",
-    "raw_link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOYjRhYUdLakFqNjY2MjB4TWt6MzBrcDVnWFlWVnVuNmdNdEszeVlFUUx0OV96Ym9INHVuRGp2WEQxYlh0WDBkOWozcUlhc1VJODhXLWlxVVQ0VjFkTWRzZEg1VG84RUIyczVYbHNNb2ZKN3E4VjEzN2E3ZWFrbkFPTjFlUEx6ZEE0RDY1b0d1RlRWS1E?oc=5",
-    "source": "Latest news from Azerbaijan",
-    "domain": "news.az",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-08T17:09:40+00:00",
-    "first_seen_at": "2026-11-08T17:52:06+00:00",
-    "route": "googlenews",
-    "query": "\"Strait of Hormuz\"",
-    "tier_hint": null,
-    "summary": "Iran reports oil tanker fire after mine strike near Strait of Hormuz Latest news from Azerbaijan",
-    "alias": "Strait of Hormuz",
-    "alias_where": "title",
-    "confidence": 0.7,
-    "also_routes": [
-     "googlenews:\"Strait of Hormuz\""
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 0.7,
-   "aliases": [
-    "Strait of Hormuz"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-08T17:09:40+00:00"
-  },
-  {
    "name_id": "sector_jet_fuel",
    "name": "Jet fuel and kerosene (sector)",
    "cluster_id": 130147,
@@ -3206,7 +3197,8 @@
     "alias_where": "title",
     "confidence": 0.8,
     "also_routes": [
-     "googlenews:\"jet fuel\""
+     "googlenews:\"jet fuel\"",
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
     ],
     "alert_categories": [
      "price_move"
