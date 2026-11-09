@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-09T19:08:58+00:00",
+ "generated_at": "2026-11-09T19:23:57+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -539,7 +539,10 @@
     "alias": "HelloFresh",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"HelloFresh\"",
+     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -1960,7 +1963,7 @@
      "url_unresolved": false
     }
    ],
-   "sources": 18,
+   "sources": 19,
    "alert_candidate": true,
    "alert_categories": [
     "litigation"
@@ -2697,55 +2700,6 @@
   {
    "name_id": "raizen",
    "name": "Raízen",
-   "cluster_id": 130586,
-   "primary": {
-    "id": 184865,
-    "title": "BlackRock reduz ações da Raízen (RAIZ55) após aumento de capital de R$ 39,8 bilhões",
-    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNLVVDSlF0TFFmbzBRbVYzNkhiUV84NXRaUk5lenJUUjd0QWRWNHFXdnNUZEVqbzZoUEJSUWVxbWYwQzBVbTRTVHNTTDh0dFdmU01NVGRNaFphLW1Lemxpay1VUkN5WXBiRE1kSkFjSmo1VmMwek8tTnA4WFZvd2VURno1NjZ3cGFvN051d3NKbmtCeHRaaTFEY0pqMjlaWmVoX2NlbWJxNXU",
-    "raw_link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNLVVDSlF0TFFmbzBRbVYzNkhiUV84NXRaUk5lenJUUjd0QWRWNHFXdnNUZEVqbzZoUEJSUWVxbWYwQzBVbTRTVHNTTDh0dFdmU01NVGRNaFphLW1Lemxpay1VUkN5WXBiRE1kSkFjSmo1VmMwek8tTnA4WFZvd2VURno1NjZ3cGFvN051d3NKbmtCeHRaaTFEY0pqMjlaWmVoX2NlbWJxNXU?oc=5",
-    "source": "Acionista.com.br",
-    "domain": "acionista.com.br",
-    "country": "BR",
-    "lang": "pt",
-    "published_at": "2026-11-09T18:32:03+00:00",
-    "first_seen_at": "2026-11-09T18:29:00+00:00",
-    "route": "googlenews",
-    "query": "(\"Raízen\")",
-    "tier_hint": null,
-    "summary": "BlackRock reduz ações da Raízen (RAIZ55) após aumento de capital de R$ 39,8 bilhões Acionista.com.br",
-    "alias": "Raízen",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [],
-    "alert_categories": [
-     "capital_markets"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "capital_markets"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Raízen"
-   ],
-   "languages": [
-    "pt"
-   ],
-   "countries": [
-    "BR"
-   ],
-   "latest": "2026-11-09T18:32:03+00:00"
-  },
-  {
-   "name_id": "raizen",
-   "name": "Raízen",
    "cluster_id": 126891,
    "primary": {
     "id": 184265,
@@ -2837,9 +2791,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 184945,
+     "title": "Raízen (RAIZ55) aprova aumento de capital de até R$ 39,8 bilhões; acionistas podem ser diluídos em até 94%",
+     "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxORnFaRWQtZW1NU2ZETFdYNE1ZZ1NoOVFibmpueEk5NFdBZlE0ZFNFWU50VWI4bUk4OG1TOXJJcXFsTzFrQWs3SnkyTWx0Y0ZBZEJOMGZ6N1NidzNDbWw2Nm9Ldy1hTEhYcFVFc1dkNGRDYzc1eEVaOHZNa2tjTXVQaHowZnNLVGZPaE9HWXBMRXlYcVU3akZfSGJKVWg2Uk5yZ2FnUnA0b1BJYktoRXZPNDBSR0NvckxpYzcyUzFld1hWZl9oYW5obUdUellDY1IwUGVXWFR2TlY",
+     "raw_link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxORnFaRWQtZW1NU2ZETFdYNE1ZZ1NoOVFibmpueEk5NFdBZlE0ZFNFWU50VWI4bUk4OG1TOXJJcXFsTzFrQWs3SnkyTWx0Y0ZBZEJOMGZ6N1NidzNDbWw2Nm9Ldy1hTEhYcFVFc1dkNGRDYzc1eEVaOHZNa2tjTXVQaHowZnNLVGZPaE9HWXBMRXlYcVU3akZfSGJKVWg2Uk5yZ2FnUnA0b1BJYktoRXZPNDBSR0NvckxpYzcyUzFld1hWZl9oYW5obUdUellDY1IwUGVXWFR2TlY?oc=5",
+     "source": "Guia do Investidor",
+     "domain": "guiadoinvestidor.com.br",
+     "country": "BR",
+     "lang": "pt",
+     "published_at": "2026-11-09T18:46:31+00:00",
+     "first_seen_at": "2026-11-09T19:13:59+00:00",
+     "route": "googlenews",
+     "query": "(\"Raízen\")",
+     "tier_hint": null,
+     "summary": "Raízen (RAIZ55) aprova aumento de capital de até R$ 39,8 bilhões; acionistas podem ser diluídos em até 94% Guia do Investidor",
+     "alias": "Raízen",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "capital_markets"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 3,
+   "sources": 4,
    "alert_candidate": true,
    "alert_categories": [
     "capital_markets"
@@ -2854,7 +2835,58 @@
    "countries": [
     "BR"
    ],
-   "latest": "2026-11-09T15:38:39+00:00"
+   "latest": "2026-11-09T18:46:31+00:00"
+  },
+  {
+   "name_id": "raizen",
+   "name": "Raízen",
+   "cluster_id": 130586,
+   "primary": {
+    "id": 184865,
+    "title": "BlackRock reduz ações da Raízen (RAIZ55) após aumento de capital de R$ 39,8 bilhões",
+    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNLVVDSlF0TFFmbzBRbVYzNkhiUV84NXRaUk5lenJUUjd0QWRWNHFXdnNUZEVqbzZoUEJSUWVxbWYwQzBVbTRTVHNTTDh0dFdmU01NVGRNaFphLW1Lemxpay1VUkN5WXBiRE1kSkFjSmo1VmMwek8tTnA4WFZvd2VURno1NjZ3cGFvN051d3NKbmtCeHRaaTFEY0pqMjlaWmVoX2NlbWJxNXU",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNLVVDSlF0TFFmbzBRbVYzNkhiUV84NXRaUk5lenJUUjd0QWRWNHFXdnNUZEVqbzZoUEJSUWVxbWYwQzBVbTRTVHNTTDh0dFdmU01NVGRNaFphLW1Lemxpay1VUkN5WXBiRE1kSkFjSmo1VmMwek8tTnA4WFZvd2VURno1NjZ3cGFvN051d3NKbmtCeHRaaTFEY0pqMjlaWmVoX2NlbWJxNXU?oc=5",
+    "source": "Acionista.com.br",
+    "domain": "acionista.com.br",
+    "country": "BR",
+    "lang": "pt",
+    "published_at": "2026-11-09T18:32:03+00:00",
+    "first_seen_at": "2026-11-09T18:29:00+00:00",
+    "route": "googlenews",
+    "query": "(\"Raízen\")",
+    "tier_hint": null,
+    "summary": "BlackRock reduz ações da Raízen (RAIZ55) após aumento de capital de R$ 39,8 bilhões Acionista.com.br",
+    "alias": "Raízen",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"Raízen\")"
+    ],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Raízen"
+   ],
+   "languages": [
+    "pt"
+   ],
+   "countries": [
+    "BR"
+   ],
+   "latest": "2026-11-09T18:32:03+00:00"
   },
   {
    "name_id": "raizen",
@@ -3198,7 +3230,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Recordati\""
+      "googlenews:\"Recordati\"",
+      "googlenews:(\"PureGym\" OR \"Rekeep\" OR \"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\")"
      ],
      "alert_categories": [
       "m_and_a"
