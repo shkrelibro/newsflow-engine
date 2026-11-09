@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-09T21:23:58+00:00",
+ "generated_at": "2026-11-09T21:38:57+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -488,7 +488,9 @@
     "alias": "Eurofins Scientific",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Eurofins Scientific\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -514,6 +516,57 @@
     "FR"
    ],
    "latest": "2026-11-09T08:48:24+00:00"
+  },
+  {
+   "name_id": "expedia",
+   "name": "Expedia",
+   "cluster_id": 130808,
+   "primary": {
+    "id": 185189,
+    "title": "Expedia’s $676 Million in Deals Points to More B2B Buying",
+    "url": "https://skift.com/2026/11/09/expedias-676-million-in-deals-points-to-more-b2b-buying",
+    "raw_link": "https://skift.com/2026/11/09/expedias-676-million-in-deals-points-to-more-b2b-buying/",
+    "source": "Skift",
+    "domain": "skift.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-09T21:20:33+00:00",
+    "first_seen_at": "2026-11-09T21:28:59+00:00",
+    "route": "rss",
+    "query": "https://skift.com/rss",
+    "tier_hint": 4,
+    "summary": "Expedia’s 2026 deals are a fraction of the nearly $6 billion it spent in 2015. But three acquisitions in nine months, plus CEO Ariane Gorin’s pledge to keep investing, signal that Expedia is a buyer again. And B2B is where the money is going.",
+    "alias": "Expedia",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a",
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a",
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Expedia"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-09T21:20:33+00:00"
   },
   {
    "name_id": "fiserv",
@@ -2829,7 +2882,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Motor Fuel Group\" OR \"Medical Properties Trust\" OR \"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\")"
+     "googlenews:(\"Motor Fuel Group\" OR \"Medical Properties Trust\" OR \"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\")",
+     "googlenews:\"PRA Group\""
     ],
     "alert_categories": [
      "price_move"
@@ -5179,7 +5233,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")",
-     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")"
+     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")",
+     "googlenews:\"Xerox\""
     ],
     "alert_categories": [
      "management"
