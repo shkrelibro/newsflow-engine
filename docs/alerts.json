@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-10T07:02:19+00:00",
+ "generated_at": "2026-11-10T07:17:19+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -433,7 +433,10 @@
     "alias": "Ceconomy",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Ceconomy\"",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -535,7 +538,11 @@
     "alias": "MediaMarkt",
     "alias_where": "title",
     "confidence": 0.9,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Ceconomy\"",
+     "googlenews:\"MediaMarkt\"",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3996,6 +4003,57 @@
   {
    "name_id": "rossini",
    "name": "Rossini (Recordati)",
+   "cluster_id": 131291,
+   "primary": {
+    "id": 185871,
+    "title": "Recordati, CVC e GBL arrivano al 91,93% e preparano il delisting. Intanto chiuso un finanziamento record da 7,58 mld euro, di cui 6,05 mld di bond high yield",
+    "url": "https://bebeez.it/private-equity/cvc-e-gbl-conquistano-il-9193-di-recordati-alla-chiusura-definitiva-dellopa-delisting-in-vista-senza-bisogno-della-fusione",
+    "raw_link": "https://bebeez.it/private-equity/cvc-e-gbl-conquistano-il-9193-di-recordati-alla-chiusura-definitiva-dellopa-delisting-in-vista-senza-bisogno-della-fusione/",
+    "source": "BeBeez",
+    "domain": "bebeez.it",
+    "country": "IT",
+    "lang": "it",
+    "published_at": "2026-11-10T06:58:20+00:00",
+    "first_seen_at": "2026-11-10T07:07:21+00:00",
+    "route": "rss",
+    "query": "https://bebeez.it/feed/",
+    "tier_hint": 4,
+    "summary": "CVC Capital Partners e Groupe Bruxelles Lambert (GBL) hanno vinto la partita per il controllo totalitario di Recordati. Alla chiusura definitiva dell&#8217;offerta pubblica di acquisto sul gruppo farmaceutico quotato a Piazza Affari, avvenuta ieri, il consorzio, sulla base dei risultati provvisori, ha infatti raggiunto il 91,93% del capitale, superando la soglia del 90% necessaria per [&#8230;]",
+    "alias": "Recordati",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets",
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets",
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Recordati"
+   ],
+   "languages": [
+    "it"
+   ],
+   "countries": [
+    "IT"
+   ],
+   "latest": "2026-11-10T06:58:20+00:00"
+  },
+  {
+   "name_id": "rossini",
+   "name": "Rossini (Recordati)",
    "cluster_id": 131237,
    "primary": {
     "id": 185798,
@@ -4067,7 +4125,9 @@
     "alias": "Recordati",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PureGym\" OR \"Rekeep\" OR \"Recordati\" OR \"Samhällsbyggnadsbolaget\" OR \"Skechers\" OR \"STADA\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -5905,9 +5965,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 185892,
+     "title": "Virgin Active Signs Unconditional Agreement to Acquire Holmes Place Germany, Marking Its Entry Into the German Market",
+     "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxPREVMbEZRc0Z1M0RndDBISldzN29hWlhQS0huUHB1bE9reUFsTkdpbzU3R1VEYW1xZDYxTnNWUTExaHV4eVV0aW5hTl9BZVVNMFZpRjQzcTREQUhoUTQwQW5iVXJDbjQ5djhMSnZnTldHZUExVVhUYnRudy1ZNlBoa3pFYW1XTDZlMGdlSlMtbTkwMk1jbXVCVUFYTkE4RENQdTBJaXRoR1pnd1dyTnowYk9ZdEZ2aFdCcUplS2JwUjZUUDV1OVBuNjVrajlhNExCNk9iMGFWLXN4MTdLUEpiUWc4aW9FSHI4dXJhZHplSDdtQzhIajJ3NzJhNFpBUnhWWldub1JFWFA",
+     "raw_link": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxPREVMbEZRc0Z1M0RndDBISldzN29hWlhQS0huUHB1bE9reUFsTkdpbzU3R1VEYW1xZDYxTnNWUTExaHV4eVV0aW5hTl9BZVVNMFZpRjQzcTREQUhoUTQwQW5iVXJDbjQ5djhMSnZnTldHZUExVVhUYnRudy1ZNlBoa3pFYW1XTDZlMGdlSlMtbTkwMk1jbXVCVUFYTkE4RENQdTBJaXRoR1pnd1dyTnowYk9ZdEZ2aFdCcUplS2JwUjZUUDV1OVBuNjVrajlhNExCNk9iMGFWLXN4MTdLUEpiUWc4aW9FSHI4dXJhZHplSDdtQzhIajJ3NzJhNFpBUnhWWldub1JFWFA?oc=5",
+     "source": "StreetInsider",
+     "domain": "streetinsider.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-11-09T07:32:36+00:00",
+     "first_seen_at": "2026-11-10T07:07:21+00:00",
+     "route": "googlenews",
+     "query": "(\"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\" OR \"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\")",
+     "tier_hint": null,
+     "summary": "Virgin Active Signs Unconditional Agreement to Acquire Holmes Place Germany, Marking Its Entry Into the German Market StreetInsider",
+     "alias": "Virgin Active",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 6,
+   "sources": 7,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -5922,7 +6009,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-11-09T07:02:29+00:00"
+   "latest": "2026-11-09T07:32:36+00:00"
   },
   {
    "name_id": "vistry",
@@ -5974,6 +6061,55 @@
     "GB"
    ],
    "latest": "2026-11-09T12:47:07+00:00"
+  },
+  {
+   "name_id": "vistry",
+   "name": "Vistry Group",
+   "cluster_id": 131307,
+   "primary": {
+    "id": 185890,
+    "title": "Vistry and Sanctuary launch JV for 2,204 homes in Worcester",
+    "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5VYVRoZVFyVVh6UVJSRGZrVEhGYjJvVno1ajlMS2xqSkZyQWJqS29RR3FkX2p0UWd5UEdjMVNXNGhfX3hwQm56bDQxQlVfR1NxYTFlcGsyY3NpR2hBdXBHTkVCLVdiUGppNmU3emRn",
+    "raw_link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5VYVRoZVFyVVh6UVJSRGZrVEhGYjJvVno1ajlMS2xqSkZyQWJqS29RR3FkX2p0UWd5UEdjMVNXNGhfX3hwQm56bDQxQlVfR1NxYTFlcGsyY3NpR2hBdXBHTkVCLVdiUGppNmU3emRn?oc=5",
+    "source": "BE News",
+    "domain": "benews.co.uk",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-09T11:12:12+00:00",
+    "first_seen_at": "2026-11-10T07:07:21+00:00",
+    "route": "googlenews",
+    "query": "(\"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\" OR \"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\")",
+    "tier_hint": null,
+    "summary": "Vistry and Sanctuary launch JV for 2,204 homes in Worcester BE News",
+    "alias": "Vistry",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Vistry"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-09T11:12:12+00:00"
   },
   {
    "name_id": "vistry",
