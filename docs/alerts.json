@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-11T10:13:29+00:00",
+ "generated_at": "2026-11-11T10:28:44+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -175,7 +175,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Aedifica\""
+     "googlenews:\"Aedifica\"",
+     "googlenews:(\"Aedifica\" OR \"Cofinimmo\")"
     ],
     "alert_categories": [
      "capital_markets"
@@ -276,7 +277,9 @@
     "alias": "Asda",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Arcaplanet\" OR \"Arla Foods\" OR \"Aroundtown\" OR \"Asda\" OR \"Ashtead\" OR \"Aspen Pharmacare\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -6019,6 +6022,57 @@
   {
    "name_id": "paypal",
    "name": "PayPal",
+   "cluster_id": 133720,
+   "primary": {
+    "id": 189361,
+    "title": "Business-Ticker: Kartellamt macht Paypal-Händlern Hoffnung",
+    "url": "https://faz.net/aktuell/wirtschaft/unternehmen/business-liveticker-paypal-konditoinen-im-visier-des-kartellamts-faz-200452404.html",
+    "raw_link": "https://www.faz.net/aktuell/wirtschaft/unternehmen/business-liveticker-paypal-konditoinen-im-visier-des-kartellamts-faz-200452404.html",
+    "source": "Wirtschaft - FAZ.NET",
+    "domain": "faz.net",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-11-11T10:17:00+00:00",
+    "first_seen_at": "2026-11-11T10:21:16+00:00",
+    "route": "rss",
+    "query": "https://www.faz.net/rss/aktuell/wirtschaft/",
+    "tier_hint": 3,
+    "summary": "Konditionen des Bezahlriesen im Visier der Wettbewerbshüter +++ Dax-Konzern Symrise beruft neuen Finanzvorstand +++ Thyssenkrupps Betriebsratschef wechselt die Seiten +++ alle Neuigkeiten im Unternehmen-Liveblog",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a",
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a",
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-11T10:17:00+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
    "cluster_id": 133626,
    "primary": {
     "id": 189220,
@@ -9040,38 +9094,6 @@
      "url_unresolved": false
     },
     {
-     "id": 186394,
-     "title": "Worldline : succès de l'offre de rachat sur ses obligations arrivant à échéance en juin 2027",
-     "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxPZUpvcC1zMTBxUUg2QTJhYzdiUlBGa2NUYmVLaWRhZjN3eXFQTy00Sk5aRnFYaWhUeHk2T0tVbDRHWnNtVTE5Zmx3SDZtWEdOOUFwaFhlejBZc0ppRDVhaWpYUG5BWkwzS0VXdnY1eFBDZjM3eGlwb3R5OVVsbDRtQkE0ZlNpVWJXbTh5bk0zcUpSdWF2S0wwajZHSDBrSWFLc05zV2lESXUyb3Y4NHEtTkI1ZGZjWFVaLWctOFdCQ2hCakJqZnFlUWJxclF2dGpDWXBMdDhQMHF5UGFNRGdGQTlNMzJGUQ",
-     "raw_link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxPZUpvcC1zMTBxUUg2QTJhYzdiUlBGa2NUYmVLaWRhZjN3eXFQTy00Sk5aRnFYaWhUeHk2T0tVbDRHWnNtVTE5Zmx3SDZtWEdOOUFwaFhlejBZc0ppRDVhaWpYUG5BWkwzS0VXdnY1eFBDZjM3eGlwb3R5OVVsbDRtQkE0ZlNpVWJXbTh5bk0zcUpSdWF2S0wwajZHSDBrSWFLc05zV2lESXUyb3Y4NHEtTkI1ZGZjWFVaLWctOFdCQ2hCakJqZnFlUWJxclF2dGpDWXBMdDhQMHF5UGFNRGdGQTlNMzJGUQ?oc=5",
-     "source": "Boursier.com",
-     "domain": "boursier.com",
-     "country": "FR",
-     "lang": "fr",
-     "published_at": "2026-11-10T10:03:00+00:00",
-     "first_seen_at": "2026-11-10T10:18:51+00:00",
-     "route": "googlenews",
-     "query": "\"Worldline\"",
-     "tier_hint": null,
-     "summary": "Worldline : succès de l'offre de rachat sur ses obligations arrivant à échéance en juin 2027 Boursier.com",
-     "alias": "Worldline",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Worldline\")",
-      "googlenews:\"Worldline\"",
-      "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\")"
-     ],
-     "alert_categories": [
-      "capital_markets",
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
-    {
      "id": 186579,
      "title": "Worldline annonce le succès de son offre de rachat sur ses obligations à échéance juin 2027",
      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNMHBheXRMV21zSFNRRmkzTEVJODZrM1RLeUc2WXVRb1RoMS1QNEJIN0FJUktRb0NVTTJDRS1jdTlpVzBwSVhnWkt2X09JYVVtSFlLbEJJVFB3NmJEUGtvbG1BSGVGZGJTNTJ1ck9Hbm53SFR6R2xvT01VVGJiZWdMVTVENENHX3BWRVJFSDlRREdFclhXcDIwYm5EdUF1UVo5aG5UTEZwSzE1bjRzMjRwWk5sWlV1OUFjNmdjNlJR",
@@ -9901,41 +9923,8 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 186395,
-     "title": "Worldline annonce le succès de l’offre de rachat sur ses obligations d’un montant de 500.000.000 euros portant intérêt au taux fixe de 0,875% arrivant à échéance en juin 2027",
-     "url": "https://news.google.com/rss/articles/CBMi7wJBVV95cUxOV3YtRVFGQ2FWVUJOdWdUVmJYWmVEelY4UzB1aXRiajlfd1U4QkhPYTJmMW5JU2pXSzRlZldxdU1pamtLVUdLZmY4RlZucmlQVFNGQWNIWWc3YW5RUnBrQ290dkNJMXZXZ1FfNFc5XzhhWTZTMmoyZFBtMG9qTTBqaEVNTjY3cjdvYnJ6bW1URUFDNEFNYm04ZWFUdUpETG1fYkF3Y2JlMVlmYUg4ZGRJX1ZLNXZUeFU2U3FPVWliNTlnMVcyOWx1T3RPMUNiTXhWVWplajVNUks2SkJlc3JoVlpNRVZKbWtULURSQzhUOTgxZDRzb2xhMHZ4Zk5PN2tKU3VjeWRlUEFpRERiZkpyNU9LTGxNVmdTRnF5UVNLeThhdzB3cjRucTc4STZKX3V4OXFVZ0RMTTV6RFhpM29vTzg1VDBKT0tJSjZwOFhTcnRDUjRZTVRDNjcyM3F2MGNhMHd4S2Jnd3VmeUFkaXpF",
-     "raw_link": "https://news.google.com/rss/articles/CBMi7wJBVV95cUxOV3YtRVFGQ2FWVUJOdWdUVmJYWmVEelY4UzB1aXRiajlfd1U4QkhPYTJmMW5JU2pXSzRlZldxdU1pamtLVUdLZmY4RlZucmlQVFNGQWNIWWc3YW5RUnBrQ290dkNJMXZXZ1FfNFc5XzhhWTZTMmoyZFBtMG9qTTBqaEVNTjY3cjdvYnJ6bW1URUFDNEFNYm04ZWFUdUpETG1fYkF3Y2JlMVlmYUg4ZGRJX1ZLNXZUeFU2U3FPVWliNTlnMVcyOWx1T3RPMUNiTXhWVWplajVNUks2SkJlc3JoVlpNRVZKbWtULURSQzhUOTgxZDRzb2xhMHZ4Zk5PN2tKU3VjeWRlUEFpRERiZkpyNU9LTGxNVmdTRnF5UVNLeThhdzB3cjRucTc4STZKX3V4OXFVZ0RMTTV6RFhpM29vTzg1VDBKT0tJSjZwOFhTcnRDUjRZTVRDNjcyM3F2MGNhMHd4S2Jnd3VmeUFkaXpF?oc=5",
-     "source": "Le Soleil",
-     "domain": "lesoleil.com",
-     "country": "FR",
-     "lang": "fr",
-     "published_at": "2026-11-10T10:05:13+00:00",
-     "first_seen_at": "2026-11-10T10:18:51+00:00",
-     "route": "googlenews",
-     "query": "\"Worldline\"",
-     "tier_hint": null,
-     "summary": "Worldline annonce le succès de l’offre de rachat sur ses obligations d’un montant de 500.000.000 euros portant intérêt au taux fixe de 0,875% arrivant à échéance en juin 2027 Le Soleil",
-     "alias": "Worldline",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Worldline\")",
-      "googlenews:\"Worldline\"",
-      "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\")"
-     ],
-     "alert_categories": [
-      "capital_markets",
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "capital_markets",
@@ -9951,7 +9940,7 @@
    "countries": [
     "FR"
    ],
-   "latest": "2026-11-10T10:05:13+00:00"
+   "latest": "2026-11-10T10:02:04+00:00"
   },
   {
    "name_id": "worldline",
@@ -10106,62 +10095,6 @@
     "GB"
    ],
    "latest": "2026-11-10T03:29:00+00:00"
-  },
-  {
-   "name_id": "worldline",
-   "name": "Worldline",
-   "cluster_id": 131649,
-   "primary": {
-    "id": 186388,
-    "title": "Worldline rachète 329,8 M€ d'obligations 2027, l'encours ramené à 138,4 M€",
-    "url": "https://ideal-investisseur.fr/actions-b/worldline-rachete-3298-m-dobligations-2027-lencours-ramene-a-1384-m/29064.html",
-    "raw_link": "https://www.ideal-investisseur.fr/actions-b/worldline-rachete-3298-m-dobligations-2027-lencours-ramene-a-1384-m/29064.html",
-    "source": "Idéal Investisseur",
-    "domain": "ideal-investisseur.fr",
-    "country": "FR",
-    "lang": "fr",
-    "published_at": "2026-11-09T13:16:00+00:00",
-    "first_seen_at": "2026-11-10T10:18:51+00:00",
-    "route": "bingnews",
-    "query": "\"Worldline\"",
-    "tier_hint": null,
-    "summary": "Worldline a annoncé le 10 novembre 2026 l'issue de l'offre de rachat portant sur ses obligations à 0,875 % arrivant à échéance en juin 2027. Sur les 468,2 M€ encore en circulation, l'encours de cette ...",
-    "alias": "Worldline",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"Worldline\"",
-     "googlenews:(\"Worldline\")",
-     "bingnews:\"Worldline\"",
-     "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"Worldline\")"
-    ],
-    "alert_categories": [
-     "capital_markets",
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "capital_markets",
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Worldline"
-   ],
-   "languages": [
-    "fr"
-   ],
-   "countries": [
-    "FR"
-   ],
-   "latest": "2026-11-09T13:16:00+00:00"
   }
  ]
 }
