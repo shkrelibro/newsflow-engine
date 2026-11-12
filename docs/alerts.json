@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T17:00:02+00:00",
+ "generated_at": "2026-11-12T17:15:02+00:00",
  "alerts": [
   {
    "name_id": "action",
@@ -535,7 +535,9 @@
     "alias": "Brenntag",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Brenntag\" OR \"Brico Dépôt\" OR \"British Sugar\" OR \"C&A\" OR \"CA Immo\" OR \"Campbell's\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -952,7 +954,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"NABM\")",
-     "googlenews:\"MediaMarkt\""
+     "googlenews:\"MediaMarkt\"",
+     "googlenews:\"Ceconomy\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -1668,7 +1671,8 @@
      "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
      "googlenews:\"Ceconomy\"",
      "googlenews:\"MediaMarkt\"",
-     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")",
+     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -2721,7 +2725,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 194174,
+     "title": "ZIM-Hapag-Lloyd cooperation comes under scrutiny in Brazil merger review",
+     "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQdlgxYU9DdzI4aVBzclZPQTJFN092VjNCWTVoa3FHbk96R2NaMEd5TlVzQ01BY2FqTGZlblY2Q2lzWGRxS244TzdZVW41bjNtZHJFMzZFemFNR0dOekgzSXBaaXdDaWRZR0xYaDJPNzdweFZqN3lhYmJXRXhUMFp6cFREUXhWd0NINlNoeGp2X0I5UncwYVVXaTg2WlE0TXRzYmlqeW10MHNHS1BIQjBGNTJ1V0ViQdIBWkFVX3lxTE40RFNjSDMxMk94eGpqRG1sSTMzSWlLUTNrdDNLM2FXT0JYaHdVcVhvNDBoWkVxMFhrNkc2TlVZMllaRlBNWFp4cllnU0hldUdyVDVVamdQTGtaZw",
+     "raw_link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQdlgxYU9DdzI4aVBzclZPQTJFN092VjNCWTVoa3FHbk96R2NaMEd5TlVzQ01BY2FqTGZlblY2Q2lzWGRxS244TzdZVW41bjNtZHJFMzZFemFNR0dOekgzSXBaaXdDaWRZR0xYaDJPNzdweFZqN3lhYmJXRXhUMFp6cFREUXhWd0NINlNoeGp2X0I5UncwYVVXaTg2WlE0TXRzYmlqeW10MHNHS1BIQjBGNTJ1V0ViQdIBWkFVX3lxTE40RFNjSDMxMk94eGpqRG1sSTMzSWlLUTNrdDNLM2FXT0JYaHdVcVhvNDBoWkVxMFhrNkc2TlVZMllaRlBNWFp4cllnU0hldUdyVDVVamdQTGtaZw?oc=5",
+     "source": "MLex",
+     "domain": "mlex.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-12T14:39:59+00:00",
+     "first_seen_at": "2026-11-12T17:05:04+00:00",
+     "route": "googlenews",
+     "query": "(\"Grifols\" OR \"Grünenthal\" OR \"Hapag-Lloyd\" OR \"HelloFresh\" OR \"Isabel Marant\" OR \"Merlin Entertainments\")",
+     "tier_hint": null,
+     "summary": "ZIM-Hapag-Lloyd cooperation comes under scrutiny in Brazil merger review MLex",
+     "alias": "Hapag-Lloyd",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -2735,9 +2767,10 @@
     "en"
    ],
    "countries": [
-    "GB"
+    "GB",
+    "US"
    ],
-   "latest": "2026-11-12T14:39:00+00:00"
+   "latest": "2026-11-12T14:39:59+00:00"
   },
   {
    "name_id": "hapag",
@@ -3492,34 +3525,6 @@
     "url_unresolved": false
    },
    "also": [
-    {
-     "id": 190686,
-     "title": "Lufthansa empfängt ersten Airbus A350-1000 in München",
-     "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPYmFiSDdoTWZkLXNwUWtVbWM5MnEtdnlfakZiS3VrcjNDak83V2VCbVh3UDBsWDlsSWFaZDQ3RTRSTWxFUmhjLUFQRTh2dnBBR3JUNkliLVFBQ0I3bnRBUFZ1cTRvbWY5RTdRVS1QNUthZmNveEVEcVg1ZFZ4Zk1vSmtn",
-     "raw_link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPYmFiSDdoTWZkLXNwUWtVbWM5MnEtdnlfakZiS3VrcjNDak83V2VCbVh3UDBsWDlsSWFaZDQ3RTRSTWxFUmhjLUFQRTh2dnBBR3JUNkliLVFBQ0I3bnRBUFZ1cTRvbWY5RTdRVS1QNUthZmNveEVEcVg1ZFZ4Zk1vSmtn?oc=5",
-     "source": "airliners.de",
-     "domain": "airliners.de",
-     "country": "DE",
-     "lang": "de",
-     "published_at": "2026-11-11T17:06:00+00:00",
-     "first_seen_at": "2026-11-11T17:13:37+00:00",
-     "route": "googlenews",
-     "query": "\"Lufthansa\"",
-     "tier_hint": null,
-     "summary": "Lufthansa empfängt ersten Airbus A350-1000 in München airliners.de",
-     "alias": "Lufthansa",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")",
-      "googlenews:\"Lufthansa\""
-     ],
-     "alert_categories": [],
-     "alert_candidate": false,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
     {
      "id": 193216,
      "title": "Lufthansa übernimmt ersten Airbus A350-1000 am Standort München",
@@ -4679,7 +4684,9 @@
     "alias": "Pfizer",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -5122,7 +5129,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
-     "googlenews:\"Recordati\""
+     "googlenews:\"Recordati\"",
+     "googlenews:\"Respighi BidCo\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -5799,6 +5807,57 @@
     "GB"
    ],
    "latest": "2026-11-12T09:24:31+00:00"
+  },
+  {
+   "name_id": "sodexo",
+   "name": "Sodexo",
+   "cluster_id": 137119,
+   "primary": {
+    "id": 194127,
+    "title": "Sodexo appoints Belinda Oakley as Global Chief Executive Officer of Sodexo Live!",
+    "url": "https://sodexo.com/news/newsroom/2026/Sodexo-Live-new-CEO",
+    "raw_link": "https://www.sodexo.com/news/newsroom/2026/Sodexo-Live-new-CEO",
+    "source": "Sodexo newsroom",
+    "domain": "sodexo.com",
+    "country": "FR",
+    "lang": "en",
+    "published_at": null,
+    "first_seen_at": "2026-11-12T17:05:04+00:00",
+    "route": "page",
+    "query": "https://www.sodexo.com/news/newsroom",
+    "tier_hint": 0,
+    "summary": "",
+    "alias": "Sodexo",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "page:https://www.sodexo.com/news/newsroom"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Sodexo"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "FR"
+   ],
+   "latest": "2026-11-12T17:05:04+00:00"
   },
   {
    "name_id": "sonic",
