@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-13T22:24:49+00:00",
+ "generated_at": "2026-11-13T22:39:50+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -620,7 +620,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
     ],
     "alert_categories": [
      "capital_markets"
@@ -987,7 +988,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Axactor\" OR \"Biogroup\" OR \"Ceconomy\" OR \"doValue\" OR \"Elior\" OR \"Europcar\")"
+      "googlenews:(\"Axactor\" OR \"Biogroup\" OR \"Ceconomy\" OR \"doValue\" OR \"Elior\" OR \"Europcar\")",
+      "googlenews:\"Ceconomy\""
      ],
      "alert_categories": [
       "m_and_a"
@@ -3412,7 +3414,9 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\" OR \"Maisons du Monde\" OR \"Maje\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -5398,57 +5402,6 @@
     "GB"
    ],
    "latest": "2026-11-13T11:14:00+00:00"
-  },
-  {
-   "name_id": "sector_container_freight",
-   "name": "Container freight (sector)",
-   "cluster_id": 137641,
-   "primary": {
-    "id": 194852,
-    "title": "Dry bulk ship recycling falls 36% to 18-year low",
-    "url": "https://hellenicshippingnews.com/dry-bulk-ship-recycling-falls-36-to-18-year-low",
-    "raw_link": "https://www.hellenicshippingnews.com/dry-bulk-ship-recycling-falls-36-to-18-year-low/",
-    "source": "Hellenic Shipping News Worldwide",
-    "domain": "hellenicshippingnews.com",
-    "country": "GR",
-    "lang": "en",
-    "published_at": "2026-11-12T22:00:57+00:00",
-    "first_seen_at": "2026-11-12T22:37:40+00:00",
-    "route": "rss",
-    "query": "https://www.hellenicshippingnews.com/feed/",
-    "tier_hint": 4,
-    "summary": "&#8220;Between January and October 2026, dry bulk ship recycling fell 36% y/y to 3m DWT, its lowest level in 18 years. Only 70 ships were recycled, primarily smaller ships in the handysize and supramax segments, as strong freight rates have extended the operational lives of older ships,” says Filipe Gouveia, Shipping Analysis Manager at BIMCO. ...",
-    "alias": "freight rates",
-    "alias_where": "summary",
-    "confidence": 0.56,
-    "also_routes": [
-     "rss:https://www.hellenicshippingnews.com/feed/"
-    ],
-    "alert_categories": [
-     "price_move"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "price_move"
-   ],
-   "max_confidence": 0.56,
-   "aliases": [
-    "freight rates"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GR"
-   ],
-   "latest": "2026-11-12T22:00:57+00:00"
   },
   {
    "name_id": "sector_jet_fuel",
