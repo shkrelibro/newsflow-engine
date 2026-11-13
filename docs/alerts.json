@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-13T06:56:07+00:00",
+ "generated_at": "2026-11-13T07:11:07+00:00",
  "alerts": [
   {
    "name_id": "action",
@@ -1156,7 +1156,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Arrow Global\" OR \"Axactor\" OR \"B2 Impact\" OR \"Ceconomy\" OR \"Cerba\" OR \"CMA CGM\")"
+      "googlenews:(\"Arrow Global\" OR \"Axactor\" OR \"B2 Impact\" OR \"Ceconomy\" OR \"Cerba\" OR \"CMA CGM\")",
+      "googlenews:\"Ceconomy\""
      ],
      "alert_categories": [
       "m_and_a"
@@ -1184,7 +1185,9 @@
      "alias": "Ceconomy",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Axactor\" OR \"Biogroup\" OR \"Ceconomy\" OR \"doValue\" OR \"Elior\" OR \"Europcar\")"
+     ],
      "alert_categories": [],
      "alert_candidate": false,
      "status": "candidate",
@@ -1210,6 +1213,55 @@
     "IT"
    ],
    "latest": "2026-11-13T06:43:31+00:00"
+  },
+  {
+   "name_id": "ceconomy",
+   "name": "Ceconomy",
+   "cluster_id": 138013,
+   "primary": {
+    "id": 195391,
+    "title": "JD.com acquisisce CECONOMY: cosa cambia per MediaWorld",
+    "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPN0hvQWZEakVNdVExNVhidFFMUHQ3UHlMbFMyYjR6MFVKZUhQSXpWQ0RodmZrVlc4YmpUSGo3VGVaazhJcDR4UkEwR2cxVV9BZ05Lcm9BWWtMbGNJdEgzOHpjemVrbmgxeWUzb2pyRUdFbVdOalhmMlRSS192VjFsUQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPN0hvQWZEakVNdVExNVhidFFMUHQ3UHlMbFMyYjR6MFVKZUhQSXpWQ0RodmZrVlc4YmpUSGo3VGVaazhJcDR4UkEwR2cxVV9BZ05Lcm9BWWtMbGNJdEgzOHpjemVrbmgxeWUzb2pyRUdFbVdOalhmMlRSS192VjFsUQ?oc=5",
+    "source": "ChinaSmartBuy",
+    "domain": "chinasmartbuy.com",
+    "country": "IT",
+    "lang": "it",
+    "published_at": "2026-11-13T06:31:30+00:00",
+    "first_seen_at": "2026-11-13T07:01:09+00:00",
+    "route": "googlenews",
+    "query": "\"Ceconomy\"",
+    "tier_hint": null,
+    "summary": "JD.com acquisisce CECONOMY: cosa cambia per MediaWorld ChinaSmartBuy",
+    "alias": "Ceconomy",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ceconomy"
+   ],
+   "languages": [
+    "it"
+   ],
+   "countries": [
+    "IT"
+   ],
+   "latest": "2026-11-13T06:31:30+00:00"
   },
   {
    "name_id": "ceconomy",
@@ -1854,7 +1906,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Ceconomy\""
+      "googlenews:\"Ceconomy\"",
+      "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"NABM\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -4166,57 +4219,6 @@
    "latest": "2026-11-12T08:44:25+00:00"
   },
   {
-   "name_id": "fnacdarty",
-   "name": "Fnac Darty",
-   "cluster_id": 135574,
-   "primary": {
-    "id": 191976,
-    "title": "Fnac Darty : OPA réussie de Daniel Kretinsky",
-    "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPRHVEaDJhSlEwUUhrRU05Tk9RYThSOE5aSUZYX0FKaGRzdGxQV0VFTjZxR3Qxc19XcjVoa2dPYVduY3d5WjlyU2xMcVpVWVVBVm5xZ3NNVk05TlMta2ZzcF9fSHFJNnU3WmlOQ0VtX0ViZnlHWkNwYVlxQmM2WjdrbXNydERIcG1KU0dxS1V3SEEwdw",
-    "raw_link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPRHVEaDJhSlEwUUhrRU05Tk9RYThSOE5aSUZYX0FKaGRzdGxQV0VFTjZxR3Qxc19XcjVoa2dPYVduY3d5WjlyU2xMcVpVWVVBVm5xZ3NNVk05TlMta2ZzcF9fSHFJNnU3WmlOQ0VtX0ViZnlHWkNwYVlxQmM2WjdrbXNydERIcG1KU0dxS1V3SEEwdw?oc=5",
-    "source": "Points de Vente",
-    "domain": "pointsdevente.fr",
-    "country": "FR",
-    "lang": "fr",
-    "published_at": "2026-11-12T06:54:38+00:00",
-    "first_seen_at": "2026-11-12T07:08:28+00:00",
-    "route": "googlenews",
-    "query": "(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")",
-    "tier_hint": null,
-    "summary": "Fnac Darty : OPA réussie de Daniel Kretinsky Points de Vente",
-    "alias": "Fnac Darty",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Fnac Darty"
-   ],
-   "languages": [
-    "fr"
-   ],
-   "countries": [
-    "FR"
-   ],
-   "latest": "2026-11-12T06:54:38+00:00"
-  },
-  {
    "name_id": "gifi",
    "name": "Gifi",
    "cluster_id": 137299,
@@ -4267,58 +4269,6 @@
     "FR"
    ],
    "latest": "2026-11-12T17:43:59+00:00"
-  },
-  {
-   "name_id": "gifi",
-   "name": "Gifi",
-   "cluster_id": 135573,
-   "primary": {
-    "id": 191975,
-    "title": "GiFi redressement judiciaire : cartes cadeaux, avoirs, commandes, que faire ?",
-    "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQQnpkRmxzMTQxYVdMQzV0V29aandqaUtlNTlFWlI0Z2QwSnRyN1pSdXRzMUw4bHZlUm1JdTVKOVh5MXFBMFczNUdVWnRZSy1jczRBMFdOZGRZWXNqMExLVy1oUGlCc0Q3TFhzTElqVGUzdVA5VUpoSGdOS0daMzF1S2RXV2dUZFI0Q3dwOWZZZmt6WW5MX0pjbTNjZ3c5Y3p1WnFKTWJRdlJDTldZdFlENUUtRzVpaHBwanNQUURzcGlvMDNrNU83VGs4bUxDRXd2VGl2TGpNUnZQbzJpaXJQOXh4V20",
-    "raw_link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQQnpkRmxzMTQxYVdMQzV0V29aandqaUtlNTlFWlI0Z2QwSnRyN1pSdXRzMUw4bHZlUm1JdTVKOVh5MXFBMFczNUdVWnRZSy1jczRBMFdOZGRZWXNqMExLVy1oUGlCc0Q3TFhzTElqVGUzdVA5VUpoSGdOS0daMzF1S2RXV2dUZFI0Q3dwOWZZZmt6WW5MX0pjbTNjZ3c5Y3p1WnFKTWJRdlJDTldZdFlENUUtRzVpaHBwanNQUURzcGlvMDNrNU83VGs4bUxDRXd2VGl2TGpNUnZQbzJpaXJQOXh4V20?oc=5",
-    "source": "La Provence",
-    "domain": "laprovence.com",
-    "country": "FR",
-    "lang": "fr",
-    "published_at": "2026-11-12T06:59:48+00:00",
-    "first_seen_at": "2026-11-12T07:08:28+00:00",
-    "route": "googlenews",
-    "query": "(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")",
-    "tier_hint": null,
-    "summary": "GiFi redressement judiciaire : cartes cadeaux, avoirs, commandes, que faire ? La Provence",
-    "alias": "Gifi",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"Gifi\"",
-     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
-    ],
-    "alert_categories": [
-     "restructuring"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "restructuring"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Gifi"
-   ],
-   "languages": [
-    "fr"
-   ],
-   "countries": [
-    "FR"
-   ],
-   "latest": "2026-11-12T06:59:48+00:00"
   },
   {
    "name_id": "gsk",
@@ -5932,57 +5882,6 @@
   {
    "name_id": "metlen",
    "name": "Metlen Energy & Metals",
-   "cluster_id": 136024,
-   "primary": {
-    "id": 192617,
-    "title": "BofA για ΜΕΤΚΑ: «Ανάδειξη αξίας» και αποτίμηση έως 2,06 δισ. ευρώ από την εισαγωγή στο Χρηματιστήριο",
-    "url": "https://mononews.gr/agores/bofa-gia-metka-anadeixi-axias-kai-apotimisi-eos-206-dis-evro-apo-tin-eisagogi-sto-chrimatistirio",
-    "raw_link": "https://www.mononews.gr/agores/bofa-gia-metka-anadeixi-axias-kai-apotimisi-eos-206-dis-evro-apo-tin-eisagogi-sto-chrimatistirio",
-    "source": "Αποκαλυπτικό ρεπορτάζ, αρθρογραφία και άμεση ενημέρωση, με όλα τα τελευταία νέα και ειδήσεις για την Οικονομία, τις Επιχειρήσεις, το Χρηματιστήριο, το Bitcoin, τις πολιτικές εξελίξεις και τον πολιτισμό",
-    "domain": "mononews.gr",
-    "country": "GR",
-    "lang": "el",
-    "published_at": "2026-11-12T10:21:09+00:00",
-    "first_seen_at": "2026-11-12T10:23:29+00:00",
-    "route": "rss",
-    "query": "https://www.mononews.gr/rss",
-    "tier_hint": 3,
-    "summary": "Τι θα σημαίνει για τη METLEN η εισαγωγή της ΜΕΤΚΑ στο ΧΑ - Σύσταση Αγορά και τιμή-στόχος στα 54 ευρώ/μετοχή",
-    "alias": "Metlen",
-    "alias_where": "summary",
-    "confidence": 0.7,
-    "also_routes": [
-     "rss:https://www.mononews.gr/rss"
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 0.7,
-   "aliases": [
-    "Metlen"
-   ],
-   "languages": [
-    "el"
-   ],
-   "countries": [
-    "GR"
-   ],
-   "latest": "2026-11-12T10:21:09+00:00"
-  },
-  {
-   "name_id": "metlen",
-   "name": "Metlen Energy & Metals",
    "cluster_id": 135972,
    "primary": {
     "id": 192546,
@@ -6046,9 +5945,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 195382,
+     "title": "BofA: «Ανάδειξη αξίας» για Metlen η εισαγωγή της ΜΕΤΚΑ στο ΧΑ",
+     "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOZUxIdXQyU01EVlUtWVNvdGx4SnhMUFBzV2xMd0FzdG1xd0tBMm45Mk4zQ19pM0I2MUFNd2djNEc4R1dnVEtQTlZFaGFpQzNrWk95VFQ2WmQ1YVR5QktyNm1vXzM2MVM5bzdlQUZqVTFSLTJrZHFVZVJHYUdJLUpfYTVkWWdWTS1BQUhDY2pJTEI2NVM1NHk5bFlDWWNaMjJUbWR3",
+     "raw_link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOZUxIdXQyU01EVlUtWVNvdGx4SnhMUFBzV2xMd0FzdG1xd0tBMm45Mk4zQ19pM0I2MUFNd2djNEc4R1dnVEtQTlZFaGFpQzNrWk95VFQ2WmQ1YVR5QktyNm1vXzM2MVM5bzdlQUZqVTFSLTJrZHFVZVJHYUdJLUpfYTVkWWdWTS1BQUhDY2pJTEI2NVM1NHk5bFlDWWNaMjJUbWR3?oc=5",
+     "source": "www.stockwatch.com.cy",
+     "domain": "stockwatch.com.cy",
+     "country": "GR",
+     "lang": "el",
+     "published_at": "2026-11-12T12:13:00+00:00",
+     "first_seen_at": "2026-11-13T07:01:09+00:00",
+     "route": "googlenews",
+     "query": "\"Metlen\"",
+     "tier_hint": null,
+     "summary": "BofA: «Ανάδειξη αξίας» για Metlen η εισαγωγή της ΜΕΤΚΑ στο ΧΑ www.stockwatch.com.cy",
+     "alias": "Metlen",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "litigation"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 1,
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "litigation"
@@ -6063,7 +5989,58 @@
    "countries": [
     "GR"
    ],
-   "latest": "2026-11-12T09:46:27+00:00"
+   "latest": "2026-11-12T12:13:00+00:00"
+  },
+  {
+   "name_id": "metlen",
+   "name": "Metlen Energy & Metals",
+   "cluster_id": 136024,
+   "primary": {
+    "id": 192617,
+    "title": "BofA για ΜΕΤΚΑ: «Ανάδειξη αξίας» και αποτίμηση έως 2,06 δισ. ευρώ από την εισαγωγή στο Χρηματιστήριο",
+    "url": "https://mononews.gr/agores/bofa-gia-metka-anadeixi-axias-kai-apotimisi-eos-206-dis-evro-apo-tin-eisagogi-sto-chrimatistirio",
+    "raw_link": "https://www.mononews.gr/agores/bofa-gia-metka-anadeixi-axias-kai-apotimisi-eos-206-dis-evro-apo-tin-eisagogi-sto-chrimatistirio",
+    "source": "Αποκαλυπτικό ρεπορτάζ, αρθρογραφία και άμεση ενημέρωση, με όλα τα τελευταία νέα και ειδήσεις για την Οικονομία, τις Επιχειρήσεις, το Χρηματιστήριο, το Bitcoin, τις πολιτικές εξελίξεις και τον πολιτισμό",
+    "domain": "mononews.gr",
+    "country": "GR",
+    "lang": "el",
+    "published_at": "2026-11-12T10:21:09+00:00",
+    "first_seen_at": "2026-11-12T10:23:29+00:00",
+    "route": "rss",
+    "query": "https://www.mononews.gr/rss",
+    "tier_hint": 3,
+    "summary": "Τι θα σημαίνει για τη METLEN η εισαγωγή της ΜΕΤΚΑ στο ΧΑ - Σύσταση Αγορά και τιμή-στόχος στα 54 ευρώ/μετοχή",
+    "alias": "Metlen",
+    "alias_where": "summary",
+    "confidence": 0.7,
+    "also_routes": [
+     "rss:https://www.mononews.gr/rss"
+    ],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 0.7,
+   "aliases": [
+    "Metlen"
+   ],
+   "languages": [
+    "el"
+   ],
+   "countries": [
+    "GR"
+   ],
+   "latest": "2026-11-12T10:21:09+00:00"
   },
   {
    "name_id": "metlen",
@@ -6456,6 +6433,104 @@
     "GR"
    ],
    "latest": "2026-11-12T08:20:00+00:00"
+  },
+  {
+   "name_id": "mutares",
+   "name": "Mutares",
+   "cluster_id": 138030,
+   "primary": {
+    "id": 195409,
+    "title": "Mutares seeks early refinancing of the outstanding Bond 2023/2027 by increasing the Bond 2024/2029 by up to EUR 165 million",
+    "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPYTRYVHR5YUNKSjNrR1c0TGR5SUlibEc4eGJHblJPbW5tRVdPS2JZNERfdkczSnFxOVhuNzM3WHN6Nl85M1ZoMmFfQV93U2NHcm1ZdXF1bml5TzhSeUs5cm5Gc0xfR1JkWWVjcXBnM2VfU2lUZVQ3RF94TlVidkhhbDRoV2Y2WEF5bWhxcHpLUVAzbWUybDYwc3hBcmRhU2J1RXZPZEYxSGZCYWwtX04yamVFTFRuTndMMW5ZejNwRmhDRDJBZ3VWQnppdmQzeExGUnNOTUE5SmRESmphWVBJS3hCaVdPcG1j",
+    "raw_link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPYTRYVHR5YUNKSjNrR1c0TGR5SUlibEc4eGJHblJPbW5tRVdPS2JZNERfdkczSnFxOVhuNzM3WHN6Nl85M1ZoMmFfQV93U2NHcm1ZdXF1bml5TzhSeUs5cm5Gc0xfR1JkWWVjcXBnM2VfU2lUZVQ3RF94TlVidkhhbDRoV2Y2WEF5bWhxcHpLUVAzbWUybDYwc3hBcmRhU2J1RXZPZEYxSGZCYWwtX04yamVFTFRuTndMMW5ZejNwRmhDRDJBZ3VWQnppdmQzeExGUnNOTUE5SmRESmphWVBJS3hCaVdPcG1j?oc=5",
+    "source": "www.marketscreener.com",
+    "domain": "marketscreener.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-13T06:31:03+00:00",
+    "first_seen_at": "2026-11-13T07:01:09+00:00",
+    "route": "googlenews",
+    "query": "(\"Motor Fuel Group\" OR \"Medical Properties Trust\" OR \"Mutares\" OR \"Paragon Customer Communications\" OR \"PizzaExpress\" OR \"PRA Group\")",
+    "tier_hint": null,
+    "summary": "Mutares seeks early refinancing of the outstanding Bond 2023/2027 by increasing the Bond 2024/2029 by up to EUR 165 million www.marketscreener.com",
+    "alias": "Mutares",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Mutares"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-13T06:31:03+00:00"
+  },
+  {
+   "name_id": "mutares",
+   "name": "Mutares",
+   "cluster_id": 138001,
+   "primary": {
+    "id": 195377,
+    "title": "EQS-News: Mutares strebt die vorzeitige Refinanzierung der ausstehenden Anleihe 2023/2027 durch eine Aufstockung der Anleihe 2024/2029 um bis zu EUR 165 Mio. an - boerse.de",
+    "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxOMXI4MkpGM2pZSWE3Vmh2SUUzeWhPazZ1QURhWmlHSHpqVnJKTjk3OGVLT1EtbHpQWW45bGZIZlZaUkdwS2FjNWcyQ2VWckJJV3NUVWFSQmlpRWtLdDU4b2g5UmVWNjM1Q2ExZGRNbWUtMmlJUmZEdnZLZ0ZVbXo1cmFiZUhHLWEwSG5hb0VYY2tfQnplaTl4bDRjLWhaVEJnekFXQUtNWWlaaDJfaFozYUhVeFZXX0Vzb0tfMFpGbHZGQUw3d3djc1ZmZ1ZJa3ZhcWlsUWc1Q1hmd3dseXFPeklCcHdndjlOLTA5aEtCQ0pkNFNScEJqTDA4Z3RFSVc5SE9RQndNLW95RW1XR0pTd3YzRS0yMF9iVm1JT1QyeXBXckV2UUJVWtIBrgJBVV95cUxPWHdhcjh6OWdRNGZwb1ZkVGladzhXQjhjM2RqM21NaDVlTmRTYmlwSmlha2VMTlJzdnFQQ2s2djhLTHhOSXJic01xS1QybER3cVNSMnFoS1RicXZMZGJuUE84eFNWbVU5c2JCUFRDU0M5amlZYmFvcjVmRS03WlVYOFRFT1gyNWRORU5CLXdsbDg5dUdRRnZyNjJ5SVliaTQ5S2l3YWpYVHZDTTRYMm5yRWJadlRMRjhCLUFVNlNSaFp4M3hPMjFUZEp1Ty1QYV9PcjBkVjJIY1BScFBDN3lZLWlhTEZQZjh2bnVPb0N1WjZCU0JrNlg2eTUwRTJVeHpZaXFDYlN5XzIyd0F5UlVYdEx0WlMxQm1PdHBUY2RTYnRhS3FuaFJsR3NheGtidw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxOMXI4MkpGM2pZSWE3Vmh2SUUzeWhPazZ1QURhWmlHSHpqVnJKTjk3OGVLT1EtbHpQWW45bGZIZlZaUkdwS2FjNWcyQ2VWckJJV3NUVWFSQmlpRWtLdDU4b2g5UmVWNjM1Q2ExZGRNbWUtMmlJUmZEdnZLZ0ZVbXo1cmFiZUhHLWEwSG5hb0VYY2tfQnplaTl4bDRjLWhaVEJnekFXQUtNWWlaaDJfaFozYUhVeFZXX0Vzb0tfMFpGbHZGQUw3d3djc1ZmZ1ZJa3ZhcWlsUWc1Q1hmd3dseXFPeklCcHdndjlOLTA5aEtCQ0pkNFNScEJqTDA4Z3RFSVc5SE9RQndNLW95RW1XR0pTd3YzRS0yMF9iVm1JT1QyeXBXckV2UUJVWtIBrgJBVV95cUxPWHdhcjh6OWdRNGZwb1ZkVGladzhXQjhjM2RqM21NaDVlTmRTYmlwSmlha2VMTlJzdnFQQ2s2djhLTHhOSXJic01xS1QybER3cVNSMnFoS1RicXZMZGJuUE84eFNWbVU5c2JCUFRDU0M5amlZYmFvcjVmRS03WlVYOFRFT1gyNWRORU5CLXdsbDg5dUdRRnZyNjJ5SVliaTQ5S2l3YWpYVHZDTTRYMm5yRWJadlRMRjhCLUFVNlNSaFp4M3hPMjFUZEp1Ty1QYV9PcjBkVjJIY1BScFBDN3lZLWlhTEZQZjh2bnVPb0N1WjZCU0JrNlg2eTUwRTJVeHpZaXFDYlN5XzIyd0F5UlVYdEx0WlMxQm1PdHBUY2RTYnRhS3FuaFJsR3NheGtidw?oc=5",
+    "source": "boerse.de",
+    "domain": "boerse.de",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-11-13T06:30:00+00:00",
+    "first_seen_at": "2026-11-13T07:01:09+00:00",
+    "route": "googlenews",
+    "query": "\"Mutares\"",
+    "tier_hint": null,
+    "summary": "EQS-News: Mutares strebt die vorzeitige Refinanzierung der ausstehenden Anleihe 2023/2027 durch eine Aufstockung der Anleihe 2024/2029 um bis zu EUR 165 Mio. an - boerse.de boerse.de",
+    "alias": "Mutares",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Mutares"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-13T06:30:00+00:00"
   },
   {
    "name_id": "mutares",
@@ -8050,58 +8125,6 @@
    "latest": "2026-11-12T17:18:51+00:00"
   },
   {
-   "name_id": "sonic",
-   "name": "Sonic Healthcare",
-   "cluster_id": 135566,
-   "primary": {
-    "id": 191965,
-    "title": "What Sonic Healthcare's (ASX:SHL) Cautious FY27 Outlook Means After a Year of Acquisition-Led Growth",
-    "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPX2xmWDdNOGdKLS1pVWhSY256ZU9rS1M0d2VwQjBfXzZmRGhYcDB4NmU1Wmd1OVYxd1RJYjF2cF9USlBiTXl4dlVIYW9NUHhwVXBMWDZ4RkpSS0hOdS1pbVFOQ2tVemhGa3FXcUJMVUtCS292Q0djN0xTNHJ4Z3NOQzhuQlhPMTNGREdQTHlzVUtoWmVWM0JJbndFdTFPY0x6SWs4WGs5SF9ZSlNwWGdvT1AzRHFJeUNWRFE4ekR3SHRrUlNHRThDSWkxemZzVTd2SUVmMVZ2b0hicThfUVE",
-    "raw_link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPX2xmWDdNOGdKLS1pVWhSY256ZU9rS1M0d2VwQjBfXzZmRGhYcDB4NmU1Wmd1OVYxd1RJYjF2cF9USlBiTXl4dlVIYW9NUHhwVXBMWDZ4RkpSS0hOdS1pbVFOQ2tVemhGa3FXcUJMVUtCS292Q0djN0xTNHJ4Z3NOQzhuQlhPMTNGREdQTHlzVUtoWmVWM0JJbndFdTFPY0x6SWs4WGs5SF9ZSlNwWGdvT1AzRHFJeUNWRFE4ekR3SHRrUlNHRThDSWkxemZzVTd2SUVmMVZ2b0hicThfUVE?oc=5",
-    "source": "Kalkine",
-    "domain": "kalkine.com.au",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-12T06:43:00+00:00",
-    "first_seen_at": "2026-11-12T07:08:28+00:00",
-    "route": "googlenews",
-    "query": "\"Sonic Healthcare\"",
-    "tier_hint": null,
-    "summary": "What Sonic Healthcare's (ASX:SHL) Cautious FY27 Outlook Means After a Year of Acquisition-Led Growth Kalkine",
-    "alias": "Sonic Healthcare",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Sixt\" OR \"Sodexo\" OR \"Sonic Healthcare\" OR \"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\")",
-     "googlenews:\"Sonic Healthcare\""
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Sonic Healthcare"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-12T06:43:00+00:00"
-  },
-  {
    "name_id": "tagimmobilien",
    "name": "TAG Immobilien",
    "cluster_id": 136665,
@@ -8452,58 +8475,6 @@
     "GB"
    ],
    "latest": "2026-11-12T03:52:28+00:00"
-  },
-  {
-   "name_id": "tuigroup",
-   "name": "TUI Group",
-   "cluster_id": 135555,
-   "primary": {
-    "id": 191954,
-    "title": "TUI Expands UK-Goa Flights, Adds Sunday Service From Gatwick and Upgrades Manchester Aircraft",
-    "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPUVVKWjF0S3l2Nk93Q0o2dWdpbGNKdXV0ZFZPMm5qcHZfSzl5SVF5MS1ReXZBZHlGX3BESUJBN1N3Y0g3REcwbGhtcWtGRVhtc2Q1NWNiTVZTQXNtb1VFT0I4S1Q0bW9sdVh5S2h0MzdRSnNTZDBoM25JZHRfQWZWdG1qLUFwRk9XYy1tZlZxTW1yRm1EdnBzNEJxT3M0aFM3akdwUlF4bmlNamt6MGhCQVNmTWFfbVAyaVJQUDIyN0FSTFpwRVhkbQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPUVVKWjF0S3l2Nk93Q0o2dWdpbGNKdXV0ZFZPMm5qcHZfSzl5SVF5MS1ReXZBZHlGX3BESUJBN1N3Y0g3REcwbGhtcWtGRVhtc2Q1NWNiTVZTQXNtb1VFT0I4S1Q0bW9sdVh5S2h0MzdRSnNTZDBoM25JZHRfQWZWdG1qLUFwRk9XYy1tZlZxTW1yRm1EdnBzNEJxT3M0aFM3akdwUlF4bmlNamt6MGhCQVNmTWFfbVAyaVJQUDIyN0FSTFpwRVhkbQ?oc=5",
-    "source": "Oherald",
-    "domain": "heraldgoa.in",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-12T06:48:55+00:00",
-    "first_seen_at": "2026-11-12T07:08:28+00:00",
-    "route": "googlenews",
-    "query": "\"TUI\"",
-    "tier_hint": null,
-    "summary": "TUI Expands UK-Goa Flights, Adds Sunday Service From Gatwick and Upgrades Manchester Aircraft Oherald",
-    "alias": "TUI",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Magnum Ice Cream Company\" OR \"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\")",
-     "googlenews:\"TUI\""
-    ],
-    "alert_categories": [
-     "rating"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "rating"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "TUI"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-12T06:48:55+00:00"
   },
   {
    "name_id": "unilever",
