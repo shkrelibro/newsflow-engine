@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-14T10:43:28+00:00",
+ "generated_at": "2026-11-14T10:58:28+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -662,7 +662,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+     "googlenews:\"Booking\""
     ],
     "alert_categories": [
      "capital_markets"
@@ -744,7 +745,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Carnival\" OR \"Castellum\" OR \"Centrakor\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"Chuanning Biotech\")"
+      "googlenews:(\"Carnival\" OR \"Castellum\" OR \"Centrakor\" OR \"Channel 21\" OR \"CHRIST (jeweller)\" OR \"Chuanning Biotech\")",
+      "googlenews:(\"Aramark\" OR \"Birkenstock\" OR \"Blue Apron\" OR \"Campbell's\" OR \"Carnival\" OR \"Circle K\")"
      ],
      "alert_categories": [
       "rating"
@@ -1122,7 +1124,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
-     "googlenews:\"Ceconomy\""
+     "googlenews:\"Ceconomy\"",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -1962,7 +1965,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Gifi\""
+     "googlenews:\"Gifi\"",
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
     ],
     "alert_categories": [
      "restructuring"
@@ -3640,57 +3644,6 @@
    "latest": "2026-11-13T11:00:47+00:00"
   },
   {
-   "name_id": "sbb",
-   "name": "SBB (Samhällsbyggnadsbolaget)",
-   "cluster_id": 138349,
-   "primary": {
-    "id": 195842,
-    "title": "Finansinspektionen tilldelar Batljan-bolag sanktionsavgift på 10 miljoner",
-    "url": "https://placera.se/nyheter/finansinspektionen-tilldelar-batljan-bolag-sanktionsavgift-pa-10-miljoner-2026-11-13",
-    "raw_link": "https://www.placera.se/nyheter/finansinspektionen-tilldelar-batljan-bolag-sanktionsavgift-pa-10-miljoner-2026-11-13",
-    "source": "Placera.se",
-    "domain": "placera.se",
-    "country": "SE",
-    "lang": "sv",
-    "published_at": "2026-11-13T10:44:58+00:00",
-    "first_seen_at": "2026-11-13T10:46:09+00:00",
-    "route": "rss",
-    "query": "https://www.placera.se/artiklar/rss.xml",
-    "tier_hint": 3,
-    "summary": "Det framgår av ett beslut från myndigheten. Health Runner fungerar som Ilija Batljans privata investment- och holdingbolag, där han bland annat har ägt en stor del av Ilija Batljan Invest AB.",
-    "alias": "Ilija Batljan",
-    "alias_where": "summary",
-    "confidence": 0.42,
-    "also_routes": [
-     "rss:https://www.placera.se/artiklar/rss.xml"
-    ],
-    "alert_categories": [
-     "regulatory"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "regulatory"
-   ],
-   "max_confidence": 0.42,
-   "aliases": [
-    "Ilija Batljan"
-   ],
-   "languages": [
-    "sv"
-   ],
-   "countries": [
-    "SE"
-   ],
-   "latest": "2026-11-13T10:44:58+00:00"
-  },
-  {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
    "cluster_id": 139667,
@@ -3767,7 +3720,9 @@
      "alias": "Strait of Hormuz",
      "alias_where": "title",
      "confidence": 0.7,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Strait of Hormuz\""
+     ],
      "alert_categories": [
       "workforce"
      ],
@@ -3794,7 +3749,9 @@
      "alias": "Strait of Hormuz",
      "alias_where": "title",
      "confidence": 0.7,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Strait of Hormuz\""
+     ],
      "alert_categories": [
       "workforce"
      ],
