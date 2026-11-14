@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-14T07:43:27+00:00",
+ "generated_at": "2026-11-14T07:58:27+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -760,7 +760,9 @@
     "alias": "Ceconomy",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Ceconomy\" OR \"Centrient\" OR \"Cerba\" OR \"Cheplapharm\" OR \"CMA CGM\" OR \"NABM\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3186,7 +3188,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -4054,6 +4057,55 @@
     "SE"
    ],
    "latest": "2026-11-13T09:59:06+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
+   "cluster_id": 133456,
+   "primary": {
+    "id": 197723,
+    "title": "Iranian Army says oil tanker strikes sea mine in Strait of Hormuz",
+    "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5qVmxDM1ZYdDlNUUxNV3pOd0tJcDU3b0ZKRE1ySERfNEw1ZDdjNXRoR2JwUmJBVnIyMjByUi1sWGpYenNDSWdlSWJpT3ZSdUE",
+    "raw_link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5qVmxDM1ZYdDlNUUxNV3pOd0tJcDU3b0ZKRE1ySERfNEw1ZDdjNXRoR2JwUmJBVnIyMjByUi1sWGpYenNDSWdlSWJpT3ZSdUE?oc=5",
+    "source": "Trend News Agency",
+    "domain": "trend.az",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-14T06:17:00+00:00",
+    "first_seen_at": "2026-11-14T07:48:29+00:00",
+    "route": "googlenews",
+    "query": "\"Strait of Hormuz\"",
+    "tier_hint": null,
+    "summary": "Iranian Army says oil tanker strikes sea mine in Strait of Hormuz Trend News Agency",
+    "alias": "Strait of Hormuz",
+    "alias_where": "title",
+    "confidence": 0.7,
+    "also_routes": [],
+    "alert_categories": [
+     "workforce"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "workforce"
+   ],
+   "max_confidence": 0.7,
+   "aliases": [
+    "Strait of Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-14T06:17:00+00:00"
   },
   {
    "name_id": "sector_container_freight",
