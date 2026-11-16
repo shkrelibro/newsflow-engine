@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T18:05:09+00:00",
+ "generated_at": "2026-11-16T18:20:08+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -2394,7 +2394,10 @@
     "alias": "doValue",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"doValue\"",
+     "googlenews:(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")"
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -2497,7 +2500,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"doValue\""
+     "googlenews:\"doValue\"",
+     "googlenews:(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")"
     ],
     "alert_categories": [
      "capital_markets"
@@ -2547,7 +2551,9 @@
     "alias": "doValue",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"doValue\""
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3089,7 +3095,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")"
+     "googlenews:(\"Grünenthal\" OR \"Hapag-Lloyd\" OR \"Heimstaden\" OR \"HelloFresh\" OR \"House of HR\" OR \"Home Shopping Europe\")",
+     "googlenews:\"Hapag-Lloyd\""
     ],
     "alert_categories": [
      "management"
@@ -5631,7 +5638,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Vonovia\" OR \"WMF\" OR \"Zooplus\")"
+     "googlenews:(\"Vonovia\" OR \"WMF\" OR \"Zooplus\")",
+     "googlenews:\"Vonovia\""
     ],
     "alert_categories": [
      "restructuring"
