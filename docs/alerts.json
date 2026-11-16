@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T19:05:09+00:00",
+ "generated_at": "2026-11-16T19:20:09+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -2345,7 +2345,10 @@
     "alias": "doValue",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"doValue\"",
+     "googlenews:(\"doValue\" OR \"Elior\" OR \"Europcar\" OR \"Evoca\" OR \"Design Holding\" OR \"Froneri\")"
+    ],
     "alert_categories": [
      "capital_markets"
     ],
@@ -3491,57 +3494,6 @@
    "latest": "2026-11-16T05:19:02+00:00"
   },
   {
-   "name_id": "iss",
-   "name": "ISS A/S",
-   "cluster_id": 141142,
-   "primary": {
-    "id": 199584,
-    "title": "Iran claims fresh strike on U.S. base as Hormuz shipping crisis deepens",
-    "url": "https://hellenicshippingnews.com/iran-claims-fresh-strike-on-u-s-base-as-hormuz-shipping-crisis-deepens",
-    "raw_link": "https://www.hellenicshippingnews.com/iran-claims-fresh-strike-on-u-s-base-as-hormuz-shipping-crisis-deepens/",
-    "source": "Hellenic Shipping News Worldwide",
-    "domain": "hellenicshippingnews.com",
-    "country": "GR",
-    "lang": "en",
-    "published_at": "2026-11-15T18:00:02+00:00",
-    "first_seen_at": "2026-11-15T19:13:42+00:00",
-    "route": "rss",
-    "query": "https://www.hellenicshippingnews.com/feed/",
-    "tier_hint": 4,
-    "summary": "Iran claimed a fresh drone strike against a U.S. military facility in Bahrain on Sunday, as mine incidents in the Strait of Hormuz and Houthi attacks on Saudi Arabia heightened regional tensions. Iran’s Islamic Revolutionary Guard Corps said six drones targeted an air-defense radar at Bahrain’s Riffa Air Base. Bahrain issued repeated security alerts, but ...",
-    "alias": "ISS",
-    "alias_where": "summary",
-    "confidence": 0.7,
-    "also_routes": [
-     "rss:https://www.hellenicshippingnews.com/feed/"
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 0.7,
-   "aliases": [
-    "ISS"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GR"
-   ],
-   "latest": "2026-11-15T18:00:02+00:00"
-  },
-  {
    "name_id": "leg",
    "name": "LEG Immobilien",
    "cluster_id": 142514,
@@ -4632,6 +4584,83 @@
   {
    "name_id": "ryanair",
    "name": "Ryanair",
+   "cluster_id": 143118,
+   "primary": {
+    "id": 202114,
+    "title": "Ryanair ownership structure claim is an anticompetitive attack, Michael O’Leary tells court",
+    "url": "https://irishtimes.com/crime-law/courts/2026/11/16/ryanair-ownership-structure-claim-is-an-anticompetitive-attack-michael-oleary-tells-court",
+    "raw_link": "https://www.irishtimes.com/crime-law/courts/2026/11/16/ryanair-ownership-structure-claim-is-an-anticompetitive-attack-michael-oleary-tells-court/",
+    "source": "Irish Times Feeds",
+    "domain": "irishtimes.com",
+    "country": "IE",
+    "lang": "en",
+    "published_at": "2026-11-16T19:00:58+00:00",
+    "first_seen_at": "2026-11-16T19:10:11+00:00",
+    "route": "rss",
+    "query": "https://www.irishtimes.com/arc/outboundfeeds/rss/",
+    "tier_hint": 3,
+    "summary": "A trade association has claimed in the High Court that the airline does not comply with EU ownership rules",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "litigation"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [
+    {
+     "id": 202119,
+     "title": "Ryanair ownership structure claim is an anticompetitive attack, Michael O’Leary tells court",
+     "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNbkp4bW5NYjU2Mm5uaXNVTmx2ZF9MWm5ad2JiUDd4a1JKOFQ3WHpoVFhMWVMtMHZCTENPellHc3Fnel9xZVVZdVFweDJGa01TNmNILS1wdUl6SXBTQ1NoX0tJUzFMbWlwUGhtYUI2VnZlaHJpRm9wb1AwdlJSZ2NaTDBqUmxHWEdsNDdSOVhCZ0xfcUFCRTBPTEluZXdIWi1FSVJlZTNDdzd1QjRYbjd5NUhYMjZJdXdMTG9WYXFnY0RCYXNNcjZpRVBCOTFuTExoZDlUbnY3cHVXLWpkSFE",
+     "raw_link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNbkp4bW5NYjU2Mm5uaXNVTmx2ZF9MWm5ad2JiUDd4a1JKOFQ3WHpoVFhMWVMtMHZCTENPellHc3Fnel9xZVVZdVFweDJGa01TNmNILS1wdUl6SXBTQ1NoX0tJUzFMbWlwUGhtYUI2VnZlaHJpRm9wb1AwdlJSZ2NaTDBqUmxHWEdsNDdSOVhCZ0xfcUFCRTBPTEluZXdIWi1FSVJlZTNDdzd1QjRYbjd5NUhYMjZJdXdMTG9WYXFnY0RCYXNNcjZpRVBCOTFuTExoZDlUbnY3cHVXLWpkSFE?oc=5",
+     "source": "The Irish Times",
+     "domain": "irishtimes.com",
+     "country": "IE",
+     "lang": "en",
+     "published_at": "2026-11-16T19:01:25+00:00",
+     "first_seen_at": "2026-11-16T19:10:11+00:00",
+     "route": "googlenews",
+     "query": "\"Ryanair\"",
+     "tier_hint": null,
+     "summary": "Ryanair ownership structure claim is an anticompetitive attack, Michael O’Leary tells court The Irish Times",
+     "alias": "Ryanair",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "litigation"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "litigation"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "IE"
+   ],
+   "latest": "2026-11-16T19:01:25+00:00"
+  },
+  {
+   "name_id": "ryanair",
+   "name": "Ryanair",
    "cluster_id": 141323,
    "primary": {
     "id": 199811,
@@ -5053,57 +5082,6 @@
     "GB"
    ],
    "latest": "2026-11-16T05:14:33+00:00"
-  },
-  {
-   "name_id": "sector_container_freight",
-   "name": "Container freight (sector)",
-   "cluster_id": 141142,
-   "primary": {
-    "id": 199584,
-    "title": "Iran claims fresh strike on U.S. base as Hormuz shipping crisis deepens",
-    "url": "https://hellenicshippingnews.com/iran-claims-fresh-strike-on-u-s-base-as-hormuz-shipping-crisis-deepens",
-    "raw_link": "https://www.hellenicshippingnews.com/iran-claims-fresh-strike-on-u-s-base-as-hormuz-shipping-crisis-deepens/",
-    "source": "Hellenic Shipping News Worldwide",
-    "domain": "hellenicshippingnews.com",
-    "country": "GR",
-    "lang": "en",
-    "published_at": "2026-11-15T18:00:02+00:00",
-    "first_seen_at": "2026-11-15T19:13:42+00:00",
-    "route": "rss",
-    "query": "https://www.hellenicshippingnews.com/feed/",
-    "tier_hint": 4,
-    "summary": "Iran claimed a fresh drone strike against a U.S. military facility in Bahrain on Sunday, as mine incidents in the Strait of Hormuz and Houthi attacks on Saudi Arabia heightened regional tensions. Iran’s Islamic Revolutionary Guard Corps said six drones targeted an air-defense radar at Bahrain’s Riffa Air Base. Bahrain issued repeated security alerts, but ...",
-    "alias": "Hormuz",
-    "alias_where": "title",
-    "confidence": 0.6,
-    "also_routes": [
-     "rss:https://www.hellenicshippingnews.com/feed/"
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 0.6,
-   "aliases": [
-    "Hormuz"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GR"
-   ],
-   "latest": "2026-11-15T18:00:02+00:00"
   },
   {
    "name_id": "sector_jet_fuel",
