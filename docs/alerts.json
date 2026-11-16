@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T07:26:28+00:00",
+ "generated_at": "2026-11-16T07:41:28+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -561,7 +561,9 @@
      "alias": "Danone",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Crocs\" OR \"CSL Behring\" OR \"CSPC Pharmaceutical\" OR \"Currys\" OR \"Danone\" OR \"David Lloyd\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -1432,7 +1434,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"PayPal\" OR \"Pfizer\")",
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:\"PayPal\""
     ],
     "alert_categories": [
      "workforce"
@@ -1639,7 +1642,9 @@
     "alias": "freight rates",
     "alias_where": "title",
     "confidence": 0.8,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -2184,7 +2189,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -2193,8 +2200,34 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 200226,
+     "title": "Unilever Appoints Meghna Menon As Head Of People Experience",
+     "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPMktSOWcwMkRMN1cyZ09ldy1MQU5YZURRSndZUkd0NFkwSS16VzZwa1VQdUxsZDNDVkNTcHRhUXhPTXgxcTJuZWltSnY4Y29HaDV3bHNQaEpIWkFzMnVFRGF2M1BCb1MxM1Fqb05ycmI1UXExMlM3UzVwaGlueHNaaGI3cUs3MllaaVNtSjVVOHNBdjZnZ2JnSjJheVJkSTA",
+     "raw_link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPMktSOWcwMkRMN1cyZ09ldy1MQU5YZURRSndZUkd0NFkwSS16VzZwa1VQdUxsZDNDVkNTcHRhUXhPTXgxcTJuZWltSnY4Y29HaDV3bHNQaEpIWkFzMnVFRGF2M1BCb1MxM1Fqb05ycmI1UXExMlM3UzVwaGlueHNaaGI3cUs3MllaaVNtSjVVOHNBdjZnZ2JnSjJheVJkSTA?oc=5",
+     "source": "BW People",
+     "domain": "bwpeople.in",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-11-16T07:25:54+00:00",
+     "first_seen_at": "2026-11-16T07:31:30+00:00",
+     "route": "googlenews",
+     "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "tier_hint": null,
+     "summary": "Unilever Appoints Meghna Menon As Head Of People Experience BW People",
+     "alias": "Unilever",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [],
+     "alert_candidate": false,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -2209,7 +2242,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-11-15T17:50:21+00:00"
+   "latest": "2026-11-16T07:25:54+00:00"
   },
   {
    "name_id": "vonovia",
@@ -2391,7 +2424,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:\"Xerox\"",
-     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")"
+     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")",
+     "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")"
     ],
     "alert_categories": [
      "regulatory"
