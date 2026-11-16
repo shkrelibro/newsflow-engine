@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T04:30:54+00:00",
+ "generated_at": "2026-11-16T04:46:09+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -208,7 +208,9 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")"
+     "googlenews:(\"B2 Impact\" OR \"Groupe Bertrand\" OR \"Biogroup\" OR \"Boels\" OR \"Boots\" OR \"Branicks\")",
+     "googlenews:\"Boots\"",
+     "googlenews:(\"Advanz Pharma\" OR \"Arrow Global\" OR \"Boots\" OR \"Fressnapf\" OR \"Intrum\" OR \"Loxam\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -630,7 +632,9 @@
     "alias": "Metlen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Metlen\""
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -707,6 +711,55 @@
     "US"
    ],
    "latest": "2026-11-14T12:48:43+00:00"
+  },
+  {
+   "name_id": "ryanair",
+   "name": "Ryanair",
+   "cluster_id": 141323,
+   "primary": {
+    "id": 199811,
+    "title": "Ryanair Keeps Cost Edge as Wizz Air Profit Falls 67%",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOSUNpVjJjcFpIRUV3QmRsaDZ5eFpQcHhnYmtJVmI1dERtcVRTd2xaWTFXX3pFR0RvSm5pMFprbUxta3J3LUxYNzZMMm9lcXh1Z2NaSHFWbE5KRjRsWThXMTc2ZjFtWTB0U0Q1bGowRlhvZEw3cmh6QURhTnFNd2EzVHBrWVhhZ2czVkpyMEpvR0dsT3YyaWd6UGxWeXJFdw",
+    "raw_link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOSUNpVjJjcFpIRUV3QmRsaDZ5eFpQcHhnYmtJVmI1dERtcVRTd2xaWTFXX3pFR0RvSm5pMFprbUxta3J3LUxYNzZMMm9lcXh1Z2NaSHFWbE5KRjRsWThXMTc2ZjFtWTB0U0Q1bGowRlhvZEw3cmh6QURhTnFNd2EzVHBrWVhhZ2czVkpyMEpvR0dsT3YyaWd6UGxWeXJFdw?oc=5",
+    "source": "Aviation A2Z",
+    "domain": "aviationa2z.com",
+    "country": "IE",
+    "lang": "en",
+    "published_at": "2026-11-15T18:31:00+00:00",
+    "first_seen_at": "2026-11-16T04:37:57+00:00",
+    "route": "googlenews",
+    "query": "\"Ryanair\"",
+    "tier_hint": null,
+    "summary": "Ryanair Keeps Cost Edge as Wizz Air Profit Falls 67% Aviation A2Z",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "price_move"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "price_move"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "IE"
+   ],
+   "latest": "2026-11-15T18:31:00+00:00"
   },
   {
    "name_id": "sector_container_freight",
@@ -916,57 +969,6 @@
    "latest": "2026-11-15T18:00:02+00:00"
   },
   {
-   "name_id": "sector_container_freight",
-   "name": "Container freight (sector)",
-   "cluster_id": 140531,
-   "primary": {
-    "id": 198787,
-    "title": "Oil Prices Jump 6% as Iran Sets UAE Oil Port Ablaze, Strikes Vessels in Strait of Hormuz",
-    "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOV1pOYzkzNEwyZDVoVFd4Z1k3S2NXWGNWQW51azQxUENfZHFtQkxzVmdJYmQ5bXlWYkViU0VoOHVFelF6Zmd1R1cyeFlZWnYxNWRSMHR4R2lXUkEwNlR1S0ljemhxUnRDN1JHeXFlZnYzVGZTU0JvWDZNLTNSTFU2MDNmdXJWbUVZcVRjMmNFLXo2MEpRRTZndFRnS3NnZnpFX0kxTjFKY3N6cDZRU3QwMVJGUDNHZWM",
-    "raw_link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOV1pOYzkzNEwyZDVoVFd4Z1k3S2NXWGNWQW51azQxUENfZHFtQkxzVmdJYmQ5bXlWYkViU0VoOHVFelF6Zmd1R1cyeFlZWnYxNWRSMHR4R2lXUkEwNlR1S0ljemhxUnRDN1JHeXFlZnYzVGZTU0JvWDZNLTNSTFU2MDNmdXJWbUVZcVRjMmNFLXo2MEpRRTZndFRnS3NnZnpFX0kxTjFKY3N6cDZRU3QwMVJGUDNHZWM?oc=5",
-    "source": "EnergyNow",
-    "domain": "energynow.ca",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-14T13:33:06+00:00",
-    "first_seen_at": "2026-11-15T04:46:07+00:00",
-    "route": "googlenews",
-    "query": "\"Strait of Hormuz\"",
-    "tier_hint": null,
-    "summary": "Oil Prices Jump 6% as Iran Sets UAE Oil Port Ablaze, Strikes Vessels in Strait of Hormuz EnergyNow",
-    "alias": "Strait of Hormuz",
-    "alias_where": "title",
-    "confidence": 0.7,
-    "also_routes": [
-     "googlenews:\"Strait of Hormuz\""
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 0.7,
-   "aliases": [
-    "Strait of Hormuz"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-14T13:33:06+00:00"
-  },
-  {
    "name_id": "ssp",
    "name": "SSP Group",
    "cluster_id": 140917,
@@ -1077,27 +1079,24 @@
    "name": "Thomas Cook",
    "cluster_id": 140475,
    "primary": {
-    "id": 198728,
+    "id": 198801,
     "title": "Thomas Cook India sees 30% rise in Q3 forward bookings despite Middle East conflict, says CFO Brijesh Modi",
-    "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQY1BxZnp3MTdTbElRT01ia0tvZ1gxMFY0UkEyYzVrX3dsdjMzSkw0MkhpUmtmbUtnLTBtdVp4MjItLXJxbnBJeGhScFF1Y1NmYWRJczdQcHpDeWFxX1BvZ1pCRUtmSWpzUFI1ZUJmQndqVE5Zc1F1TFpaMmpsVENSdmpoRUhydDRWYjNOeHJ3S3RXUGhpR2o4T2NXaENTYWt3QlgyZ21HM0JpOGQ1VHAwTURicGtrbFBSLVFqYzAxeWJXdFRzQ3ZUd1otUDlCUTNsWW9NNkUxS2FNU1dRTTdlSkM3QWF3M19Cc3fSAfcBQVVfeXFMTzdBZlQ4eFE0ZjctX0txa0NGUzRHUXBGSVZnend5VGhlX0RqOHJqbWhEcUhaMFJGbFdmM2VKWENveEJhVnZRU2RBLTcyLW5oaW41aFNVMVRjS3oyWDc0b1V5VWxVN2Zjc0IzN2RmRGNaVG1yX2o5enJWQ2hCclhBeG5KY1BwellqZTZJMzQtdHBBS2lqcW40bzFhV3pSMmROa3ZlWmE5Zkc2TGxfdVpVX3E1b3h2Y3JFcjgwZmNydDRwaUlRMXB2YWdCOGNaTXN2SmFISkhjOXFwWWpzR1lXNDlxQ2xMa2ZYS3drMXdYTUk5eTh6YUdUNA",
-    "raw_link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQY1BxZnp3MTdTbElRT01ia0tvZ1gxMFY0UkEyYzVrX3dsdjMzSkw0MkhpUmtmbUtnLTBtdVp4MjItLXJxbnBJeGhScFF1Y1NmYWRJczdQcHpDeWFxX1BvZ1pCRUtmSWpzUFI1ZUJmQndqVE5Zc1F1TFpaMmpsVENSdmpoRUhydDRWYjNOeHJ3S3RXUGhpR2o4T2NXaENTYWt3QlgyZ21HM0JpOGQ1VHAwTURicGtrbFBSLVFqYzAxeWJXdFRzQ3ZUd1otUDlCUTNsWW9NNkUxS2FNU1dRTTdlSkM3QWF3M19Cc3fSAfcBQVVfeXFMTzdBZlQ4eFE0ZjctX0txa0NGUzRHUXBGSVZnend5VGhlX0RqOHJqbWhEcUhaMFJGbFdmM2VKWENveEJhVnZRU2RBLTcyLW5oaW41aFNVMVRjS3oyWDc0b1V5VWxVN2Zjc0IzN2RmRGNaVG1yX2o5enJWQ2hCclhBeG5KY1BwellqZTZJMzQtdHBBS2lqcW40bzFhV3pSMmROa3ZlWmE5Zkc2TGxfdVpVX3E1b3h2Y3JFcjgwZmNydDRwaUlRMXB2YWdCOGNaTXN2SmFISkhjOXFwWWpzR1lXNDlxQ2xMa2ZYS3drMXdYTUk5eTh6YUdUNA?oc=5",
+    "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPN0FmVDh4UTRmNy1fS3FrQ0ZTNEdRcEZJVmd6d3lUaGVfRGo4cmptaERxSFowUkZsV2YzZUpYQ294QmFWdlFTZEEtNzItbmhpbjVoU1UxVGNLejJYNzRvVXlVbFU3ZmNzQjM3ZGZEY1pUbXJfajl6clZDaEJyWEF4bkpjUHB6WWplNkkzNC10cEFLaWpxbjRvMWFXelIyZE5rdmVaYTlmRzZMbF91WlVfcTVveHZjckVyODBmY3J0NHBpSVExcHZhZ0I4Y1pNc3ZKYUhKSGM5cXBZanNHWVc0OXFDbExrZlhLd2sxd1hNSTl5OHphR1Q00gH3AUFVX3lxTE83QWZUOHhRNGY3LV9LcWtDRlM0R1FwRklWZ3p3eVRoZV9Eajhyam1oRHFIWjBSRmxXZjNlSlhDb3hCYVZ2UVNkQS03Mi1uaGluNWhTVTFUY0t6Mlg3NG9VeVVsVTdmY3NCMzdkZkRjWlRtcl9qOXpyVkNoQnJYQXhuSmNQcHpZamU2STM0LXRwQUtpanFuNG8xYVd6UjJkTmt2ZVphOWZHNkxsX3VaVV9xNW94dmNyRXI4MGZjcnQ0cGlJUTFwdmFnQjhjWk1zdkphSEpIYzlxcFlqc0dZVzQ5cUNsTGtmWEt3azF3WE1JOXk4emFHVDQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPN0FmVDh4UTRmNy1fS3FrQ0ZTNEdRcEZJVmd6d3lUaGVfRGo4cmptaERxSFowUkZsV2YzZUpYQ294QmFWdlFTZEEtNzItbmhpbjVoU1UxVGNLejJYNzRvVXlVbFU3ZmNzQjM3ZGZEY1pUbXJfajl6clZDaEJyWEF4bkpjUHB6WWplNkkzNC10cEFLaWpxbjRvMWFXelIyZE5rdmVaYTlmRzZMbF91WlVfcTVveHZjckVyODBmY3J0NHBpSVExcHZhZ0I4Y1pNc3ZKYUhKSGM5cXBZanNHWVc0OXFDbExrZlhLd2sxd1hNSTl5OHphR1Q00gH3AUFVX3lxTE83QWZUOHhRNGY3LV9LcWtDRlM0R1FwRklWZ3p3eVRoZV9Eajhyam1oRHFIWjBSRmxXZjNlSlhDb3hCYVZ2UVNkQS03Mi1uaGluNWhTVTFUY0t6Mlg3NG9VeVVsVTdmY3NCMzdkZkRjWlRtcl9qOXpyVkNoQnJYQXhuSmNQcHpZamU2STM0LXRwQUtpanFuNG8xYVd6UjJkTmt2ZVphOWZHNkxsX3VaVV9xNW94dmNyRXI4MGZjcnQ0cGlJUTFwdmFnQjhjWk1zdkphSEpIYzlxcFlqc0dZVzQ5cUNsTGtmWEt3azF3WE1JOXk4emFHVDQ?oc=5",
     "source": "Fortune India",
     "domain": "fortuneindia.com",
     "country": "GB",
     "lang": "en",
     "published_at": "2026-11-15T04:14:49+00:00",
-    "first_seen_at": "2026-11-15T04:31:07+00:00",
+    "first_seen_at": "2026-11-15T05:01:07+00:00",
     "route": "googlenews",
-    "query": "\"Thomas Cook\"",
+    "query": "(\"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\" OR \"United Rentals\" OR \"Univar\")",
     "tier_hint": null,
     "summary": "Thomas Cook India sees 30% rise in Q3 forward bookings despite Middle East conflict, says CFO Brijesh Modi Fortune India",
     "alias": "Thomas Cook",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\" OR \"United Rentals\" OR \"Univar\")",
-     "googlenews:\"Thomas Cook\""
-    ],
+    "also_routes": [],
     "alert_categories": [
      "management",
      "price_move"
@@ -1107,36 +1106,7 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 198801,
-     "title": "Thomas Cook India sees 30% rise in Q3 forward bookings despite Middle East conflict, says CFO Brijesh Modi",
-     "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPN0FmVDh4UTRmNy1fS3FrQ0ZTNEdRcEZJVmd6d3lUaGVfRGo4cmptaERxSFowUkZsV2YzZUpYQ294QmFWdlFTZEEtNzItbmhpbjVoU1UxVGNLejJYNzRvVXlVbFU3ZmNzQjM3ZGZEY1pUbXJfajl6clZDaEJyWEF4bkpjUHB6WWplNkkzNC10cEFLaWpxbjRvMWFXelIyZE5rdmVaYTlmRzZMbF91WlVfcTVveHZjckVyODBmY3J0NHBpSVExcHZhZ0I4Y1pNc3ZKYUhKSGM5cXBZanNHWVc0OXFDbExrZlhLd2sxd1hNSTl5OHphR1Q00gH3AUFVX3lxTE83QWZUOHhRNGY3LV9LcWtDRlM0R1FwRklWZ3p3eVRoZV9Eajhyam1oRHFIWjBSRmxXZjNlSlhDb3hCYVZ2UVNkQS03Mi1uaGluNWhTVTFUY0t6Mlg3NG9VeVVsVTdmY3NCMzdkZkRjWlRtcl9qOXpyVkNoQnJYQXhuSmNQcHpZamU2STM0LXRwQUtpanFuNG8xYVd6UjJkTmt2ZVphOWZHNkxsX3VaVV9xNW94dmNyRXI4MGZjcnQ0cGlJUTFwdmFnQjhjWk1zdkphSEpIYzlxcFlqc0dZVzQ5cUNsTGtmWEt3azF3WE1JOXk4emFHVDQ",
-     "raw_link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPN0FmVDh4UTRmNy1fS3FrQ0ZTNEdRcEZJVmd6d3lUaGVfRGo4cmptaERxSFowUkZsV2YzZUpYQ294QmFWdlFTZEEtNzItbmhpbjVoU1UxVGNLejJYNzRvVXlVbFU3ZmNzQjM3ZGZEY1pUbXJfajl6clZDaEJyWEF4bkpjUHB6WWplNkkzNC10cEFLaWpxbjRvMWFXelIyZE5rdmVaYTlmRzZMbF91WlVfcTVveHZjckVyODBmY3J0NHBpSVExcHZhZ0I4Y1pNc3ZKYUhKSGM5cXBZanNHWVc0OXFDbExrZlhLd2sxd1hNSTl5OHphR1Q00gH3AUFVX3lxTE83QWZUOHhRNGY3LV9LcWtDRlM0R1FwRklWZ3p3eVRoZV9Eajhyam1oRHFIWjBSRmxXZjNlSlhDb3hCYVZ2UVNkQS03Mi1uaGluNWhTVTFUY0t6Mlg3NG9VeVVsVTdmY3NCMzdkZkRjWlRtcl9qOXpyVkNoQnJYQXhuSmNQcHpZamU2STM0LXRwQUtpanFuNG8xYVd6UjJkTmt2ZVphOWZHNkxsX3VaVV9xNW94dmNyRXI4MGZjcnQ0cGlJUTFwdmFnQjhjWk1zdkphSEpIYzlxcFlqc0dZVzQ5cUNsTGtmWEt3azF3WE1JOXk4emFHVDQ?oc=5",
-     "source": "Fortune India",
-     "domain": "fortuneindia.com",
-     "country": "GB",
-     "lang": "en",
-     "published_at": "2026-11-15T04:14:49+00:00",
-     "first_seen_at": "2026-11-15T05:01:07+00:00",
-     "route": "googlenews",
-     "query": "(\"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\" OR \"United Rentals\" OR \"Univar\")",
-     "tier_hint": null,
-     "summary": "Thomas Cook India sees 30% rise in Q3 forward bookings despite Middle East conflict, says CFO Brijesh Modi Fortune India",
-     "alias": "Thomas Cook",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [],
-     "alert_categories": [
-      "management",
-      "price_move"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
+   "also": [],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
