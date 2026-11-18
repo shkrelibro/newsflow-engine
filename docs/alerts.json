@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-18T13:28:30+00:00",
+ "generated_at": "2026-11-18T13:43:54+00:00",
  "alerts": [
   {
    "name_id": "action",
@@ -1006,7 +1006,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
     ],
     "alert_categories": [
      "management"
@@ -1243,7 +1244,8 @@
     "also_routes": [
      "googlenews:\"MediaMarkt\"",
      "googlenews:\"Ceconomy\"",
-     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")"
+     "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
+     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -2910,57 +2912,6 @@
     "GB"
    ],
    "latest": "2026-11-17T14:23:29+00:00"
-  },
-  {
-   "name_id": "lufthansa",
-   "name": "Lufthansa",
-   "cluster_id": 144400,
-   "primary": {
-    "id": 203742,
-    "title": "Vereinigung Cockpit lässt Frage nach weiteren Streiks bei Lufthansa offen",
-    "url": "https://aerotelegraph.com/ticker/vereinigung-cockpit-laesst-frage-nach-weiteren-streiks-bei-lufthansa-offen/km30wvg",
-    "raw_link": "https://www.aerotelegraph.com/ticker/vereinigung-cockpit-laesst-frage-nach-weiteren-streiks-bei-lufthansa-offen/km30wvg",
-    "source": "aeroTELEGRAPH",
-    "domain": "aerotelegraph.com",
-    "country": "CH",
-    "lang": "de",
-    "published_at": "2026-11-17T13:31:26+00:00",
-    "first_seen_at": "2026-11-17T13:38:10+00:00",
-    "route": "rss",
-    "query": "https://www.aerotelegraph.com/feed",
-    "tier_hint": 4,
-    "summary": "Im Tarifkonflikt bei Lufthansa sieht die Pilotengewerkschaft Vereinigung Cockpit den Konzern am Zug. In sieben Monaten Verhandlungen habe Lufthansa kein einziges Angebot vorgelegt, kritisiert Gewerkschaftspräsident Andreas Pinheiro. Der jüngste Vorschlag des Unternehmens sei weder im Rahmen der Mediation noch der Schlichtung unterbreitet worden. Die Empfehlung des unabhängigen Mediators beinhalte für die Pilotinnen und Piloten Zugeständnisse im Volumen von einer Milliarde Euro über die gesamte Laufzeit. Dass Lufthansa diesen Vorschlag nicht annehme, sei für ihn unverständlich.",
-    "alias": "Lufthansa",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "rss:https://www.aerotelegraph.com/feed"
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Lufthansa"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "CH"
-   ],
-   "latest": "2026-11-17T13:31:26+00:00"
   },
   {
    "name_id": "maersk",
@@ -6101,7 +6052,10 @@
      "alias": "Viatris",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Viatris\"",
+      "googlenews:(\"SandenVendo\" OR \"Viatris\" OR \"Virgin Active\" OR \"Vistry\" OR \"Viva Wallet\" OR \"Vonovia\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
