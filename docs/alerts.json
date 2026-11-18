@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-18T14:13:39+00:00",
+ "generated_at": "2026-11-18T14:28:34+00:00",
  "alerts": [
   {
    "name_id": "action",
@@ -232,59 +232,6 @@
     "SE"
    ],
    "latest": "2026-11-18T06:32:36+00:00"
-  },
-  {
-   "name_id": "airbaltic",
-   "name": "airBaltic",
-   "cluster_id": 144480,
-   "primary": {
-    "id": 203842,
-    "title": "Flygbolag på Arlanda varnar: Pengarna kan ta slut i december",
-    "url": "https://dagensps.se/weekend/resor/flygbolag-pa-arlanda-varnar-pengarna-kan-ta-slut-i-december",
-    "raw_link": "https://www.dagensps.se/weekend/resor/flygbolag-pa-arlanda-varnar-pengarna-kan-ta-slut-i-december/",
-    "source": "Dagens PS",
-    "domain": "dagensps.se",
-    "country": "SE",
-    "lang": "sv",
-    "published_at": "2026-11-17T14:20:28+00:00",
-    "first_seen_at": "2026-11-17T14:23:09+00:00",
-    "route": "rss",
-    "query": "https://www.dagensps.se/feed",
-    "tier_hint": 3,
-    "summary": "Flygbolaget airBaltic riskerar att få slut på pengar redan under första halvan av december. Utan ytterligare finansiering kan bolaget tvingas stoppa verksamheten och avvecklas, enligt handlingar till en amerikansk konkursdomstol. För resenärer från Arlanda är frågan vad som händer med redan bokade biljetter. Den 9 december ska en domstol i New York pröva en avgörande […]",
-    "alias": "airBaltic",
-    "alias_where": "summary",
-    "confidence": 0.7,
-    "also_routes": [
-     "rss:https://www.dagensps.se/feed"
-    ],
-    "alert_categories": [
-     "restructuring",
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation",
-    "restructuring"
-   ],
-   "max_confidence": 0.7,
-   "aliases": [
-    "airBaltic"
-   ],
-   "languages": [
-    "sv"
-   ],
-   "countries": [
-    "SE"
-   ],
-   "latest": "2026-11-17T14:20:28+00:00"
   },
   {
    "name_id": "airbaltic",
@@ -1245,7 +1192,8 @@
      "googlenews:\"MediaMarkt\"",
      "googlenews:\"Ceconomy\"",
      "googlenews:(\"Boels\" OR \"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Südzucker\" OR \"Takko\")",
-     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")"
+     "googlenews:(\"Ceconomy\" OR \"Cheplapharm\" OR \"DEMIRE\" OR \"Europcar\" OR \"Evoca\" OR \"Flora Food\")",
+     "googlenews:(\"Ceconomy\" OR \"Fressnapf\" OR \"Intrum\" OR \"Medical Properties Trust\" OR \"PureGym\" OR \"SYNLAB\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -1899,7 +1847,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Inovie\" OR \"Inter IKEA\" OR \"ISS\" OR \"Jet2\" OR \"Kedrion\" OR \"KiK\")"
+     "googlenews:(\"Inovie\" OR \"Inter IKEA\" OR \"ISS\" OR \"Jet2\" OR \"Kedrion\" OR \"KiK\")",
+     "googlenews:\"Jet2\""
     ],
     "alert_categories": [
      "price_move"
@@ -2986,7 +2935,9 @@
     "alias": "Metlen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Loxam\" OR \"Manuchar\" OR \"Maxeda\" OR \"Merlin Entertainments\" OR \"Metlen\" OR \"Mobilux\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -3670,7 +3621,9 @@
     "alias": "Pfizer",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -3747,7 +3700,9 @@
      "alias": "Pfizer",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     ],
      "alert_categories": [
       "regulatory"
      ],
@@ -5512,7 +5467,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Sonic Healthcare\""
+     "googlenews:\"Sonic Healthcare\"",
+     "googlenews:(\"Sixt\" OR \"Sodexo\" OR \"Sonic Healthcare\" OR \"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\")"
     ],
     "alert_categories": [
      "m_and_a"
