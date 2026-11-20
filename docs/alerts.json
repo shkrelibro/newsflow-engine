@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-20T22:45:00+00:00",
+ "generated_at": "2026-11-20T22:59:57+00:00",
  "alerts": [
   {
    "name_id": "aedifica",
@@ -330,7 +330,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Avis Budget\""
+     "googlenews:\"Avis Budget\"",
+     "googlenews:(\"Adler Group\" OR \"Advanz Pharma\" OR \"airBaltic\" OR \"Arrow Global\" OR \"Avis Budget\" OR \"Axactor\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -380,7 +381,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.faz.net/rss/aktuell/wirtschaft/"
+    ],
     "alert_categories": [
      "litigation"
     ],
@@ -7248,6 +7251,55 @@
   {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
+   "cluster_id": 151523,
+   "primary": {
+    "id": 213339,
+    "title": "Fire ignites on tanker in Hormuz strike as transits decline",
+    "url": "https://tradewindsnews.com/casualties/fire-ignites-on-tanker-in-hormuz-strike-as-transits-decline/2-1-2077712",
+    "raw_link": "https://www.tradewindsnews.com/casualties/fire-ignites-on-tanker-in-hormuz-strike-as-transits-decline/2-1-2077712",
+    "source": "Tradewinds",
+    "domain": "tradewindsnews.com",
+    "country": "NO",
+    "lang": "en",
+    "published_at": "2026-11-20T22:43:21+00:00",
+    "first_seen_at": "2026-11-20T22:51:14+00:00",
+    "route": "rss",
+    "query": "https://services.tradewindsnews.com/api/feed/rss",
+    "tier_hint": 4,
+    "summary": "UK Maritime Trade Operations reports that transits through embattled strait slump in both directions over last week.",
+    "alias": "Hormuz",
+    "alias_where": "title",
+    "confidence": 0.6,
+    "also_routes": [],
+    "alert_categories": [
+     "workforce"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "workforce"
+   ],
+   "max_confidence": 0.6,
+   "aliases": [
+    "Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "NO"
+   ],
+   "latest": "2026-11-20T22:43:21+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
    "cluster_id": 151247,
    "primary": {
     "id": 212927,
@@ -7816,7 +7868,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:\"Vonovia\"",
-     "googlenews:(\"Vonovia\" OR \"WMF\" OR \"Zooplus\")"
+     "googlenews:(\"Vonovia\" OR \"WMF\" OR \"Zooplus\")",
+     "googlenews:\"TAG Immobilien\""
     ],
     "alert_categories": [
      "price_move"
