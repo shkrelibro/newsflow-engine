@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-20T14:12:37+00:00",
+ "generated_at": "2026-11-20T14:27:48+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -2727,7 +2727,9 @@
     "alias": "Intrum",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Biogroup\" OR \"Boels\" OR \"House of HR\" OR \"Intrum\" OR \"Manuchar\" OR \"Maxeda\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -3082,7 +3084,9 @@
     "alias": "Lufthansa",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -3183,7 +3187,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Lufthansa\""
+     "googlenews:\"Lufthansa\"",
+     "googlenews:(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")"
     ],
     "alert_categories": [
      "restructuring"
@@ -4181,7 +4186,7 @@
      "url_unresolved": true
     }
    ],
-   "sources": 27,
+   "sources": 33,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a",
@@ -4198,7 +4203,56 @@
     "AT",
     "DE"
    ],
-   "latest": "2026-11-20T08:26:08+00:00"
+   "latest": "2026-11-20T08:36:11+00:00"
+  },
+  {
+   "name_id": "lufthansa",
+   "name": "Lufthansa",
+   "cluster_id": 150725,
+   "primary": {
+    "id": 212153,
+    "title": "Folge 500: Thyssenkrupp-CEO: „Ich bin ein großer Befürworter der Regierung” | Exklusiv: Lufthansa streicht 1000 Stellen | Anthropic",
+    "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxQSDYtRHZTOFEyREoxdWE4ZlpKNXIxYVhyS1d3VTYxeEdEdEhPSzQwWHp3LUhXVlBXQmV5dEE0TU11UXR4LUpxa1BtT3JtN0VtQ3RsOFhHc0NyNzZKQ2pQMERfb2xCR2U5cV9KVi1PaHMwLVBlemtmM3J0RmZZR1didkd0bjBYZ1RWZnEtcVVKa09YbkRMZEpCVHVzV0JmRXJLS3dhbEhzVGN4czlaQkF3QWNmN3JJTXNmY2g1UkJzdHJOQVdKT0V0MlY3QmNFeWhYcWktdERmRnpuRlUxRTd1dURDM0I3M3lOWW5sYzhBZF9GQXJWWjhyOG1zRENsdW1rLUJGYjc4UnoyZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiigJBVV95cUxQSDYtRHZTOFEyREoxdWE4ZlpKNXIxYVhyS1d3VTYxeEdEdEhPSzQwWHp3LUhXVlBXQmV5dEE0TU11UXR4LUpxa1BtT3JtN0VtQ3RsOFhHc0NyNzZKQ2pQMERfb2xCR2U5cV9KVi1PaHMwLVBlemtmM3J0RmZZR1didkd0bjBYZ1RWZnEtcVVKa09YbkRMZEpCVHVzV0JmRXJLS3dhbEhzVGN4czlaQkF3QWNmN3JJTXNmY2g1UkJzdHJOQVdKT0V0MlY3QmNFeWhYcWktdERmRnpuRlUxRTd1dURDM0I3M3lOWW5sYzhBZF9GQXJWWjhyOG1zRENsdW1rLUJGYjc4UnoyZw?oc=5",
+    "source": "RTL+",
+    "domain": "plus.rtl.de",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-11-20T07:32:14+00:00",
+    "first_seen_at": "2026-11-20T14:18:46+00:00",
+    "route": "googlenews",
+    "query": "(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")",
+    "tier_hint": null,
+    "summary": "Folge 500: Thyssenkrupp-CEO: „Ich bin ein großer Befürworter der Regierung” | Exklusiv: Lufthansa streicht 1000 Stellen | Anthropic RTL+",
+    "alias": "Lufthansa",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Lufthansa"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-20T07:32:14+00:00"
   },
   {
    "name_id": "lufthansa",
@@ -4880,29 +4934,26 @@
   {
    "name_id": "paypal",
    "name": "PayPal",
-   "cluster_id": 150478,
+   "cluster_id": 150739,
    "primary": {
-    "id": 211799,
-    "title": "PayPal names new CFO and several other executive leaders",
-    "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOd1BKX3FmdmhZVWt1WUQwRUNyaEdXdGdONnZyR1BqQlNrTTJxN0dzbVAzS05lNVM3RmtJQlZLSURUeTE5UWN6Qnh2X3VXcmNZVFRPTEQ1NlJsc2FBQWdwRUxCVWx3cnFRR1ZqTEUtaDZiblpXRml3OG1ad0NvS3ZTemc2eW03WlRfZWRQOXNoU2dsTFM3NTQzY2Qzc2xMY1BWcGlBREVCTERHRzZGTDg1aVluMHNNZw",
-    "raw_link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOd1BKX3FmdmhZVWt1WUQwRUNyaEdXdGdONnZyR1BqQlNrTTJxN0dzbVAzS05lNVM3RmtJQlZLSURUeTE5UWN6Qnh2X3VXcmNZVFRPTEQ1NlJsc2FBQWdwRUxCVWx3cnFRR1ZqTEUtaDZiblpXRml3OG1ad0NvS3ZTemc2eW03WlRfZWRQOXNoU2dsTFM3NTQzY2Qzc2xMY1BWcGlBREVCTERHRzZGTDg1aVluMHNNZw?oc=5",
-    "source": "StreetInsider",
-    "domain": "streetinsider.com",
+    "id": 212175,
+    "title": "PayPal Holdings, Inc. Announces CFO Changes",
+    "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPcUVLWV9WZWs2NEtEUlVETlVQRVdxSDl1aUF3MVJpQVhzamY0bExURFJjcWFGby0ybzA4NFBpd08xbWE3T1RtWDFNWkItdVNGNmFTOEZ4eks4b2ZlTjNXSGRiNHFaWWdUOFZBcld4MEx0Z2d6VnkwYXNxb0VrelQtSlFsemsya0RXSTRDdnZYMlQ0WDZCcGlGN1hR",
+    "raw_link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPcUVLWV9WZWs2NEtEUlVETlVQRVdxSDl1aUF3MVJpQVhzamY0bExURFJjcWFGby0ybzA4NFBpd08xbWE3T1RtWDFNWkItdVNGNmFTOEZ4eks4b2ZlTjNXSGRiNHFaWWdUOFZBcld4MEx0Z2d6VnkwYXNxb0VrelQtSlFsemsya0RXSTRDdnZYMlQ0WDZCcGlGN1hR?oc=5",
+    "source": "www.marketscreener.com",
+    "domain": "marketscreener.com",
     "country": "US",
     "lang": "en",
-    "published_at": "2026-11-20T12:37:29+00:00",
-    "first_seen_at": "2026-11-20T12:48:46+00:00",
+    "published_at": "2026-11-20T14:06:24+00:00",
+    "first_seen_at": "2026-11-20T14:18:46+00:00",
     "route": "googlenews",
     "query": "(\"PayPal\" OR \"Pfizer\")",
     "tier_hint": null,
-    "summary": "PayPal names new CFO and several other executive leaders StreetInsider",
+    "summary": "PayPal Holdings, Inc. Announces CFO Changes www.marketscreener.com",
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:\"PayPal\"",
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
-    ],
+    "also_routes": [],
     "alert_categories": [
      "management"
     ],
@@ -4911,38 +4962,8 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 211941,
-     "title": "PayPal Names New CFO and Executive Leaders",
-     "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQzJBRXhjUDhOMGJBbDdsN1FpeGxvWFJPVnN5RzBjN3E4VktqUzRxbXpSMjlBQXVoMzJrbmRNSGdSTTIyUjdRdnJqRjVPdlhxSUNQMUZwdWJPYVV0QVZRcUEwenJLSlZRNk8tVVozOEdpRnJ6MFMtMk9VQlY0cGdxQS1nOFczM0ZpR3RBN0k2MzV0LVZtc0gxREMtWQ",
-     "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQzJBRXhjUDhOMGJBbDdsN1FpeGxvWFJPVnN5RzBjN3E4VktqUzRxbXpSMjlBQXVoMzJrbmRNSGdSTTIyUjdRdnJqRjVPdlhxSUNQMUZwdWJPYVV0QVZRcUEwenJLSlZRNk8tVVozOEdpRnJ6MFMtMk9VQlY0cGdxQS1nOFczM0ZpR3RBN0k2MzV0LVZtc0gxREMtWQ?oc=5",
-     "source": "grafa.com",
-     "domain": "grafa.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-11-20T13:36:48+00:00",
-     "first_seen_at": "2026-11-20T13:33:45+00:00",
-     "route": "googlenews",
-     "query": "\"PayPal\"",
-     "tier_hint": null,
-     "summary": "PayPal Names New CFO and Executive Leaders grafa.com",
-     "alias": "PayPal",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
-     ],
-     "alert_categories": [
-      "management"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "management"
@@ -4957,131 +4978,31 @@
    "countries": [
     "US"
    ],
-   "latest": "2026-11-20T13:36:48+00:00"
+   "latest": "2026-11-20T14:06:24+00:00"
   },
   {
    "name_id": "paypal",
    "name": "PayPal",
-   "cluster_id": 150624,
+   "cluster_id": 150738,
    "primary": {
-    "id": 212006,
-    "title": "PayPal's new CFO to get up to $31M in stock and bonuses (PYPL:NASDAQ)",
-    "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSEVWaGMtVjR4SHk2X0JvN3JLcWVPX1VPZUE2MTFDQ2xndlpXUjY3Wi1hNnRJTXBuNkJXSEJPMC1hNi1YT25GbnRHMEU2TmoxTkE1SlJ1RVBUazVsR25hbmFCUlJlQUJUOVRqQ0hMeTExMGdPMkswZS1ZTlZ4RmpQdzg4Mk1kNUpVRHpZWVFIaGJON1hpTnNpTXlURTJCRGdFQXJDakRva2xRRmhudkFN",
-    "raw_link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSEVWaGMtVjR4SHk2X0JvN3JLcWVPX1VPZUE2MTFDQ2xndlpXUjY3Wi1hNnRJTXBuNkJXSEJPMC1hNi1YT25GbnRHMEU2TmoxTkE1SlJ1RVBUazVsR25hbmFCUlJlQUJUOVRqQ0hMeTExMGdPMkswZS1ZTlZ4RmpQdzg4Mk1kNUpVRHpZWVFIaGJON1hpTnNpTXlURTJCRGdFQXJDakRva2xRRmhudkFN?oc=5",
-    "source": "Seeking Alpha",
-    "domain": "seekingalpha.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-20T13:35:07+00:00",
-    "first_seen_at": "2026-11-20T13:48:46+00:00",
-    "route": "googlenews",
-    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-    "tier_hint": null,
-    "summary": "PayPal's new CFO to get up to $31M in stock and bonuses (PYPL:NASDAQ) Seeking Alpha",
-    "alias": "PayPal",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "PayPal"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-20T13:35:07+00:00"
-  },
-  {
-   "name_id": "paypal",
-   "name": "PayPal",
-   "cluster_id": 150628,
-   "primary": {
-    "id": 212011,
-    "title": "PayPal names Claire Bramley CFO from Xero, replacing Jamie Miller",
-    "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRXFnQXhDRWxjeFBzN28yUjh2MnpNclBROFNCTlhvTDQtWVhaU1pMc19TZ3B3bmdjRXE1em1SSHR6M1FCUkloZHBwdkFqQUsxSkxBM0pLdHdpSi1MTm16ZXZFNUNqblpSWHJiazNNRGVHYzZvYTNfSlQ4QVB0V2pSamNRR3pJeUVVSm9xTkNDOG12VlBsdU1TWENicEppQ1J3Qlh4Q0U4dGM4Zk14WVYyR09n",
-    "raw_link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRXFnQXhDRWxjeFBzN28yUjh2MnpNclBROFNCTlhvTDQtWVhaU1pMc19TZ3B3bmdjRXE1em1SSHR6M1FCUkloZHBwdkFqQUsxSkxBM0pLdHdpSi1MTm16ZXZFNUNqblpSWHJiazNNRGVHYzZvYTNfSlQ4QVB0V2pSamNRR3pJeUVVSm9xTkNDOG12VlBsdU1TWENicEppQ1J3Qlh4Q0U4dGM4Zk14WVYyR09n?oc=5",
-    "source": "NewsBytes",
-    "domain": "newsbytesapp.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-20T13:34:33+00:00",
-    "first_seen_at": "2026-11-20T13:48:46+00:00",
-    "route": "googlenews",
-    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
-    "tier_hint": null,
-    "summary": "PayPal names Claire Bramley CFO from Xero, replacing Jamie Miller NewsBytes",
-    "alias": "PayPal",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "PayPal"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-20T13:34:33+00:00"
-  },
-  {
-   "name_id": "paypal",
-   "name": "PayPal",
-   "cluster_id": 150573,
-   "primary": {
-    "id": 211923,
-    "title": "PayPal Appoints Xero Finance Chief Claire Bramley as Next CFO",
-    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNdWpXRFZhdUp4ZV9HU215dzg0R0piLXlMS0ZfZlA2a3RubnBEYVpTeXlFcmlPOEx5LVFDNENmR3k2SkZRRUF5cDhQcEdhUkEtbUpmWVFqSE9Xd0YyMGtwcE9EZjJEeFZIQlpqczEzQ29GYWFkWFRaUTgzVS1mNGtsRE1SVEtfRElRRFFQTFhlYmlhcUtCd0hpbG5OUm1YWTk1Y09HellGSzQ5U1k",
-    "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNdWpXRFZhdUp4ZV9HU215dzg0R0piLXlMS0ZfZlA2a3RubnBEYVpTeXlFcmlPOEx5LVFDNENmR3k2SkZRRUF5cDhQcEdhUkEtbUpmWVFqSE9Xd0YyMGtwcE9EZjJEeFZIQlpqczEzQ29GYWFkWFRaUTgzVS1mNGtsRE1SVEtfRElRRFFQTFhlYmlhcUtCd0hpbG5OUm1YWTk1Y09HellGSzQ5U1k?oc=5",
-    "source": "WSJ",
-    "domain": "wsj.com",
+    "id": 212174,
+    "title": "PayPal Hires Xero CFO To Help Fund Its Turnaround",
+    "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTGtoei1LZ184alFUX2x4Y094QjZ1LTBZSGVCcnY3S2VqcnMyUGxZY1Jpd0dxbGdUZ0ZjWHp4bElXSmVkT3BvenBweFNKdUI0aE16WDgyQmIwZzVUWFF2aFNTTWRBQWEzWjRoc0JUSVZFenE0cEZwYV9RWnp3YmRFWUQ2MEE",
+    "raw_link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTGtoei1LZ184alFUX2x4Y094QjZ1LTBZSGVCcnY3S2VqcnMyUGxZY1Jpd0dxbGdUZ0ZjWHp4bElXSmVkT3BvenBweFNKdUI0aE16WDgyQmIwZzVUWFF2aFNTTWRBQWEzWjRoc0JUSVZFenE0cEZwYV9RWnp3YmRFWUQ2MEE?oc=5",
+    "source": "Finimize",
+    "domain": "finimize.com",
     "country": "US",
     "lang": "en",
-    "published_at": "2026-11-20T13:20:12+00:00",
-    "first_seen_at": "2026-11-20T13:33:45+00:00",
+    "published_at": "2026-11-20T14:01:21+00:00",
+    "first_seen_at": "2026-11-20T14:18:46+00:00",
     "route": "googlenews",
-    "query": "\"PayPal\"",
+    "query": "(\"PayPal\" OR \"Pfizer\")",
     "tier_hint": null,
-    "summary": "PayPal Appoints Xero Finance Chief Claire Bramley as Next CFO WSJ",
+    "summary": "PayPal Hires Xero CFO To Help Fund Its Turnaround Finimize",
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
-    ],
+    "also_routes": [],
     "alert_categories": [
      "management"
     ],
@@ -5106,7 +5027,56 @@
    "countries": [
     "US"
    ],
-   "latest": "2026-11-20T13:20:12+00:00"
+   "latest": "2026-11-20T14:01:21+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 150740,
+   "primary": {
+    "id": 212177,
+    "title": "PayPal taps Xero's Claire Bramley as CFO, succeeding Jamie Miller",
+    "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOOHdyNGlvZ0xoTTNVRE9IMVZPQ3hvNVB5SmVBWWFjZ3VUaTRYYjBVYy1acVFZSklNTHB1b243YUFyNmI4b1duTUdtQm9xOUZXeFB0RVFXQ2ZrMVZYb2w1NDhoMWNOSHo2aHVqZE9WdjlQOUJWdHhZdkh5SWx4VTEzV0dsaHB1RlBhWTJuTHZBRVEwZUM4MDc3TWJXckd3Q0JYekNDSk5fVWlhM1lBbmc",
+    "raw_link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOOHdyNGlvZ0xoTTNVRE9IMVZPQ3hvNVB5SmVBWWFjZ3VUaTRYYjBVYy1acVFZSklNTHB1b243YUFyNmI4b1duTUdtQm9xOUZXeFB0RVFXQ2ZrMVZYb2w1NDhoMWNOSHo2aHVqZE9WdjlQOUJWdHhZdkh5SWx4VTEzV0dsaHB1RlBhWTJuTHZBRVEwZUM4MDc3TWJXckd3Q0JYekNDSk5fVWlhM1lBbmc?oc=5",
+    "source": "CNA",
+    "domain": "channelnewsasia.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-20T14:00:09+00:00",
+    "first_seen_at": "2026-11-20T14:18:46+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\")",
+    "tier_hint": null,
+    "summary": "PayPal taps Xero's Claire Bramley as CFO, succeeding Jamie Miller CNA",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-20T14:00:09+00:00"
   },
   {
    "name_id": "paypal",
@@ -5160,7 +5130,9 @@
      "alias": "PayPal",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\")"
+     ],
      "alert_categories": [
       "management"
      ],
@@ -5188,7 +5160,119 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+      "googlenews:(\"PayPal\" OR \"Pfizer\")"
+     ],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 212176,
+     "title": "PayPal names Xero's Claire Bramley as CFO in leadership shuffle",
+     "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBWVjRHQnFDZVA3VEJkcXc4LUZWWnhFTXRXUVJnei1DckZVem5tcTk1X2JQMWRoWm45MVEzQjlleDN5VEJUWlpBLU9BbDFUMTk4UkF4SUVJbzEwTExwdjhMSTRPTXZfdHliUDloUUZ3aTB1M1pUb2hQbVNlNFc",
+     "raw_link": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBWVjRHQnFDZVA3VEJkcXc4LUZWWnhFTXRXUVJnei1DckZVem5tcTk1X2JQMWRoWm45MVEzQjlleDN5VEJUWlpBLU9BbDFUMTk4UkF4SUVJbzEwTExwdjhMSTRPTXZfdHliUDloUUZ3aTB1M1pUb2hQbVNlNFc?oc=5",
+     "source": "Quartz",
+     "domain": "qz.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-20T13:59:44+00:00",
+     "first_seen_at": "2026-11-20T14:18:46+00:00",
+     "route": "googlenews",
+     "query": "(\"PayPal\" OR \"Pfizer\")",
+     "tier_hint": null,
+     "summary": "PayPal names Xero's Claire Bramley as CFO in leadership shuffle Quartz",
+     "alias": "PayPal",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "management"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 3,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-20T13:59:44+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 150478,
+   "primary": {
+    "id": 211799,
+    "title": "PayPal names new CFO and several other executive leaders",
+    "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOd1BKX3FmdmhZVWt1WUQwRUNyaEdXdGdONnZyR1BqQlNrTTJxN0dzbVAzS05lNVM3RmtJQlZLSURUeTE5UWN6Qnh2X3VXcmNZVFRPTEQ1NlJsc2FBQWdwRUxCVWx3cnFRR1ZqTEUtaDZiblpXRml3OG1ad0NvS3ZTemc2eW03WlRfZWRQOXNoU2dsTFM3NTQzY2Qzc2xMY1BWcGlBREVCTERHRzZGTDg1aVluMHNNZw",
+    "raw_link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOd1BKX3FmdmhZVWt1WUQwRUNyaEdXdGdONnZyR1BqQlNrTTJxN0dzbVAzS05lNVM3RmtJQlZLSURUeTE5UWN6Qnh2X3VXcmNZVFRPTEQ1NlJsc2FBQWdwRUxCVWx3cnFRR1ZqTEUtaDZiblpXRml3OG1ad0NvS3ZTemc2eW03WlRfZWRQOXNoU2dsTFM3NTQzY2Qzc2xMY1BWcGlBREVCTERHRzZGTDg1aVluMHNNZw?oc=5",
+    "source": "StreetInsider",
+    "domain": "streetinsider.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-20T12:37:29+00:00",
+    "first_seen_at": "2026-11-20T12:48:46+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\")",
+    "tier_hint": null,
+    "summary": "PayPal names new CFO and several other executive leaders StreetInsider",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:\"PayPal\"",
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [
+    {
+     "id": 211941,
+     "title": "PayPal Names New CFO and Executive Leaders",
+     "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQzJBRXhjUDhOMGJBbDdsN1FpeGxvWFJPVnN5RzBjN3E4VktqUzRxbXpSMjlBQXVoMzJrbmRNSGdSTTIyUjdRdnJqRjVPdlhxSUNQMUZwdWJPYVV0QVZRcUEwenJLSlZRNk8tVVozOEdpRnJ6MFMtMk9VQlY0cGdxQS1nOFczM0ZpR3RBN0k2MzV0LVZtc0gxREMtWQ",
+     "raw_link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQzJBRXhjUDhOMGJBbDdsN1FpeGxvWFJPVnN5RzBjN3E4VktqUzRxbXpSMjlBQXVoMzJrbmRNSGdSTTIyUjdRdnJqRjVPdlhxSUNQMUZwdWJPYVV0QVZRcUEwenJLSlZRNk8tVVozOEdpRnJ6MFMtMk9VQlY0cGdxQS1nOFczM0ZpR3RBN0k2MzV0LVZtc0gxREMtWQ?oc=5",
+     "source": "grafa.com",
+     "domain": "grafa.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-20T13:36:48+00:00",
+     "first_seen_at": "2026-11-20T13:33:45+00:00",
+     "route": "googlenews",
+     "query": "\"PayPal\"",
+     "tier_hint": null,
+     "summary": "PayPal Names New CFO and Executive Leaders grafa.com",
+     "alias": "PayPal",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+      "googlenews:(\"PayPal\" OR \"Pfizer\")"
      ],
      "alert_categories": [
       "management"
@@ -5214,7 +5298,161 @@
    "countries": [
     "US"
    ],
-   "latest": "2026-11-20T13:20:00+00:00"
+   "latest": "2026-11-20T13:36:48+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 150624,
+   "primary": {
+    "id": 212006,
+    "title": "PayPal's new CFO to get up to $31M in stock and bonuses (PYPL:NASDAQ)",
+    "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSEVWaGMtVjR4SHk2X0JvN3JLcWVPX1VPZUE2MTFDQ2xndlpXUjY3Wi1hNnRJTXBuNkJXSEJPMC1hNi1YT25GbnRHMEU2TmoxTkE1SlJ1RVBUazVsR25hbmFCUlJlQUJUOVRqQ0hMeTExMGdPMkswZS1ZTlZ4RmpQdzg4Mk1kNUpVRHpZWVFIaGJON1hpTnNpTXlURTJCRGdFQXJDakRva2xRRmhudkFN",
+    "raw_link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOSEVWaGMtVjR4SHk2X0JvN3JLcWVPX1VPZUE2MTFDQ2xndlpXUjY3Wi1hNnRJTXBuNkJXSEJPMC1hNi1YT25GbnRHMEU2TmoxTkE1SlJ1RVBUazVsR25hbmFCUlJlQUJUOVRqQ0hMeTExMGdPMkswZS1ZTlZ4RmpQdzg4Mk1kNUpVRHpZWVFIaGJON1hpTnNpTXlURTJCRGdFQXJDakRva2xRRmhudkFN?oc=5",
+    "source": "Seeking Alpha",
+    "domain": "seekingalpha.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-20T13:35:07+00:00",
+    "first_seen_at": "2026-11-20T13:48:46+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+    "tier_hint": null,
+    "summary": "PayPal's new CFO to get up to $31M in stock and bonuses (PYPL:NASDAQ) Seeking Alpha",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-20T13:35:07+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 150628,
+   "primary": {
+    "id": 212011,
+    "title": "PayPal names Claire Bramley CFO from Xero, replacing Jamie Miller",
+    "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRXFnQXhDRWxjeFBzN28yUjh2MnpNclBROFNCTlhvTDQtWVhaU1pMc19TZ3B3bmdjRXE1em1SSHR6M1FCUkloZHBwdkFqQUsxSkxBM0pLdHdpSi1MTm16ZXZFNUNqblpSWHJiazNNRGVHYzZvYTNfSlQ4QVB0V2pSamNRR3pJeUVVSm9xTkNDOG12VlBsdU1TWENicEppQ1J3Qlh4Q0U4dGM4Zk14WVYyR09n",
+    "raw_link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRXFnQXhDRWxjeFBzN28yUjh2MnpNclBROFNCTlhvTDQtWVhaU1pMc19TZ3B3bmdjRXE1em1SSHR6M1FCUkloZHBwdkFqQUsxSkxBM0pLdHdpSi1MTm16ZXZFNUNqblpSWHJiazNNRGVHYzZvYTNfSlQ4QVB0V2pSamNRR3pJeUVVSm9xTkNDOG12VlBsdU1TWENicEppQ1J3Qlh4Q0U4dGM4Zk14WVYyR09n?oc=5",
+    "source": "NewsBytes",
+    "domain": "newsbytesapp.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-20T13:34:33+00:00",
+    "first_seen_at": "2026-11-20T13:48:46+00:00",
+    "route": "googlenews",
+    "query": "(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+    "tier_hint": null,
+    "summary": "PayPal names Claire Bramley CFO from Xero, replacing Jamie Miller NewsBytes",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-20T13:34:33+00:00"
+  },
+  {
+   "name_id": "paypal",
+   "name": "PayPal",
+   "cluster_id": 150573,
+   "primary": {
+    "id": 211923,
+    "title": "PayPal Appoints Xero Finance Chief Claire Bramley as Next CFO",
+    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNdWpXRFZhdUp4ZV9HU215dzg0R0piLXlMS0ZfZlA2a3RubnBEYVpTeXlFcmlPOEx5LVFDNENmR3k2SkZRRUF5cDhQcEdhUkEtbUpmWVFqSE9Xd0YyMGtwcE9EZjJEeFZIQlpqczEzQ29GYWFkWFRaUTgzVS1mNGtsRE1SVEtfRElRRFFQTFhlYmlhcUtCd0hpbG5OUm1YWTk1Y09HellGSzQ5U1k",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNdWpXRFZhdUp4ZV9HU215dzg0R0piLXlMS0ZfZlA2a3RubnBEYVpTeXlFcmlPOEx5LVFDNENmR3k2SkZRRUF5cDhQcEdhUkEtbUpmWVFqSE9Xd0YyMGtwcE9EZjJEeFZIQlpqczEzQ29GYWFkWFRaUTgzVS1mNGtsRE1SVEtfRElRRFFQTFhlYmlhcUtCd0hpbG5OUm1YWTk1Y09HellGSzQ5U1k?oc=5",
+    "source": "WSJ",
+    "domain": "wsj.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-20T13:20:12+00:00",
+    "first_seen_at": "2026-11-20T13:33:45+00:00",
+    "route": "googlenews",
+    "query": "\"PayPal\"",
+    "tier_hint": null,
+    "summary": "PayPal Appoints Xero Finance Chief Claire Bramley as Next CFO WSJ",
+    "alias": "PayPal",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "PayPal"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-20T13:20:12+00:00"
   },
   {
    "name_id": "paypal",
@@ -5238,7 +5476,9 @@
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -5288,7 +5528,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "management"
@@ -5388,7 +5629,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "management"
@@ -5764,8 +6006,36 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 212179,
+     "title": "Can New Products and Acquisitions Revive Pfizer's Growth Story?",
+     "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQRWEzMmdfMjhOZDg4R3gyME9ONGtKSVJBVGdqLU5VWnNkOHg0VGZnNGxGY3lSbVZwcEZUWTNHMHhmNXUtVUk5bmZhdkNrYjRsOFhwTTIzREd0RTZuX3JjWVdhc3liNkJleTFJXy1qQ1BRVGE4ZWJKenpmMnpQRVE4M2w1UGZjSWNEeTdsQW9fR0lSYUM5SDhYcmx1amd1aXRmT3VMZEJFdGtYeEh3RTlSWlVrM1pSOU5waWJ1ZXRlX1lDOWFGNzFJNTFYWXNBMVZkOUdSSFFqdzgxaV9XTEE",
+     "raw_link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQRWEzMmdfMjhOZDg4R3gyME9ONGtKSVJBVGdqLU5VWnNkOHg0VGZnNGxGY3lSbVZwcEZUWTNHMHhmNXUtVUk5bmZhdkNrYjRsOFhwTTIzREd0RTZuX3JjWVdhc3liNkJleTFJXy1qQ1BRVGE4ZWJKenpmMnpQRVE4M2w1UGZjSWNEeTdsQW9fR0lSYUM5SDhYcmx1amd1aXRmT3VMZEJFdGtYeEh3RTlSWlVrM1pSOU5waWJ1ZXRlX1lDOWFGNzFJNTFYWXNBMVZkOUdSSFFqdzgxaV9XTEE?oc=5",
+     "source": "The Globe and Mail",
+     "domain": "theglobeandmail.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-19T16:40:59+00:00",
+     "first_seen_at": "2026-11-20T14:18:46+00:00",
+     "route": "googlenews",
+     "query": "(\"PayPal\" OR \"Pfizer\")",
+     "tier_hint": null,
+     "summary": "Can New Products and Acquisitions Revive Pfizer's Growth Story? The Globe and Mail",
+     "alias": "Pfizer",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -5778,9 +6048,10 @@
     "en"
    ],
    "countries": [
-    "GB"
+    "GB",
+    "US"
    ],
-   "latest": "2026-11-19T14:34:21+00:00"
+   "latest": "2026-11-19T16:40:59+00:00"
   },
   {
    "name_id": "pfizer",
@@ -6069,6 +6340,57 @@
    "latest": "2026-11-20T12:41:15+00:00"
   },
   {
+   "name_id": "ryanair",
+   "name": "Ryanair",
+   "cluster_id": 150729,
+   "primary": {
+    "id": 212160,
+    "title": "Ryanair: Fare Recovery And Another Buyback Support Our Buy Rating (NASDAQ:RYAAY)",
+    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOTlZNQVJ5bmt0Z0RPYWJMX1FvM0ZGMmthTEVxeEQ5djdWSXgzMlBiSVhZSnRVZXRWSzZzTW5mN09vUGFqSzB2ZW42M25vdGQ2QUk1ajRBODZ3Q216cnprZHJybENZM1JsZTN3cEtWeVg2THVxMDBnNTNnUzdQOXRYZG9FY252cHNiS0lXUVhmSGN5MU5IZ2N6RF9faFMzczRVLXhmY0xxSmU",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOTlZNQVJ5bmt0Z0RPYWJMX1FvM0ZGMmthTEVxeEQ5djdWSXgzMlBiSVhZSnRVZXRWSzZzTW5mN09vUGFqSzB2ZW42M25vdGQ2QUk1ajRBODZ3Q216cnprZHJybENZM1JsZTN3cEtWeVg2THVxMDBnNTNnUzdQOXRYZG9FY252cHNiS0lXUVhmSGN5MU5IZ2N6RF9faFMzczRVLXhmY0xxSmU?oc=5",
+    "source": "Seeking Alpha",
+    "domain": "seekingalpha.com",
+    "country": "IE",
+    "lang": "en",
+    "published_at": "2026-11-20T14:01:47+00:00",
+    "first_seen_at": "2026-11-20T14:18:46+00:00",
+    "route": "googlenews",
+    "query": "(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")",
+    "tier_hint": null,
+    "summary": "Ryanair: Fare Recovery And Another Buyback Support Our Buy Rating (NASDAQ:RYAAY) Seeking Alpha",
+    "alias": "Ryanair",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "rating",
+     "capital_markets"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "capital_markets",
+    "rating"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Ryanair"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "IE"
+   ],
+   "latest": "2026-11-20T14:01:47+00:00"
+  },
+  {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
    "cluster_id": 150679,
@@ -6090,7 +6412,9 @@
     "alias": "Hormuz",
     "alias_where": "title",
     "confidence": 0.6,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://skift.com/rss"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -6493,7 +6817,9 @@
     "alias": "Mein Schiff",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Mein Schiff\""
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -6835,7 +7161,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\" OR \"Wickes\" OR \"Williams Lea\" OR \"Wizz Air\")"
+     "googlenews:(\"Walgreens\" OR \"Watches of Switzerland\" OR \"Weiqida\" OR \"Wickes\" OR \"Williams Lea\" OR \"Wizz Air\")",
+     "googlenews:(\"Ventas\" OR \"Viatris\" OR \"Walgreens\" OR \"Welltower\" OR \"Xerox\")"
     ],
     "alert_categories": [
      "price_move"
@@ -6938,7 +7265,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")"
+     "googlenews:(\"Rekeep\" OR \"Recordati\" OR \"SYNLAB\" OR \"Thom Group\" OR \"Magnum Ice Cream Company\" OR \"Worldline\")",
+     "googlenews:\"Worldline\""
     ],
     "alert_categories": [
      "price_move"
