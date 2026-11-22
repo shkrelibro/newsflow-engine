@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T08:06:29+00:00",
+ "generated_at": "2026-11-22T08:21:09+00:00",
  "alerts": [
   {
    "name_id": "amazon",
@@ -644,7 +644,10 @@
      "alias": "Lufthansa",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Lufthansa\"",
+      "googlenews:(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")"
+     ],
      "alert_categories": [
       "workforce"
      ],
@@ -693,7 +696,10 @@
     "alias": "Lufthansa",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Lufthansa\"",
+     "googlenews:(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -1107,7 +1113,9 @@
     "alias": "PayPal",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1261,7 +1269,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "workforce"
@@ -1440,7 +1449,9 @@
     "alias": "The Restaurant",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"The Restaurant\""
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1880,73 +1891,22 @@
   {
    "name_id": "sector_container_freight",
    "name": "Container freight (sector)",
-   "cluster_id": 151523,
-   "primary": {
-    "id": 213830,
-    "title": "Fire ignites on tanker in Hormuz strike as transits decline",
-    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQT1h4bWRiNzc0cjhleXVibVVxdzZxV3ZRTTZPa0JFdW1wQjVlQUZfcmVfTmVSQmFqUE5ObDQtMnh2OUtCNm90NlZlVnNpc3A4YXczcm9Zc1VmTXZITkx5X2J5dF94UUlxa3MtdkF5aERDSnpMNENKU093SzNtZ2VOQjBnbE5NaG5DQThnVnhBbFVZejMxWGg0SGxWSUppcDNBVTZhVjF0OXc4M2p6bDRCS0lsVQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQT1h4bWRiNzc0cjhleXVibVVxdzZxV3ZRTTZPa0JFdW1wQjVlQUZfcmVfTmVSQmFqUE5ObDQtMnh2OUtCNm90NlZlVnNpc3A4YXczcm9Zc1VmTXZITkx5X2J5dF94UUlxa3MtdkF5aERDSnpMNENKU093SzNtZ2VOQjBnbE5NaG5DQThnVnhBbFVZejMxWGg0SGxWSUppcDNBVTZhVjF0OXc4M2p6bDRCS0lsVQ?oc=5",
-    "source": "TradeWinds News",
-    "domain": "tradewindsnews.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-20T22:45:56+00:00",
-    "first_seen_at": "2026-11-21T08:14:31+00:00",
-    "route": "googlenews",
-    "query": "\"Strait of Hormuz\"",
-    "tier_hint": null,
-    "summary": "Fire ignites on tanker in Hormuz strike as transits decline TradeWinds News",
-    "alias": "Hormuz",
-    "alias_where": "title",
-    "confidence": 0.6,
-    "also_routes": [
-     "googlenews:\"Strait of Hormuz\""
-    ],
-    "alert_categories": [
-     "workforce"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "workforce"
-   ],
-   "max_confidence": 0.6,
-   "aliases": [
-    "Hormuz"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-20T22:45:56+00:00"
-  },
-  {
-   "name_id": "sector_container_freight",
-   "name": "Container freight (sector)",
    "cluster_id": 143079,
    "primary": {
-    "id": 213832,
-    "title": "Tanker Catches Fire After Projectile Strike Near Strait Of Hormuz: Report",
-    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQSUpDR2Q3MExlZk5VQWlFTFRhd3FDVi03TVZwMGRvNHhreUVybWdaX09aTDZfZU90X19vUll1Y2xOLW9oRWJDTi0zZ1JYLXhTRFozY1RNdUszQTJFMWRiVWRDQmZ6dVlsMEJtR1FVSTg1YWFYdkFSN0M5MGJfd0RvcG9zbEdxNFVzTEhFZDNPYjJ3R3cwSlI0Y3hqTHpUalg4eTRQMDlOMUtxX0otVHY3MWt0ONIBuwFBVV95cUxPLXNsRW1xOU9qRGp5SHVWb2hwMHB3TGpZbnBUUHJvVVJaT0J4MHlWUHdSLXZnaDZWT25XT1pDUzEycXBOMzd6UDVqSGg0UG1PT0VYYjJ0ZDVIUENua1c1Wm9tampOcGYxWGZVcnpVRlNMMjd4aE1yZG1odnROekFjbXowZTNXWTJkNDJWTE0tQVhkZ2tjeWZpQzBGV1BUcFJ3M1FMQXBqeG5ua1RqWTZ2REZSTnBqOUQyb2FR",
-    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQSUpDR2Q3MExlZk5VQWlFTFRhd3FDVi03TVZwMGRvNHhreUVybWdaX09aTDZfZU90X19vUll1Y2xOLW9oRWJDTi0zZ1JYLXhTRFozY1RNdUszQTJFMWRiVWRDQmZ6dVlsMEJtR1FVSTg1YWFYdkFSN0M5MGJfd0RvcG9zbEdxNFVzTEhFZDNPYjJ3R3cwSlI0Y3hqTHpUalg4eTRQMDlOMUtxX0otVHY3MWt0ONIBuwFBVV95cUxPLXNsRW1xOU9qRGp5SHVWb2hwMHB3TGpZbnBUUHJvVVJaT0J4MHlWUHdSLXZnaDZWT25XT1pDUzEycXBOMzd6UDVqSGg0UG1PT0VYYjJ0ZDVIUENua1c1Wm9tampOcGYxWGZVcnpVRlNMMjd4aE1yZG1odnROekFjbXowZTNXWTJkNDJWTE0tQVhkZ2tjeWZpQzBGV1BUcFJ3M1FMQXBqeG5ua1RqWTZ2REZSTnBqOUQyb2FR?oc=5",
-    "source": "NDTV",
-    "domain": "ndtv.com",
+    "id": 213980,
+    "title": "Tanker Catches Fire After Projectile Strike Near Strait of Hormuz, UKMTO Says",
+    "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQa1E0SDBKd2dzSk1Xa25GNHhxTnZkdTFGQlRyaEFSMnU0TjU0WTFWMHJLMlNLb3g1ZWd3ZG1VVkNRLU5YWVFSSnZ4Q2o1WFNoMHlzNWxDemFiakxuMGRtU2ZrdDU3aFhReUk3UFBoZGN1ZFZZMVllSkdhOUpxUklkVVlENEU2WmlIS0I2YkltbldOOC1BOVBUcDdqRXFiZTRwQ0RRZE9Qa0oxbWpyanBoOEZISWY",
+    "raw_link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQa1E0SDBKd2dzSk1Xa25GNHhxTnZkdTFGQlRyaEFSMnU0TjU0WTFWMHJLMlNLb3g1ZWd3ZG1VVkNRLU5YWVFSSnZ4Q2o1WFNoMHlzNWxDemFiakxuMGRtU2ZrdDU3aFhReUk3UFBoZGN1ZFZZMVllSkdhOUpxUklkVVlENEU2WmlIS0I2YkltbldOOC1BOVBUcDdqRXFiZTRwQ0RRZE9Qa0oxbWpyanBoOEZISWY?oc=5",
+    "source": "ASHARQ AL-AWSAT English",
+    "domain": "english.aawsat.com",
     "country": "GB",
     "lang": "en",
-    "published_at": "2026-11-20T17:06:16+00:00",
-    "first_seen_at": "2026-11-21T08:14:31+00:00",
+    "published_at": "2026-11-20T17:14:08+00:00",
+    "first_seen_at": "2026-11-21T09:44:31+00:00",
     "route": "googlenews",
     "query": "\"Strait of Hormuz\"",
     "tier_hint": null,
-    "summary": "Tanker Catches Fire After Projectile Strike Near Strait Of Hormuz: Report NDTV",
+    "summary": "Tanker Catches Fire After Projectile Strike Near Strait of Hormuz, UKMTO Says ASHARQ AL-AWSAT English",
     "alias": "Strait of Hormuz",
     "alias_where": "title",
     "confidence": 0.7,
@@ -1961,38 +1921,8 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [
-    {
-     "id": 213980,
-     "title": "Tanker Catches Fire After Projectile Strike Near Strait of Hormuz, UKMTO Says",
-     "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQa1E0SDBKd2dzSk1Xa25GNHhxTnZkdTFGQlRyaEFSMnU0TjU0WTFWMHJLMlNLb3g1ZWd3ZG1VVkNRLU5YWVFSSnZ4Q2o1WFNoMHlzNWxDemFiakxuMGRtU2ZrdDU3aFhReUk3UFBoZGN1ZFZZMVllSkdhOUpxUklkVVlENEU2WmlIS0I2YkltbldOOC1BOVBUcDdqRXFiZTRwQ0RRZE9Qa0oxbWpyanBoOEZISWY",
-     "raw_link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQa1E0SDBKd2dzSk1Xa25GNHhxTnZkdTFGQlRyaEFSMnU0TjU0WTFWMHJLMlNLb3g1ZWd3ZG1VVkNRLU5YWVFSSnZ4Q2o1WFNoMHlzNWxDemFiakxuMGRtU2ZrdDU3aFhReUk3UFBoZGN1ZFZZMVllSkdhOUpxUklkVVlENEU2WmlIS0I2YkltbldOOC1BOVBUcDdqRXFiZTRwQ0RRZE9Qa0oxbWpyanBoOEZISWY?oc=5",
-     "source": "ASHARQ AL-AWSAT English",
-     "domain": "english.aawsat.com",
-     "country": "GB",
-     "lang": "en",
-     "published_at": "2026-11-20T17:14:08+00:00",
-     "first_seen_at": "2026-11-21T09:44:31+00:00",
-     "route": "googlenews",
-     "query": "\"Strait of Hormuz\"",
-     "tier_hint": null,
-     "summary": "Tanker Catches Fire After Projectile Strike Near Strait of Hormuz, UKMTO Says ASHARQ AL-AWSAT English",
-     "alias": "Strait of Hormuz",
-     "alias_where": "title",
-     "confidence": 0.7,
-     "also_routes": [
-      "googlenews:\"Strait of Hormuz\""
-     ],
-     "alert_categories": [
-      "workforce"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "workforce"
