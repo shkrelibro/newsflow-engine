@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-23T11:24:27+00:00",
+ "generated_at": "2026-11-23T11:39:45+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -262,7 +262,9 @@
     "alias": "Arla Foods",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Arcaplanet\" OR \"Arla Foods\" OR \"Aroundtown\" OR \"Asda\" OR \"Ashtead\" OR \"Aspen Pharmacare\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -421,7 +423,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/portada"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1184,7 +1188,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Jet2\""
+     "googlenews:\"Jet2\"",
+     "googlenews:(\"Inovie\" OR \"Inter IKEA\" OR \"ISS\" OR \"Jet2\" OR \"Kedrion\" OR \"KiK\")"
     ],
     "alert_categories": [
      "rating"
@@ -1211,6 +1216,55 @@
     "GB"
    ],
    "latest": "2026-11-22T15:21:00+00:00"
+  },
+  {
+   "name_id": "lufthansa",
+   "name": "Lufthansa",
+   "cluster_id": 154158,
+   "primary": {
+    "id": 216785,
+    "title": "Lufthansa Cargo announces planned acquisition of Fiege Air Cargo Logistics in Frankfurt",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOMi1kQUR2aXNyRUZ4ZnRQbWk1NTNfb2QzRzJrQmVRNEtVUHdhczQxcXdDMjJkb2k1bTFBV2FCSG5lNXM0OTNqLXpjSDhISlg1ZUdpSXFPZThUVnB4U3VXSWdUaHc4akdmeUtfQy03Zk5DWDdtQmpCTlBUR2p0OVhHQ1dodnpIT0VpOEVsMHhXSTZxY2dmdVZja2FGTnFWdGltbmlzaUNMYzFEelIyN0xwT0Y1dw",
+    "raw_link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOMi1kQUR2aXNyRUZ4ZnRQbWk1NTNfb2QzRzJrQmVRNEtVUHdhczQxcXdDMjJkb2k1bTFBV2FCSG5lNXM0OTNqLXpjSDhISlg1ZUdpSXFPZThUVnB4U3VXSWdUaHc4akdmeUtfQy03Zk5DWDdtQmpCTlBUR2p0OVhHQ1dodnpIT0VpOEVsMHhXSTZxY2dmdVZja2FGTnFWdGltbmlzaUNMYzFEelIyN0xwT0Y1dw?oc=5",
+    "source": "Air Cargo Week",
+    "domain": "aircargoweek.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-23T10:28:59+00:00",
+    "first_seen_at": "2026-11-23T11:31:27+00:00",
+    "route": "googlenews",
+    "query": "(\"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\" OR \"Maisons du Monde\" OR \"Maje\")",
+    "tier_hint": null,
+    "summary": "Lufthansa Cargo announces planned acquisition of Fiege Air Cargo Logistics in Frankfurt Air Cargo Week",
+    "alias": "Lufthansa",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Lufthansa"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-23T10:28:59+00:00"
   },
   {
    "name_id": "lufthansa",
@@ -2097,7 +2151,9 @@
     "alias": "sugar beet",
     "alias_where": "title",
     "confidence": 0.8,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -2400,7 +2456,9 @@
     "alias": "TUI",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.aviation24.be/feed/"
+    ],
     "alert_categories": [
      "workforce"
     ],
@@ -2580,7 +2638,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:(\"Südzucker\" OR \"SYNLAB\" OR \"TUI\" OR \"Worldline\")",
-     "googlenews:(\"TUI\" OR \"Versuni\")"
+     "googlenews:(\"TUI\" OR \"Versuni\")",
+     "googlenews:\"TUI\""
     ],
     "alert_categories": [
      "workforce"
