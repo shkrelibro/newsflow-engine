@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T10:59:10+00:00",
+ "generated_at": "2026-11-24T11:14:36+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -3179,18 +3179,18 @@
    "name": "Lufthansa",
    "cluster_id": 156059,
    "primary": {
-    "id": 219217,
+    "id": 219246,
     "title": "Bald Streik bei Lufthansa?: Vereinigung Cockpit berät über neue Tarif-Forderungen",
-    "url": "https://tagesspiegel.de/wirtschaft/dpa-bald-streik-bei-lufthansa-vereinigung-cockpit-berat-uber-neue-tarif-forderungen-16319521.html",
-    "raw_link": "https://www.tagesspiegel.de/wirtschaft/dpa-bald-streik-bei-lufthansa-vereinigung-cockpit-berat-uber-neue-tarif-forderungen-16319521.html",
-    "source": "tagesspiegel.de: News",
-    "domain": "tagesspiegel.de",
+    "url": "https://handelsblatt.com/politik/deutschland/bald-streik-bei-lufthansa-vereinigung-cockpit-beraet-ueber-neue-tarif-forderungen/100272381.html",
+    "raw_link": "https://www.handelsblatt.com/politik/deutschland/bald-streik-bei-lufthansa-vereinigung-cockpit-beraet-ueber-neue-tarif-forderungen/100272381.html",
+    "source": "Handelsblatt Schlagzeilen",
+    "domain": "handelsblatt.com",
     "country": "DE",
     "lang": "de",
-    "published_at": "2026-11-24T10:40:28+00:00",
-    "first_seen_at": "2026-11-24T10:49:04+00:00",
+    "published_at": "2026-11-24T10:39:03+00:00",
+    "first_seen_at": "2026-11-24T11:04:04+00:00",
     "route": "rss",
-    "query": "https://www.tagesspiegel.de/contentexport/feed/wirtschaft",
+    "query": "https://feeds.cms.handelsblatt.com/schlagzeilen",
     "tier_hint": 3,
     "summary": "Streiks, Schlichtung, Mediation: Lufthansa und ihre Piloten kommen nicht weiter. Die Vereinigung Cockpit verzichtet zunächst auf weitere Streikdrohungen, bereitet aber den nächsten Konflikt vor.",
     "alias": "Lufthansa",
@@ -3205,8 +3205,38 @@
     "screen_reason": "",
     "url_unresolved": false
    },
-   "also": [],
-   "sources": 1,
+   "also": [
+    {
+     "id": 219217,
+     "title": "Bald Streik bei Lufthansa?: Vereinigung Cockpit berät über neue Tarif-Forderungen",
+     "url": "https://tagesspiegel.de/wirtschaft/dpa-bald-streik-bei-lufthansa-vereinigung-cockpit-berat-uber-neue-tarif-forderungen-16319521.html",
+     "raw_link": "https://www.tagesspiegel.de/wirtschaft/dpa-bald-streik-bei-lufthansa-vereinigung-cockpit-berat-uber-neue-tarif-forderungen-16319521.html",
+     "source": "tagesspiegel.de: News",
+     "domain": "tagesspiegel.de",
+     "country": "DE",
+     "lang": "de",
+     "published_at": "2026-11-24T10:40:28+00:00",
+     "first_seen_at": "2026-11-24T10:49:04+00:00",
+     "route": "rss",
+     "query": "https://www.tagesspiegel.de/contentexport/feed/wirtschaft",
+     "tier_hint": 3,
+     "summary": "Streiks, Schlichtung, Mediation: Lufthansa und ihre Piloten kommen nicht weiter. Die Vereinigung Cockpit verzichtet zunächst auf weitere Streikdrohungen, bereitet aber den nächsten Konflikt vor.",
+     "alias": "Lufthansa",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "rss:https://www.tagesspiegel.de/contentexport/feed/wirtschaft"
+     ],
+     "alert_categories": [
+      "workforce"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": false
+    }
+   ],
+   "sources": 2,
    "alert_candidate": true,
    "alert_categories": [
     "workforce"
@@ -4756,7 +4786,8 @@
     "also_routes": [
      "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")",
      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")",
-     "googlenews:\"jet fuel\""
+     "googlenews:\"jet fuel\"",
+     "googlenews:\"Ryanair\""
     ],
     "alert_categories": [
      "management"
@@ -5389,7 +5420,9 @@
     "alias": "prix du sucre",
     "alias_where": "title",
     "confidence": 0.7,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"prix du sucre\""
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -5417,6 +5450,37 @@
      "alias": "betterave",
      "alias_where": "title",
      "confidence": 0.8,
+     "also_routes": [
+      "googlenews:\"prix du sucre\"",
+      "googlenews:\"betterave\"",
+      "googlenews:(\"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\" OR \"jet fuel\" OR \"sugar beet\" OR \"Sodexo\")"
+     ],
+     "alert_categories": [
+      "regulatory"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 219277,
+     "title": "Zuckerrübenpreise EU, 24 Nov 2026: EUR 0.56/kg FCA — CMB News",
+     "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPam8zQnc4LUxXZTB6R1A0QzIwcHlQY0I1UDZiOGhPR3pqbTJmX0lVUExpVUVNU3A4VVpxOWl4S1IzbHRtNDdVNlRXcGtuYV82Wkg1bHpEVlVDcHBlbFN2SEpYYzl4TkZrVVJfd3QyYTFPaXFveWgyZmRSLWZyVEgtOEIyN1pVNkxGcWtld0Zxbkg2YTg2RjF6a243ejNQZ0FIYzJobg",
+     "raw_link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPam8zQnc4LUxXZTB6R1A0QzIwcHlQY0I1UDZiOGhPR3pqbTJmX0lVUExpVUVNU3A4VVpxOWl4S1IzbHRtNDdVNlRXcGtuYV82Wkg1bHpEVlVDcHBlbFN2SEpYYzl4TkZrVVJfd3QyYTFPaXFveWgyZmRSLWZyVEgtOEIyN1pVNkxGcWtld0Zxbkg2YTg2RjF6a243ejNQZ0FIYzJobg?oc=5",
+     "source": "CMB News",
+     "domain": "commodity-board.com",
+     "country": "DE",
+     "lang": "de",
+     "published_at": "2026-11-24T07:45:02+00:00",
+     "first_seen_at": "2026-11-24T11:04:04+00:00",
+     "route": "googlenews",
+     "query": "(\"QVC\" OR \"antibiotic shortage\" OR \"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\")",
+     "tier_hint": null,
+     "summary": "Zuckerrübenpreise EU, 24 Nov 2026: EUR 0.56/kg FCA — CMB News CMB News",
+     "alias": "Zuckerrübe",
+     "alias_where": "title",
+     "confidence": 0.8,
      "also_routes": [],
      "alert_categories": [
       "regulatory"
@@ -5434,13 +5498,16 @@
    ],
    "max_confidence": 0.8,
    "aliases": [
+    "Zuckerrübe",
     "betterave",
     "prix du sucre"
    ],
    "languages": [
+    "de",
     "fr"
    ],
    "countries": [
+    "DE",
     "FR"
    ],
    "latest": "2026-11-24T07:45:02+00:00"
