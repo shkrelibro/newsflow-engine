@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T19:52:04+00:00",
+ "generated_at": "2026-11-24T20:07:52+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -1414,7 +1414,9 @@
      "alias": "airBaltic",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"airBaltic\" site:db.lv"
+     ],
      "alert_categories": [
       "restructuring"
      ],
@@ -2052,6 +2054,55 @@
     "US"
    ],
    "latest": "2026-11-24T12:30:00+00:00"
+  },
+  {
+   "name_id": "bayer",
+   "name": "Bayer",
+   "cluster_id": 157163,
+   "primary": {
+    "id": 220739,
+    "title": "WISAG übernimmt Dienstleistungen für Bayer Crop Science in Dormagen",
+    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOYWNsMTJZYW5TOHRnX0ExNU1Hc3dRSklMTmxxYmRtdmVJLXNMcXVHeWlzT1hINFE0MWN0M3VLemRuaks5Y2Nkc1Ruam5tVXhtTUotSjF0THFHT21HUXZQdUJ5VWVuUXpXZFNlR3pzdTdDa2J5WFc0Wm83aUlhVzJwbkk1X1Vzd2ZhYUg4ck9mOG5rM0dfUEV5cm5hQzR2cjJJVXdtWHJob2dUczA",
+    "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOYWNsMTJZYW5TOHRnX0ExNU1Hc3dRSklMTmxxYmRtdmVJLXNMcXVHeWlzT1hINFE0MWN0M3VLemRuaks5Y2Nkc1Ruam5tVXhtTUotSjF0THFHT21HUXZQdUJ5VWVuUXpXZFNlR3pzdTdDa2J5WFc0Wm83aUlhVzJwbkk1X1Vzd2ZhYUg4ck9mOG5rM0dfUEV5cm5hQzR2cjJJVXdtWHJob2dUczA?oc=5",
+    "source": "CHEManager",
+    "domain": "chemanager-online.com",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-11-24T16:49:39+00:00",
+    "first_seen_at": "2026-11-24T20:00:04+00:00",
+    "route": "googlenews",
+    "query": "(\"Adidas\" OR \"Bayer\")",
+    "tier_hint": null,
+    "summary": "WISAG übernimmt Dienstleistungen für Bayer Crop Science in Dormagen CHEManager",
+    "alias": "Bayer",
+    "alias_where": "title",
+    "confidence": 0.95,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 0.95,
+   "aliases": [
+    "Bayer"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-24T16:49:39+00:00"
   },
   {
    "name_id": "bayer",
@@ -4408,7 +4459,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")",
+     "googlenews:(\"PayPal\" OR \"Pfizer\")"
     ],
     "alert_categories": [
      "regulatory"
