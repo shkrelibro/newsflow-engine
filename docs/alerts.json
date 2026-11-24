@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T16:09:21+00:00",
+ "generated_at": "2026-11-24T16:24:01+00:00",
  "alerts": [
   {
    "name_id": "adecco",
@@ -1402,7 +1402,10 @@
      "alias": "airBaltic",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "bingnews:\"airBaltic\"",
+      "rss:https://nra.lv/rss/jaunakas-zinas/"
+     ],
      "alert_categories": [
       "restructuring"
      ],
@@ -1790,7 +1793,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"airBaltic\""
+      "googlenews:\"airBaltic\"",
+      "googlenews:(\"airBaltic\" OR \"Intrum\")"
      ],
      "alert_categories": [
       "restructuring"
@@ -3064,7 +3068,9 @@
     "alias": "Hapag-Lloyd",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Hapag-Lloyd\""
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -4867,7 +4873,9 @@
     "alias": "Ryanair",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -4951,7 +4959,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"jet fuel\""
+      "googlenews:\"jet fuel\"",
+      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
      ],
      "alert_categories": [
       "management"
@@ -5346,7 +5355,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 220109,
+     "title": "Hormuz oil traffic is down 40 percent: Are Iran’s tanker attacks working?",
+     "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPcmltN2lnQ2RQY01IdGF4VTJOYXctMm5qRkF2eVFZMDdzdzNDa0JEU01VcEJKRGNwQUN2cUtHNnJncjFJTUpWa25jVlM0M3NOUjdvWUtoeHVyblc3cllRTnBlZmxBX2lsTzZaU09SVXQyanR0ZGkxOEE2TGZBajRZeUVEVDhweklkeVphU0pXWXFoUmtuUklQY2JCYU9PTndib29oM0M5LWI2SVlMTmxhaGltZG4zdXPSAbcBQVVfeXFMT3JpbTdpZ0NkUGNNSHRheFUyTmF3LTJuakZBdnlRWTA3c3czQ2tCRFNNVXBCSkRjcEFDdnFLRzZyZ3IxSU1KVmtuY1ZTNDNzTlI3b1lLaHh1cm5XN3JZUU5wZWZsQV9pbE82WlNPUlV0Mmp0dGRpMThBNkxmQWo0WXlFRFQ4cHpJZHlaYVNKV1lxaFJrblJJUGNiQmFPT053Ym9vaDNDOS1iNklZTE5sYWhpbWRuM3Vz",
+     "raw_link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPcmltN2lnQ2RQY01IdGF4VTJOYXctMm5qRkF2eVFZMDdzdzNDa0JEU01VcEJKRGNwQUN2cUtHNnJncjFJTUpWa25jVlM0M3NOUjdvWUtoeHVyblc3cllRTnBlZmxBX2lsTzZaU09SVXQyanR0ZGkxOEE2TGZBajRZeUVEVDhweklkeVphU0pXWXFoUmtuUklQY2JCYU9PTndib29oM0M5LWI2SVlMTmxhaGltZG4zdXPSAbcBQVVfeXFMT3JpbTdpZ0NkUGNNSHRheFUyTmF3LTJuakZBdnlRWTA3c3czQ2tCRFNNVXBCSkRjcEFDdnFLRzZyZ3IxSU1KVmtuY1ZTNDNzTlI3b1lLaHh1cm5XN3JZUU5wZWZsQV9pbE82WlNPUlV0Mmp0dGRpMThBNkxmQWo0WXlFRFQ4cHpJZHlaYVNKV1lxaFJrblJJUGNiQmFPT053Ym9vaDNDOS1iNklZTE5sYWhpbWRuM3Vz?oc=5",
+     "source": "Al Jazeera",
+     "domain": "aljazeera.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-11-24T13:35:21+00:00",
+     "first_seen_at": "2026-11-24T16:16:13+00:00",
+     "route": "googlenews",
+     "query": "\"Strait of Hormuz\"",
+     "tier_hint": null,
+     "summary": "Hormuz oil traffic is down 40 percent: Are Iran’s tanker attacks working? Al Jazeera",
+     "alias": "Hormuz",
+     "alias_where": "title",
+     "confidence": 0.6,
+     "also_routes": [],
+     "alert_categories": [
+      "price_move"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -5362,7 +5399,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-11-24T13:35:20+00:00"
+   "latest": "2026-11-24T13:35:21+00:00"
   },
   {
    "name_id": "sector_container_freight",
