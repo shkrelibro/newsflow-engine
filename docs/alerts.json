@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T09:43:55+00:00",
+ "generated_at": "2026-11-24T09:59:22+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -74,7 +74,9 @@
     "alias": "Adyen",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Adyen\""
+    ],
     "alert_categories": [
      "management"
     ],
@@ -124,7 +126,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Adyen\" OR \"Air France-KLM\" OR \"Basic-Fit\" OR \"C&A\" OR \"FrieslandCampina\" OR \"IMCD\")"
+     "googlenews:(\"Adyen\" OR \"Air France-KLM\" OR \"Basic-Fit\" OR \"C&A\" OR \"FrieslandCampina\" OR \"IMCD\")",
+     "googlenews:\"Adyen\""
     ],
     "alert_categories": [
      "management"
@@ -314,7 +317,9 @@
      "alias": "Adyen",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Adyen\""
+     ],
      "alert_categories": [
       "management"
      ],
@@ -1314,59 +1319,6 @@
   {
    "name_id": "airbaltic",
    "name": "airBaltic",
-   "cluster_id": 153942,
-   "primary": {
-    "id": 216528,
-    "title": "Altgläubiger stellen sich bei Sanierung von Air Baltic quer",
-    "url": "https://aero.de/news-54230/Altglaeubiger-stellen-sich-bei-Sanierung-von-Air-Baltic-quer.html",
-    "raw_link": "https://www.aero.de/news-54230/Altglaeubiger-stellen-sich-bei-Sanierung-von-Air-Baltic-quer.html",
-    "source": "aero.de Luftfahrtnachrichten",
-    "domain": "aero.de",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-11-23T09:33:29+00:00",
-    "first_seen_at": "2026-11-23T09:46:26+00:00",
-    "route": "rss",
-    "query": "https://www.aero.de/feed/",
-    "tier_hint": 4,
-    "summary": "RIGA - Im Chapter-11-Verfahren von Air Baltic streiten alte und neue Gläubigern über Sicherheiten. Die Airline warnt vor drastischen Folgen, sofern Anleihegläubiger auf der bisherigen Besicherungsstruktur ihrer Forderungen bestehen - Air Baltic könnte in diesem Fall schon kurzfristig das Geld ausgehen.",
-    "alias": "Air Baltic",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "rss:https://www.aero.de/feed/"
-    ],
-    "alert_categories": [
-     "restructuring",
-     "capital_markets"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "capital_markets",
-    "restructuring"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Air Baltic"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-11-23T09:33:29+00:00"
-  },
-  {
-   "name_id": "airbaltic",
-   "name": "airBaltic",
    "cluster_id": 154437,
    "primary": {
     "id": 217151,
@@ -1721,7 +1673,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Associated British Foods\" OR \"Action\" OR \"Adecco\" OR \"Adidas\" OR \"Amazon\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -1898,57 +1852,6 @@
     "DE"
    ],
    "latest": "2026-11-23T10:06:00+00:00"
-  },
-  {
-   "name_id": "bayer",
-   "name": "Bayer",
-   "cluster_id": 153968,
-   "primary": {
-    "id": 216560,
-    "title": "US-Gericht winkt Glyphosat-Vergleich durch - Bayer-Aktie gibt dennoch nach",
-    "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNa2hVUVR2bHZPdkhNMmwwaUhqcWpPb29mRGZ5NlJBSUlRaEFCZEVlNUNwOVRkMVUtYXhfMjZhcGxUazFCaHJmdE02WUc0YWJqWmVja2xWMHR1MXJYbXA4RFpReHdzVWZFeEJVcXllWVVmNV9iNWRIZHQyRC1zSlU0MnU2TmdWZFVLaEZhMDFMbzJBd3YzX1pGeWZHQkZWdFZsaWpFc3F6OVFQQlhVcVFwMnB5X1FRci1Lc0pMeDBBU3hZNkJrTDU5cTZ6TUd4Mk5jRXhBcQ",
-    "raw_link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNa2hVUVR2bHZPdkhNMmwwaUhqcWpPb29mRGZ5NlJBSUlRaEFCZEVlNUNwOVRkMVUtYXhfMjZhcGxUazFCaHJmdE02WUc0YWJqWmVja2xWMHR1MXJYbXA4RFpReHdzVWZFeEJVcXllWVVmNV9iNWRIZHQyRC1zSlU0MnU2TmdWZFVLaEZhMDFMbzJBd3YzX1pGeWZHQkZWdFZsaWpFc3F6OVFQQlhVcVFwMnB5X1FRci1Lc0pMeDBBU3hZNkJrTDU5cTZ6TUd4Mk5jRXhBcQ?oc=5",
-    "source": "MarketScreener Schweiz",
-    "domain": "ch.marketscreener.com",
-    "country": "DE",
-    "lang": "de",
-    "published_at": "2026-11-23T09:39:49+00:00",
-    "first_seen_at": "2026-11-23T09:46:26+00:00",
-    "route": "googlenews",
-    "query": "(\"Adidas\" OR \"Bayer\")",
-    "tier_hint": null,
-    "summary": "US-Gericht winkt Glyphosat-Vergleich durch - Bayer-Aktie gibt dennoch nach MarketScreener Schweiz",
-    "alias": "Bayer",
-    "alias_where": "title",
-    "confidence": 0.95,
-    "also_routes": [
-     "googlenews:(\"Adidas\" OR \"Bayer\")"
-    ],
-    "alert_categories": [
-     "litigation"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "litigation"
-   ],
-   "max_confidence": 0.95,
-   "aliases": [
-    "Bayer"
-   ],
-   "languages": [
-    "de"
-   ],
-   "countries": [
-    "DE"
-   ],
-   "latest": "2026-11-23T09:39:49+00:00"
   },
   {
    "name_id": "booking",
@@ -4657,7 +4560,9 @@
     "alias": "Ryanair",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -5290,7 +5195,9 @@
      "alias": "sugar beet",
      "alias_where": "title",
      "confidence": 0.8,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+     ],
      "alert_categories": [
       "regulatory"
      ],
@@ -5923,7 +5830,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"SSP\""
+     "googlenews:\"SSP\"",
+     "googlenews:(\"Sixt\" OR \"Sodexo\" OR \"Sonic Healthcare\" OR \"Sonnenklar TV\" OR \"SSP\" OR \"Steelcase\")"
     ],
     "alert_categories": [
      "litigation"
