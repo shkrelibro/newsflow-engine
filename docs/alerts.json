@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T22:29:33+00:00",
+ "generated_at": "2026-11-25T22:44:16+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -2156,7 +2156,8 @@
      "confidence": 1.0,
      "also_routes": [
       "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
-      "googlenews:\"Booking\""
+      "googlenews:\"Booking\"",
+      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -2214,7 +2215,9 @@
      "alias": "Expedia",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -3010,7 +3013,8 @@
     "confidence": 1.0,
     "also_routes": [
      "googlenews:\"Labcorp\"",
-     "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")"
+     "googlenews:(\"Endo International\" OR \"Fiserv\" OR \"Worldpay\" OR \"Haworth\" OR \"Hertz\" OR \"Labcorp\")",
+     "googlenews:(\"Kingfisher\" OR \"Labcorp\" OR \"Lactalis\" OR \"Groupe Le Duff\" OR \"LEG Immobilien\" OR \"Leroy Merlin\")"
     ],
     "alert_categories": [
      "management"
@@ -3217,7 +3221,9 @@
     "alias": "Lufthansa",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Lufthansa\" OR \"Lupin\" OR \"Lyfius\" OR \"Maersk\" OR \"Maisons du Monde\" OR \"Maje\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -5611,7 +5617,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 224372,
+     "title": "Profits surge 44% at Pets at Home as Vets and Retail turnaround gains traction",
+     "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxON19NRHE4QWN2dzlfM2VWYV9zR0hDMUZFSmFZb3d6T1RaVS1Cc1Jyd0lyeksxb1JUSkNvTFJIZnBKTzh4OUZkYURwTDZTdzNrcG9rWVd6enFlREhETk9JOFRMdkp2OWdLNUYxODdZOThYSXViNmx0eVJTMTZNa1Z3M3BrTjdDc2dnM2NQcGRlTFpTTlNzUTVtb3RSNkwzcElnd0xQUzd0WE5QZEpkbURDZXhhNDNzc2IxUTY1M2kwMA",
+     "raw_link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxON19NRHE4QWN2dzlfM2VWYV9zR0hDMUZFSmFZb3d6T1RaVS1Cc1Jyd0lyeksxb1JUSkNvTFJIZnBKTzh4OUZkYURwTDZTdzNrcG9rWVd6enFlREhETk9JOFRMdkp2OWdLNUYxODdZOThYSXViNmx0eVJTMTZNa1Z3M3BrTjdDc2dnM2NQcGRlTFpTTlNzUTVtb3RSNkwzcElnd0xQUzd0WE5QZEpkbURDZXhhNDNzc2IxUTY1M2kwMA?oc=5",
+     "source": "TheBusinessDesk.com",
+     "domain": "thebusinessdesk.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-11-25T07:43:56+00:00",
+     "first_seen_at": "2026-11-25T22:34:18+00:00",
+     "route": "googlenews",
+     "query": "(\"Parques Reunidos\" OR \"Peach Property\" OR \"Pepco\" OR \"Persimmon\" OR \"Pets at Home\" OR \"Pho (restaurant group)\")",
+     "tier_hint": null,
+     "summary": "Profits surge 44% at Pets at Home as Vets and Retail turnaround gains traction TheBusinessDesk.com",
+     "alias": "Pets at Home",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "price_move"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -7837,57 +7871,6 @@
    "latest": "2026-11-25T09:38:00+00:00"
   },
   {
-   "name_id": "triton",
-   "name": "Triton Partners",
-   "cluster_id": 157428,
-   "primary": {
-    "id": 221104,
-    "title": "Triton Partners Completes Acquisition of Protective Equipment Manufacturer Integris Composites",
-    "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNN2lOZ3VicU5jd0RPcEtQa2JDdEhfc0FxcDdkVHpNVUhlWVJUbEJMdjlublA4RmpiRF9KcHd5aXoxY2wzeVhSWkJLVlJDYlpUR0lLQlNKOGR1SmJsOExYR3E2dUxuQTlOamhPYVU0TVBDOGhBT0dXbjNPTDRKVGtjQTc5UkM4ODlQWEMxTk11dGd5UjBwWE5FcndZXzRZbTNqeGJfXzFmVHhoRkcwWEZhckpwcnk",
-    "raw_link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNN2lOZ3VicU5jd0RPcEtQa2JDdEhfc0FxcDdkVHpNVUhlWVJUbEJMdjlublA4RmpiRF9KcHd5aXoxY2wzeVhSWkJLVlJDYlpUR0lLQlNKOGR1SmJsOExYR3E2dUxuQTlOamhPYVU0TVBDOGhBT0dXbjNPTDRKVGtjQTc5UkM4ODlQWEMxTk11dGd5UjBwWE5FcndZXzRZbTNqeGJfXzFmVHhoRkcwWEZhckpwcnk?oc=5",
-    "source": "Pulse 2.0",
-    "domain": "pulse2.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-24T22:04:13+00:00",
-    "first_seen_at": "2026-11-24T22:30:04+00:00",
-    "route": "googlenews",
-    "query": "(\"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\" OR \"United Rentals\" OR \"Univar\")",
-    "tier_hint": null,
-    "summary": "Triton Partners Completes Acquisition of Protective Equipment Manufacturer Integris Composites Pulse 2.0",
-    "alias": "Triton Partners",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "googlenews:(\"Thomas Cook\" OR \"Triton Partners\" OR \"The United Laboratories\" OR \"Unilabs\" OR \"United Rentals\" OR \"Univar\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Triton Partners"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-24T22:04:13+00:00"
-  },
-  {
    "name_id": "tuicruises",
    "name": "TUI Cruises",
    "cluster_id": 158571,
@@ -8045,7 +8028,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "m_and_a",
      "regulatory"
@@ -9193,7 +9178,9 @@
     "alias": "Unilever",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"PayPal\" OR \"Pfizer\" OR \"Unilever\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -9605,7 +9592,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")"
+     "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")",
+     "googlenews:(\"ZIM\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -9632,6 +9620,55 @@
     "IL"
    ],
    "latest": "2026-11-25T20:08:00+00:00"
+  },
+  {
+   "name_id": "zim",
+   "name": "ZIM",
+   "cluster_id": 159751,
+   "primary": {
+    "id": 224350,
+    "title": "Zim Integrated Shipping Services Insider Sold Shares Worth $326,010, According to a Recent SEC Filing",
+    "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxPSWF4NFRwREVHd1cycFo2ZnN6X1hZcU1EUXhtQmZZOGc2SFg3NENOVVRpLVlCTkdrcm9MWmxNZFp0LTFoQzFNLVp6R1hhLU8xSkVTUVFDNXdsUVFJMmJRRzRWR2ljUDhKNk42bGc4U3V1OUhwUmY4QTNFcXhfNkpYTTRhWUZULWIyZkt4OUxnWHhVU19Kd014Y3JHSDlieUFoX253RVpfbnJENERwUmtWMUx1Nk51ZHlDdE9icTBiNjZQSm1OMjFjMVJRQUVXNjRDUkJxWkw0cTQ0X01IUlZoMEZkVFRIQQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxPSWF4NFRwREVHd1cycFo2ZnN6X1hZcU1EUXhtQmZZOGc2SFg3NENOVVRpLVlCTkdrcm9MWmxNZFp0LTFoQzFNLVp6R1hhLU8xSkVTUVFDNXdsUVFJMmJRRzRWR2ljUDhKNk42bGc4U3V1OUhwUmY4QTNFcXhfNkpYTTRhWUZULWIyZkt4OUxnWHhVU19Kd014Y3JHSDlieUFoX253RVpfbnJENERwUmtWMUx1Nk51ZHlDdE9icTBiNjZQSm1OMjFjMVJRQUVXNjRDUkJxWkw0cTQ0X01IUlZoMEZkVFRIQQ?oc=5",
+    "source": "www.marketscreener.com",
+    "domain": "marketscreener.com",
+    "country": "IL",
+    "lang": "en",
+    "published_at": "2026-11-25T16:03:45+00:00",
+    "first_seen_at": "2026-11-25T22:34:18+00:00",
+    "route": "googlenews",
+    "query": "(\"ZIM\")",
+    "tier_hint": null,
+    "summary": "Zim Integrated Shipping Services Insider Sold Shares Worth $326,010, According to a Recent SEC Filing www.marketscreener.com",
+    "alias": "ZIM",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "ZIM"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "IL"
+   ],
+   "latest": "2026-11-25T16:03:45+00:00"
   }
  ]
 }
