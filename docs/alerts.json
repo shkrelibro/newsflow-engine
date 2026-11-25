@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T17:42:45+00:00",
+ "generated_at": "2026-11-25T17:57:51+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -694,7 +694,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -978,7 +980,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Alteri Investors\" OR \"AmRest\" OR \"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\")"
+      "googlenews:(\"Alteri Investors\" OR \"AmRest\" OR \"Anglikang\" OR \"AO World\" OR \"Applegreen\" OR \"Aramark\")",
+      "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -1232,7 +1235,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Adidas\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -1330,7 +1335,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Adidas\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "regulatory"
     ],
@@ -1390,7 +1397,35 @@
     "screen_reason": "",
     "url_unresolved": true
    },
-   "also": [],
+   "also": [
+    {
+     "id": 223769,
+     "title": "Bayer: Konzern lizenziert in China einen neuartigen Krebsantikörper ein - Aktie in Rot",
+     "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxNcFJtUkJnYTFXbUotWmV6RF80bHpJbUZEQ2tvQ3lPX1F0MHBRanFsWEpfRTNIUjBGTGFYWm00ZTdkNDN4bjdFTlR0d0dhSUdVVl9hOVZBMTc5M2ctY2ZkMURpY1FSZGhYcHljX1ZqZGxQOURqaHFkVTFTaEcwLTNDQjlZN18wZ1NyYVdrZDhNZFBOSDd2TjRNbXpuVXIya0xPZEhzOVhKLWkteEo5SFotekN2S2ozeVZFbWxKVHR6dHE2d2F3ZG1acGlVdU5iWG9Va2NWQWs1RlZiay03SVZadWphZUhqTHI5Nmc",
+     "raw_link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxNcFJtUkJnYTFXbUotWmV6RF80bHpJbUZEQ2tvQ3lPX1F0MHBRanFsWEpfRTNIUjBGTGFYWm00ZTdkNDN4bjdFTlR0d0dhSUdVVl9hOVZBMTc5M2ctY2ZkMURpY1FSZGhYcHljX1ZqZGxQOURqaHFkVTFTaEcwLTNDQjlZN18wZ1NyYVdrZDhNZFBOSDd2TjRNbXpuVXIya0xPZEhzOVhKLWkteEo5SFotekN2S2ozeVZFbWxKVHR6dHE2d2F3ZG1acGlVdU5iWG9Va2NWQWs1RlZiay03SVZadWphZUhqTHI5Nmc?oc=5",
+     "source": "Finanzen.net",
+     "domain": "finanzen.net",
+     "country": "DE",
+     "lang": "de",
+     "published_at": "2026-11-25T14:51:00+00:00",
+     "first_seen_at": "2026-11-25T17:49:17+00:00",
+     "route": "googlenews",
+     "query": "(\"Adidas\" OR \"Bayer\")",
+     "tier_hint": null,
+     "summary": "Bayer: Konzern lizenziert in China einen neuartigen Krebsantikörper ein - Aktie in Rot Finanzen.net",
+     "alias": "Bayer",
+     "alias_where": "title",
+     "confidence": 0.95,
+     "also_routes": [],
+     "alert_categories": [
+      "regulatory"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
    "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
@@ -2267,6 +2302,145 @@
   {
    "name_id": "expedia",
    "name": "Expedia",
+   "cluster_id": 158915,
+   "primary": {
+    "id": 223311,
+    "title": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities",
+    "url": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPdk5nNnF6QXE2cXUyelYtcmNMaVlrelhVQUtqWnNub2d5ZkpaNkpmNjJvclBQMWhvNkxEazhSMnl5Zm1IUS1jbDlTRFNaTk9paXF5TmhIcHNZRlVHOXY4SmtBNS1TRGJob3JTUElvWnE1Zzh1QkhWcm9wMkFxaHJidTV1Q2FNVWltWmxXTEhZQ1VYSUw4cFFmWTBBRTlTZlRhUnZLdWlwMEc2bks5YVEwVnBUZk80MWpUdHJxWElFQmM2dzRJbTUzcU5fRU1mclJmOEhVSktBbHZIVVJWbWRVb0REOGE3ckpHYVRFbGFjb1FrZzhxaU1KZDY3ZE9YYmpaU0hhNWFpdHJEdW43VFNlNlZ4RVRoSEU",
+    "raw_link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPdk5nNnF6QXE2cXUyelYtcmNMaVlrelhVQUtqWnNub2d5ZkpaNkpmNjJvclBQMWhvNkxEazhSMnl5Zm1IUS1jbDlTRFNaTk9paXF5TmhIcHNZRlVHOXY4SmtBNS1TRGJob3JTUElvWnE1Zzh1QkhWcm9wMkFxaHJidTV1Q2FNVWltWmxXTEhZQ1VYSUw4cFFmWTBBRTlTZlRhUnZLdWlwMEc2bks5YVEwVnBUZk80MWpUdHJxWElFQmM2dzRJbTUzcU5fRU1mclJmOEhVSktBbHZIVVJWbWRVb0REOGE3ckpHYVRFbGFjb1FrZzhxaU1KZDY3ZE9YYmpaU0hhNWFpdHJEdW43VFNlNlZ4RVRoSEU?oc=5",
+    "source": "The Joplin Globe",
+    "domain": "joplinglobe.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-25T14:00:56+00:00",
+    "first_seen_at": "2026-11-25T15:54:01+00:00",
+    "route": "googlenews",
+    "query": "\"Expedia\"",
+    "tier_hint": null,
+    "summary": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities The Joplin Globe",
+    "alias": "Expedia",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "googlenews:\"Expedia\""
+    ],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [
+    {
+     "id": 223310,
+     "title": "Expedia Group Agrees to Acquire Travel Technology Firm Kiwi.com",
+     "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPV1N6dXNPelJfQ0VZOTNHRHF6Tkh3WUFiakl3SDNxOVY4dGdVTFlueWNUeDRLUHllemhYMVQ3bVU5NnVnaWtnVHZWUnVwWkVMYXJxRzFyVHRQNmtHR0VsODVnVDhsS1Q2bHk4bHZqRW5TZVRBNnRmNW82UVFraVk2anFXb083eGJDSGNhbVJPazFGTzFSQ0N1Y1hyQTl0MFZzT2NfSkR3U1YybTVHeDdsdTloaHFqQmc",
+     "raw_link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPV1N6dXNPelJfQ0VZOTNHRHF6Tkh3WUFiakl3SDNxOVY4dGdVTFlueWNUeDRLUHllemhYMVQ3bVU5NnVnaWtnVHZWUnVwWkVMYXJxRzFyVHRQNmtHR0VsODVnVDhsS1Q2bHk4bHZqRW5TZVRBNnRmNW82UVFraVk2anFXb083eGJDSGNhbVJPazFGTzFSQ0N1Y1hyQTl0MFZzT2NfSkR3U1YybTVHeDdsdTloaHFqQmc?oc=5",
+     "source": "marketscreener.com",
+     "domain": "marketscreener.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-25T14:25:48+00:00",
+     "first_seen_at": "2026-11-25T15:54:01+00:00",
+     "route": "googlenews",
+     "query": "\"Expedia\"",
+     "tier_hint": null,
+     "summary": "Expedia Group Agrees to Acquire Travel Technology Firm Kiwi.com marketscreener.com",
+     "alias": "Expedia",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+      "googlenews:\"Expedia\""
+     ],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 223186,
+     "title": "Expedia Group agrees to acquire Kiwi.com",
+     "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5neWl5Q29iS0p1bFp1a0FFQmZyZVNfczMxdmtJaFA4SThzcXo2WTcyRlZubHRRckY4ZkpvejZUTEdzc0FoR3dtN3lpeXR4Ujk1dm1WQUxvNGs5eWZvM2ZGQnh5aVNhWkpxODhETnNfOTVhRUVTMjJ3VA",
+     "raw_link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5neWl5Q29iS0p1bFp1a0FFQmZyZVNfczMxdmtJaFA4SThzcXo2WTcyRlZubHRRckY4ZkpvejZUTEdzc0FoR3dtN3lpeXR4Ujk1dm1WQUxvNGs5eWZvM2ZGQnh5aVNhWkpxODhETnNfOTVhRUVTMjJ3VA?oc=5",
+     "source": "Crypto Briefing",
+     "domain": "cryptobriefing.com",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-25T14:28:10+00:00",
+     "first_seen_at": "2026-11-25T14:54:01+00:00",
+     "route": "googlenews",
+     "query": "(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
+     "tier_hint": null,
+     "summary": "Expedia Group agrees to acquire Kiwi.com Crypto Briefing",
+     "alias": "Expedia",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [
+      "googlenews:\"Expedia\"",
+      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     ],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    },
+    {
+     "id": 223763,
+     "title": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities",
+     "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPTXQ2eFhmVGU2NlZVRlIwSEpQMXVXQ3lxaS1mLUtEWkUyN1RCOE1GQW1pQWZOd2p6MXdaRTN2MW53Ty00OWMyZmRhdHo2R0kzQ2NXYnZPall3ajBzV0toNVplRjQ0aXpha19XTnBIc0lTcWN1M09kMFF4YVdybnVYVWFRRm5NdWFpWGk1U2VfcFUzSzZGLXdCd0RXbHBwcmtVQWJpakZmbTdHX2c",
+     "raw_link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPTXQ2eFhmVGU2NlZVRlIwSEpQMXVXQ3lxaS1mLUtEWkUyN1RCOE1GQW1pQWZOd2p6MXdaRTN2MW53Ty00OWMyZmRhdHo2R0kzQ2NXYnZPall3ajBzV0toNVplRjQ0aXpha19XTnBIc0lTcWN1M09kMFF4YVdybnVYVWFRRm5NdWFpWGk1U2VfcFUzSzZGLXdCd0RXbHBwcmtVQWJpakZmbTdHX2c?oc=5",
+     "source": "01net",
+     "domain": "01net.it",
+     "country": "US",
+     "lang": "en",
+     "published_at": "2026-11-25T17:00:00+00:00",
+     "first_seen_at": "2026-11-25T17:49:17+00:00",
+     "route": "googlenews",
+     "query": "\"Expedia\"",
+     "tier_hint": null,
+     "summary": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities 01net",
+     "alias": "Expedia",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
+    }
+   ],
+   "sources": 4,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Expedia"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-25T17:00:00+00:00"
+  },
+  {
+   "name_id": "expedia",
+   "name": "Expedia",
    "cluster_id": 158942,
    "primary": {
     "id": 223231,
@@ -2317,7 +2491,9 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+      "googlenews:\"Expedia\"",
+      "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -2367,7 +2543,9 @@
     "alias": "Expedia",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:\"Expedia\""
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -2395,7 +2573,9 @@
      "alias": "Expedia",
      "alias_where": "title",
      "confidence": 1.0,
-     "also_routes": [],
+     "also_routes": [
+      "googlenews:\"Expedia\""
+     ],
      "alert_categories": [
       "m_and_a"
      ],
@@ -2425,115 +2605,6 @@
   {
    "name_id": "expedia",
    "name": "Expedia",
-   "cluster_id": 158915,
-   "primary": {
-    "id": 223311,
-    "title": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities",
-    "url": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPdk5nNnF6QXE2cXUyelYtcmNMaVlrelhVQUtqWnNub2d5ZkpaNkpmNjJvclBQMWhvNkxEazhSMnl5Zm1IUS1jbDlTRFNaTk9paXF5TmhIcHNZRlVHOXY4SmtBNS1TRGJob3JTUElvWnE1Zzh1QkhWcm9wMkFxaHJidTV1Q2FNVWltWmxXTEhZQ1VYSUw4cFFmWTBBRTlTZlRhUnZLdWlwMEc2bks5YVEwVnBUZk80MWpUdHJxWElFQmM2dzRJbTUzcU5fRU1mclJmOEhVSktBbHZIVVJWbWRVb0REOGE3ckpHYVRFbGFjb1FrZzhxaU1KZDY3ZE9YYmpaU0hhNWFpdHJEdW43VFNlNlZ4RVRoSEU",
-    "raw_link": "https://news.google.com/rss/articles/CBMilwJBVV95cUxPdk5nNnF6QXE2cXUyelYtcmNMaVlrelhVQUtqWnNub2d5ZkpaNkpmNjJvclBQMWhvNkxEazhSMnl5Zm1IUS1jbDlTRFNaTk9paXF5TmhIcHNZRlVHOXY4SmtBNS1TRGJob3JTUElvWnE1Zzh1QkhWcm9wMkFxaHJidTV1Q2FNVWltWmxXTEhZQ1VYSUw4cFFmWTBBRTlTZlRhUnZLdWlwMEc2bks5YVEwVnBUZk80MWpUdHJxWElFQmM2dzRJbTUzcU5fRU1mclJmOEhVSktBbHZIVVJWbWRVb0REOGE3ckpHYVRFbGFjb1FrZzhxaU1KZDY3ZE9YYmpaU0hhNWFpdHJEdW43VFNlNlZ4RVRoSEU?oc=5",
-    "source": "The Joplin Globe",
-    "domain": "joplinglobe.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-11-25T14:00:56+00:00",
-    "first_seen_at": "2026-11-25T15:54:01+00:00",
-    "route": "googlenews",
-    "query": "\"Expedia\"",
-    "tier_hint": null,
-    "summary": "Expedia Group Announces Agreement to Acquire Kiwi.com to Augment Flights Capabilities The Joplin Globe",
-    "alias": "Expedia",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [
-    {
-     "id": 223310,
-     "title": "Expedia Group Agrees to Acquire Travel Technology Firm Kiwi.com",
-     "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPV1N6dXNPelJfQ0VZOTNHRHF6Tkh3WUFiakl3SDNxOVY4dGdVTFlueWNUeDRLUHllemhYMVQ3bVU5NnVnaWtnVHZWUnVwWkVMYXJxRzFyVHRQNmtHR0VsODVnVDhsS1Q2bHk4bHZqRW5TZVRBNnRmNW82UVFraVk2anFXb083eGJDSGNhbVJPazFGTzFSQ0N1Y1hyQTl0MFZzT2NfSkR3U1YybTVHeDdsdTloaHFqQmc",
-     "raw_link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPV1N6dXNPelJfQ0VZOTNHRHF6Tkh3WUFiakl3SDNxOVY4dGdVTFlueWNUeDRLUHllemhYMVQ3bVU5NnVnaWtnVHZWUnVwWkVMYXJxRzFyVHRQNmtHR0VsODVnVDhsS1Q2bHk4bHZqRW5TZVRBNnRmNW82UVFraVk2anFXb083eGJDSGNhbVJPazFGTzFSQ0N1Y1hyQTl0MFZzT2NfSkR3U1YybTVHeDdsdTloaHFqQmc?oc=5",
-     "source": "marketscreener.com",
-     "domain": "marketscreener.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-11-25T14:25:48+00:00",
-     "first_seen_at": "2026-11-25T15:54:01+00:00",
-     "route": "googlenews",
-     "query": "\"Expedia\"",
-     "tier_hint": null,
-     "summary": "Expedia Group Agrees to Acquire Travel Technology Firm Kiwi.com marketscreener.com",
-     "alias": "Expedia",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
-     ],
-     "alert_categories": [
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
-    {
-     "id": 223186,
-     "title": "Expedia Group agrees to acquire Kiwi.com",
-     "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5neWl5Q29iS0p1bFp1a0FFQmZyZVNfczMxdmtJaFA4SThzcXo2WTcyRlZubHRRckY4ZkpvejZUTEdzc0FoR3dtN3lpeXR4Ujk1dm1WQUxvNGs5eWZvM2ZGQnh5aVNhWkpxODhETnNfOTVhRUVTMjJ3VA",
-     "raw_link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5neWl5Q29iS0p1bFp1a0FFQmZyZVNfczMxdmtJaFA4SThzcXo2WTcyRlZubHRRckY4ZkpvejZUTEdzc0FoR3dtN3lpeXR4Ujk1dm1WQUxvNGs5eWZvM2ZGQnh5aVNhWkpxODhETnNfOTVhRUVTMjJ3VA?oc=5",
-     "source": "Crypto Briefing",
-     "domain": "cryptobriefing.com",
-     "country": "US",
-     "lang": "en",
-     "published_at": "2026-11-25T14:28:10+00:00",
-     "first_seen_at": "2026-11-25T14:54:01+00:00",
-     "route": "googlenews",
-     "query": "(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
-     "tier_hint": null,
-     "summary": "Expedia Group agrees to acquire Kiwi.com Crypto Briefing",
-     "alias": "Expedia",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "googlenews:\"Expedia\"",
-      "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
-     ],
-     "alert_categories": [
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    }
-   ],
-   "sources": 3,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Expedia"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-11-25T14:28:10+00:00"
-  },
-  {
-   "name_id": "expedia",
-   "name": "Expedia",
    "cluster_id": 159000,
    "primary": {
     "id": 223307,
@@ -2554,7 +2625,9 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+     "googlenews:\"Expedia\"",
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
     ],
     "alert_categories": [
      "m_and_a"
@@ -2851,7 +2924,9 @@
     "alias": "HelloFresh",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "bingnews:\"HelloFresh\""
+    ],
     "alert_categories": [
      "management"
     ],
@@ -7166,6 +7241,55 @@
   {
    "name_id": "sodexo",
    "name": "Sodexo",
+   "cluster_id": 154641,
+   "primary": {
+    "id": 223783,
+    "title": "Mickaël Le Bohellec nommé directeur général de Sodexo Live! France et Lenôtre",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQTG42NXNzdmc0VF8xVTZKV0xwbFRFOUNIbVE1MFkzRkZ2aW1HWjN0RmVsQmtyXzBVVFVVeVRzVXJ5a2NXMFlzRHkxamZDWnpZOVVrRURVUU5NRkc0Q1lpYmVEMTlLMEZ3VWIxbFhPNEhzUzJyRFBpaXdIOWRtUGg4dHVTdU5jUkVzbExacnFQdUMxV0hoMUFyUUtQYnNtUQ",
+    "raw_link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQTG42NXNzdmc0VF8xVTZKV0xwbFRFOUNIbVE1MFkzRkZ2aW1HWjN0RmVsQmtyXzBVVFVVeVRzVXJ5a2NXMFlzRHkxamZDWnpZOVVrRURVUU5NRkc0Q1lpYmVEMTlLMEZ3VWIxbFhPNEhzUzJyRFBpaXdIOWRtUGg4dHVTdU5jUkVzbExacnFQdUMxV0hoMUFyUUtQYnNtUQ?oc=5",
+    "source": "HR-Infos",
+    "domain": "hr-infos.fr",
+    "country": "FR",
+    "lang": "fr",
+    "published_at": "2026-11-25T16:47:19+00:00",
+    "first_seen_at": "2026-11-25T17:49:17+00:00",
+    "route": "googlenews",
+    "query": "(\"Sandro\" OR \"Savencia\" OR \"antibiotic shortage\" OR \"jet fuel\" OR \"sugar beet\" OR \"Sodexo\")",
+    "tier_hint": null,
+    "summary": "Mickaël Le Bohellec nommé directeur général de Sodexo Live! France et Lenôtre HR-Infos",
+    "alias": "Sodexo",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "management"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "management"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Sodexo"
+   ],
+   "languages": [
+    "fr"
+   ],
+   "countries": [
+    "FR"
+   ],
+   "latest": "2026-11-25T16:47:19+00:00"
+  },
+  {
+   "name_id": "sodexo",
+   "name": "Sodexo",
    "cluster_id": 159283,
    "primary": {
     "id": 223678,
@@ -7719,7 +7843,8 @@
     "confidence": 0.5,
     "also_routes": [
      "googlenews:\"Magnum Ice Cream Company\"",
-     "googlenews:(\"Magnum Ice Cream Company\" OR \"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\")"
+     "googlenews:(\"Magnum Ice Cream Company\" OR \"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\")",
+     "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")"
     ],
     "alert_categories": [
      "m_and_a"
