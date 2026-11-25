@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T11:52:16+00:00",
+ "generated_at": "2026-11-25T12:01:09+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -361,7 +361,9 @@
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.tvnet.lv/rss"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -1063,7 +1065,9 @@
     "alias": "Amazon",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")"
+    ],
     "alert_categories": [
      "management"
     ],
@@ -2049,6 +2053,55 @@
    "latest": "2026-11-24T15:16:00+00:00"
   },
   {
+   "name_id": "disneyparks",
+   "name": "Disney Parks",
+   "cluster_id": 158515,
+   "primary": {
+    "id": 222644,
+    "title": "Disney sued by NFL agent Zac Hiller’s LAA Music over alleged use of unlicensed music in ESPN, Hulu, Disney Parks, and FX social media promos",
+    "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQbS1GX1Q2ZFZQdzJPVzhWZmtISGs0SnlidXBOSHFMMk9Jd1hpNFFWV25ONW93eDBvMVdqY19Pdm1UWTlDOEZ4ME9HQWhSUUljNEpVN2ctd0Z0SWNGMVZUaDhmRTYtNnAzNlRzS0lPZjVmZWxTNnR2bUZ4RFpSUWtwZmxJUUhQZi00MkxUSXlKVEZYTzduSjRfRzJlRndXQXgzcFlXeVpYeGFVR1hZLUptNWZKZndpZVk5c0ZMLVVjZmVVdE81a19kLUx3WDlKRkUtd2EwWkxEdTE1dm1aajJxUm5ReEpoWS1sU1NxT3I5d3dMaU9neGZXRjVxMEQ2dXZ3UjJiWTlYNA",
+    "raw_link": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQbS1GX1Q2ZFZQdzJPVzhWZmtISGs0SnlidXBOSHFMMk9Jd1hpNFFWV25ONW93eDBvMVdqY19Pdm1UWTlDOEZ4ME9HQWhSUUljNEpVN2ctd0Z0SWNGMVZUaDhmRTYtNnAzNlRzS0lPZjVmZWxTNnR2bUZ4RFpSUWtwZmxJUUhQZi00MkxUSXlKVEZYTzduSjRfRzJlRndXQXgzcFlXeVpYeGFVR1hZLUptNWZKZndpZVk5c0ZMLVVjZmVVdE81a19kLUx3WDlKRkUtd2EwWkxEdTE1dm1aajJxUm5ReEpoWS1sU1NxT3I5d3dMaU9neGZXRjVxMEQ2dXZ3UjJiWTlYNA?oc=5",
+    "source": "Music Business Worldwide",
+    "domain": "musicbusinessworldwide.com",
+    "country": "US",
+    "lang": "en",
+    "published_at": "2026-11-25T10:57:59+00:00",
+    "first_seen_at": "2026-11-25T11:54:01+00:00",
+    "route": "googlenews",
+    "query": "(\"Amazon\" OR \"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"Nike\")",
+    "tier_hint": null,
+    "summary": "Disney sued by NFL agent Zac Hiller’s LAA Music over alleged use of unlicensed music in ESPN, Hulu, Disney Parks, and FX social media promos Music Business Worldwide",
+    "alias": "Disney Parks",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "regulatory"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "regulatory"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Disney Parks"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "US"
+   ],
+   "latest": "2026-11-25T10:57:59+00:00"
+  },
+  {
    "name_id": "dovalue",
    "name": "doValue",
    "cluster_id": 156495,
@@ -2401,7 +2454,9 @@
     "alias": "Hornbach",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"DER Touristik\" OR \"Fitness First\" OR \"Grand City Properties\" OR \"Hamborner REIT\" OR \"Hornbach\" OR \"KiK\")"
+    ],
     "alert_categories": [
      "litigation",
      "regulatory"
@@ -2725,6 +2780,55 @@
     "FR"
    ],
    "latest": "2026-11-24T12:15:00+00:00"
+  },
+  {
+   "name_id": "lufthansa",
+   "name": "Lufthansa",
+   "cluster_id": 158508,
+   "primary": {
+    "id": 222633,
+    "title": "Nachrichten der Woche - Ryanair-Wachstumsplan, Lufthansa-Stellenabbau, Pilotenkonflikt, Konzern-App",
+    "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOWkVRSGxtb3ZrNVFZR1VCc2s1X29ocGRRMzN1MURybWJadERFWW5qM1RkN0hQamo3NDhxZkhkNGlIbkdFekR6ZllvTTh4Z25Fa3dPX1NXMGNZRGZOODZxSm0yNFNoYUNvZ1Y2Um5DUjZmeTZ1Mm4zRlpxbkU5ZEhTWm4xYzJEallWNzJmSDR5SldJc3J5WXMxRWN5d2EwUGJaTDlhNVBpWjV2LVd5V3VsTEU0d1JrUjFWZDZzSGJB",
+    "raw_link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOWkVRSGxtb3ZrNVFZR1VCc2s1X29ocGRRMzN1MURybWJadERFWW5qM1RkN0hQamo3NDhxZkhkNGlIbkdFekR6ZllvTTh4Z25Fa3dPX1NXMGNZRGZOODZxSm0yNFNoYUNvZ1Y2Um5DUjZmeTZ1Mm4zRlpxbkU5ZEhTWm4xYzJEallWNzJmSDR5SldJc3J5WXMxRWN5d2EwUGJaTDlhNVBpWjV2LVd5V3VsTEU0d1JrUjFWZDZzSGJB?oc=5",
+    "source": "airliners.de",
+    "domain": "airliners.de",
+    "country": "DE",
+    "lang": "de",
+    "published_at": "2026-11-25T11:30:00+00:00",
+    "first_seen_at": "2026-11-25T11:54:01+00:00",
+    "route": "googlenews",
+    "query": "(\"LEG Immobilien\" OR \"Lufthansa\" OR \"Marley Spoon\" OR \"MEDIAN Kliniken\" OR \"Motel One\" OR \"Nexi\")",
+    "tier_hint": null,
+    "summary": "Nachrichten der Woche - Ryanair-Wachstumsplan, Lufthansa-Stellenabbau, Pilotenkonflikt, Konzern-App airliners.de",
+    "alias": "Lufthansa",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [],
+    "alert_categories": [
+     "workforce"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "workforce"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Lufthansa"
+   ],
+   "languages": [
+    "de"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-25T11:30:00+00:00"
   },
   {
    "name_id": "lufthansa",
