@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T11:33:07+00:00",
+ "generated_at": "2026-11-26T11:47:56+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -23,7 +23,9 @@
     "alias": "Adidas",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Adidas\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "rating"
     ],
@@ -305,7 +307,9 @@
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "rss:https://www.diepresse.com/rss//"
+    ],
     "alert_categories": [
      "restructuring"
     ],
@@ -701,25 +705,25 @@
    "name": "airBaltic",
    "cluster_id": 158470,
    "primary": {
-    "id": 222582,
+    "id": 223136,
     "title": "JV vēl nav izlēmusi, kādu nostāju ieņems \"airBaltic\" jautājumā",
-    "url": "https://pmo.ee/8589866",
-    "raw_link": "https://pmo.ee/8589866",
+    "url": "https://tvnet.lv/8589866/jv-vel-nav-izlemusi-kadu-nostaju-ienems-airbaltic-jautajuma",
+    "raw_link": "https://www.tvnet.lv/8589866/jv-vel-nav-izlemusi-kadu-nostaju-ienems-airbaltic-jautajuma",
     "source": "TVNET",
-    "domain": "pmo.ee",
+    "domain": "tvnet.lv",
     "country": "LV",
     "lang": "lv",
-    "published_at": "2026-11-25T11:27:08+00:00",
-    "first_seen_at": "2026-11-25T11:45:04+00:00",
-    "route": "rss",
-    "query": "https://www.tvnet.lv/rss",
-    "tier_hint": 3,
-    "summary": "\"Jaunās vienotības\" (JV) Saeimas frakcijas deputāti pašlaik nevar pieņemt lēmumu par to, vai atbalstīt galvojuma sniegšanu \"airBaltic\" 175 miljonu eiro apmērā, aģentūrai LETA teica JV Saeimas frakcijas vadītāja Inese Lībiņa-Egnere.",
+    "published_at": "2026-11-25T03:27:00+00:00",
+    "first_seen_at": "2026-11-25T14:54:01+00:00",
+    "route": "bingnews",
+    "query": "\"airBaltic\"",
+    "tier_hint": null,
+    "summary": "\"Jaunās vienotības\" (JV) Saeimas frakcijas deputāti pašlaik nevar pieņemt lēmumu par to, vai atbalstīt galvojuma sniegšanu \"airBaltic\" 175 miljonu eiro apmērā, aģentūrai LETA teica JV Saeimas frakcija ...",
     "alias": "airBaltic",
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "rss:https://www.tvnet.lv/rss"
+     "bingnews:\"airBaltic\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -729,38 +733,8 @@
     "screen_reason": "",
     "url_unresolved": false
    },
-   "also": [
-    {
-     "id": 223136,
-     "title": "JV vēl nav izlēmusi, kādu nostāju ieņems \"airBaltic\" jautājumā",
-     "url": "https://tvnet.lv/8589866/jv-vel-nav-izlemusi-kadu-nostaju-ienems-airbaltic-jautajuma",
-     "raw_link": "https://www.tvnet.lv/8589866/jv-vel-nav-izlemusi-kadu-nostaju-ienems-airbaltic-jautajuma",
-     "source": "TVNET",
-     "domain": "tvnet.lv",
-     "country": "LV",
-     "lang": "lv",
-     "published_at": "2026-11-25T03:27:00+00:00",
-     "first_seen_at": "2026-11-25T14:54:01+00:00",
-     "route": "bingnews",
-     "query": "\"airBaltic\"",
-     "tier_hint": null,
-     "summary": "\"Jaunās vienotības\" (JV) Saeimas frakcijas deputāti pašlaik nevar pieņemt lēmumu par to, vai atbalstīt galvojuma sniegšanu \"airBaltic\" 175 miljonu eiro apmērā, aģentūrai LETA teica JV Saeimas frakcija ...",
-     "alias": "airBaltic",
-     "alias_where": "title",
-     "confidence": 1.0,
-     "also_routes": [
-      "bingnews:\"airBaltic\""
-     ],
-     "alert_categories": [
-      "m_and_a"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": false
-    }
-   ],
-   "sources": 2,
+   "also": [],
+   "sources": 1,
    "alert_candidate": true,
    "alert_categories": [
     "m_and_a"
@@ -775,7 +749,7 @@
    "countries": [
     "LV"
    ],
-   "latest": "2026-11-25T11:27:08+00:00"
+   "latest": "2026-11-25T03:27:00+00:00"
   },
   {
    "name_id": "airfranceklm",
@@ -2150,7 +2124,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")"
+     "googlenews:(\"Booking\" OR \"Disney Parks\" OR \"Enterprise\" OR \"Expedia\" OR \"GSK\" OR \"Nike\")",
+     "googlenews:\"Expedia\""
     ],
     "alert_categories": [
      "m_and_a"
@@ -4364,7 +4339,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Marley Spoon\" OR \"McDonald's France\" OR \"MEDIAN Kliniken\" OR \"MillerKnoll\" OR \"Mollie\" OR \"Morellato\")"
+     "googlenews:(\"Marley Spoon\" OR \"McDonald's France\" OR \"MEDIAN Kliniken\" OR \"MillerKnoll\" OR \"Mollie\" OR \"Morellato\")",
+     "googlenews:(\"MillerKnoll\" OR \"Norwegian Cruise Line\" OR \"Omega Healthcare\" OR \"On Holding\" OR \"OpenGate Capital\" OR \"Organon\")"
     ],
     "alert_categories": [
      "litigation"
@@ -5964,7 +5940,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:\"Ryanair\""
+     "googlenews:\"Ryanair\"",
+     "googlenews:(\"Applegreen\" OR \"Primark\" OR \"Ryanair\")"
     ],
     "alert_categories": [
      "regulatory"
@@ -7863,111 +7840,6 @@
     "GB"
    ],
    "latest": "2026-11-26T07:14:51+00:00"
-  },
-  {
-   "name_id": "tmicc",
-   "name": "The Magnum Ice Cream Company",
-   "cluster_id": 158484,
-   "primary": {
-    "id": 222598,
-    "title": "Magnum Ice Cream (MICC) tech chief acquires 3,500 ordinary shares for £51,485.",
-    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOYmtBR1BiaTU5bW44NE00cVVRVTNBOEh5QkxDRFg5UklLOFJtUktzU0ZDNk5BMWtJcm5ObXl6TE9uRi0tc3JYRjBIRWhKZXVQODF6V3J1cU1STkl3QU9KTm83R1ZaRkpIYl9PNUEzT1lEc1FFZVFQWGlCZndMSDlZNks5azkxSVp0WEVidmFacDJrZ1A1UXZLbEgyNGY2Y215NjJleEptNFEwZWV5bk5YUUhQM1dVNmxsT2hj",
-    "raw_link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOYmtBR1BiaTU5bW44NE00cVVRVTNBOEh5QkxDRFg5UklLOFJtUktzU0ZDNk5BMWtJcm5ObXl6TE9uRi0tc3JYRjBIRWhKZXVQODF6V3J1cU1STkl3QU9KTm83R1ZaRkpIYl9PNUEzT1lEc1FFZVFQWGlCZndMSDlZNks5azkxSVp0WEVidmFacDJrZ1A1UXZLbEgyNGY2Y215NjJleEptNFEwZWV5bk5YUUhQM1dVNmxsT2hj?oc=5",
-    "source": "Stock Titan",
-    "domain": "stocktitan.net",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-11-25T11:07:21+00:00",
-    "first_seen_at": "2026-11-25T11:45:04+00:00",
-    "route": "googlenews",
-    "query": "\"Magnum Ice Cream Company\"",
-    "tier_hint": null,
-    "summary": "Magnum Ice Cream (MICC) tech chief acquires 3,500 ordinary shares for £51,485. Stock Titan",
-    "alias": "Magnum",
-    "alias_where": "title",
-    "confidence": 0.5,
-    "also_routes": [
-     "googlenews:\"Magnum Ice Cream Company\"",
-     "googlenews:\"TMICC\""
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 0.5,
-   "aliases": [
-    "Magnum"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-11-25T11:07:21+00:00"
-  },
-  {
-   "name_id": "tmicc",
-   "name": "The Magnum Ice Cream Company",
-   "cluster_id": 158485,
-   "primary": {
-    "id": 222599,
-    "title": "Magnum Ice Cream CTO acquires 3,500 shares wort...",
-    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMzhwNkJYbjdNNDFFQ1EtTm5KMVcyMkk2eVFZUWU4TWJoSnZOT0ozY29uNlBrTlBsLUQ5Y052b0VkTk90TUZBMWUxQjd5U3RrMWVRUXp5eXN3TWNnWW1oclZKQlhBYmdDUHU4amNmTjJaQUQtVUdneVZOU0I3dkJzdXpMRmlKZDhQOHZ4MTVTemNXZzc2eVZZ",
-    "raw_link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMzhwNkJYbjdNNDFFQ1EtTm5KMVcyMkk2eVFZUWU4TWJoSnZOT0ozY29uNlBrTlBsLUQ5Y052b0VkTk90TUZBMWUxQjd5U3RrMWVRUXp5eXN3TWNnWW1oclZKQlhBYmdDUHU4amNmTjJaQUQtVUdneVZOU0I3dkJzdXpMRmlKZDhQOHZ4MTVTemNXZzc2eVZZ?oc=5",
-    "source": "Pluang",
-    "domain": "pluang.com",
-    "country": "US",
-    "lang": "en",
-    "published_at": "2026-11-25T09:54:09+00:00",
-    "first_seen_at": "2026-11-25T11:45:04+00:00",
-    "route": "googlenews",
-    "query": "\"Magnum Ice Cream Company\"",
-    "tier_hint": null,
-    "summary": "Magnum Ice Cream CTO acquires 3,500 shares wort... Pluang",
-    "alias": "Magnum",
-    "alias_where": "title",
-    "confidence": 0.5,
-    "also_routes": [
-     "googlenews:\"Magnum Ice Cream Company\"",
-     "googlenews:(\"Magnum Ice Cream Company\" OR \"Travelodge\" OR \"TUI Cruises\" OR \"TUI\" OR \"Versuni\" OR \"The Very Group\")",
-     "googlenews:(\"Medical Properties Trust\" OR \"PRA Group\" OR \"Skechers\" OR \"Teva\" OR \"Magnum Ice Cream Company\" OR \"Wagamama\")"
-    ],
-    "alert_categories": [
-     "m_and_a"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": true
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "m_and_a"
-   ],
-   "max_confidence": 0.5,
-   "aliases": [
-    "Magnum"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "US"
-   ],
-   "latest": "2026-11-25T09:54:09+00:00"
   },
   {
    "name_id": "travelodge",
