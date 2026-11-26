@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T06:35:32+00:00",
+ "generated_at": "2026-11-26T06:50:38+00:00",
  "alerts": [
   {
    "name_id": "adyen",
@@ -1807,7 +1807,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"Anglikang\" OR \"Chuanning Biotech\" OR \"COSCO\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\")"
+     "googlenews:(\"Anglikang\" OR \"Chuanning Biotech\" OR \"COSCO\" OR \"CSPC Pharmaceutical\" OR \"North China Pharmaceutical\" OR \"The United Laboratories\")",
+     "googlenews:(\"Conforama\" OR \"COSCO\" OR \"Covis Pharma\" OR \"CPI Property\" OR \"Crane Merchandising\" OR \"Cristal Union\")"
     ],
     "alert_categories": [
      "capital_markets"
@@ -3770,7 +3771,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Metlen\""
+      "googlenews:\"Metlen\"",
+      "googlenews:(\"doValue\" OR \"Intrum\" OR \"Metlen\")"
      ],
      "alert_categories": [
       "litigation"
@@ -5022,6 +5024,85 @@
     "US"
    ],
    "latest": "2026-11-25T20:36:00+00:00"
+  },
+  {
+   "name_id": "mutares",
+   "name": "Mutares",
+   "cluster_id": 160205,
+   "primary": {
+    "id": 224977,
+    "title": "Mutares has sold a controlling stake in Lapeyre Group to an investment vehicle backed by Italian entrepreneurs",
+    "url": "https://mutares.com/en/mutares-has-sold-a-controlling-stake-in-lapeyre-group-to-an-investment-vehicle-backed-by-italian-entrepreneurs",
+    "raw_link": "https://mutares.com/en/mutares-has-sold-a-controlling-stake-in-lapeyre-group-to-an-investment-vehicle-backed-by-italian-entrepreneurs/",
+    "source": "Mutares news",
+    "domain": "mutares.com",
+    "country": "DE",
+    "lang": "en",
+    "published_at": "2026-11-26T06:29:56+00:00",
+    "first_seen_at": "2026-11-26T06:40:31+00:00",
+    "route": "page",
+    "query": "https://mutares.com/en/news/",
+    "tier_hint": 0,
+    "summary": "",
+    "alias": "Mutares",
+    "alias_where": "title",
+    "confidence": 1.0,
+    "also_routes": [
+     "page:https://mutares.com/en/news/"
+    ],
+    "alert_categories": [
+     "m_and_a"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": false
+   },
+   "also": [
+    {
+     "id": 224980,
+     "title": "07:30 Corporate Mutares SE & Co. KGaA Corporate Mutares has sold a controlling stake in Lapeyre Group to an investment vehicle backed by Italian entrepreneurs ",
+     "url": "https://eqs-news.com/news/corporate/mutares-has-sold-a-controlling-stake-in-lapeyre-group-to-an-investment-vehicle-backed-by-italian-entrepreneurs/9b002272-442b-4945-a524-082e1181e023_en",
+     "raw_link": "https://www.eqs-news.com/news/corporate/mutares-has-sold-a-controlling-stake-in-lapeyre-group-to-an-investment-vehicle-backed-by-italian-entrepreneurs/9b002272-442b-4945-a524-082e1181e023_en",
+     "source": "Mutares regulatory news (EQS)",
+     "domain": "eqs-news.com",
+     "country": "DE",
+     "lang": "en",
+     "published_at": null,
+     "first_seen_at": "2026-11-26T06:40:31+00:00",
+     "route": "page",
+     "query": "https://www.eqs-news.com/company/mutares-se-co-kgaa/news/5b959bd4-ea7c-11e8-902f-2c44fd856d8c",
+     "tier_hint": 0,
+     "summary": "",
+     "alias": "Mutares",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "m_and_a"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": false
+    }
+   ],
+   "sources": 2,
+   "alert_candidate": true,
+   "alert_categories": [
+    "m_and_a"
+   ],
+   "max_confidence": 1.0,
+   "aliases": [
+    "Mutares"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "DE"
+   ],
+   "latest": "2026-11-26T06:40:31+00:00"
   },
   {
    "name_id": "mutares",
@@ -7260,7 +7341,9 @@
     "alias": "jet fuel",
     "alias_where": "title",
     "confidence": 0.8,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"freight rates\" OR \"jet fuel\" OR \"property lender\" OR \"sugar beet\" OR \"Sielaff\" OR \"Signet Jewelers\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -7394,25 +7477,25 @@
    "name": "Sugar beet (sector)",
    "cluster_id": 155837,
    "primary": {
-    "id": 221573,
-    "title": "Sugar Price Europe, 25 Nov 2026: EUR 0.54/kg FCA — CMB News",
-    "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNUTYteENlaEo1ZWhpeDl0XzM0alpYc25FdjdLUEZzNmpCMF9kOEtYS1E4b2N1UHVoekt1Tl9ZUjVSS2kySHc5V0FyVVBFS2Z3XzBLS0lPeVlacVUyZk1UeE1tNGZLZzIzTlZGbWVfdGI5Z205amFxamMzbTJVdUR2ZThRRXM3SGZJTnVNQTFzdzQwdlN6ZVhxR2VoREl2NzlIdnc",
-    "raw_link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNUTYteENlaEo1ZWhpeDl0XzM0alpYc25FdjdLUEZzNmpCMF9kOEtYS1E4b2N1UHVoekt1Tl9ZUjVSS2kySHc5V0FyVVBFS2Z3XzBLS0lPeVlacVUyZk1UeE1tNGZLZzIzTlZGbWVfdGI5Z205amFxamMzbTJVdUR2ZThRRXM3SGZJTnVNQTFzdzQwdlN6ZVhxR2VoREl2NzlIdnc?oc=5",
+    "id": 222910,
+    "title": "Prix du sucre en Europe, 25 Nov 2026 : EUR 0.54/kg FCA — CMB News",
+    "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbFA0YkJxYlF2X0U2VFp0X0ppaEt6bFozcEpqcGpiMFFBbWhKd0U1eDd4RUE2VkFObGNpU0FCVG5jMUJFYTNac1VxNlJqa1ZubzdITHNaeFd4TURudnc0X2lRQkpyUEoyYXFJMFJpejQ1MXo3RC15Zk9WSUlILUVJTndhb3JUSmEyT2dEakZTRUt1R3MyTG1pb0g0T1VoUGsyV0pRQkhGTnVDaVpLb0haUUFaM19Val9xUVJyWDNHdHBOVWRN",
+    "raw_link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbFA0YkJxYlF2X0U2VFp0X0ppaEt6bFozcEpqcGpiMFFBbWhKd0U1eDd4RUE2VkFObGNpU0FCVG5jMUJFYTNac1VxNlJqa1ZubzdITHNaeFd4TURudnc0X2lRQkpyUEoyYXFJMFJpejQ1MXo3RC15Zk9WSUlILUVJTndhb3JUSmEyT2dEakZTRUt1R3MyTG1pb0g0T1VoUGsyV0pRQkhGTnVDaVpLb0haUUFaM19Val9xUVJyWDNHdHBOVWRN?oc=5",
     "source": "CMB News",
     "domain": "commodity-board.com",
-    "country": "GB",
-    "lang": "en",
+    "country": "FR",
+    "lang": "fr",
     "published_at": "2026-11-25T05:35:59+00:00",
-    "first_seen_at": "2026-11-25T06:45:04+00:00",
+    "first_seen_at": "2026-11-25T13:24:01+00:00",
     "route": "googlenews",
-    "query": "\"sugar price\"",
+    "query": "\"prix du sucre\"",
     "tier_hint": null,
-    "summary": "Sugar Price Europe, 25 Nov 2026: EUR 0.54/kg FCA — CMB News CMB News",
-    "alias": "sugar price",
+    "summary": "Prix du sucre en Europe, 25 Nov 2026 : EUR 0.54/kg FCA — CMB News CMB News",
+    "alias": "prix du sucre",
     "alias_where": "title",
-    "confidence": 0.6,
+    "confidence": 0.7,
     "also_routes": [
-     "googlenews:\"sugar price\""
+     "googlenews:\"prix du sucre\""
     ],
     "alert_categories": [
      "regulatory"
@@ -7423,35 +7506,6 @@
     "url_unresolved": true
    },
    "also": [
-    {
-     "id": 222910,
-     "title": "Prix du sucre en Europe, 25 Nov 2026 : EUR 0.54/kg FCA — CMB News",
-     "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbFA0YkJxYlF2X0U2VFp0X0ppaEt6bFozcEpqcGpiMFFBbWhKd0U1eDd4RUE2VkFObGNpU0FCVG5jMUJFYTNac1VxNlJqa1ZubzdITHNaeFd4TURudnc0X2lRQkpyUEoyYXFJMFJpejQ1MXo3RC15Zk9WSUlILUVJTndhb3JUSmEyT2dEakZTRUt1R3MyTG1pb0g0T1VoUGsyV0pRQkhGTnVDaVpLb0haUUFaM19Val9xUVJyWDNHdHBOVWRN",
-     "raw_link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPbFA0YkJxYlF2X0U2VFp0X0ppaEt6bFozcEpqcGpiMFFBbWhKd0U1eDd4RUE2VkFObGNpU0FCVG5jMUJFYTNac1VxNlJqa1ZubzdITHNaeFd4TURudnc0X2lRQkpyUEoyYXFJMFJpejQ1MXo3RC15Zk9WSUlILUVJTndhb3JUSmEyT2dEakZTRUt1R3MyTG1pb0g0T1VoUGsyV0pRQkhGTnVDaVpLb0haUUFaM19Val9xUVJyWDNHdHBOVWRN?oc=5",
-     "source": "CMB News",
-     "domain": "commodity-board.com",
-     "country": "FR",
-     "lang": "fr",
-     "published_at": "2026-11-25T05:35:59+00:00",
-     "first_seen_at": "2026-11-25T13:24:01+00:00",
-     "route": "googlenews",
-     "query": "\"prix du sucre\"",
-     "tier_hint": null,
-     "summary": "Prix du sucre en Europe, 25 Nov 2026 : EUR 0.54/kg FCA — CMB News CMB News",
-     "alias": "prix du sucre",
-     "alias_where": "title",
-     "confidence": 0.7,
-     "also_routes": [
-      "googlenews:\"prix du sucre\""
-     ],
-     "alert_categories": [
-      "regulatory"
-     ],
-     "alert_candidate": true,
-     "status": "candidate",
-     "screen_reason": "",
-     "url_unresolved": true
-    },
     {
      "id": 223730,
      "title": "Zuckerpreis Europa, 25 Nov 2026: EUR 0.54/kg FCA — CMB News",
@@ -9890,9 +9944,36 @@
      "status": "candidate",
      "screen_reason": "",
      "url_unresolved": true
+    },
+    {
+     "id": 224988,
+     "title": "At Zadig & Voltaire, Arnaud Gillier sets out how improved profitability has made refinancing possible",
+     "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQbE5rakFrVmQ2SmFuWDlheUhscG9FaDVoQW5lQXI5Q1lmalltTnZiSDlVTzlGamVxMlVBQVhVeXdMQWt2VXhLRC10OFc2T2JDTWZvakZQTTIzbXR3S1JIVUxfU1F3U0JPejFxYk5TNkhNamd5aERSZHdLQ1o4WG9PcmdBSW0tQzVnNFFRS2VPWXp2VktwX0RlV3UzTTVOaWlrNkNWSGdjZDYtX3VEQ0diRnloWnU0MGkwbnFuR2JCcklBYTQ3dUdBNVJzZW5rUk9WZ0duVnh3eGZaWG1SMG8w",
+     "raw_link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQbE5rakFrVmQ2SmFuWDlheUhscG9FaDVoQW5lQXI5Q1lmalltTnZiSDlVTzlGamVxMlVBQVhVeXdMQWt2VXhLRC10OFc2T2JDTWZvakZQTTIzbXR3S1JIVUxfU1F3U0JPejFxYk5TNkhNamd5aERSZHdLQ1o4WG9PcmdBSW0tQzVnNFFRS2VPWXp2VktwX0RlV3UzTTVOaWlrNkNWSGdjZDYtX3VEQ0diRnloWnU0MGkwbnFuR2JCcklBYTQ3dUdBNVJzZW5rUk9WZ0duVnh3eGZaWG1SMG8w?oc=5",
+     "source": "FashionNetwork India",
+     "domain": "in.fashionnetwork.com",
+     "country": "GB",
+     "lang": "en",
+     "published_at": "2026-11-26T05:40:16+00:00",
+     "first_seen_at": "2026-11-26T06:40:31+00:00",
+     "route": "googlenews",
+     "query": "(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")",
+     "tier_hint": null,
+     "summary": "At Zadig & Voltaire, Arnaud Gillier sets out how improved profitability has made refinancing possible FashionNetwork India",
+     "alias": "Zadig & Voltaire",
+     "alias_where": "title",
+     "confidence": 1.0,
+     "also_routes": [],
+     "alert_categories": [
+      "capital_markets"
+     ],
+     "alert_candidate": true,
+     "status": "candidate",
+     "screen_reason": "",
+     "url_unresolved": true
     }
    ],
-   "sources": 2,
+   "sources": 3,
    "alert_candidate": true,
    "alert_categories": [
     "capital_markets"
@@ -9907,7 +9988,7 @@
    "countries": [
     "GB"
    ],
-   "latest": "2026-11-26T03:55:59+00:00"
+   "latest": "2026-11-26T05:40:16+00:00"
   },
   {
    "name_id": "zadigvoltaire",
@@ -10088,7 +10169,8 @@
     "alias_where": "title",
     "confidence": 1.0,
     "also_routes": [
-     "googlenews:(\"ZIM\")"
+     "googlenews:(\"ZIM\")",
+     "googlenews:(\"WMF\" OR \"Xerox\" OR \"Zadig & Voltaire\" OR \"ZIM\" OR \"Zooplus\")"
     ],
     "alert_categories": [
      "m_and_a"
