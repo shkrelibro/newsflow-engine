@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-28T09:21:45+00:00",
+ "generated_at": "2026-11-28T09:36:27+00:00",
  "alerts": [
   {
    "name_id": "adidas",
@@ -662,7 +662,9 @@
     "alias": "Bayer",
     "alias_where": "title",
     "confidence": 0.95,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Adidas\" OR \"Bayer\")"
+    ],
     "alert_categories": [
      "price_move"
     ],
@@ -1886,7 +1888,9 @@
     "alias": "Fnac Darty",
     "alias_where": "title",
     "confidence": 1.0,
-    "also_routes": [],
+    "also_routes": [
+     "googlenews:(\"Cristal Union\" OR \"Danone\" OR \"Eurofins Scientific\" OR \"Fnac Darty\" OR \"Gifi\" OR \"Groupe SEB\")"
+    ],
     "alert_categories": [
      "m_and_a"
     ],
@@ -2841,7 +2845,8 @@
      "alias_where": "title",
      "confidence": 1.0,
      "also_routes": [
-      "googlenews:\"Grifols\""
+      "googlenews:\"Grifols\"",
+      "googlenews:(\"Froneri\" OR \"Grifols\" OR \"Grünenthal\" OR \"Intrum\" OR \"Kiloutou\" OR \"Loxam\")"
      ],
      "alert_categories": [
       "m_and_a"
@@ -3894,6 +3899,55 @@
     "GB"
    ],
    "latest": "2026-11-27T13:52:30+00:00"
+  },
+  {
+   "name_id": "sector_container_freight",
+   "name": "Container freight (sector)",
+   "cluster_id": 164598,
+   "primary": {
+    "id": 230925,
+    "title": "Iran strikes the same ships twice to deter transit through the Strait of Hormuz",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQQ0hWSUF2c1N4NmpIb3EweF90RzVxamJrdXdYMldZZHRGQk5yWXBwN1d1M3ZXRDhoNUlNdExfWTIzRmR4NURMNTFkc0pkSTk5Z3IwZFZYaVpOQUMwZVJEY3ZQQUw3WlhRTXluNlp6cTJ0VzlZWk0wRXZOU09KUGFhci1pc01KQkxnWWZmSERXeTRLQjFmUjlibjNjSWJXQ1ZyZG5JSVVUS0lZSy00TDczUTAyOVNzdmRweHlZ",
+    "raw_link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQQ0hWSUF2c1N4NmpIb3EweF90RzVxamJrdXdYMldZZHRGQk5yWXBwN1d1M3ZXRDhoNUlNdExfWTIzRmR4NURMNTFkc0pkSTk5Z3IwZFZYaVpOQUMwZVJEY3ZQQUw3WlhRTXluNlp6cTJ0VzlZWk0wRXZOU09KUGFhci1pc01KQkxnWWZmSERXeTRLQjFmUjlibjNjSWJXQ1ZyZG5JSVVUS0lZSy00TDczUTAyOVNzdmRweHlZ?oc=5",
+    "source": "Il Sole 24 ORE",
+    "domain": "en.ilsole24ore.com",
+    "country": "GB",
+    "lang": "en",
+    "published_at": "2026-11-28T08:12:18+00:00",
+    "first_seen_at": "2026-11-28T09:26:21+00:00",
+    "route": "googlenews",
+    "query": "\"Strait of Hormuz\"",
+    "tier_hint": null,
+    "summary": "Iran strikes the same ships twice to deter transit through the Strait of Hormuz Il Sole 24 ORE",
+    "alias": "Strait of Hormuz",
+    "alias_where": "title",
+    "confidence": 0.7,
+    "also_routes": [],
+    "alert_categories": [
+     "workforce"
+    ],
+    "alert_candidate": true,
+    "status": "candidate",
+    "screen_reason": "",
+    "url_unresolved": true
+   },
+   "also": [],
+   "sources": 1,
+   "alert_candidate": true,
+   "alert_categories": [
+    "workforce"
+   ],
+   "max_confidence": 0.7,
+   "aliases": [
+    "Strait of Hormuz"
+   ],
+   "languages": [
+    "en"
+   ],
+   "countries": [
+    "GB"
+   ],
+   "latest": "2026-11-28T08:12:18+00:00"
   },
   {
    "name_id": "sector_container_freight",
@@ -5080,57 +5134,6 @@
     "GB"
    ],
    "latest": "2026-11-27T11:51:48+00:00"
-  },
-  {
-   "name_id": "travelodge",
-   "name": "Travelodge",
-   "cluster_id": 162718,
-   "primary": {
-    "id": 228498,
-    "title": "Travelodge appoints former TUI executive as CEO",
-    "url": "https://mca-insight.com/news/travelodge-appoints-former-tui-executive-as-ceo/726363.article",
-    "raw_link": "https://www.mca-insight.com/news/travelodge-appoints-former-tui-executive-as-ceo/726363.article",
-    "source": "MCA Insight",
-    "domain": "mca-insight.com",
-    "country": "GB",
-    "lang": "en",
-    "published_at": "2026-11-26T16:00:00+00:00",
-    "first_seen_at": "2026-11-27T09:32:00+00:00",
-    "route": "bingnews",
-    "query": "\"Travelodge\"",
-    "tier_hint": null,
-    "summary": "The announcement that Peter Krueger will join in December, replacing interim chief executive Ray Reidy, comes as the budget hotel group reports a 3.7% increase in revenue in its Q3 results ...",
-    "alias": "Travelodge",
-    "alias_where": "title",
-    "confidence": 1.0,
-    "also_routes": [
-     "bingnews:\"Travelodge\""
-    ],
-    "alert_categories": [
-     "management"
-    ],
-    "alert_candidate": true,
-    "status": "candidate",
-    "screen_reason": "",
-    "url_unresolved": false
-   },
-   "also": [],
-   "sources": 1,
-   "alert_candidate": true,
-   "alert_categories": [
-    "management"
-   ],
-   "max_confidence": 1.0,
-   "aliases": [
-    "Travelodge"
-   ],
-   "languages": [
-    "en"
-   ],
-   "countries": [
-    "GB"
-   ],
-   "latest": "2026-11-26T16:00:00+00:00"
   },
   {
    "name_id": "tuigroup",
